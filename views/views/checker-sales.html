@@ -1,0 +1,164 @@
+<div class="container">
+<div ng-controller="CheckerSalesCtrl">
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"   data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ng-click="adminSelectCategory(1)">FM Marketing</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <ul class="nav navbar-nav">
+          <li ng-class="category == 1 ? 'active' : default" ng-click="cashierSelectCategory(1)"><a>Tally</a></li>
+          <li  ng-class="category == 2 ? 'active' : default" ng-click="cashierSelectCategory(2)"><a>Load In</a></li>
+          <li  ng-class="category == 3 ? 'active' : default" ng-click="cashierSelectCategory(3)"><a>Adjusment</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="disabled">{{username.userName}}</a></li>
+          <li><a ng-click="logout()">Logout</a></li>
+        </ul>   
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <section class="main">
+    <a class="btn" ng-click="selectTab(1)">DSSR</a>
+    <a class="btn" ng-click="selectTab(2)">Delivery Overview</a>
+
+
+    <div class="col-md-12">
+      <br>
+      <br>
+      <div class="row" ng-show="tab == 1">
+        <h1>Daily Sales Stock Report</h1>
+        <div class="col-md-3">
+        <br>
+        <span>Beginning Inventory:</span><input type="text" disabled>
+        <br>
+        <br>
+        <span>Ending Inventory:</span><input type="text" disabled>
+         <br>
+        <br>
+        <span>Expenses:</span><input type="text" disabled>
+         <br>
+        <br>
+        <span>Returns:</span><input type="text" disabled>
+         <br>
+        <br>
+        <span>Income:</span><br><input type="text" disabled>
+         <br>
+        <br>
+        </div>
+
+        <div class="col-md-9">
+          <br>
+          <table class="table table-bordered table-stripped">
+            <thead>
+              <th>Product</th>
+              <th>Size</th>
+              <th>Quantity</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Coke</td>
+                <td>1L</td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td>Sprite</td>
+                <td>1L</td>
+                <td>27</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    
+        </div>
+      </div>
+      <div class="row" ng-show="tab == 2">
+        <h1>Delivery Overview</h1>
+        <table class="table table-bordered table-stripped">
+          <thead>
+            <th>Establishment Name</th>
+            <th>Owner Name</th>
+            <th>Delivery Date</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+            <th>Paid Amount</th>
+          </thead>
+          <tbody>
+            <tr data-toggle="modal" data-target="#myModal">
+              <td>Aling Puring's</td>
+              <td>Puring Purisima</td>
+              <td>11/13/2014</td>
+              <td>11/12/2014</td>
+              <td>Cancelled</td>
+              <td>1200</td>
+              <td>1200</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Products</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-stripped table-bordered">
+          <thead>
+            <th>Product Name</th>
+            <th>Size</th>
+            <th>Cases</th>
+            <th>Bottles</th>
+            <th>Price</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Coke</td>
+              <td>500ml</td>
+              <td>15</td>
+              <td>800</td>
+              <td>400</td>
+            </tr>
+            <tr>
+              <td>Sprite</td>
+              <td>500ml</td>
+              <td>20</td>
+              <td>1100</td>
+              <td>800</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+  </section>
+
+</div>
+</div>
+
+
+
+
+
+
