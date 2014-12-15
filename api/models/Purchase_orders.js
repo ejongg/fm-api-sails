@@ -10,7 +10,7 @@ module.exports = {
   attributes: {
   	product : {
   		required : true,
-  		model : 'product'
+  		model : 'products'
   	},
   	total_amount : {
   		required : true,

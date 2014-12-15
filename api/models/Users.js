@@ -4,6 +4,7 @@
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
 
@@ -16,7 +17,8 @@ module.exports = {
   	password : {
   		type : "string",
   		required : true,
-  		minLength : 6
+  		minLength : 6,
+      defaultsTo : 'abcdef'
   	},
   	type : {
   		type : "string",
@@ -33,8 +35,6 @@ module.exports = {
   },
 
   beforeCreate : function(user, next){
-		var bcrypt = require('bcrypt-nodejs');
-
 		bcrypt.genSalt(10, function(err, salt){
 			if(err)
 				return next(err);
@@ -44,6 +44,18 @@ module.exports = {
 				next();
 			});
 		});
-	}
+	},
+
+  beforeUpdate : function(user, next){
+    bcrypt.genSalt(10, function(err, salt){
+      if(err)
+        return next(err);
+
+      bcrypt.hash(user.password, salt, null, function(err, hash){
+        user.password = hash;
+        next();
+      });
+    });
+  }
 };
 
