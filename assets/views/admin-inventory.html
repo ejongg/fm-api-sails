@@ -1,0 +1,198 @@
+<div class="container">
+<div ng-controller="AdminInventoryCtrl">
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"   data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ng-click="adminSelectCategory(1)">FM Marketing</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li ng-class="category == 1 ? 'active' : default" ng-click="adminSelectCategory(1)"><a>Sales</a></li>
+          <li  ng-class="category == 2 ? 'active' : default" ng-click="adminSelectCategory(2)"><a>Inventory</a></li>
+          <li  ng-class="category == 3 ? 'active' : default" ng-click="adminSelectCategory(3)"><a>Account</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="disabled">{{username.userName}}</a></li>
+          <li><a ng-click="logout()">Logout</a></li>
+        </ul>   
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <section class="main">
+    <a class="btn" ng-click="selectTab(1)">Inventory</a>
+    <a class="btn" ng-click="selectTab(2)">Products</a>
+    <a class="btn" ng-click="selectTab(3)">Variants</a>
+
+    <div class="col-md-12">
+      <br>
+      <br>
+      <div class="row" ng-show="tab == 1">
+        <h1>Inventory</h1>
+        <div class="col-md-11">
+          <table class="table table-bordered table-stripped">
+            <thead>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Brand</th>
+              <th>Price</th>
+              <th>Bottles</th>
+              <th>Cases</th>
+              <th>Lifespan</th>
+              <th>Expiration Date</th>
+              <th>Age</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="product in inventory">
+                <td>{{product.name}}</td>
+                <td>{{product.size}}</td>
+                <td>{{product.brand}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.bottles}}</td>
+                <td>{{product.cases}}</td>
+                <td>{{product.lifespan}}</td>
+                <td>{{product.expiration}}</td>
+                <td>{{product.age}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row" ng-show="tab == 2">
+        <h1>Products</h1>
+      <div class="col-md-8">
+        <table class="table table-bordered table-stripped">
+            <thead>
+              <th>Product Name</th>
+              <th>Brand</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="product in products">
+                <td>{{product.name}}</td>
+                <td>{{product.brand}}</td>
+                <td><button class="btn btn-sm btn-warning"  ng-click="editProd(product)">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
+      <!-- Add Product -->
+      <div class="col-md-2" ng-show="showAddForm">
+        <form role="form" name="addProductForm" novalidate ng-submit="addProduct(newProduct)">
+          <h3>Add Product</h3>
+          <div class="form-group">
+          <label for="input-username">Product Name</label>
+          <input type="text" ng-model="newProduct.name" class="" required>
+          </div>
+
+          <div class="form-group">
+          <label for="input-username">Brand</label>
+          <input type="text" ng-model="newProduct.brand" class="" required>
+          </div>
+         
+         <div class="pull-right"> 
+         <button class="btn btn-primary btn-sm " ng-disabled="addProductForm.$invalid" ng-click="showAddForm = false">Add</button>
+         <a class="btn btn-primary btn-sm add-margin " style="margin-right: -28px;" ng-click="showAddForm = false">Cancel</a>
+         </div> 
+
+       </form>
+      </div>
+
+           <!-- Edit Product -->
+      <div class="col-md-2" ng-show="showEditForm">
+        <form role="form" name="editProductForm" novalidate ng-submit="saveEditProduct(productEdit)">
+          <h3>Edit Product</h3>
+          <div class="form-group">
+          <label for="input-username">Product Name</label>
+          <input type="text" ng-model="productEdit.name" class="" required>
+          </div>
+
+          <div class="form-group">
+          <label for="input-username">Brand</label>
+          <input type="text" ng-model="productEdit.brand" class="" required>
+          </div>
+         
+         <div class="pull-right"> 
+         <button class="btn btn-primary btn-sm " ng-disabled="editProductForm.$invalid">Edit</button>
+         <a class="btn btn-primary btn-sm add-margin " style="margin-right: -28px;" ng-click="showEditForm = false">Cancel</a>
+         </div> 
+       </form>
+      </div>
+
+      <div class="col-md-2" ng-hide="showAddForm || showEditForm">
+        <button class="btn btn-primary" ng-click="showAddForm = true">Add Product</button>
+      </div>
+      </div> 
+
+      <div class="row" ng-show="tab == 3">
+        <h1>Variants</h1>
+      <div style="margin: 20px 0;">
+        <button class="btn btn-primary">Add Variant</button><br><br>
+        <select ng-model="showBrand" ng-options="item.action as item.brand for item in products"></select>
+      </div>
+      <div ng-class="showEditVariantForm ? 'col-md-9' : 'col-md-11' ">       
+          <table class="table table-bordered table-stripped">
+            <thead>
+              <th>Product Name</th>
+              <th>Size</th>
+              <th>Brand</th>
+              <th>Price</th>
+              <th>Bottles</th>
+              <th>Cases</th>
+              <th>Lifespan</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="variant in variants">
+                <td>{{variant.name}}</td>
+                <td>{{variant.size}}</td>
+                <td>{{variant.brand}}</td>
+                <td>{{variant.price}}</td>
+                <td>{{variant.bottles}}</td>
+                <td>{{variant.cases}}</td>
+                <td>{{variant.lifespan+" "+"months"}}</td>
+                <td><button class="btn btn-sm btn-warning"  ng-click="editVar(variant)">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
+           <!-- Edit Variant -->
+      <div class="col-md-3" ng-show="showEditVariantForm">
+        <form role="form" name="editVariantForm" novalidate ng-submit="saveEditVariant(variantEdit)">
+          <h3>Edit Variant</h3>
+          <div class="form-group">
+          <label for="input-username">Price: ₱</label>
+          <input type="number" style="width: 60px;" ng-model="variantEdit.price" class="" required>
+          </div>
+
+          <div class="form-group">
+          <label for="input-username">Lifespan:</label>
+          <input type="number" style="width: 40px;" ng-model="variantEdit.lifespan" class="" required><span>months</span>
+          </div>
+         
+         <div class="pull-right"> 
+         <button class="btn btn-primary btn-sm " ng-disabled="editVariantForm.$invalid" ng-click="showEditVariantForm = false">Edit</button>
+         <a class="btn btn-primary btn-sm add-margin " style="margin-right: 68px;" ng-click="showEditVariantForm = false">Cancel</a>
+         </div> 
+       </form>
+      </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+</div>
+

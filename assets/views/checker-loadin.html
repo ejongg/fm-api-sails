@@ -1,0 +1,101 @@
+<div class="container">
+<div ng-controller="CheckerSalesCtrl">
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"   data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ng-click="adminSelectCategory(1)">FM Marketing</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <ul class="nav navbar-nav">
+          <li ng-class="category == 1 ? 'active' : default" ng-click="cashierSelectCategory(1)"><a>Tally</a></li>
+          <li  ng-class="category == 2 ? 'active' : default" ng-click="cashierSelectCategory(2)"><a>Load In</a></li>
+          <li  ng-class="category == 3 ? 'active' : default" ng-click="cashierSelectCategory(3)"><a>Adjusment</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="disabled">{{username.userName}}</a></li>
+          <li><a ng-click="logout()">Logout</a></li>
+        </ul>   
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <section class="main">
+    
+    <div class="row">
+   
+    <div class="col-md-4">
+    	<br>
+    	<br>
+    	<h1>Load In</h1>
+    	<br>
+    <form action="">
+    	<select name="" id="">
+    		<option value="">Truck 1</option>
+    		<option value="">Truck 2</option>
+    		<option value="">Truck 3</option>
+    		<option value="">Truck 4</option>
+    	</select><br><br><br>
+    	Name: <input type="text"><br><br><br>
+    	Brand: <input type="text"><br><br><br>
+    	Size: <select name="" id="">
+    		<option value="">1L</option>
+    		<option value="">1.5L</option>
+    	</select><br><br><br>
+    	Cases: <input type="text"><br><br><br>
+    	<button class="btn btn-primary">Add</button>
+    </form>
+    </div>	
+    <div class="col-md-8">
+    	<br>
+    	<br>
+    	<br>
+      <p>Date:</p><input type="date" disable>
+      <p>Driver:</p><input type="text">
+      <p>Helper:</p><input type="text">
+      <br>
+      <p>Route#:</p><input type="text">
+      <br>
+      <p>Dispatcher:</p><input type="text">
+      <br>
+      <br>
+      <br>
+      <select name="" id="">
+      	<option value="">Truck 1</option>
+        <option value="">Truck 2</option>
+        <option value="">Truck 3</option>
+        <option value="">Truck 4</option>
+      </select>
+      <br>
+      <br>
+      <br>
+      <table class="table table-bordered table-stripped">
+      	<thead>
+      		<th>Product Name</th>
+      		<th>Brand</th>
+      		<th>Size</th>
+      		<th>Cases</th>
+      	</thead>
+      </table>
+    </div>
+    </div>
+
+  </section>
+
+</div>
+</div>
+
+
+
+
+
+
