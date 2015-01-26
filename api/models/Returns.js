@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-
+  	return_date : {
+  		type : 'date',
+  		required : true
+  	}
   }
 };
 

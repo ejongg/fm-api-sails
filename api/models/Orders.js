@@ -8,7 +8,25 @@
 module.exports = {
 
   attributes: {
+  	cokeagent_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	prod_id : {
 
+  	},
+  	bottles : {
+  		type : 'integer',
+  		required : true
+  	},
+  	cases : {
+  		type : 'integer',
+  		required : true
+  	},
+  	date_received : {
+  		type : 'date',
+  		required : true
+  	}
   }
 };
 

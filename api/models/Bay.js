@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-
+  	pile_name : {
+  		type : 'string',
+  		required : true
+  	}
   }
 };
 

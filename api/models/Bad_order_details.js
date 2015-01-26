@@ -8,7 +8,24 @@
 module.exports = {
 
   attributes: {
+  	bad_order_id : {
 
+  	},
+  	prod_id : {
+
+  	},
+  	bottles : {
+  		type : 'integer',
+  		required : true
+  	},
+  	cases : {
+  		type : 'integer'
+  		required : true
+  	},
+  	reason_for_disposal : {
+  		type : 'text',
+  		required : true
+  	}
   }
 };
 

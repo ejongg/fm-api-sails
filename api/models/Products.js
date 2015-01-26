@@ -8,7 +8,14 @@
 module.exports = {
 
   attributes: {
-
+  	prod_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	brand : {
+  		type : 'string',
+  		required : true
+  	}
   }
 };
 

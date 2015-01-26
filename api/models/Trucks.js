@@ -8,7 +8,26 @@
 module.exports = {
 
   attributes: {
-
+  	driver_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	agent_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	helper_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	dispatcher_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	route : {
+		type : 'string',
+  		required : true	
+  	}
   }
 };
 

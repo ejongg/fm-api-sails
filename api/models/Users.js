@@ -31,7 +31,14 @@ module.exports = {
   	lastname : {
   		type : "string",
   		required : true
-  	}
+  	},
+    token : {
+      type : 'string'
+    },
+    status : {
+      type : 'string',
+      defaultsTo : 'active'
+    }
   },
 
   beforeCreate : function(user, next){

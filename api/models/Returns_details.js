@@ -8,7 +8,21 @@
 module.exports = {
 
   attributes: {
+  	prod_id : {
 
+  	},
+  	bottles : {
+  		type : 'integer',
+  		required : true
+  	},
+  	cases : {
+  		type : 'integer',
+  		required : true
+  	},
+  	deposit : {
+  		type : 'float',
+  		required : true
+  	}
   }
 };
 

@@ -8,7 +8,22 @@
 module.exports = {
 
   attributes: {
-
+  	establishment_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	address : {
+  		type : 'string',
+  		required : true
+  	},
+  	owner_name : {
+  		type : 'string',
+  		required : true
+  	},
+  	status : {
+  		type : 'string',
+  		required : true
+  	}
   }
 };
 

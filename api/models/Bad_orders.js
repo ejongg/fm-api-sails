@@ -8,7 +8,18 @@
 module.exports = {
 
   attributes: {
-
+  	expense : {
+  		type : "float",
+  		required : true
+  	},
+  	date : {
+  		type : "date",
+  		required : true
+  	},
+  	status : {
+  		type : "string",
+  		required : true
+  	}
   }
 };
 

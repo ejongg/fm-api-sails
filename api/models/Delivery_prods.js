@@ -8,7 +8,20 @@
 module.exports = {
 
   attributes: {
+    dtrans_id :{
 
+    },
+  	prod_id : {
+
+  	},
+  	cases : {
+  		type : 'integer',
+  		required : true
+  	},
+  	bottles : {
+  		type : 'integer',
+  		required : true
+  	}
   }
 };
 
