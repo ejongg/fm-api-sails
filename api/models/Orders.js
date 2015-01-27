@@ -13,7 +13,7 @@ module.exports = {
   		required : true
   	},
   	prod_id : {
-
+      model : 'products'
   	},
   	bottles : {
   		type : 'integer',
