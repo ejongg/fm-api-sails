@@ -8,9 +8,6 @@
 module.exports = {
 
   attributes: {
-  	dtrans_id : {
-
-  	},
   	total_amount : {
   		type : 'float',
   		required : true
@@ -32,13 +29,15 @@ module.exports = {
   		required : true
   	},
   	customer_id : {
-  		
+  		model : 'customer_details',
+      required : true
   	},
   	return_id : {
-
+      
   	},
   	truck_id : {
-
+      model : 'trucks',
+      required : true
   	}
   }
 };

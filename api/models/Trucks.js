@@ -25,7 +25,7 @@ module.exports = {
   		required : true
   	},
   	route : {
-		type : 'string',
+		  type : 'string',
   		required : true	
   	}
   }

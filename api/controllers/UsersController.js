@@ -29,6 +29,21 @@ module.exports = {
 					return res.json({message: 'User not found'}, 404);
 				}
 			});
+	},
+
+	logout : function(req, res){
+		Users.findOneByUsername(req.body.id)
+			.exec(function(err, user){
+				if(err)
+					return res.json({message : 'DB error'}, 500);
+
+				if(user){
+					user.token = '';
+					return res.json({message : 'logout succesful'});
+				}else{
+					return res.json({message : 'User not found'}, 404);
+				}
+			});
 	}
 };
 

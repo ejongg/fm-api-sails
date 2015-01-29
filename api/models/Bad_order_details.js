@@ -9,17 +9,19 @@ module.exports = {
 
   attributes: {
   	bad_order_id : {
-
+      model : 'bad_orders',
+      required : true
   	},
   	prod_id : {
-
+      model : 'products',
+      required : true
   	},
   	bottles : {
   		type : 'integer',
   		required : true
   	},
   	cases : {
-  		type : 'integer'
+  		type : 'integer',
   		required : true
   	},
   	reason_for_disposal : {

@@ -9,7 +9,8 @@ module.exports = {
 
   attributes: {
   	prod_id : {
-
+      model : 'products',
+      required : true
   	},
   	bottles : {
   		type : 'integer',

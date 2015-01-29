@@ -9,10 +9,12 @@ module.exports = {
 
   attributes: {
     dtrans_id :{
-
+      model : 'delivery_transactions',
+      required : true
     },
   	prod_id : {
-
+      model : 'products',
+      required : true
   	},
   	cases : {
   		type : 'integer',

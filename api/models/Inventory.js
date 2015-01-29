@@ -9,10 +9,12 @@ module.exports = {
 
   attributes: {
   	bay_id : {
-
+      model : 'bay',
+      required : true
   	},
   	prod_id : {
-
+      model : 'products',
+      required : true
   	},
   	bottles : {
   		type : 'integer',
