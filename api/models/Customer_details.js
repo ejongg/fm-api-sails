@@ -23,7 +23,11 @@ module.exports = {
   	status : {
   		type : 'string',
   		required : true
-  	}
+  	},
+    transactions : {
+      collection : 'delivery_transactions',
+      via : 'customer_id'
+    }
   }
 };
 

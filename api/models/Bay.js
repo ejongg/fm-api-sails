@@ -11,6 +11,10 @@ module.exports = {
   	pile_name : {
   		type : 'string',
   		required : true
+  	},
+  	products : {
+  		collection : 'inventory',
+  		via : 'bay_id'
   	}
   }
 };

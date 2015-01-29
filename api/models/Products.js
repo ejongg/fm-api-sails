@@ -15,7 +15,11 @@ module.exports = {
   	brand : {
   		type : 'string',
   		required : true
-  	}
+  	},
+    variants : {
+      collection : 'product_details',
+      via : 'prod_id'
+    }
   }
 };
 

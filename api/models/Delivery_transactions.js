@@ -38,7 +38,11 @@ module.exports = {
   	truck_id : {
       model : 'trucks',
       required : true
-  	}
+  	},
+    products : {
+      collection : 'delivery_prods',
+      via : 'dtrans_id'
+    }
   }
 };
 

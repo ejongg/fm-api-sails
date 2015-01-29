@@ -27,7 +27,11 @@ module.exports = {
   	route : {
 		  type : 'string',
   		required : true	
-  	}
+  	},
+    deliveries : {
+      collection : 'delivery_transactions',
+      via : 'truck_id'
+    }
   }
 };
 
