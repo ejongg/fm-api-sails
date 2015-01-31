@@ -51,6 +51,18 @@ module.exports = {
 				next();
 			});
 		});
-	}
+	},
+
+  beforeUpdate : function(user, next){
+    bcrypt.genSalt(10, function(err, salt){
+      if(err)
+        return next(err);
+
+      bcrypt.hash(user.password, salt, null, function(err, hash){
+        user.password = hash;
+        next();
+      });
+    });
+  }  
 };
 
