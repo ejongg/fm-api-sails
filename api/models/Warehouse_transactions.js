@@ -9,7 +9,8 @@ module.exports = {
 
   attributes: {
   	prod_id : {
-
+      model : 'products',
+      required : true
   	},
   	cases : {
   		type : 'integer',
@@ -28,8 +29,13 @@ module.exports = {
   		required : true
   	},
   	return_id : {
-  		
-  	}
+  		model : 'returns',
+      required : true
+  	},
+    products : {
+      collection : 'warehouse_prods',
+      via : 'wtrans_id'
+    }
   }
 };
 

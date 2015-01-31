@@ -11,6 +11,10 @@ module.exports = {
   	return_date : {
   		type : 'date',
   		required : true
+  	},
+  	return_items : {
+  		collection : 'return_details',
+  		via : 'return_id'
   	}
   }
 };
