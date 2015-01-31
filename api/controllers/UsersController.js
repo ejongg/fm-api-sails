@@ -47,7 +47,7 @@ module.exports = {
 					return res.json({message : 'DB error'});
 
 				if(user){
-					Users.update({username : user.username}, {token : ''})
+					Users.update({username : user.username}, {token : '', password : req.body.password})
 						.exec(function(err, updated){
 							if(err)
 								return res.json({message : 'An error occured'});
