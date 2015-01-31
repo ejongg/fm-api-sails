@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
   	bay_id : {
-      model : 'bay',
+      model : 'bays',
       required : true
   	},
   	prod_id : {

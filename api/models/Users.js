@@ -47,6 +47,9 @@ module.exports = {
 				return next(err);
 
 			bcrypt.hash(user.password, salt, null, function(err, hash){
+        if(err)
+          return next(err);
+        
 				user.password = hash;
 				next();
 			});
@@ -59,6 +62,9 @@ module.exports = {
         return next(err);
 
       bcrypt.hash(user.password, salt, null, function(err, hash){
+        if(err)
+          return next(err);
+
         user.password = hash;
         next();
       });
