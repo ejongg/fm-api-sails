@@ -13,7 +13,7 @@ module.exports = {
   		required : true
   	},
   	return_items : {
-  		collection : 'return_details',
+  		collection : 'returns_details',
   		via : 'return_id'
   	}
   }

@@ -11,7 +11,7 @@ module.exports = {
     return_id : {
       model : 'returns',
       required : true
-    }
+    },
   	prod_id : {
       model : 'products',
       required : true
