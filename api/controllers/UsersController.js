@@ -16,24 +16,29 @@ module.exports = {
 					return res.json({message: 'DB error'});			
 
 				if(user){
-					bcrypt.compare(req.body.password, user.password, function(err, match){
-						if(err)
-							return res.json({message : 'Server error'});
+					if(user.token == ''){
+						bcrypt.compare(req.body.password, user.password, function(err, match){
+							if(err)
+								return res.json({message : 'Server error'});
 
-						if(match){
-							var token = rand_token.generate(32);
+							if(match){
+								var token = rand_token.generate(32);
 
-							Users.update({username : user.username}, {token : token})
-								.exec(function(err, updated){
-									if(err)
-										return res.json({message : 'An error occured'});
-								});
+								Users.update({username : user.username}, {token : token})
+									.exec(function(err, updated){
+										if(err)
+											return res.json({message : 'An error occured'});
+									});
 
-							user.token = token;
-							return res.json(user);
-						}else
-							return res.json({message : 'Passwords do not match'});
-					});
+								user.token = token;
+								return res.json(user);
+							}else
+								return res.json({message : 'Passwords do not match'});
+						});
+					}else{
+						return res.json({message : 'User already logged in'});
+					}
+					
 				}else{
 					return res.json({message: 'User not found'});
 				}

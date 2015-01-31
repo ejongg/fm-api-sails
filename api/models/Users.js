@@ -33,7 +33,8 @@ module.exports = {
   		required : true
   	},
     token : {
-      type : 'string'
+      type : 'string',
+      defaultsTo : ''
     },
     status : {
       type : 'string',
