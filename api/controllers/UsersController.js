@@ -55,12 +55,12 @@ module.exports = {
 					Users.update({username : user.username}, {token : '', password : req.body.password})
 						.exec(function(err, updated){
 							if(err)
-								return res.json({message : 'An error occured'});
+								return res.json({status :{code : 0,  message : 'An error occured'}});
 						});
 
-					return res.json({message : 'logout succesful'});
+					return res.json({status :{code : 1,  message : 'logout succesful'}});
 				}else{
-					return res.json({message : 'User not found'});
+					return res.json({status :{code : 0,  message : 'User not found'}});
 				}
 			});
 	},
