@@ -13,13 +13,13 @@ module.exports = {
 		Users.findOneByUsername(req.body.username)
 			.exec(function(err, user){
 				if(err)
-					return res.json({message: 'DB error'});			
+					return res.json({status : {code: 0, message: 'DB error'}});			
 
 				if(user){
 					if(user.token == ''){
 						bcrypt.compare(req.body.password, user.password, function(err, match){
 							if(err)
-								return res.json({status : 0, message : 'Server error'});
+								return res.json({status : {code : 0, message : 'Server error'}});
 
 							if(match){
 								var token = rand_token.generate(32);
@@ -27,20 +27,20 @@ module.exports = {
 								Users.update({username : user.username}, {token : token})
 									.exec(function(err, updated){
 										if(err)
-											return res.json({status : 0, message : 'An error occured'});
+											return res.json({code : 0, message : 'An error occured'});
 									});
 
 								user.token = token;
-								return res.json([{status : 1, message: 'Login succesful'} , {userinfo : user}]);
+								return res.json([{status : {code : 1, message: 'Login succesful'}} , {userinfo : user}]);
 							}else
-								return res.json({status : 0, message : 'Passwords do not match'});
+								return res.json({status : {code : 0, message : 'Passwords do not match'}});
 						});
 					}else{
-						return res.json({status : 0, message : 'User already logged in'});
+						return res.json({status : {code : 0, message : 'User already logged in'}});
 					}
 					
 				}else{
-					return res.json({status : 0, message: 'User not found'});
+					return res.json({status : {code : 0, message: 'User not found'}});
 				}
 			});
 	},
