@@ -8,37 +8,21 @@ var bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
 	login : function(req, res){
-		var rand_token = require('rand-token');
-
 		Users.findOneByUsername(req.body.username)
 			.exec(function(err, user){
 				if(err)
 					return res.json({status : {code: 0, message: 'DB error'}});			
 
 				if(user){
-					if(user.token == ''){
-						bcrypt.compare(req.body.password, user.password, function(err, match){
-							if(err)
-								return res.json({status : {code : 0, message : 'Server error'}});
+					bcrypt.compare(req.body.password, user.password, function(err, match){
+						if(err)
+							return res.json({status : {code : 0, message : 'Server error'}});
 
-							if(match){
-								var token = rand_token.generate(32);
-
-								Users.update({username : user.username}, {token : token})
-									.exec(function(err, updated){
-										if(err)
-											return res.json({code : 0, message : 'An error occured'});
-									});
-
-								user.token = token;
-								return res.json({status : {code : 1, message: 'Login succesful'} , userinfo : user});
-							}else
-								return res.json({status : {code : 0, message : 'Passwords do not match'}});
-						});
-					}else{
-						return res.json({status : {code : 0, message : 'User already logged in'}});
-					}
-					
+						if(match){
+							return res.json({status : {code : 1, message: 'Login succesful'} , userinfo : user, token : Auth.issueToken(req.body.username)});
+						}else
+							return res.json({status : {code : 0, message : 'Passwords do not match'}});
+					});
 				}else{
 					return res.json({status : {code : 0, message: 'User not found'}});
 				}
@@ -46,18 +30,12 @@ module.exports = {
 	},
 
 	logout : function(req, res){
-		Users.findOneByUsername(req.body.username)
+		Users.findOneByUsername(req.token)
 			.exec(function(err, user){
 				if(err)
-					return res.json({message : 'DB error'});
+					return res.json({status :{code : 0, message : 'DB error'}});
 
 				if(user){
-					Users.update({username : user.username}, {token : '', password : req.body.password})
-						.exec(function(err, updated){
-							if(err)
-								return res.json({status :{code : 0,  message : 'An error occured'}});
-						});
-
 					return res.json({status :{code : 1,  message : 'logout succesful'}});
 				}else{
 					return res.json({status :{code : 0,  message : 'User not found'}});
@@ -77,7 +55,7 @@ module.exports = {
 			});
 		});
 
-		Users.findOneByUsername(req.body.username)
+		Users.findOneByUsername(req.token)
 			.exec(function(err, user){
 				if(err)
 					return res.json({message : 'An error occured'});
@@ -95,6 +73,14 @@ module.exports = {
 					return res.json({message : 'User not found'});
 				}
 			});
+	},
+
+	sample : function(req, res){
+		if(req.token){
+			return res.json(req.token);
+		}else{
+			return res.json('Token not present!');
+		}
 	}
 };
 

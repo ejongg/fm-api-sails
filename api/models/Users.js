@@ -32,10 +32,6 @@ module.exports = {
   		type : "string",
   		required : true
   	},
-    token : {
-      type : 'string',
-      defaultsTo : ''
-    },
     status : {
       type : 'string',
       defaultsTo : 'active'
