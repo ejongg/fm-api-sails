@@ -31,7 +31,7 @@ module.exports = {
 									});
 
 								user.token = token;
-								return res.json([{status : {code : 1, message: 'Login succesful'}} , {userinfo : user}]);
+								return res.json({status : {code : 1, message: 'Login succesful'} , userinfo : user});
 							}else
 								return res.json({status : {code : 0, message : 'Passwords do not match'}});
 						});
