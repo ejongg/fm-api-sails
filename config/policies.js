@@ -30,6 +30,8 @@ module.exports.policies = {
 
   UsersController : {
     login : 'alreadyLoggedIn', 
+
+    create : 'alreadyLoggedIn'
   }
 
   /***************************************************************************
