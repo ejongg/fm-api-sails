@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var secret = 'fmmktg';
+var secret = process.env.SECRET_TOKEN || 'fmmktg' + new Date().getDate();
 
 module.exports.issueToken = function(payload){
 	var token = jwt.sign(payload, secret, {expiresInMinutes : 600});
