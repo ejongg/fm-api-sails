@@ -26,7 +26,7 @@ module.exports = {
     Products.publishCreate({prod_name : product.prod_name, company : product.company, variants : product.variants});
   },
 
-  afterUpdate = function(product, next){
+  afterUpdate : function(product, next){
     Products.publishUpdate(product.id, product);
   }
 };
