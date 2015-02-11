@@ -28,6 +28,14 @@ module.exports = {
   		type : 'float',
   		required : true
   	}
+  },
+
+  afterCreate : function(returns_detail, next){
+    Returns_details.publishCreate(returns_detail);
+  },
+
+  afterUpdate : function(returns_detail, next){
+    Returns_details.publishUpdate(returns_detail.id, returns_detail);
   }
 };
 

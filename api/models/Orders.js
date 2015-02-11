@@ -28,6 +28,14 @@ module.exports = {
   		type : 'date',
   		required : true
   	}
+  },
+
+  afterCreate : function(order, next){
+    Orders.publishCreate(order);
+  },
+
+  afterUpdate : function(order, next){
+    Orders.publishUpdate(order.id, order);
   }
 };
 

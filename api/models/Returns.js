@@ -16,6 +16,14 @@ module.exports = {
   		collection : 'returns_details',
   		via : 'return_id'
   	}
+  },
+
+  afterCreate : function(returns, next){
+    Returns.publishCreate(returns);
+  },
+
+  afterUpdate : function(returns, next){
+    Returns.publishUpdate(returns.id, returns);
   }
 };
 

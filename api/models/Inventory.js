@@ -32,6 +32,14 @@ module.exports = {
   		type : 'integer',
   		required : true
   	}
+  },
+
+  afterCreate : function(product, next){
+    Inventory.publishCreate(product);
+  },
+
+  afterUpdate : function(product, next){
+    Inventory.publishUpdate(product.id, product);
   }
 };
 

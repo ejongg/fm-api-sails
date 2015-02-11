@@ -43,6 +43,14 @@ module.exports = {
       collection : 'delivery_prods',
       via : 'dtrans_id'
     }
+  },
+
+  afterCreate : function(delivery, next){
+    Delivery_transactions.publishCreate(delivery);
+  },
+
+  afterUpdate : function(bay, next){
+    Delivery_transactions.publishUpdate(delivery.id, delivery);
   }
 };
 

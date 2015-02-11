@@ -24,6 +24,14 @@ module.exports = {
   		type : 'integer',
   		required : true
   	}
+  },
+
+  afterCreate : function(warehouse_prod, next){
+    Warehouse_prods.publishCreate(warehouse_prod);
+  },
+
+  afterUpdate : function(warehouse_prod, next){
+    Warehouse_prods.publishUpdate(warehouse_prod.id, warehouse_prod);
   }
 };
 

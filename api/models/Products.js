@@ -23,7 +23,7 @@ module.exports = {
   },
 
   afterCreate : function(product, next){
-    Products.publishCreate({prod_name : product.prod_name, company : product.company, variants : product.variants});
+    Products.publishCreate(product);
   },
 
   afterUpdate : function(product, next){

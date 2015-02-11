@@ -32,6 +32,14 @@ module.exports = {
   		type : 'integer',
   		required : true
   	}
+  },
+
+  afterCreate : function(sku, next){
+    Product_details.publishCreate(sku);
+  },
+
+  afterUpdate : function(sku, next){
+    Product_details.publishUpdate(sku.id, sku);
   }
 };
 

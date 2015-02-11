@@ -32,6 +32,14 @@ module.exports = {
       collection : 'delivery_transactions',
       via : 'truck_id'
     }
+  },
+
+  afterCreate : function(truck, next){
+    Trucks.publishCreate(truck);
+  },
+
+  afterUpdate : function(truck, next){
+    Trucks.publishUpdate(truck.id, truck);
   }
 };
 

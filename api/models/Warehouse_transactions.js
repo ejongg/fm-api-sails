@@ -36,6 +36,14 @@ module.exports = {
       collection : 'warehouse_prods',
       via : 'wtrans_id'
     }
+  },
+
+  afterCreate : function(warehouse_transaction, next){
+    Warehouse_transactions.publishCreate(warehouse_transaction);
+  },
+
+  afterUpdate : function(bay, next){
+    Warehouse_transactions.publishUpdate(warehouse_transaction.id, warehouse_transaction);
   }
 };
 
