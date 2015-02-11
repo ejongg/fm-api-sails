@@ -28,6 +28,14 @@ module.exports = {
   		type : 'text',
   		required : true
   	}
+  },
+
+  afterCreate : function(bad_order_detail, next){
+    Bad_order_details.publishCreate(bad_order_detail);
+  },
+
+  afterUpdate : function(bad_order_detail, next){
+    Bad_order_details.publishUpdate(bad_order_detail.id, bad_order_detail);
   }
 };
 

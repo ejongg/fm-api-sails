@@ -16,6 +16,14 @@ module.exports = {
   		collection : 'inventory',
   		via : 'bay_id'
   	}
+  },
+
+  afterCreate : function(bay, next){
+    Bay.publishCreate(bay);
+  },
+
+  afterUpdate : function(bay, next){
+    Bay.publishUpdate(bay.id, bay);
   }
 };
 

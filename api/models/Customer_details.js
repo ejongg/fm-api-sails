@@ -32,6 +32,14 @@ module.exports = {
       collection : 'delivery_transactions',
       via : 'customer_id'
     }
+  },
+
+  afterCreate : function(customer, next){
+    Customer_details.publishCreate(customer);
+  },
+
+  afterUpdate : function(bad_order, next){
+    Customer_details.publishUpdate(customer.id, customer);
   }
 };
 
