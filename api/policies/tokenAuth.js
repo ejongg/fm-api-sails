@@ -15,8 +15,6 @@ module.exports = function(req, res, next){
 		return res.json({error : 'Authorization header not found'});
 	}
 	
-	
-
 	Auth.verifyToken(token, function(err, token){
 		if(err)
 			return res.json({error : 'Token not valid.'});
