@@ -26,7 +26,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': 'tokenAuth',
+  // '*': 'tokenAuth',
 
   UsersController : {
     login : 'alreadyLoggedIn', 
