@@ -17,7 +17,7 @@ module.exports = {
   		required : true
   	},
     variants : {
-      collection : 'product_details',
+      collection : 'sku',
       via : 'prod_id'
     }
   },
@@ -28,6 +28,10 @@ module.exports = {
 
   afterUpdate : function(product, next){
     Products.publishUpdate(product.id, product);
+  }
+
+  afterDestroy : function(product, next){
+    sails.sockets.blast('product', {verb : 'destroyed', data : product[0].id});
   }
 };
 

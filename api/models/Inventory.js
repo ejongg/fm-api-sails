@@ -40,6 +40,10 @@ module.exports = {
 
   afterUpdate : function(product, next){
     Inventory.publishUpdate(product.id, product);
+  },
+
+  afterDestroy : function(product, next){
+    sails.sockets.blast('product', {verb : 'destroyed', data : product[0].id});
   }
 };
 

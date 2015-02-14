@@ -40,6 +40,10 @@ module.exports = {
 
   afterUpdate : function(sku, next){
     Product_details.publishUpdate(sku.id, sku);
+  },
+
+  afterDestroy : function(product, next){
+    sails.sockets.blast('product', {verb : 'destroyed', data : product[0].id});
   }
 };
 

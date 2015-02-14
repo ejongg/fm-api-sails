@@ -1,7 +1,7 @@
 /**
- * Product_detailsController
+ * SkuController
  *
- * @description :: Server-side logic for managing product_details
+ * @description :: Server-side logic for managing sku
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
