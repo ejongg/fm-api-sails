@@ -42,8 +42,12 @@ module.exports = {
     Warehouse_transactions.publishCreate(warehouse_transaction);
   },
 
-  afterUpdate : function(bay, next){
+  afterUpdate : function(warehouse_transaction, next){
     Warehouse_transactions.publishUpdate(warehouse_transaction.id, warehouse_transaction);
+  },
+
+  afterDestroy : function(warehouse, next){
+    sails.sockets.blast('Warehouse_transactions', {verb : 'destroyed', data : warehouse[0].id});
   }
 };
 

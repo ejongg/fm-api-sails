@@ -36,6 +36,10 @@ module.exports = {
 
   afterUpdate : function(returns_detail, next){
     Returns_details.publishUpdate(returns_detail.id, returns_detail);
+  },
+
+  afterDestroy : function(returns_detail, next){
+    sails.sockets.blast('returns_details', {verb : 'destroyed', data : returns_detail[0].id});
   }
 };
 

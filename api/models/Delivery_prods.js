@@ -32,6 +32,10 @@ module.exports = {
 
   afterUpdate : function(delivery_prod, next){
     Delivery_prods.publishUpdate(delivery_prod.id, delivery_prod);
+  },
+
+  afterDestroy : function(delivery_prod, next){
+    sails.sockets.blast('delivery_prods', {verb : 'destroyed', data : delivery_prods[0].id});
   }
 };
 

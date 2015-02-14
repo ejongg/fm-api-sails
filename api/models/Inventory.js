@@ -34,16 +34,16 @@ module.exports = {
   	}
   },
 
-  afterCreate : function(product, next){
-    Inventory.publishCreate(product);
+  afterCreate : function(inventory, next){
+    Inventory.publishCreate(inventory);
   },
 
-  afterUpdate : function(product, next){
-    Inventory.publishUpdate(product.id, product);
+  afterUpdate : function(inventory, next){
+    Inventory.publishUpdate(inventory.id, inventory);
   },
 
-  afterDestroy : function(product, next){
-    sails.sockets.blast('product', {verb : 'destroyed', data : product[0].id});
+  afterDestroy : function(inventory, next){
+    sails.sockets.blast('inventory', {verb : 'destroyed', data : inventory[0].id});
   }
 };
 

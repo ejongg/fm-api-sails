@@ -38,8 +38,12 @@ module.exports = {
     Customer_details.publishCreate(customer);
   },
 
-  afterUpdate : function(bad_order, next){
+  afterUpdate : function(customer, next){
     Customer_details.publishUpdate(customer.id, customer);
+  },
+
+  afterDestroy : function(customer, next){
+    sails.sockets.blast('customer_details', {verb : 'destroyed', data : customer[0].id});
   }
 };
 

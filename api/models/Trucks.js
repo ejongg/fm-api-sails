@@ -40,6 +40,10 @@ module.exports = {
 
   afterUpdate : function(truck, next){
     Trucks.publishUpdate(truck.id, truck);
+  },
+
+  afterDestroy : function(truck, next){
+    sails.sockets.blast('truck', {verb : 'destroyed', data : truck[0].id});
   }
 };
 
