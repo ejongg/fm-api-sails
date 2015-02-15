@@ -12,6 +12,10 @@ module.exports = {
       model : 'products',
       required : true
   	},
+    sku_name : {
+      type : 'string',
+      required, true
+    },
   	bottles : {
   		type : 'integer',
   		required : true
@@ -28,10 +32,6 @@ module.exports = {
   		type : 'float',
   		required : true
   	},
-  	lifespan : {
-  		type : 'integer',
-  		required : true
-  	}
   },
 
   afterCreate : function(sku, next){
