@@ -14,7 +14,8 @@ module.exports = {
   	},
     sku_name : {
       type : 'string',
-      required, true
+      required :  true,
+      unique : true
     },
   	bottles : {
   		type : 'integer',
