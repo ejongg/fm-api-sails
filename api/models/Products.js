@@ -10,7 +10,8 @@ module.exports = {
   attributes: {
   	prod_name : {
   		type : 'string',
-  		required : true
+  		required : true,
+  		unique : true
   	},
   	company : {
   		type : 'string',
