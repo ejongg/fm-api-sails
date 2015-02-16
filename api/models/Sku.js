@@ -32,15 +32,15 @@ module.exports = {
   	price : {
   		type : 'float',
   		required : true
-  	},
+  	}
   },
 
   afterCreate : function(sku, next){
-    Product_details.publishCreate(sku);
+    Sku.publishCreate(sku);
   },
 
   afterUpdate : function(sku, next){
-    Product_details.publishUpdate(sku.id, sku);
+    Sku.publishUpdate(sku.id, sku);
   },
 
   afterDestroy : function(sku, next){

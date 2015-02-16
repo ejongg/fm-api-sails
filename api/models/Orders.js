@@ -16,10 +16,6 @@ module.exports = {
       model : 'products',
       required : true
   	},
-  	bottles : {
-  		type : 'integer',
-  		required : true
-  	},
   	cases : {
   		type : 'integer',
   		required : true
