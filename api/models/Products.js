@@ -17,7 +17,7 @@ module.exports = {
   		type : 'string',
   		required : true
   	},
-    variants : {
+    sku : {
       collection : 'sku',
       via : 'prod_id'
     }
