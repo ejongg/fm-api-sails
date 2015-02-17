@@ -17,7 +17,7 @@ module.exports = {
       required :  true,
       unique : true
     },
-  	bottles : {
+  	bottlespercase : {
   		type : 'integer',
   		required : true
   	},

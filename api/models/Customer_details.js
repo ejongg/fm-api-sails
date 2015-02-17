@@ -24,13 +24,17 @@ module.exports = {
       type : 'string',
       required : true
     },
-  	status : {
-  		type : 'string',
-  		required : true
-  	},
+    distance_rating : {
+      type : 'integer',
+      required : true
+    },
     transactions : {
       collection : 'delivery_transactions',
       via : 'customer_id'
+    },
+    orders : {
+      collection : 'customer_orders',
+      via : 'cust_id'
     }
   },
 

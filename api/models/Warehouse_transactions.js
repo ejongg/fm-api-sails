@@ -16,10 +16,6 @@ module.exports = {
   		type : 'integer',
   		required : true
   	},
-  	bottles : {
-  		type : 'integer',
-  		required : true
-  	},
   	customer_name : {
   		type : 'string',
   		required : true
@@ -32,9 +28,9 @@ module.exports = {
   		model : 'returns',
       required : true
   	},
-    products : {
-      collection : 'warehouse_prods',
-      via : 'wtrans_id'
+    user : {
+      model : 'users',
+      required : true
     }
   },
 

@@ -33,12 +33,21 @@ module.exports = {
       required : true
   	},
   	return_id : {
-      
+      model : 'returns',
+      required : true
   	},
   	truck_id : {
       model : 'trucks',
       required : true
   	},
+    order_id : {
+      model : 'customer_orders',
+      required : true
+    },
+    user : {
+      model : 'users',
+      required : true
+    },
     products : {
       collection : 'delivery_prods',
       via : 'dtrans_id'

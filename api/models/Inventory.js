@@ -20,10 +20,6 @@ module.exports = {
   		type : 'integer',
   		required : true
   	},
-  	cases : {
-		type : 'integer',
-  		required : true
-  	},
   	exp_date : {
   		type : 'date',
   		required : true
@@ -31,7 +27,15 @@ module.exports = {
   	age : {
   		type : 'integer',
   		required : true
-  	}
+  	},
+    physical_count : {
+      type : 'integer',
+      required : true
+    },
+    logical_count : {
+      type : 'integer',
+      required : true
+    }
   },
 
   afterCreate : function(inventory, next){

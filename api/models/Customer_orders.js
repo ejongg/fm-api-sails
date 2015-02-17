@@ -1,5 +1,5 @@
 /**
-* Orders.js
+* Customer_orders.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -23,7 +23,19 @@ module.exports = {
   	date_received : {
   		type : 'date',
   		required : true
-  	}
+  	},
+    status : {
+      type : 'string',
+      required : true
+    },
+    cust_id : {
+      model : 'customer_details'.
+      required : true
+    },
+    user : {
+      model : 'users',
+      required : true
+    }
   },
 
   afterCreate : function(order, next){
