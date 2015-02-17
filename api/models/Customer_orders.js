@@ -29,7 +29,7 @@ module.exports = {
       required : true
     },
     cust_id : {
-      model : 'customer_details'.
+      model : 'customer_details',
       required : true
     },
     user : {
