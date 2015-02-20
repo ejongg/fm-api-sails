@@ -6,22 +6,17 @@
 */
 
 module.exports = {
-
   attributes: {
-  	prod_id : {
-      model : 'products',
-      required : true
-  	},
     sku_name : {
       type : 'string',
       required :  true,
       unique : true
     },
-  	bottlespercase : {
-  		type : 'integer',
-  		required : true
+  	prod_id : {
+      model : 'products',
+      required : true
   	},
-  	cases : {
+  	bottlespercase : {
   		type : 'integer',
   		required : true
   	},
@@ -37,14 +32,17 @@ module.exports = {
 
   afterCreate : function(sku, next){
     Sku.publishCreate(sku);
+    next();
   },
 
   afterUpdate : function(sku, next){
     Sku.publishUpdate(sku.id, sku);
+    next();
   },
 
   afterDestroy : function(sku, next){
     sails.sockets.blast('sku', {verb : 'destroyed', data : sku[0].id});
+    next();
   }
 };
 

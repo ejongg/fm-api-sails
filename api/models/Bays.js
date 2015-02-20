@@ -6,7 +6,6 @@
 */
 
 module.exports = {
-
   attributes: {
   	pile_name : {
   		type : 'string',
@@ -19,15 +18,18 @@ module.exports = {
   },
 
   afterCreate : function(bay, next){
-    Bay.publishCreate(bay);
+    Bays.publishCreate(bay);
+    next();
   },
 
   afterUpdate : function(bay, next){
-    Bay.publishUpdate(bay.id, bay);
+    Bays.publishUpdate(bay.id, bay);
+    next();
   },
 
   afterDestroy : function(bay, next){
     sails.sockets.blast('bays', {verb : 'destroyed', data : bay[0].id});
+    next();
   }
 };
 
