@@ -16,7 +16,7 @@ module.exports = {
       required : true
   	},
   	exp_date : {
-  		type : 'date',
+  		type : 'string',
   		required : true
   	},
   	age : {
