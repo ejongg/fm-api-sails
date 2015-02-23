@@ -8,6 +8,13 @@
 module.exports = {
 
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'delivery_id'
+    },
   	total_amount : {
   		type : 'integer',
   		required : true

@@ -7,10 +7,16 @@
 
 module.exports = {
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'sku_id'
+    },
     sku_name : {
       type : 'string',
       required :  true,
-      unique : true
     },
   	prod_id : {
       model : 'products',

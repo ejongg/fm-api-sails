@@ -7,6 +7,13 @@
 
 module.exports = {
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'bay_id'
+    },
   	pile_name : {
   		type : 'string',
   		required : true

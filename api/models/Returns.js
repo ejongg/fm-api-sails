@@ -8,6 +8,13 @@
 module.exports = {
 
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'return_id'
+    },
   	return_date : {
   		type : 'string',
   		required : true
