@@ -1,0 +1,218 @@
+
+<!-- START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Add Stock (SKU) </h1>
+    </div>
+</div>
+
+
+
+<!-- BODY -->
+
+<!-- DO NOT REMOVE-->
+<div class="container">
+
+    <!-- LEFT PANEL -->
+
+    <div class="panel panel-left col-md-4">
+        <div class="panel-body">
+            <form class="form-horizontal" name="skuForm" ng-submit="addSKU(sku)" novalidate>
+                <fieldset>
+
+                    <div class="form-group">
+                        <label for="inputProductName" class="col-md-12">
+                        Product Name</label>
+                        <div class="col-md-12">
+                          <select class="form-control" ng-model="sku.prod_name" ng-change="selectCompany(sku.prod_name)" ng-options="product.prod_name as product.prod_name for product in products">
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputFirstName" class="col-md-12">
+                        Company Name</label>
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputCompanyName" placeholder="Enter company."
+                          ng-model="sku.company">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputSize" class="col-md-12">
+                        Size</label> 
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputSize" placeholder="Enter size.">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice" class="col-md-12">
+                        Price</label> 
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price.">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputBottlePerCase" class="col-md-12">
+                        No. of Bottle/Case</label> 
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case.">
+                        </div>
+                    </div>
+
+
+                    <!-- ADD BUTTON -->
+
+                        <div class="icon-preview">
+                          <button type="submit" class="btn btn-primary pull-right btn-md" ng-disabled="skuForm.$invalid">Add</button>
+                          <br>
+                        </div>
+
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- START OF TABLE -->
+
+    <div class="panel panel-right col-md-8">
+        <div class="panel-body">
+
+        <div class="form-group">
+          <label for="select" class="col-md-2">Company Name</label>
+            <div class="col-md-5">
+                <select class="form-control" ng-model="companyFilter" ng-options="product.company as product.company for product in existingProducts">
+                </select>
+            </div>
+        </div>
+
+
+      <table class="table variantTable table-striped table-hover">
+
+              <thead>
+                  <tr>
+                      <th>Product Name&nbsp;
+            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      <th>Size&nbsp;
+            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      <th>Brand&nbsp;
+            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      <th>Price&nbsp;
+            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      <th>Bottles&nbsp;
+            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      <th>Cases&nbsp;
+            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      <th></th>
+                  </tr>
+              </thead>
+
+              <tbody>
+                  <tr>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>
+                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editStockModal" href="">Edit</button>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>Column content</td>
+                      <td>
+                       
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+    <!-- END OF TABLE -->
+    
+
+    <div class="icon-preview">
+      <a class="btn btn-primary pull-right btn-md">Add</a>
+      <br>
+    </div>
+
+
+    <!-- PRINT ICON -->
+    <br><br>
+    <div class="form-group" align="right">
+        <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a></div>
+    </div>
+    <br><br>
+
+
+</div>
+</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+
+</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+
+<!-- Edit Variants modal-->
+<!-- <div class="modal" id="editStockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Edit Stock</h4>
+            </div>
+    <div class="modal-body">
+
+    <form class="form-horizontal">
+        <fieldset>
+            <div class="form-group">
+                <label for="inputEmail" class="col-md-3 control-label">Price:</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="inputUsername" placeholder="enter username">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" class="col-md-3 control-label">Lifespan:</label>
+                <div class="col-md-9">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="enter here.">
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+    </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div> -->
+

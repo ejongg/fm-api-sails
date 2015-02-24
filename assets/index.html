@@ -1,16 +1,44 @@
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Hello World!</title>
-		<script src="js/dependencies/sails.io.js"></script>
-	</head>
-	<body>
-		<h1>Hello world!</h1>
-	</body>
+<!DOCTYPE html>
+<html lang="en" ng-app="fmApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="styles/vendors/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/vendors/material.css">
+	<link rel="stylesheet" href="styles/main.css">
+</head>
+<body ng-controller="MainCtrl">
+
+	<ui-view></ui-view>
+ 
+	<!-- Vendor's js-->
+	<script src="scripts/vendors/jquery.min.js"></script>
+	<script src="scripts/vendors/bootstrap.min.js"></script>
+	<script src="scripts/vendors/ripples.min.js"></script>
+	<script src="scripts/vendors/arrive.min.js"></script>
+	<script src="scripts/vendors/material.min.js"></script>
+	<script src="scripts/vendors/lodash.min.js"></script>
+	<script src="scripts/vendors/sails.io.js"></script>
 
 	<script>
-		io.socket.get('/users', function(response){
-			console.log(response);
-		});
-	</script>
+      $.material.init();
+    </script>
+
+   <script src="scripts/vendors/angular.min.js"></script>
+   <script src="scripts/vendors/angular-ui-router.min.js"></script>
+   <script src="scripts/vendors/ngsails.io.js"></script>
+	<script src="scripts/vendors/ngFx.min.js"></script>
+
+   <script src="scripts/app.js"></script>
+
+   <script src="scripts/controllers/login-controller.js"></script>
+   <script src="scripts/controllers/products-controller.js"></script>
+   <script src="scripts/controllers/sku-controller.js"></script>
+
+   <script src="scripts/filters/custom-filters.js"></script>
+
+   <script src="scripts/services/auth-service.js"></script>
+   <script src="scripts/services/user-service.js"></script>
+
+</body>
 </html>
