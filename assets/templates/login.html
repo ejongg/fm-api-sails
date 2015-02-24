@@ -1,0 +1,59 @@
+
+
+<div class="loginbg">
+
+
+
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4 col-md-offset-2">
+
+
+
+<div class="panel panel-login">
+
+    <div class="panel-body">
+
+      <h2> Welcome. </h2><br>
+
+          <div class="alert alert-dismissable alert-danger" ng-show="showError">
+            <button type="button" class="close" ng-click="closeError(false)">×</button>
+            <strong>{{error}}</strong>
+          </div> 
+
+        <img src="" class="img-responsive">
+         <form class="form-horizontal" name="loginForm" ng-submit="login(login)" novalidate>
+              <fieldset>
+
+                <div class="forminput">
+              
+                  <div class="form-group forminput">
+                    <input class="form-control floating-label" id="inputUsername" type="text" placeholder="Username:" ng-model="login.username" required>
+                  </div>
+
+                  <br>
+
+                  <div class="form-group forminput">
+                    <input class="form-control floating-label" id="inputPassword" type="password" placeholder="Password:" ng-model="login.password" required>
+                  </div>
+
+                  <br>
+                
+                  <div class="form-group">
+                      <div class="col-md-10 col-md-offset-2">
+                          <button type="submit" class="btn btn-primary pull-right" ng-disabled="loginForm.$invalid" >Login</button>
+                      </div>
+                  </div>
+               </div> 
+
+              </fieldset>
+          </form>
+
+    </div>
+
+  </div>
+
+</div>
+</div>
+</div>

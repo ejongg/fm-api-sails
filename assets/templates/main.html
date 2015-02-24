@@ -1,0 +1,116 @@
+
+<!-- FM MARKETING BANNER -->
+
+<div class="navbar fmbanner">
+    <div class="navbar-inner">
+        <div class="pull-right"></div>
+    </div>
+</div>
+
+<!-- NAVIGATION: TITLE/BACKGROUND HEADER -->
+
+<div class="navbar navbar-hello big-margin navbar-fixed-top">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="javascript:void(0)"></a>
+    </div>
+
+<!-- NAVIGATION: LEFT SIDE -->
+
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+
+        <ul class="nav navbar-nav navbar-left">
+
+            <li class="dropdown">
+                <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                    &nbsp; Sales &nbsp;<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a ui-sref="admin.dssr">DSSR</a></li>
+                    <li><a ui-sref="admin.purchase-overview">Purchase Overview</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                    &nbsp; Inventory &nbsp;<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a ui-sref="admin.inventory">Inventory</a></li>
+                    <li><a ui-sref="admin.products">Products</a></li>
+                </ul>
+            </li>
+
+            <li><a ui-sref="admin.accounts">Accounts</a></li>
+
+            <li class="dropdown">
+                <a href="/templates/accounts.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                    &nbsp; Others &nbsp;<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <!-- <li class="divider"></li> DIVIDER-->
+                    <li class="dropdown-header">Encoder</li>
+                    <li><a ui-sref="encoder.sku">Add Stock (SKU)</a></li>
+                    <li><a ui-sref="encoder.add-delivery">Add Delivery</a></li>
+                    <li><a ui-sref="encoder.purchases">Purchases</a></li>
+                    <li class="dropdown-header">Checker</li>
+                    <li><a ui-sref="checker.tally">Tally</a></li>
+                    <li><a ui-sref="checker.bad-order">Bad Orders</a></li>
+                    <li class="dropdown-header">Cashier</li>
+                    <li><a ui-sref="cashier.pos">POS</a></li>
+                </ul>
+            </li>
+
+        </ul>
+
+<!-- NAVIGATION: RIGHT SIDE -->
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><img src="../../images/user.png" class="user"></li>
+            <li><a>&nbsp; admin &nbsp;</a></li>
+            <li><a href="" ng-click="logout()">&nbsp; Logout &nbsp;</a></li>
+        </ul>
+
+    </div>
+
+</div>
+
+<!-- END OF NAIVGATION -->
+
+
+<!-- START OF CONTENT -->
+
+<div ui-view="mainContent"></udiv>
+
+<!-- START OF FOOTER  -->
+
+
+<!-- PA EPAL LANG | "ENDER" -->
+<div class="row clearfix">
+</div>
+
+<!-- START OF COPYRIGHT FOOTER  -->
+
+    <footer class="text-center">
+       <div class="row">
+          <div class="col-md-12">
+                <br><font color='white'>
+                123 Brookside, Imelda Village, Baguio City, Philippines 2600
+                <br>
+                Copyright &copy; FM Marketing
+                <br></font>
+             <br>
+         </div>
+     </div>
+    </footer>
+
+<!-- END OF COPYRIGHT FOOTER  -->
+
+
+</div> <!-- END FOOTER  -->
+
+
+
+
+
