@@ -21,7 +21,7 @@ module.exports = {
 						if(match){
 							return res.json({status : {code : 1, message: 'Login succesful'} , userinfo : user.toJSON(), token : Auth.issueToken(req.body.username)});
 						}else
-							return res.json({status : {code : 0, message : 'Password Incorrect'}});
+							return res.json({status : {code : 0, message : 'Passwords do not match'}});
 					});
 				}else{
 					return res.json({status : {code : 0, message: 'User not found'}});
