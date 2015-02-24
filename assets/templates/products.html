@@ -222,9 +222,10 @@
           <div class="form-group">
           <label for="select" class="col-md-2">Company Name</label>
             <div class="col-md-5">
-                <select class="form-control" ng-model="searchCompany" ng-options="product.company as product.company for product in existingCompany">
+                <select class="form-control" ng-model="searchCompany" ng-show="!noExistingProduct" ng-options="product.company as product.company for product in existingCompany">
                 <option value="">Select Company</option>
                 </select>
+                <input type="text" class="form-control empty" ng-hide="!noExistingProduct" value="No products added" disabled>
             </div>
         </div>
 

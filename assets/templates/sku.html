@@ -22,6 +22,7 @@
 
     <div class="panel panel-left col-md-4">
         <div class="panel-body">
+          <div ng-show="!noExistingProduct">
             <form class="form-horizontal" name="skuForm" ng-submit="addSKU(sku)" novalidate>
                 <fieldset>
 
@@ -29,30 +30,27 @@
                         <label for="inputProductName" class="col-md-12">
                         Product Name</label>
                         <div class="col-md-12">
-                          <select class="form-control" ng-model="sku.prod_name" ng-change="selectCompany(sku.prod_name)" ng-options="product.prod_name as product.prod_name for product in products">
+                          <select class="form-control" ng-model="sku.prod_name" ng-options="product.prod_name as product.prod_name for product in products">
                           </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputFirstName" class="col-md-12">
-                        Company Name</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputCompanyName" placeholder="Enter company."
-                          ng-model="sku.company">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSize" class="col-md-12">
                         Size</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputSize" placeholder="Enter size.">
+                        <div class="col-md-6"><input type="number" min="0" class="form-control" id="inputSize" placeholder="Enter size." ng-model="sku.size" required>
+                        </div>
+                        <div class="col-md-6">
+                          <select class="form-control" ng-model="sku.label" ng-init="sku.label = units[0]">
+                            <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
+                          </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputPrice" class="col-md-12">
                         Price</label> 
-                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price.">
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price." ng-model="sku.price" required>
                         </div>
                     </div>
 
@@ -60,7 +58,7 @@
                     <div class="form-group">
                         <label for="inputBottlePerCase" class="col-md-12">
                         No. of Bottle/Case</label> 
-                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case.">
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="sku.bottlespercase" required>
                         </div>
                     </div>
 
@@ -75,6 +73,10 @@
 
                 </fieldset>
             </form>
+          </div>
+          <div ng-hide="!noExistingProduct">
+            Add product first..
+          </div>
         </div>
     </div>
 
@@ -91,7 +93,7 @@
         <div class="form-group">
           <label for="select" class="col-md-2">Company Name</label>
             <div class="col-md-5">
-                <select class="form-control" ng-model="companyFilter" ng-options="product.company as product.company for product in existingProducts">
+                <select class="form-control" ng-model="companyFilter" ng-options="product.company as product.company for product in existingCompany">
                 </select>
             </div>
         </div>
@@ -107,16 +109,13 @@
                       <th>Size&nbsp;
             <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
             <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Brand&nbsp;
+                      <th>Company&nbsp;
             <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
             <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>Price&nbsp;
             <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
             <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>Bottles&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Cases&nbsp;
             <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
             <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th></th>

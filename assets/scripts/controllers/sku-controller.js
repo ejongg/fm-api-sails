@@ -3,40 +3,39 @@
 angular.module('fmApp')
 .controller('SKUCtrl',['$scope','$sailsSocket','_','$filter', function($scope, $sailsSocket, _,$filter){
 	$scope.products = [];
-	$scope.existingProducts = [];
+	$scope.existingCompany = [];
 	$scope.companyFilter = {};
 	$scope.sku = {};
+  $scope.units = ["L","oz"];
+  
+  $scope.noExistingProduct = false;
 
 	var getProducts = function (){  
       $sailsSocket.get('/products').success(function (data) {
       $scope.products = data;
-      // console.log($scope.products);
-      $scope.existingProducts = _.uniq($scope.products,'company');
-      //console.log($scope.existingProducts);
-      $scope.companyFilter = $scope.existingProducts[0].company;
-      $scope.sku.prod_name = $scope.products[0].prod_name;
-      //console.log($scope.sku);
-      //console.log($scope.products[0].prod_name);
-      $scope.sku.company = _.result(_.find($scope.products, function(chr) { return chr.prod_name === $scope.sku.prod_name; }), 'company');
-      console.log($scope.sku.company);
+
+      if($scope.products.length === 0){
+        $scope.noExistingProduct = true;
+      }else{
+        // console.log($scope.products);
+        $scope.existingCompany = _.uniq($scope.products,'company');
+        //console.log($scope.existingProducts);
+        $scope.companyFilter = $scope.existingCompany[0].company;
+        $scope.sku.prod_name = $scope.products[0].prod_name;
+        //console.log($scope.sku);
+        //console.log($scope.products[0].prod_name);
+      }
       }).error(function (err) {
       console.log(err);
       });
-    };
+  };
     
-    getProducts();
+  getProducts();
 
-    $scope.addSKU = function (data) {
+  $scope.addSKU = function (data) {
       console.log(data);
-    };
+  };
 
-  $scope.selectCompany = function (product){
-    $scope.sku.company = _.result(_.find($scope.products, function(chr) { return chr.prod_name === product; }), 'company');
-  }
-
-    // $scope.sku.company = $scope.sku.prod_name
-  
-   
 
     $sailsSocket.subscribe('products', function(msg){
 
