@@ -113,95 +113,6 @@
 </div>
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
-<div class="panel panel-left col-md-3" ng-show="editOrDeleteProductPane">
-    <div class="panel-body">
-
-                <!-- TAB LINKS -->
-                <div>
-                    <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <a ng-click="setEditProductTab(true)">Edit Product</a>
-                        </li>
-                        <li>
-                            <a ng-click="setEditProductTab(false)">Delete Product</a>
-                        </li>
-                    </ul>
-
-
-
-                    <!-- START TAB - OPENED TAB -->
-
-                        
-                            
-                            <legend ng-show="newProductTab"><br>Edit Product Product</legend>
-                            <legend ng-hide="newProductTab"><br>Delete Product</legend>
-
-                             <!-- START OF TABLE -->
-                            <form class="form-horizontal" name="editProductForm" ng-submit="editProduct(editOrDeleteProduct)" novalidate>
-                                <fieldset>
-                                      <div ng-show="editProductTab">
-                                        <div class="form-group">
-                                            <label for="inputProductName" class="col-md-12">Product Name</label>
-                                            <div class="col-md-12">
-                                                  <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter product name." ng-model="editOrDeleteProduct.prod_name" required>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label for="inputProductName" class="col-md-12">Company Name</label>
-                                            <div class="col-md-12">
-                                                 <input type="text" class="form-control empty" id="inputBrand" placeholder="Enter the company." ng-model="editOrDeleteProduct.company" required>
-                                            </div>
-                                        </div>
-
-                                        </div>
-                                        
-                                       
-
-                                      <div ng-hide="editProductTab">
-
-                                          
-                                        <div class="form-group">
-                                            <label for="inputProductName" class="col-md-12">Product Name</label>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter product name." ng-model="editOrDeleteProduct.prod_name" disabled>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label for="inputProductName" class="col-md-6">Company Name</label>
-                                            <div class="col-md-12">
-                                               <input type="text" class="form-control empty" id="inputBrand" placeholder="Enter the company." ng-model="editOrDeleteProduct.company" disabled>
-                                            </div>
-                                        </div>
-
-                                      </div>
-
-                                       <div ng-show="editProductTab">
-                                            <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteProducts(false)" >Cancel</button>
-                                            <button type="submit" ng-disabled="editProductForm.$invalid" class="btn btn-primary btn-xs rightalign">Edit</button>
-                                       </div>
-                                       <div ng-hide="editProductTab">
-                                           <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteProducts(false)" >Cancel</button>
-                                           <button type="button" class="btn btn-primary btn-xs rightalign" ng-click="deleteProduct(editOrDeleteProduct)">Delete</button>
-                                       </div>
-                                      
-
-                                </fieldset>
-                            </form>
-                            <!-- END OF TABLE -->
-
-
-                    </div>
-                    
-                <!-- END OPENED TAB -->
-
-</div>
-</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
-
-
 <!-- PANEL RIGHT-->
 
 
@@ -241,16 +152,27 @@
                         <th>Company&nbsp;
             <a href="" ng-show="company_rev" ng-click="company_rev = false;order('company', company_rev)"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
             <a href="" ng-hide="company_rev" ng-click="company_rev = true;order('company', company_rev)"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+            <th></th>
                     </tr>
                 </thead>
 
                 <tbody>
 
 
-          <tr ng-repeat="product in products | filter:searchAny | filter:searchCompany | range:selectedPage:pageSize" ng-click="productClicked(product)">
+          <tr ng-repeat="product in products | filter:searchAny | filter:searchCompany | range:currentPage:pageSize" >
 
-            <td>{{product.prod_name}}</td>
-            <td>{{product.company}}</td>
+            <td>
+            <div ng-hide="editIndex === $index">{{product.prod_name}}</div>
+            <div ng-show="editIndex === $index"><input type="text" ng-model="editProduct.prod_name"></div>
+            </td>
+            <td>
+            <div ng-hide="editIndex === $index">{{product.company}}</div>
+            <div ng-show="editIndex === $index"><input type="text" ng-model="editProduct.company"></div>
+            </td>
+            <td>
+                <button ng-click="productClicked(product,$index)">Edit</button>
+                <button ng-click="productClicked(product,-1)">Close</button>
+            </td>
 
           </tr>
 
@@ -263,6 +185,10 @@
                 {{$index + 1}}
             </a>
         </div>
+
+        <h4>Limit the maximum visible buttons</h4>
+    <pagination total-items="totalItems" ng-model="currentPage" items-per-page="5" class="pagination-sm" boundary-links="true"></pagination>
+
 
 
     <!-- Add product button 

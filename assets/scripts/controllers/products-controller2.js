@@ -1,17 +1,16 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('ProductsCtrl',['$scope','$sailsSocket','_','$filter', function($scope, $sailsSocket, _,$filter){
+.controller('ProductsCtrl2',['$scope','$sailsSocket','_','$filter', function($scope, $sailsSocket, _,$filter){
   $scope.addProduct = false;
   $scope.newProductTab = true;
   $scope.products = [];
   $scope.prod_rev = false;
   $scope.company_rev = false;
-  
-  $scope.editOrDeleteProductPane = false;
-  $scope.editProductTab = true;
-  $scope.editOrDeleteProduct = {};
 
+  $scope.editIndex = -1;
+  $scope.editProduct = {};
+  
   $scope.noExistingProduct = false;
 
   $scope.product = {};
@@ -21,17 +20,15 @@ angular.module('fmApp')
   $scope.existingCompanyProduct = {};
   $scope.existingCompanyProduct.prod_name = '';
   $scope.existingCompanyProduct.company = '';
-
+ 
   $scope.existingCompany = [];
 
   $scope.pageSize = 5;
-  $scope.selectedPage = 1;
+  $scope.maxSize = 5;
+  $scope.totalItems = 0;
+  $scope.currentPage = 1;
 
    var orderBy = $filter('orderBy');
-
-  $scope.selectPage = function (newPage) {
-    $scope.selectedPage = newPage;
-  }
 
   $scope.showAddProduct = function (data) {
     $scope.addProduct = data;
@@ -53,26 +50,10 @@ angular.module('fmApp')
     $scope.newProductTab = data;
   }
 
-  $scope.productClicked = function (product) {
-    $scope.editOrDeleteProduct = angular.copy(product);
-    if($scope.addProduct === true){
-      $scope.addProduct = false;
-    }
-    $scope.showEditOrDeleteProducts(true);
-  }
-
-  $scope.showEditOrDeleteProducts = function (data) {
-    $scope.editOrDeleteProductPane = data;
-    if(data === false) {
-      $scope.editOrDeleteProduct = {};
-      if($scope.editProductTab === false){
-        $scope.setEditProductTab(true);
-      }
-    }
-  }
-
-  $scope.setEditProductTab = function (data) {
-    $scope.editProductTab = data;
+  $scope.productClicked = function (product, index) {
+    console.log(index);
+    $scope.editIndex = index;
+    $scope.editProduct = angular.copy(product);
   }
 
   var clearForm =function () {
@@ -98,6 +79,7 @@ angular.module('fmApp')
     if($scope.products.length === 0) {
       $scope.noExistingProduct = true;
     }else{
+      $scope.totalItems = $scope.products.length;
       console.log($scope.products);
       $scope.existingCompany = _.uniq($scope.products,'company');
       console.log($scope.existingCompany);
@@ -176,7 +158,7 @@ angular.module('fmApp')
       console.log(err);
     });
 
-    $scope.editOrDeleteProductPane = false;
+    // $scope.editOrDeleteProductPane = false;
   }
 
   $scope.deleteProduct = function (product) {
@@ -198,8 +180,8 @@ angular.module('fmApp')
       console.log(err);
     });
 
-    $scope.editOrDeleteProductPane = false;
-    $scope.setEditProductTab(true);
+    // $scope.editOrDeleteProductPane = false;
+    // $scope.setEditProductTab(true);
   }
 
   $scope.order = function(predicate, reverse) {

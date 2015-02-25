@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fmApp', ['ui.router','sails.io','ngFx'] )
+angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
 
 .constant('serviceHost','http://localhost:1337')
 .constant('_', window._)
@@ -71,6 +71,15 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx'] )
           'mainContent': {
             templateUrl: 'templates/products.html',
             controller:'ProductsCtrl'
+          }
+        }  
+      })
+      .state('admin.products2', {
+        url:'/inventory/products2',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/products2.html',
+            controller:'ProductsCtrl2'
           }
         }  
       })
