@@ -247,7 +247,7 @@
                 <tbody>
 
 
-          <tr ng-repeat="product in products | filter:searchAny | filter:searchCompany | range:selectedPage:pageSize" ng-click="productClicked(product)">
+          <tr ng-repeat="product in products | searchFilter:searchAny | companyFilter:searchCompany | range:currentPage:pageSize" ng-click="productClicked(product)">
 
             <td>{{product.prod_name}}</td>
             <td>{{product.company}}</td>
@@ -257,12 +257,7 @@
                 </tbody>
         </table>
 
-        <div class="pull-right btn-group">
-            <a ng-repeat="product in products | pageCount:pageSize"
-               ng-click="selectPage($index + 1)" class="btn btn-default">
-                {{$index + 1}}
-            </a>
-        </div>
+         <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="5" class="pagination-sm" boundary-links="true"></pagination>
 
 
     <!-- Add product button 

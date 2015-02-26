@@ -9,7 +9,7 @@ angular.module("fmApp")
                 return [];
             } else {
                 var results = $filter("limitTo")(data.slice(start_index), size);
-                console.log(results);
+                console.log("Filter: "+ results);
                 return results;
             }
         } else {
@@ -17,17 +17,33 @@ angular.module("fmApp")
         }
     }
 })
-.filter("pageCount", function () {
-    return function (data, size) {
+.filter("companyFilter", function ($filter) {
+    return function (data,company) {
+        console.log("Data: "+ data);
+        console.log("Company: "+ company);
         if (angular.isArray(data)) {
             var result = [];
-            for (var i = 0; i < Math.ceil(data.length / size) ; i++) {
-                result.push(i);
-            }
+            result = $filter('filter')(data,company);
+            totalItem = result.length;
+            console.log(result);
+            return result;
+        } else {
+            return data;
+        }
+    }
+})
+.filter("searchFilter", function ($filter) {
+    return function (data,searchText) {
+        console.log("Data: "+ data);
+        console.log("Company: "+ searchText);
+        if (angular.isArray(data)) {
+            var result = [];
+            result = $filter('filter')(data,searchText);
+            totalItem = result.length;
+            console.log(result);
             return result;
         } else {
             return data;
         }
     }
 });
-

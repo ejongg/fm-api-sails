@@ -25,13 +25,11 @@ angular.module('fmApp')
   $scope.existingCompany = [];
 
   $scope.pageSize = 5;
-  $scope.selectedPage = 1;
+  $scope.maxSize = 5;
+  $scope.totalItems = 0;
+  $scope.currentPage = 1;
 
    var orderBy = $filter('orderBy');
-
-  $scope.selectPage = function (newPage) {
-    $scope.selectedPage = newPage;
-  }
 
   $scope.showAddProduct = function (data) {
     $scope.addProduct = data;
@@ -76,19 +74,12 @@ angular.module('fmApp')
   }
 
   var clearForm =function () {
-    if(!angular.isUndefined($scope.product.prod_name) && !angular.isUndefined($scope.product.company) ){
-      $scope.product.prod_name= "";
-      $scope.product.company="";
+    $scope.product.prod_name= "";
+    $scope.product.company="";
+    $scope.existingCompanyProduct.prod_name= "";
+    if($scope.noExistingProduct === false){
+      $scope.existingCompanyProduct.company = $scope.existingCompany[0].company;
     }
-    console.log("clearForm");
-    if(!angular.isUndefined($scope.existingCompanyProduct.prod_name) && !angular.isUndefined($scope.existingCompanyProduct.company) ){
-      $scope.existingCompanyProduct.prod_name= "";
-      if($scope.noExistingProduct === false){
-        $scope.existingCompanyProduct.company = $scope.existingCompany[0].company;
-      }
-      
-    }
-
   }
  
    var getProducts = function (){  
@@ -98,6 +89,7 @@ angular.module('fmApp')
     if($scope.products.length === 0) {
       $scope.noExistingProduct = true;
     }else{
+      $scope.totalItems = $scope.products.length;
       console.log($scope.products);
       $scope.existingCompany = _.uniq($scope.products,'company');
       console.log($scope.existingCompany);
@@ -109,23 +101,6 @@ angular.module('fmApp')
   };
   
   getProducts();
-
-   $sailsSocket.subscribe('products', function(msg){
-
-    if(msg.verb === 'created'){
-      
-      if(_.findIndex($scope.existingCompany, function(prod) { return prod.company == msg.data.company; }) === -1){
-        $scope.existingCompany.push(msg.data);
-      }
-
-      $scope.products.push(msg.data);
-
-      if($scope.noExistingProduct === true){
-        $scope.noExistingProduct = false;
-      }
-    }
-
-  });
 
   $scope.addNewProduct = function(data){
      var productInfo = {};
@@ -145,6 +120,19 @@ angular.module('fmApp')
 
     $sailsSocket.post('/products', productInfo).success(function (data) {
       console.log(data);
+
+      if(_.findIndex($scope.existingCompany, function(prod) { return prod.company == data.company; }) === -1){
+        $scope.existingCompany.push(data);
+      }
+
+      $scope.products.push(data);
+
+      if($scope.noExistingProduct === true){
+        $scope.noExistingProduct = false;
+      }
+
+      $scope.totalItems = $scope.products.length;
+      console.log($scope.totalItems);
       $scope.addProduct = false;
       clearForm();
       $scope.setNewProductTab(true);
@@ -192,7 +180,7 @@ angular.module('fmApp')
       if($scope.products.length === 0){
         $scope.noExistingProduct = true;
       }
-      
+      $scope.totalItems = $scope.products.length;
       $scope.existingCompany = _.uniq($scope.products,'company');
     }).error(function (err) {
       console.log(err);
