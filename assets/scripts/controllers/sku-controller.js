@@ -12,7 +12,8 @@ angular.module('fmApp')
   $scope.units = ["L","oz"];
   
   $scope.addSKUForm = false;
-  $scope.editSKUForm = false;
+  $scope.editOrDeleteSKUForm = false;
+  $scope.editSKUTab = true;
   
   $scope.noExistingProduct = false;
   
@@ -24,11 +25,24 @@ angular.module('fmApp')
     $scope.addSKUForm = data;
     console.log("add here");
     $scope.clearForm();
+    if($scope.editOrDeleteSKUForm === true){
+      $scope.showEditOrDeleteSkuForm(false);
+      console.log("false");
+    } 
   }
 
-  $scope.showEditSkuForm = function (data) {
-    $scope.editSKUForm = data;
+  $scope.showEditOrDeleteSkuForm = function (data) {
+    $scope.editOrDeleteSKUForm = data;
     console.log("edit here");
+    if(data === false){
+      if($scope.editSKUTab === false){
+        $scope.setEditSKUTab(true);
+      }
+    }
+  }
+
+  $scope.setEditSKUTab = function (data) {
+    $scope.editSKUTab = data;
   }
   
   /*
@@ -44,13 +58,23 @@ angular.module('fmApp')
   Open edit form and close if add sku form is open
   */
   $scope.skuClicked = function (sku) {
-    console.log(sku);
-    $scope.skuEdit = sku;
-    $scope.showEditSkuForm(true);
+    
+    var copiedSku = angular.copy(sku);
+    console.log(copiedSku);
+    copiedSku.size = copiedSku.size.split(" ");
+    console.log(copiedSku.size);
+    $scope.skuEdit.id = copiedSku.id;
+    $scope.skuEdit.sku_name = copiedSku.sku_name;
+    $scope.skuEdit.price = copiedSku.price;
+    $scope.skuEdit.bottlespercase = copiedSku.bottlespercase;
+    $scope.skuEdit.size = parseFloat(copiedSku.size[0]);
+    $scope.skuEdit.unit = copiedSku.size[1];
 
     if($scope.addSKUForm === true){
       $scope.showAddSkuForm(false);
     }
+
+    $scope.showEditOrDeleteSkuForm(true);
   }
   
   /*
@@ -90,7 +114,7 @@ angular.module('fmApp')
 
   /*
    Add SKU in the server
-    - If the success clear the form and close the form.
+    - If success clear the form and close the form.
   */
   $scope.addSKU = function (sku) {
     console.log(sku);
@@ -115,6 +139,46 @@ angular.module('fmApp')
     });
 
   };
+  
+  /*
+   Edit SKU in the server
+    - If success close the form.
+  */
+  $scope.editSKU = function (sku) {
+    console.log(sku);
+    var size = sku.size + ' ' +sku.unit;
+    var prod_id = _.result(_.find($scope.products, {'prod_name': sku.prod_name }), 'id');
+
+    var newInfo = {
+      "sku_name":sku.sku_name,
+      "size":size,
+      "price":sku.price,
+      "bottlespercase": sku.bottlespercase,
+      "prod_id": prod_id
+    }
+    console.log(newInfo);
+
+    $sailsSocket.put('/sku/' + sku.id, newInfo).success(function (data) {
+      var index = _.findIndex($scope.skuLists, function(sku) { return sku.id == data.id; });
+      $scope.skuLists[index] = data;
+      $scope.showEditOrDeleteSkuForm(false);
+    }).error(function (err) {
+      console.log(err);
+    });
+
+  };
+
+  $scope.deleteSKU = function (sku) {
+    $sailsSocket.delete('/sku/' + sku.id).success(function (data) {
+
+      var index = _.findIndex($scope.skuLists, function(skuItem) { return skuItem.id == data.id; });
+      console.log(index);
+      $scope.skuLists.splice(index,1);
+      $scope.showEditOrDeleteSkuForm(false);
+    }).error(function (err) {
+      console.log(err);
+    });
+  }
 
   /*
   Connect to socket and listen to products model

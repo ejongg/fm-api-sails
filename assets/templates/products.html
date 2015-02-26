@@ -46,6 +46,11 @@
                             <legend ng-show="newProductTab"><br>Add New Product</legend>
                             <legend ng-hide="newProductTab"><br>Add Existing Company</legend>
 
+                            <div class="alert alert-dismissable alert-danger" ng-show="hasError">
+                              <button type="button" class="close" ng-click="showError(false)">×</button>
+                              <strong>{{errorMessage}}</strong>
+                            </div> 
+
                              <!-- START OF TABLE -->
                       <div ng-show="newProductTab">
                             <form class="form-horizontal" name="addProductForm" ng-submit="addNewProduct(product)" novalidate>
