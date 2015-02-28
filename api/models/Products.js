@@ -6,8 +6,14 @@
 */
 
 module.exports = {
-
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'prod_id'
+    },
   	prod_name : {
   		type : 'string',
   		required : true,
@@ -25,14 +31,17 @@ module.exports = {
 
   afterCreate : function(product, next){
     Products.publishCreate(product);
+    next();
   },
 
   afterUpdate : function(product, next){
     Products.publishUpdate(product.id, product);
+    next();
   },
 
   afterDestroy : function(product, next){
     sails.sockets.blast('products', {verb : 'destroyed', data : product[0].id});
+    next();
   }
 };
 

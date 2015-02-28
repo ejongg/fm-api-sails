@@ -8,53 +8,68 @@
 module.exports = {
 
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'delivery_id'
+    },
   	total_amount : {
-  		type : 'float',
+  		type : 'integer',
   		required : true
   	},
   	paid_amount : {
-  		type : 'float',
+  		type : 'integer',
   		required : true
   	},
   	delivery_date : {
-  		type : 'date',
-  		required : true
-  	},
-  	order_date : {
-  		type : 'date',
+  		type : 'string',
   		required : true
   	},
   	payment_date : {
-  		type : 'date',
+  		type : 'string',
   		required : true
   	},
   	customer_id : {
-  		model : 'customer_details',
-      required : true
+  		model : 'customers',
+  		required : true
   	},
-  	return_id : {
-      
+  	returns_id : {
+  		model : 'returns',
+  		required : true
   	},
   	truck_id : {
-      model : 'trucks',
-      required : true
+  		model : 'trucks',
+  		required : true
   	},
-    products : {
-      collection : 'delivery_prods',
-      via : 'dtrans_id'
-    }
+  	order_id : {
+  		model : 'customer_orders',
+  		required : true
+  	},
+  	status : {
+  		type : 'string',
+  		required : true
+  	},
+  	user : {
+  		model : 'users',
+  		required : true
+  	}
   },
 
-  afterCreate : function(delivery, next){
-    Delivery_transactions.publishCreate(delivery);
+  afterCreate : function(delivery_transaction, next){
+    Delivery_transactions.publishCreate(delivery_transaction);
+    next();
   },
 
-  afterUpdate : function(delivery, next){
-    Delivery_transactions.publishUpdate(delivery.id, delivery);
+  afterUpdate : function(delivery_transaction, next){
+    Delivery_transactions.publishUpdate(delivery_transaction.id, delivery_transaction);
+    next();
   },
 
-  afterDestroy : function(delivery, next){
-    sails.sockets.blast('delivery_transactions', {verb : 'destroyed', data : delivery[0].id});
+  afterDestroy : function(delivery_transaction, next){
+    sails.sockets.blast('delivery_transactions', {verb : 'destroyed', data : delivery_transaction[0].id});
+    next();
   }
 };
 

@@ -8,26 +8,32 @@
 module.exports = {
 
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'return_id'
+    },
   	return_date : {
-  		type : 'date',
+  		type : 'string',
   		required : true
-  	},
-  	return_items : {
-  		collection : 'returns_details',
-  		via : 'return_id'
   	}
   },
 
   afterCreate : function(returns, next){
     Returns.publishCreate(returns);
+    next();
   },
 
   afterUpdate : function(returns, next){
     Returns.publishUpdate(returns.id, returns);
+    next();
   },
 
   afterDestroy : function(returns, next){
     sails.sockets.blast('returns', {verb : 'destroyed', data : returns[0].id});
+    next();
   }
 };
 

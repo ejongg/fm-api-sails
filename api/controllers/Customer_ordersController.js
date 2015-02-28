@@ -1,7 +1,7 @@
 /**
- * Bad_order_detailsController
+ * Customer_ordersController
  *
- * @description :: Server-side logic for managing bad_order_details
+ * @description :: Server-side logic for managing customer_orders
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 

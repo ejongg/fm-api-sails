@@ -73,14 +73,6 @@ module.exports = {
 					return res.json({message : 'User not found'});
 				}
 			});
-	},
-
-	sample : function(req, res){
-		if(req.token){
-			return res.json(req.token);
-		}else{
-			return res.json('Token not present!');
-		}
 	}
 };
 

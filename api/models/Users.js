@@ -7,8 +7,14 @@
 var bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
-
   attributes: {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'user_id'
+    },
   	username : {
   		type : "string",
   		required : true,

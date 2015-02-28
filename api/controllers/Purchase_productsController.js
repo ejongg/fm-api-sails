@@ -1,7 +1,7 @@
 /**
- * Customer_detailsController
+ * Purchase_productsController
  *
- * @description :: Server-side logic for managing customer_details
+ * @description :: Server-side logic for managing purchase_products
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 

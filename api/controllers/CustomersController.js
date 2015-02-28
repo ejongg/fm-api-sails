@@ -1,7 +1,7 @@
 /**
- * Delivery_prodsController
+ * CustomersController
  *
- * @description :: Server-side logic for managing delivery_prods
+ * @description :: Server-side logic for managing customers
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 

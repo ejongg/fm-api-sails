@@ -8,46 +8,44 @@
 module.exports = {
 
   attributes: {
-  	prod_id : {
-      model : 'products',
-      required : true
-  	},
-  	cases : {
-  		type : 'integer',
-  		required : true
-  	},
-  	bottles : {
-  		type : 'integer',
-  		required : true
-  	},
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'warehouse_trans_id'
+    },
   	customer_name : {
   		type : 'string',
   		required : true
   	},
   	date : {
-  		type : 'date',
+  		type : 'string',
   		required : true
   	},
   	return_id : {
   		model : 'returns',
-      required : true
+  		required : true
   	},
-    products : {
-      collection : 'warehouse_prods',
-      via : 'wtrans_id'
-    }
+  	user : {
+  		model : 'users',
+  		required : true
+  	}
   },
 
   afterCreate : function(warehouse_transaction, next){
     Warehouse_transactions.publishCreate(warehouse_transaction);
+    next();
   },
 
   afterUpdate : function(warehouse_transaction, next){
     Warehouse_transactions.publishUpdate(warehouse_transaction.id, warehouse_transaction);
+    next();
   },
 
-  afterDestroy : function(warehouse, next){
-    sails.sockets.blast('Warehouse_transactions', {verb : 'destroyed', data : warehouse[0].id});
+  afterDestroy : function(warehouse_transaction, next){
+    sails.sockets.blast('warehouse_transactions', {verb : 'destroyed', data : warehouse_transaction[0].id});
+    next();
   }
 };
 

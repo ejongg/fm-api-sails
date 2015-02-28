@@ -8,42 +8,48 @@
 module.exports = {
 
   attributes: {
-  	driver_name : {
+    id: {
+      type: 'integer',
+      unique: true,
+      primaryKey: true,
+      autoIncrement : true,
+      columnName: 'truck_id'
+    },
+  	driver : {
   		type : 'string',
   		required : true
   	},
-  	agent_name : {
+  	dispatcher : {
   		type : 'string',
   		required : true
   	},
-  	helper_name : {
+  	agent : {
   		type : 'string',
   		required : true
   	},
-  	dispatcher_name : {
+  	helper : {
   		type : 'string',
   		required : true
   	},
   	route : {
-		  type : 'string',
-  		required : true	
-  	},
-    deliveries : {
-      collection : 'delivery_transactions',
-      via : 'truck_id'
-    }
+  		type : 'string',
+  		required : true
+  	}
   },
 
   afterCreate : function(truck, next){
     Trucks.publishCreate(truck);
+    next();
   },
 
   afterUpdate : function(truck, next){
     Trucks.publishUpdate(truck.id, truck);
+    next();
   },
 
   afterDestroy : function(truck, next){
-    sails.sockets.blast('truck', {verb : 'destroyed', data : truck[0].id});
+    sails.sockets.blast('trucks', {verb : 'destroyed', data : truck[0].id});
+    next();
   }
 };
 

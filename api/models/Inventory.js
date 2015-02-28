@@ -6,44 +6,46 @@
 */
 
 module.exports = {
-
   attributes: {
   	bay_id : {
       model : 'bays',
       required : true
   	},
-  	prod_id : {
+  	sku_id : {
       model : 'products',
       required : true
   	},
-  	bottles : {
-  		type : 'integer',
-  		required : true
-  	},
-  	cases : {
-		type : 'integer',
-  		required : true
-  	},
   	exp_date : {
-  		type : 'date',
+  		type : 'string',
   		required : true
   	},
   	age : {
   		type : 'integer',
   		required : true
-  	}
+  	},
+    physical_count : {
+      type : 'integer',
+      required : true
+    },
+    logical_count : {
+      type : 'integer',
+      required : true
+    }
   },
 
   afterCreate : function(inventory, next){
     Inventory.publishCreate(inventory);
+    next();
   },
 
   afterUpdate : function(inventory, next){
     Inventory.publishUpdate(inventory.id, inventory);
+    next();
   },
 
   afterDestroy : function(inventory, next){
     sails.sockets.blast('inventory', {verb : 'destroyed', data : inventory[0].id});
+    next();
   }
 };
 

@@ -1,7 +1,7 @@
 /**
- * Warehouse_prodsController
+ * PurchasesController
  *
- * @description :: Server-side logic for managing warehouse_prods
+ * @description :: Server-side logic for managing purchases
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
