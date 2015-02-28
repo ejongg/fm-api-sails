@@ -17,7 +17,8 @@ module.exports = {
     },
   	establishment_name : {
   		type : 'string',
-  		required : true
+  		required : true,
+      unique : true
   	},
   	owner_name : {
   		type : 'string',
