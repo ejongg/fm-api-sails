@@ -9,7 +9,6 @@ module.exports = {
   attributes: {
   	bay_id : {
       model : 'bays',
-      required : true
   	},
   	sku_id : {
       model : 'products',
