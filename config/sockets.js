@@ -12,17 +12,17 @@
 
 module.exports.sockets = {
 
+
   /***************************************************************************
   *                                                                          *
   * This custom onDisconnect function will be run each time a socket         *
   * disconnects                                                              *
   *                                                                          *
   ***************************************************************************/
-  afterDisconnect: function(session, socket, cb) {
-
-    // By default: do nothing.
+  afterDisconnect: function (session, socket, cb) {
+    // Be sure to call the callback
     return cb();
-  },
+  }
 
 
   /***************************************************************************
