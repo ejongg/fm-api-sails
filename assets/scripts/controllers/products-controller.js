@@ -24,9 +24,6 @@ angular.module('fmApp')
 
   $scope.existingCompany = [];
 
-  $scope.errorMessage = "";
-  $scope.hasError = false;
-
   $scope.pageSize = 5;
   $scope.maxSize = 5;
   $scope.totalItems = 0;
@@ -45,17 +42,14 @@ angular.module('fmApp')
       if($scope.newProductTab === false){
         $scope.setNewProductTab(true);
       }
-      if($scope.hasError === true){
-        $scope.hasError = false;
-      }
     }
-  };
+  }
 
   $scope.setNewProductTab = function (data) {
     clearForm();
     console.log($scope.noExistingProduct);
     $scope.newProductTab = data;
-  };
+  }
 
   $scope.productClicked = function (product) {
     $scope.editOrDeleteProduct = angular.copy(product);
@@ -63,7 +57,7 @@ angular.module('fmApp')
       $scope.addProduct = false;
     }
     $scope.showEditOrDeleteProducts(true);
-  };
+  }
 
   $scope.showEditOrDeleteProducts = function (data) {
     $scope.editOrDeleteProductPane = data;
@@ -73,11 +67,11 @@ angular.module('fmApp')
         $scope.setEditProductTab(true);
       }
     }
-  };
+  }
 
   $scope.setEditProductTab = function (data) {
     $scope.editProductTab = data;
-  };
+  }
 
   var clearForm =function () {
     $scope.product.prod_name= "";
@@ -86,9 +80,9 @@ angular.module('fmApp')
     if($scope.noExistingProduct === false){
       $scope.existingCompanyProduct.company = $scope.existingCompany[0].company;
     }
-  };
-
-  var getProducts = function (){  
+  }
+ 
+   var getProducts = function (){  
     $sailsSocket.get('/products').success(function (data) {
     $scope.products = data;
     console.log($scope.products.length);  
@@ -143,27 +137,11 @@ angular.module('fmApp')
       clearForm();
       $scope.setNewProductTab(true);
     }).error(function (err) {
-      if(err.error === 'E_VALIDATION'){
-        setFormError("Name is already used.");
-        clearForm();
-      }
+      console.log(err);
     });
     // $scope.addProduct = false;
     // clearForm();
     // $scope.setNewProductTab(true);
-  };
-
-  var setFormError = function (message) {
-    $scope.errorMessage = message;
-    $scope.showError(true);
-  }
-
-  $scope.showError = function (data) {
-    if(data === true) {
-      $scope.hasError = true;
-    }else{
-      $scope.hasError = false;
-    }
   }
 
   $scope.editProduct = function (data) {
@@ -187,7 +165,7 @@ angular.module('fmApp')
     });
 
     $scope.editOrDeleteProductPane = false;
-  };
+  }
 
   $scope.deleteProduct = function (product) {
     console.log(product.id);
@@ -210,7 +188,7 @@ angular.module('fmApp')
 
     $scope.editOrDeleteProductPane = false;
     $scope.setEditProductTab(true);
-  };
+  }
 
   $scope.order = function(predicate, reverse) {
     $scope.products = orderBy($scope.products, predicate, reverse);
