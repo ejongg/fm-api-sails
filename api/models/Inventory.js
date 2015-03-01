@@ -12,7 +12,7 @@ module.exports = {
       required : true
   	},
   	sku_id : {
-      model : 'products',
+      model : 'sku',
       required : true
   	},
   	exp_date : {
@@ -21,7 +21,7 @@ module.exports = {
   	},
   	age : {
   		type : 'integer',
-  		required : true
+      defaultsTo : 0
   	},
     physical_count : {
       type : 'integer',
@@ -34,12 +34,18 @@ module.exports = {
   },
 
   afterCreate : function(inventory, next){
-    Inventory.publishCreate(inventory);
-    next();
+    Inventory.find({id : inventory.id}).populate('sku_id').populate('bay_id')
+          .exec(function(err, populated){
+            sails.sockets.blast('inventory', {verb : 'created', data : populated[0]});
+          });    
+          next();
   },
 
   afterUpdate : function(inventory, next){
-    Inventory.publishUpdate(inventory.id, inventory);
+    Inventory.find({id : inventory.id}).populate('sku_id').populate('bay_id')
+          .exec(function(err, populated){
+            sails.sockets.blast('inventory', {verb : 'updated', data : populated[0]});
+          });   
     next();
   },
 
