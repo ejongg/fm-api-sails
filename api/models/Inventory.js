@@ -38,14 +38,15 @@ module.exports = {
           .exec(function(err, populated){
             sails.sockets.blast('inventory', {verb : 'created', data : populated[0]});
           });    
-          next();
+    next();
   },
 
   afterUpdate : function(inventory, next){
     Inventory.find({id : inventory.id}).populate('sku_id').populate('bay_id')
           .exec(function(err, populated){
             sails.sockets.blast('inventory', {verb : 'updated', data : populated[0]});
-          });   
+          });
+             
     next();
   },
 
