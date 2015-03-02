@@ -37,7 +37,10 @@ module.exports = {
   },
 
   afterCreate : function(sku, next){
-    Sku.publishCreate(sku);
+    Sku.find({id : sku.id}).populate('prod_id')
+      .exec(function(err, populated){
+        sails.sockets.blast('sku', {verb : "created", data : populated[0]});  
+      });
     next();
   },
 
