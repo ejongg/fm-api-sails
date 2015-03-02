@@ -45,7 +45,10 @@ module.exports = {
   },
 
   afterUpdate : function(sku, next){
-    Sku.publishUpdate(sku.id, sku);
+    Sku.find({id : sku.id}).populate('prod_id')
+      .exec(function(err, populated){
+        sails.sockets.blast('sku', {verb : "updated", data : populated[0]});  
+      });
     next();
   },
 
