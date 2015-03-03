@@ -29,21 +29,14 @@ module.exports = {
   	},
   	status : {
   		type : 'string',
-  		required : true
+  		required : true,
+      defaultsTo : 'pending',
+      enum : ['pending', 'delivered']
   	},
   	user : {
   		type : 'string',
   		required : true
-  	},
-  	products : {
-  		collection : 'customer_order_products',
-  		via : 'order_id'
   	}
-  },
-
-  afterCreate : function(customer_order, next){
-    Customer_orders.publishCreate(customer_order);
-    next();
   },
 
   afterUpdate : function(customer_order, next){
