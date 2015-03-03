@@ -22,11 +22,6 @@ module.exports = {
   	}
   },
 
-  afterCreate : function(order_product, next){
-    Customer_order_products.publishCreate(order_product);
-    next();
-  },
-
   afterUpdate : function(order_product, next){
     Customer_order_products.publishUpdate(order_product.id, order_product);
     next();
