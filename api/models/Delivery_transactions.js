@@ -49,7 +49,8 @@ module.exports = {
   	},
   	status : {
   		type : 'string',
-  		required : true
+  		required : true,
+      defaultsTo : 'pending'
   	},
   	user : {
   		model : 'users',
