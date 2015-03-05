@@ -38,7 +38,6 @@ module.exports = {
           .exec(function(err, populated){
             sails.sockets.blast('inventory', {verb : 'created', data : populated[0]});
           });    
-    next();
   },
 
   afterUpdate : function(inventory, next){
@@ -46,13 +45,10 @@ module.exports = {
           .exec(function(err, populated){
             sails.sockets.blast('inventory', {verb : 'updated', data : populated[0]});
           });
-             
-    next();
   },
 
   afterDestroy : function(inventory, next){
     sails.sockets.blast('inventory', {verb : 'destroyed', data : inventory[0].id});
-    next();
   }
 };
 
