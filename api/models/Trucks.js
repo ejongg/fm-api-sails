@@ -34,7 +34,13 @@ module.exports = {
   	route : {
   		type : 'string',
   		required : true
-  	}
+  	},
+    carry_weight : {
+      type : 'integer'
+    },
+    current_load_weight : {
+      type : 'integer'
+    }
   },
 
   afterCreate : function(truck, next){
