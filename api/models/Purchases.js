@@ -25,7 +25,7 @@ module.exports = {
   		required : true
   	},
     user : {
-      model : 'users',
+      type : 'string',
       required : true
     },
     products : {
