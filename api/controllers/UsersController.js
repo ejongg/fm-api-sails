@@ -28,21 +28,7 @@ module.exports = {
 				}
 			});
 	},
-
-	logout : function(req, res){
-		Users.findOneByUsername(req.token)
-			.exec(function(err, user){
-				if(err)
-					return res.json({status :{code : 0, message : 'DB error'}});
-
-				if(user){
-					return res.json({status :{code : 1,  message : 'logout succesful'}});
-				}else{
-					return res.json({status :{code : 0,  message : 'User not found'}});
-				}
-			});
-	},
-
+	
 	changepassword : function(req, res){
 		var password = req.body.password;
 
