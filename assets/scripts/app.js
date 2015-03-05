@@ -37,7 +37,8 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
         url:'/accounts',
         views: {
           'mainContent': {
-            templateUrl: 'templates/accounts.html'
+            templateUrl: 'templates/accounts.html',
+            controller: 'AccountsCtrl'
           }
         }  
       })
@@ -61,7 +62,8 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
         url:'/inventory',
         views: {
           'mainContent': {
-            templateUrl: 'templates/inventory.html'
+            templateUrl: 'templates/inventory.html',
+            controller:'InventoryCtrl'
           }
         }  
       })
@@ -71,6 +73,24 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
           'mainContent': {
             templateUrl: 'templates/products.html',
             controller:'ProductsCtrl'
+          }
+        }  
+      })
+      .state('admin.customers', {
+        url:'/customers',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/customers.html',
+            controller:'CustomersCtrl'
+          }
+        }  
+      })
+      .state('admin.bays', {
+        url:'/bays',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/bays.html',
+            controller:'BaysCtrl'
           }
         }  
       })
@@ -110,10 +130,11 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
         }  
       })
       .state('encoder.purchases', {
-        url:'/inventory',
+        url:'/inventory/purchases',
         views: {
           'mainContent': {
-            templateUrl: 'templates/purchases.html'
+            templateUrl: 'templates/purchases.html',
+            controller:'PurchasesCtrl'
           }
         }  
       })

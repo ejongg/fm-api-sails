@@ -19,12 +19,9 @@ angular.module("fmApp")
 })
 .filter("companyFilter", function ($filter) {
     return function (data,company) {
-        console.log("Data: "+ data);
-        console.log("Company: "+ company);
         if (angular.isArray(data)) {
             var result = [];
             result = $filter('filter')(data,company);
-            totalItem = result.length;
             console.log(result);
             return result;
         } else {
@@ -34,12 +31,9 @@ angular.module("fmApp")
 })
 .filter("searchFilter", function ($filter) {
     return function (data,searchText) {
-        console.log("Data: "+ data);
-        console.log("Company: "+ searchText);
         if (angular.isArray(data)) {
             var result = [];
             result = $filter('filter')(data,searchText);
-            totalItem = result.length;
             console.log(result);
             return result;
         } else {

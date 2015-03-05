@@ -1,0 +1,215 @@
+<!-- START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Customers </h1>
+    </div>
+
+</div>
+
+
+
+<!-- BODY -->
+
+<!-- DO NOT REMOVE-->
+<div class="container">
+
+    <!-- LEFT PANEL -->
+    <div class="panel panel-left col-md-3" ng-show="addCustomerForm">
+        <div class="panel-body">
+            <form class="form-horizontal" name="customerForm" ng-submit="addCustomer(customer)" novalidate>
+                <fieldset>
+
+                    <div class="form-group">
+                        <label for="inputEstablishmentName" class="col-md-2 control-label">Establisment Name</label>  
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="customer.establishment_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputOwnerName" class="col-md-2 control-label">Owner Name</label>
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputOwnerName" placeholder="Enter owner name."
+                        ng-model="customer.owner_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-2 control-label">Address</label>
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputAddress" placeholder="Enter address."
+                        ng-model="customer.address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-3">Distance Rating</label>
+                        <div class="col-md-12">
+                            <select class="form-control" id="selectType" ng-model="customer.distance_rating" ng-init="customer.distance_rating = distanceRatings[0]">
+                                <option ng-repeat="distanceRating in distanceRatings" value="{{distanceRating}}">{{distanceRating}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group rightalign">
+                        <button type="submit" class="btn btn-primary" ng-disabled="customerForm.$invalid">Add</button>
+                        <button type="button" class="btn btn-default" ng-click="showAddCustomerForm(false)">Cancel</button> 
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="panel panel-left col-md-4" ng-show="editOrDeleteCustomerForm">
+
+        <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <a ng-click="setEditCustomerTab(true)">Edit Customer</a>
+                        </li>
+                        <li>
+                            <a ng-click="setEditCustomerTab(false)">Delete Customer</a>
+                        </li>
+                    </ul>
+
+        <div class="panel-body" ng-show="editCustomerTab">
+          <legend>EDIT BAY</legend>
+          <form class="form-horizontal" name="editCustomerForm" ng-submit="editCustomer(customerEdit)" novalidate>
+                <fieldset>
+
+                    <div class="form-group">
+                        <label for="inputEstablishmentName" class="col-md-2 control-label">Establisment Name</label>  
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="customerEdit.establishment_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputOwnerName" class="col-md-2 control-label">Owner Name</label>
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputOwnerName" placeholder="Enter owner name."
+                        ng-model="customerEdit.owner_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-2 control-label">Address</label>
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputAddress" placeholder="Enter address."
+                        ng-model="customerEdit.address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-3">Distance Rating</label>
+                        <div class="col-md-12">
+                            <select class="form-control" id="selectType" ng-model="customerEdit.distance_rating" ng-init="customer.distance_rating = distanceRatings[0]">
+                                <option ng-repeat="distanceRating in distanceRatings" value="{{distanceRating}}">{{distanceRating}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group rightalign">
+                        <button type="submit" class="btn btn-primary" ng-disabled="editCustomerForm.$invalid">Edit</button>
+                        <button type="button" class="btn btn-default" ng-click="showEditOrDeleteCustomerForm(false)">Cancel</button> 
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="panel-body" ng-hide="editCustomerTab">
+          <legend>DELETE BAY</legend>
+          <form class="form-horizontal" name="deleteCustomerForm" ng-submit="deleteCustomer(customerDelete)" novalidate>
+                <fieldset>
+                   
+                   <div class="form-group">
+                        <label for="inputEstablishmentName" class="col-md-2 control-label">Establisment Name</label>  
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="customerDelete.establishment_name" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputOwnerName" class="col-md-2 control-label">Owner Name</label>
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputOwnerName" placeholder="Enter owner name."
+                        ng-model="customerDelete.owner_name" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-2 control-label">Address</label>
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputAddress" placeholder="Enter address."
+                        ng-model="customerDelete.address" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-3">Distance Rating</label>
+                        <div class="col-md-12">
+                            <select class="form-control" id="selectType" ng-model="customerDelete.distance_rating" ng-init="customer.distance_rating = distanceRatings[0]" disabled>
+                                <option ng-repeat="distanceRating in distanceRatings" value="{{distanceRating}}">{{distanceRating}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group rightalign">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <button type="button" class="btn btn-default" ng-click="showEditOrDeleteUserForm(false)">Cancel</button> 
+                    </div>
+                </fieldset>
+            </form>   
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <div class="panel panel-right col-md-8">
+        <form class="navbar-form navbar-left">
+                <input type="text" class="form-control" placeholder="Search by:">
+            </form>
+        <div class="panel-body">
+
+    <!-- START OF TABLE -->           
+
+            <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>Establishment Name</th>
+                        <th>Owner Name</th>
+                        <th>Address</th>
+                        <th>Distance Rating</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="customer in customers" ng-click="customerClicked(customer)">
+                        <td>{{customer.establishment_name}}</td>
+                        <td>{{customer.owner_name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.distance_rating}}</td>
+                    </tr>
+
+                    <!-- DON'T REMOVE CODE BELOW -->
+
+                </tbody>
+            </table>
+
+            <div class="icon-preview">
+              <a class="btn btn-primary pull-right btn-md" ng-click="showAddCustomerForm(true)">Add</a>
+            <br>
+            </div>
+        </div>
+
+    <!-- END OF TABLE -->
+    
+
+    <!-- PRINT ICON -->
+    <br><br>
+    <div class="form-group" align="right">
+        <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a></div>
+    </div>
+    <br><br>
+
+
+</div>
+</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+
+</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->

@@ -42,7 +42,7 @@
                         <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" id="inputSize" placeholder="Enter size." ng-model="sku.size" required>
                         </div>
                         <div class="col-md-6">
-                          <select class="form-control" ng-model="sku.unit" ng-init="sku.unit= units[0]">
+                          <select class="form-control" ng-model="sku.unit" ng-init="sku.unit = units[0]">
                             <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
                           </select>
                         </div>
@@ -85,17 +85,28 @@
         </div>
     </div>
 
-    <div class="panel panel-left col-md-4" ng-show="editSKUForm">
-        <div class="panel-body">
+    <div class="panel panel-left col-md-4" ng-show="editOrDeleteSKUForm">
+
+        <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <a ng-click="setEditSKUTab(true)">Edit SKU</a>
+                        </li>
+                        <li>
+                            <a ng-click="setEditSKUTab(false)">Delete SKU</a>
+                        </li>
+                    </ul>
+
+        <div class="panel-body" ng-show="editSKUTab">
             <legend>EDIT SKU</legend>
-            <form class="form-horizontal" name="editskuForm" ng-submit="editSKU(sku)" novalidate>
+            <form class="form-horizontal" name="editskuForm" ng-submit="editSKU(skuEdit)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
                         <label for="inputProductName" class="col-md-12">
                         Product Name</label>
                         <div class="col-md-12">
-                          <input type="text" class="form-control" id="inputPrice" placeholder="Enter price." ng-model="skuEdit.sku_name" required>
+                          <select class="form-control" ng-model="skuEdit.sku_name" ng-options="product.prod_name as product.prod_name for product in products">
+                          </select>
                         </div>
                     </div>
 
@@ -105,7 +116,7 @@
                         <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" id="inputSize" placeholder="Enter size." ng-model="skuEdit.size" required>
                         </div>
                         <div class="col-md-6">
-                          <select class="form-control" ng-model="skuEdit.unit" ng-init="skuEdit.unit= units[0]">
+                          <select class="form-control" ng-model="skuEdit.unit">
                             <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
                           </select>
                         </div>
@@ -130,8 +141,63 @@
                     <!-- ADD BUTTON -->
 
                         <div class="icon-preview">
-                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditSkuForm(false)" >Cancel</button>
-                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="editskuForm.$invalid">Add</button>
+                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteSkuForm(false)" >Cancel</button>
+                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="editskuForm.$invalid">Edit</button>
+
+                          <br>
+                        </div>
+
+
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="panel-body" ng-hide="editSKUTab">
+            <legend>DELETE SKU</legend>
+            <form class="form-horizontal" name="deleteskuForm" ng-submit="deleteSKU(skuDelete)" novalidate>
+                <fieldset>
+
+                    <div class="form-group">
+                        <label for="inputProductName" class="col-md-12">
+                        Product Name</label>
+                        <div class="col-md-12">
+                          <input type="text" class="form-control" id="inputPrice" placeholder="Enter price." ng-model="skuDelete.sku_name" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputSize" class="col-md-12">
+                        Size</label> 
+                        <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" id="inputSize" placeholder="Enter size." ng-model="skuDelete.size" disabled>
+                        </div>
+                        <div class="col-md-6">
+                          <select class="form-control" ng-model="skuDelete.unit" disabled>
+                            <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice" class="col-md-12">
+                        Price</label> 
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price." ng-model="skuDelete.price"disabled>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputBottlePerCase" class="col-md-12">
+                        No. of Bottle/Case</label> 
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="skuDelete.bottlespercase" disabled>
+                        </div>
+                    </div>
+
+
+                    <!-- ADD BUTTON -->
+
+                        <div class="icon-preview">
+                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteSkuForm(false)" >Cancel</button>
+                          <button type="submit" class="btn btn-primary btn-xs pull-right">Delete</button>
 
                           <br>
                         </div>
