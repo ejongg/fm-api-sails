@@ -32,6 +32,10 @@ module.exports = {
       collection : 'purchase_products',
       via : 'purchase_id'
     }
+  },
+
+  afterCreate : function(purchase, next){
+    sails.sockets.blast('purchases', {verb : 'created', data : purchase});
   }
 };
 
