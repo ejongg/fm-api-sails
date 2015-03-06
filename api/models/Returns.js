@@ -23,17 +23,14 @@ module.exports = {
 
   afterCreate : function(returns, next){
     Returns.publishCreate(returns);
-    next();
   },
 
   afterUpdate : function(returns, next){
     Returns.publishUpdate(returns.id, returns);
-    next();
   },
 
   afterDestroy : function(returns, next){
     sails.sockets.blast('returns', {verb : 'destroyed', data : returns[0].id});
-    next();
   }
 };
 

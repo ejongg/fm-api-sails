@@ -26,17 +26,14 @@ module.exports = {
 
   afterCreate : function(warehouse_product, next){
     Warehouse_products.publishCreate(warehouse_product);
-    next();
   },
 
   afterUpdate : function(warehouse_product, next){
     Warehouse_products.publishUpdate(warehouse_product.id, warehouse_product);
-    next();
   },
 
   afterDestroy : function(warehouse_product, next){
     sails.sockets.blast('warehouse_products', {verb : 'destroyed', data : warehouse_product[0].id});
-    next();
   }
 };
 

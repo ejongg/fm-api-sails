@@ -24,12 +24,10 @@ module.exports = {
 
   afterUpdate : function(order_product, next){
     Customer_order_products.publishUpdate(order_product.id, order_product);
-    next();
   },
 
   afterDestroy : function(order_product, next){
     sails.sockets.blast('order_products', {verb : 'destroyed', data : order_product[0].id});
-    next();
   }
 };
 

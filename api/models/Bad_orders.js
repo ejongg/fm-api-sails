@@ -31,17 +31,15 @@ module.exports = {
 
   afterCreate : function(bad_order, next){
     Bad_orders.publishCreate(bad_order);
-    next();
+
   },
 
   afterUpdate : function(bad_order, next){
     Bad_orders.publishUpdate(bad_order.id, bad_order);
-    next();
   },
 
   afterDestroy : function(bad_order, next){
     sails.sockets.blast('bad_orders', {verb : 'destroyed', data : bad_order[0].id});
-    next();
   }
 };
 

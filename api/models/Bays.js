@@ -26,17 +26,14 @@ module.exports = {
 
   afterCreate : function(bay, next){
     Bays.publishCreate(bay);
-    next();
   },
 
   afterUpdate : function(bay, next){
     Bays.publishUpdate(bay.id, bay);
-    next();
   },
 
   afterDestroy : function(bay, next){
     sails.sockets.blast('bays', {verb : 'destroyed', data : bay[0].id});
-    next();
   }
 };
 

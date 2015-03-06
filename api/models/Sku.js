@@ -41,7 +41,6 @@ module.exports = {
       .exec(function(err, populated){
         sails.sockets.blast('sku', {verb : "created", data : populated[0]});  
       });
-    next();
   },
 
   afterUpdate : function(sku, next){
@@ -49,12 +48,10 @@ module.exports = {
       .exec(function(err, populated){
         sails.sockets.blast('sku', {verb : "updated", data : populated[0]});  
       });
-    next();
   },
 
   afterDestroy : function(sku, next){
     sails.sockets.blast('sku', {verb : 'destroyed', data : sku[0].id});
-    next();
   }
 };
 

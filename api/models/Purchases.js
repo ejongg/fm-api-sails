@@ -36,6 +36,14 @@ module.exports = {
 
   afterCreate : function(purchase, next){
     sails.sockets.blast('purchases', {verb : 'created', data : purchase});
+  },
+
+  afterUpdate : function(purchase, next){
+    sails.sockets.blast('purchases', {verb : 'updated', data : purchase});
+  },
+
+  afterDestroy : function(purchase, next){
+    sails.sockets.blast('purchases', {verb : 'destroyed', data : purchase[0].id});
   }
 };
 

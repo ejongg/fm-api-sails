@@ -39,17 +39,15 @@ module.exports = {
 
   afterCreate : function(customer, next){
     Customers.publishCreate(customer);
-    next();
   },
 
   afterUpdate : function(customer, next){
     Customers.publishUpdate(customer.id, customer);
-    next();
   },
 
   afterDestroy : function(customer, next){
     sails.sockets.blast('customers', {verb : 'destroyed', data : customer[0].id});
-    next();
+
   }
 };
 

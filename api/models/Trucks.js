@@ -45,17 +45,14 @@ module.exports = {
 
   afterCreate : function(truck, next){
     Trucks.publishCreate(truck);
-    next();
   },
 
   afterUpdate : function(truck, next){
     Trucks.publishUpdate(truck.id, truck);
-    next();
   },
 
   afterDestroy : function(truck, next){
     sails.sockets.blast('trucks', {verb : 'destroyed', data : truck[0].id});
-    next();
   }
 };
 
