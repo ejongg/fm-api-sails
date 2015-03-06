@@ -60,17 +60,14 @@ module.exports = {
 
   afterCreate : function(delivery_transaction, next){
     Delivery_transactions.publishCreate(delivery_transaction);
-    next();
   },
 
   afterUpdate : function(delivery_transaction, next){
     Delivery_transactions.publishUpdate(delivery_transaction.id, delivery_transaction);
-    next();
   },
 
   afterDestroy : function(delivery_transaction, next){
     sails.sockets.blast('delivery_transactions', {verb : 'destroyed', data : delivery_transaction[0].id});
-    next();
   }
 };
 
