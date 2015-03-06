@@ -71,11 +71,8 @@ module.exports = {
 						*/
 						Customer_orders.findOne({id : new_cust_order.id}).populate('customer_id')
 							.exec(function(err, populated_cust_order){
-								var data = {
-									verb : 'created', 
-									data: populated_cust_order
-								};
-								sails.sockets.blast('customer_orders', {verb : 'created', data : data});
+
+								sails.sockets.blast('customer_orders', {verb : 'created', data : populated_cust_order});
 							});
 					});
 			});
