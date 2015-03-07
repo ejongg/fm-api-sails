@@ -22,14 +22,6 @@ module.exports = {
   	}
   },
 
-  afterCreate : function(purchase_products, next){
-    sails.sockets.blast('purchase_products', {verb : 'created', data : purchase_products});
-  },
-
-  afterUpdate : function(purchase_products, next){
-    sails.sockets.blast('purchase_products', {verb : 'updated', data : purchase_products});
-  },
-
   afterDestroy : function(purchase_products, next){
     sails.sockets.blast('purchase_products', {verb : 'destroyed', data : purchase_products[0].id});
   }
