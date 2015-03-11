@@ -17,15 +17,13 @@ module.exports = {
   		required : true
   	},
   	bottles : {
-  		type : 'integer'
+  		type : 'integer',
+      defaultsTo : 0
   	},
   	cases : {
-  		type : 'integer'
+  		type : 'integer',
+      defaultsTo : 0
   	}
-  },
-
-  afterCreate : function(warehouse_product, next){
-    Warehouse_products.publishCreate(warehouse_product);
   },
 
   afterUpdate : function(warehouse_product, next){
