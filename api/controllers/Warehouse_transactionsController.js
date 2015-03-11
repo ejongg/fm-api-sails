@@ -95,17 +95,22 @@ module.exports = {
 										do {
 											var current_sku_count = skus[index].physical_count;
 
-											skus[index].physical_count = Math.max(0, skus[index].physical_count - cases_sold);
-											skus[index].logical_count = Math.max(0, skus[index].logical_count - cases_sold);
-											skus[index].save(function(err, saved){});
+											if(current_sku_count > 0){
+												skus[index].physical_count = Math.max(0, skus[index].physical_count - cases_sold);
+												skus[index].logical_count = Math.max(0, skus[index].logical_count - cases_sold);
+												skus[index].save(function(err, saved){});
 
-											if(cases_sold < skus[index].physical_count){
-												cases_sold = 0;
+												if(cases_sold < skus[index].physical_count){
+													cases_sold = 0;
+												}else{
+													cases_sold = cases_sold - current_sku_count;
+													index++;
+												}
 											}else{
-												cases_sold = cases_sold - current_sku_count;
 												index++;
 											}
-										}while(cases_sold != 0);
+											
+										}while(cases_sold > 0);
 									});
 							}).value();
 						});
