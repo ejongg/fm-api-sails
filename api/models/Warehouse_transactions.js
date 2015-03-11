@@ -27,14 +27,14 @@ module.exports = {
   		model : 'returns',
   		required : true
   	},
+    total_amount : {
+      type : 'float',
+      required : true
+    },
   	user : {
-  		model : 'users',
+  		type : 'string',
   		required : true
   	}
-  },
-
-  afterCreate : function(warehouse_transaction, next){
-    Warehouse_transactions.publishCreate(warehouse_transaction);
   },
 
   afterUpdate : function(warehouse_transaction, next){
