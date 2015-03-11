@@ -20,8 +20,7 @@ module.exports = {
   		required : true
   	},
   	paid_amount : {
-  		type : 'integer',
-  		required : true
+  		type : 'integer'
   	},
   	delivery_date : {
   		type : 'string',
@@ -29,7 +28,6 @@ module.exports = {
   	},
   	payment_date : {
   		type : 'string',
-  		required : true
   	},
   	customer_id : {
   		model : 'customers',
