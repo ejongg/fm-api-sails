@@ -32,6 +32,10 @@ module.exports.policies = {
     login : 'alreadyLoggedIn', 
 
     create : 'disableTokenAuth'
+  },
+
+  Warehouse_transactionsController : {
+    add : 'whtransValidityCheck'
   }
 
   /***************************************************************************
