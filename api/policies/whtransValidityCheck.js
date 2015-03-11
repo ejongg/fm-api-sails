@@ -59,7 +59,6 @@ module.exports = function(req, res, next){
 			}
 			
 		}else{
-			req.result = false;
 			return res.json({message : 'Insufficient stocks in warehouse', data : notAvailableProducts});
 		}
 
