@@ -113,6 +113,7 @@ module.exports = {
 										}while(cases_sold > 0);
 
 										sails.sockets.blast('warehouse_transactions', {verb : 'created', data : created_transaction});
+										return res.json({message : 'Transaction completed'});
 									});
 							}).value();
 						});
