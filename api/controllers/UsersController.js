@@ -19,7 +19,7 @@ module.exports = {
 							return res.json({status : {code : 0, message : 'Server error'}});
 
 						if(match){
-							return res.json({status : {code : 1, message: 'Login succesful'} , userinfo : user.toJSON(), token : Auth.issueToken(req.body.username)});
+							return res.json({status : {code : 1, message: 'Login succesful'} , userinfo : user, token : Auth.issueToken(req.body.username)});
 						}else
 							return res.json({status : {code : 0, message : 'Passwords do not match'}});
 					});
