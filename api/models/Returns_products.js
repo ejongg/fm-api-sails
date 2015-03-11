@@ -18,26 +18,16 @@ module.exports = {
   	},
   	bottles : {
   		type : 'integer',
+      defaultsTo : 0
   	},
   	cases : {
-  		type : 'integer'
+  		type : 'integer',
+      defaultsTo : 0
   	},
   	deposit : {
   		type : 'float',
   		required : true
   	}
-  },
-
-  afterCreate : function(return_detail, next){
-    Return_details.publishCreate(return_detail);
-  },
-
-  afterUpdate : function(return_detail, next){
-    Return_details.publishUpdate(return_detail.id, return_detail);
-  },
-
-  afterDestroy : function(return_detail, next){
-    sails.sockets.blast('return_details', {verb : 'destroyed', data : return_detail[0].id});
   }
 };
 
