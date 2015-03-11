@@ -15,14 +15,17 @@ angular.module('fmApp')
 	$scope.editUserTab = true;
 
 	var getUsers = function () {
-      $sailsSocket.get('/users').success(function (data) {
-      $scope.users = data;
-      }).error(function (err) {
-      console.log(err);
-      });
+    io.socket.request($scope.socketOptions('get','/users'), function (body, JWR) {
+      console.log('Sails responded with get user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.users = body;
+        $scope.$digest();
+      }
+    });
 	};
 
-    getUsers();
+  getUsers();
 
 	$scope.showAddUserForm = function (data) {
       $scope.addUserForm = data;
@@ -80,15 +83,13 @@ angular.module('fmApp')
     }; 
 
 	$scope.addUser = function (user) {
-      console.log(user);
-      $sailsSocket.post('/users', user).success(function (data) {
-      console.log(data);
-      $scope.users.push(data);
-      $scope.showAddUserForm(false);
-      clearForm();
-      }).error(function (err) {
-      console.log(err);
-      });
+    io.socket.request($scope.socketOptions('post','/users',{},user), function (body, JWR) {
+      console.log('Sails responded with post user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 201){
+      
+      }
+    });   
 	}; 
 
 	$scope.editUser = function (newInfo) {
@@ -103,12 +104,38 @@ angular.module('fmApp')
 	};
 
 	$scope.deleteUser = function (user) {
-      $sailsSocket.delete('/users/' + user.id).success(function (data) {
-        var index = _.findIndex($scope.users, function(user) { return user.id == data.id; });
+    io.socket.request($scope.socketOptions('delete','/users/' + user.id,{}), function (body, JWR) {
+      console.log('Sails responded with delete user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        
+      }
+    }); 
+	};
+
+  io.socket.on('users', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("User Created");
+        $scope.users.push(msg.data);
+        $scope.showAddUserForm(false);
+        clearForm()
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("User Deleted");
+        console.log($scope.users);
+        var index = _.findIndex($scope.users,{'id': msg.data.id});
         $scope.users.splice(index,1);
         $scope.showEditOrDeleteUserForm(false);
-      }).error(function (err) {
-        console.log(err);
-      });
-	};
+        $scope.$digest();
+    }
+
+  });
+
+
 }]);

@@ -65,9 +65,9 @@ angular.module('fmApp')
   Clear form inputs
   */
   var clearForm = function () {
-    $scope.sku.size = '';
-    $scope.sku.price = '';
-    $scope.sku.bottlespercase= '';
+    $scope.sku.size = null ;
+    $scope.sku.price = null;
+    $scope.sku.bottlespercase= null;
     $scope.sku.prod_name = $scope.products[0].prod_name;
     $scope.sku.unit = $scope.units[0];
   }

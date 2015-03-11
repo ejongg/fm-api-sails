@@ -42,14 +42,6 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
           }
         }  
       })
-      .state('admin.purchase-overview', {
-        url:'/sales/purchase-overview',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/purchase-overview.html'
-          }
-        }  
-      })
       .state('admin.dssr', {
         url:'/sales/dssr',
         views: {
@@ -94,6 +86,15 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
           }
         }  
       })
+      .state('admin.trucks', {
+        url:'/trucks',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/trucks.html',
+            controller:'TrucksCtrl'
+          }
+        }  
+      })
       .state('admin.products2', {
         url:'/inventory/products2',
         views: {
@@ -121,20 +122,29 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
           }
         }  
       })
-      .state('encoder.add-delivery', {
-        url:'/sales/add-delivery',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/add-delivery.html'
-          }
-        }  
-      })
       .state('encoder.purchases', {
         url:'/inventory/purchases',
         views: {
           'mainContent': {
             templateUrl: 'templates/purchases.html',
             controller:'PurchasesCtrl'
+          }
+        }  
+      })
+      .state('encoder.orders', {
+        url:'/orders',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/orders.html',
+            controller:'OrdersCtrl'
+          }
+        }  
+      })
+      .state('encoder.bad-order', {
+        url:'/bad-order',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/bad-order.html'
           }
         }  
       })
@@ -170,14 +180,6 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
         views: {
           'mainContent': {
             templateUrl: 'templates/tally.html'
-          }
-        }  
-      })
-      .state('checker.bad-order', {
-        url:'/bad-order',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/bad-order.html'
           }
         }  
       })
@@ -233,6 +235,16 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
   $scope.logout = function () {
     authService.logout();
     $state.go('login');
-  } 
+  };
+
+  $scope.socketOptions = function (method,url,headers,params) {
+    return {
+      method: method,
+      url: url,
+      headers: headers,
+      params: params
+    };
+  };
+
 }]);
 
