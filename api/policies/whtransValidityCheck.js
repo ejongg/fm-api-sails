@@ -52,7 +52,12 @@ module.exports = function(req, res, next){
 		*	is ok then proceed with the transaction
 		*/
 		if(notAvailableProducts.length == 0){
-			req.result = true;
+			if(products.length == 0){
+				res.json({message : 'Invalid! No products sent.'});
+			}else{
+				req.result = true;
+			}
+			
 		}else{
 			req.result = false;
 			return res.json({message : 'Insufficient stocks in warehouse', data : notAvailableProducts});
