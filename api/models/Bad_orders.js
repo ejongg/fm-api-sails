@@ -29,11 +29,6 @@ module.exports = {
     }
   },
 
-  afterCreate : function(bad_order, next){
-    Bad_orders.publishCreate(bad_order);
-
-  },
-
   afterUpdate : function(bad_order, next){
     Bad_orders.publishUpdate(bad_order.id, bad_order);
   },
