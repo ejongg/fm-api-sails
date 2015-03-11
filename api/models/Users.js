@@ -41,12 +41,7 @@ module.exports = {
     status : {
       type : 'string',
       defaultsTo : 'active'
-    },
-    toJSON: function() {
-            user = this.toObject()
-            delete user.password
-            return user
-        }
+    }
   },
 
   beforeCreate : function(user, next){
