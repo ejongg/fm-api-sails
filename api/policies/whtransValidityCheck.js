@@ -37,7 +37,7 @@ module.exports = function(req, res, next){
 				* If the product is not found in the inventory send an error message.
 				*/
 				}else{
-					return res.json({message : product.sku_name + ' not found in inventory'});
+					return res.json({code : 0, message : product.sku_name + ' not found in inventory'});
 					cb();
 				}
 			});
@@ -53,12 +53,12 @@ module.exports = function(req, res, next){
 		*/
 		if(notAvailableProducts.length == 0){
 			if(products.length == 0){
-				res.json({message : 'Invalid! No products sent.'});
+				res.json({code : 0, message : 'Invalid! No products sent.'});
 			}else{
 				req.result = true;
 			}
 		}else{
-			return res.json({message : 'Insufficient stocks in warehouse', data : notAvailableProducts});
+			return res.json({code : 0, message : 'Insufficient stocks in warehouse', data : notAvailableProducts});
 		}
 
 		next();
