@@ -38,6 +38,8 @@ module.exports = {
 
 					Purchase_products.create(productToBeCreated)
 						.exec(function(err, newProduct){
+							if(err)
+								console.log(err);
 
 							/**
 							*	NOTE: The exp_date attr here is just temporary
@@ -62,6 +64,9 @@ module.exports = {
 							*/
 							Inventory.findOne({sku_id : item.sku_id, exp_date : item.exp_date})
 								.exec(function(err, found){
+									if(err)
+										console.log(err);
+
 									if(found){
 										var p_count = found.physical_count = found.physical_count + parseInt(prod.cases, 10);
 										var l_count = found.logical_count = found.logical_count + parseInt(prod.cases, 10);
