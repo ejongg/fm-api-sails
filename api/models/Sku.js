@@ -33,7 +33,10 @@ module.exports = {
   	price : {
   		type : 'float',
   		required : true
-  	}
+  	},
+    weightpercase : {
+      type : 'float'
+    }
   },
 
   afterCreate : function(sku, next){
