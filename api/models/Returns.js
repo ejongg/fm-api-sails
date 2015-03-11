@@ -21,10 +21,6 @@ module.exports = {
   	}
   },
 
-  afterCreate : function(returns, next){
-    Returns.publishCreate(returns);
-  },
-
   afterUpdate : function(returns, next){
     Returns.publishUpdate(returns.id, returns);
   },
