@@ -72,6 +72,18 @@ module.exports = {
         next();
       });
     });
+  },
+
+  afterCreate : function(user, next){
+    sails.sockets.blast('users', {verb : 'created', data : user});
+  },
+
+  afterUpdate : function(user, next){
+    sails.sockets.blast('users', {verb : 'updated', data : user});
+  },
+
+  afterDestroy : function(user, next){
+    sails.sockets.blast('users', {verb : 'destroyed', data : user});
   }  
 };
 
