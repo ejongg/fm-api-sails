@@ -37,10 +37,6 @@ module.exports = {
   	}
   },
 
-  afterCreate : function(customer, next){
-    Customers.publishCreate(customer);
-  },
-
   afterUpdate : function(customer, next){
     Customers.publishUpdate(customer.id, customer);
   },
