@@ -19,7 +19,11 @@ module.exports = {
   	cases : {
   		type : 'integer',
   		required : true
-  	}
+  	},
+    amount : {
+      type : 'float',
+      required : true
+    }
   },
 
   afterDestroy : function(purchase_products, next){
