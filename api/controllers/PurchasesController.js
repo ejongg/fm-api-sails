@@ -63,7 +63,7 @@ module.exports = {
 							*	inventory. If yes then only update the 
 							*	logical count and the physical count.
 							*/
-							Inventory.findOne({sku_id : item.sku_id, exp_date : item.exp_date})
+							Inventory.findOne({sku_id : item.sku_id, exp_date : item.exp_date, bay_id : prod.bay_id})
 								.exec(function(err, found){
 									if(err)
 										console.log(err);
