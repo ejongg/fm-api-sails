@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('BaysCtrl',['$scope','$sailsSocket','_', function($scope, $sailsSocket, _){
+.controller('BaysCtrl',['$scope','$sailsSocket','_','$http', function($scope, $sailsSocket, _, $http){
   $scope.bays = [];
 
   $scope.bay = {};
@@ -28,6 +28,11 @@ angular.module('fmApp')
         $scope.$digest();
       }
     });
+
+    $http.get('http://localhost:1337/inventory?where={"bay_id" : '+ 1 + '}').success(function(data){
+     console.log(data);
+   });
+
   };
 
   getBays();
@@ -148,7 +153,7 @@ angular.module('fmApp')
         $scope.bays[index] = msg.data;
         $scope.showEditOrDeleteBayForm(false);
         $scope.$digest();
-        break
+        break;
       case "destroyed":
         console.log("Bay Deleted");
         var index = _.findIndex($scope.bays,{'id': msg.data.id});

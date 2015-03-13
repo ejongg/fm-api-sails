@@ -21,22 +21,48 @@ angular.module('fmApp')
   
   
   var getSKU = function () {
-    $http.get('http://localhost:1337/sku').success(function(data){
-      $scope.skuList = data;
-      $scope.purchase.sku = $scope.skuList[0];
+    // $http.get('http://localhost:1337/sku').success(function(data){
+    //   $scope.skuList = data;
+    //   $scope.purchase.sku = $scope.skuList[0];
+    // });
+    io.socket.request($scope.socketOptions('get','/sku'), function (body, JWR) {
+      console.log('Sails responded with get sku: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.skuList = body;
+        $scope.purchase.sku = $scope.skuList[0];
+        $scope.$digest();
+      }
     });
   };
 
   var getBays = function (){
-    $http.get('http://localhost:1337/bays').success(function(data){
-      $scope.bays = data;
-      $scope.purchase.bay = $scope.bays[0];
+    // $http.get('http://localhost:1337/bays').success(function(data){
+    // $scope.bays = data;
+    // $scope.purchase.bay = $scope.bays[0];
+    // });
+    io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
+      console.log('Sails responded with get bays: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.bays = body;
+        $scope.purchase.bay = $scope.bays[0];
+        $scope.$digest();
+      }
     });
   }
 
   var getPurchases = function (){
-    $http.get('http://localhost:1337/purchases').success(function(data){
-      $scope.purchasesList = data;
+    // $http.get('http://localhost:1337/purchases').success(function(data){
+    //   $scope.purchasesList = data;
+    // });
+    io.socket.request($scope.socketOptions('get','/purchases'), function (body, JWR) {
+      console.log('Sails responded with get purchases: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.purchasesList = body;
+        $scope.$digest();
+      }
     });
   }
   
@@ -54,6 +80,7 @@ angular.module('fmApp')
     if(data === false){
       clearForm();
       $scope.purchases = [];
+      $scope.totalCost = 0;
     }
   };
 
@@ -84,17 +111,27 @@ angular.module('fmApp')
     $scope.purchase.sku = $scope.skuList[0];
     $scope.purchase.bay = $scope.bays[0];
     $scope.purchase.cases = null;
-    $scope.purchase.cost = null;
+    $scope.purchase.amount = null;
     $scope.purchase.prod_date = new Date();
   };
 
-   $scope.getPurchaseProducts = function (id) {
-    console.log(id);
-   $http.get('http://localhost:1337/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){
-     $scope.purchaseProducts = data;
-     console.log($scope.purchaseProducts);
-     $scope.showViewProducts(true);
+  $scope.getPurchaseProducts = function (id) {
+   //  console.log(id);
+   // $http.get('http://localhost:1337/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){
+     // $scope.purchaseProducts = data;
+     // console.log($scope.purchaseProducts);
+     // $scope.showViewProducts(true);
+   // });
+   io.socket.request($scope.socketOptions('get','/purchase_products?where={"purchase_id" :'+ id +'}'), function (body, JWR) {
+      console.log('Sails responded with get purchases: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.purchaseProducts = body;
+        $scope.showViewProducts(true);
+        $scope.$digest();
+      }
    });
+    
   };
 
   $scope.addPurchase = function (purchase) {
@@ -110,12 +147,12 @@ angular.module('fmApp')
       "bay" : purchase.bay.pile_name,
       "prod_date" : $filter('date')(purchase.prod_date, "yyyy-MM-dd HH:mm:ss"),
       "cases" : purchase.cases,
-      "cost" : purchase.cost
+      "amount" : purchase.amount
     };
     
     if( _.findIndex($scope.purchases,{ 'sku_id': purchase.sku.id, 'bay_id':purchase.bay.id }) === -1 ){
            $scope.purchases.push(purchaseInfo);
-           $scope.totalCost += purchase.cost;
+           $scope.totalCost += purchase.amount;
     }else{
       $scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
@@ -126,33 +163,125 @@ angular.module('fmApp')
   };
 
   $scope.deletePurchase = function (index) {
-    $scope.totalCost -= $scope.purchases[index].cost;
+    $scope.totalCost -= $scope.purchases[index].amount;
     $scope.purchases.splice(index,1);
   };
 
   $scope.submitPurchases = function () {
-    $scope.purchases = _.map($scope.purchases, function (purchase) { return _.omit(purchase, 'cost'); });
     var purchase = {
        products : $scope.purchases,
        total_cost : $scope.totalCost,
        user : 'Sonic'
     };
+
+    console.log();
             
-    io.socket.post('/purchases/add', {purchases : purchase});
-    $scope.totalCost = 0;
-    $scope.showAddPurchaseForm(false);
+    // io.socket.post('/purchases/add', {purchases : purchase});
+    // $scope.totalCost = 0;
+    // $scope.showAddPurchaseForm(false);
+
+    io.socket.request($scope.socketOptions('post','/purchases/add',{},purchase), function (body, JWR) {
+      console.log('Sails responded with post user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 201){
+        $scope.showAddPurchaseForm(false);
+        $scope.totalCost = 0;
+        $scope.$digest();
+      }
+    }); 
 
   };
 
+  // io.socket.on('purchases', function(msg){
+  // 	console.log("purchase created");
+  //   console.log(msg);
+  //   if (msg.verb === 'created') {
+  //     console.log(msg.data);
+  //     $scope.purchasesList.push(msg.data);
+  //     console.log($scope.purchasesList);
+  //     $scope.$digest();
+  //   }
+  // });
+
   io.socket.on('purchases', function(msg){
-  	console.log("purchase created");
-    console.log(msg);
-    if (msg.verb === 'created') {
-      console.log(msg.data);
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    // switch (msg.verb) {
+    //   case "created": 
+    //     console.log("Purchase Created");
+    //     $scope.users.push(msg.data);
+    //     $scope.showAddUserForm(false);
+    //     clearForm()
+    //     $scope.$digest();
+    //     break;
+    //   case "destroyed":
+    //     console.log("User Deleted");
+    //     console.log($scope.users);
+    //     var index = _.findIndex($scope.users,{'id': msg.data.id});
+    //     $scope.users.splice(index,1);
+    //     $scope.showEditOrDeleteUserForm(false);
+    //     $scope.$digest();
+    // }
+
+    if(msg.verb === 'created'){
+      console.log("Purchase Created");
       $scope.purchasesList.push(msg.data);
-      console.log($scope.purchasesList);
       $scope.$digest();
     }
+
+  });
+
+  io.socket.on('sku', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("SKU Created");
+        $scope.skuList.push(msg.data);
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("SKU Updated");
+        var index = _.findIndex($scope.skuList,{'id': msg.data.id});
+        $scope.skuList[index] = msg.data;
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("SKU Deleted");
+        var index = _.findIndex($scope.skuList,{'id': msg.data.id});
+        $scope.skuList.splice(index,1);
+        $scope.$digest();
+    }
+  });
+
+  io.socket.on('bays', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("Bay Created");
+        $scope.bays.push(msg.data);
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("Bay Updated");
+        var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        $scope.bays[index] = msg.data;
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Bay Deleted");
+        var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        $scope.bays.splice(index,1);
+        $scope.$digest();
+    }
+
   });
         
 

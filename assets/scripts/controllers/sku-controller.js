@@ -19,17 +19,83 @@ angular.module('fmApp')
   
   $scope.noExistingProduct = false;
   
+
+  var getProducts = function (){  
+    io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {
+      console.log('Sails responded with get products: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.products = body;
+
+        if($scope.products.length === 0){
+          $scope.noExistingProduct = true;
+        }else{
+          $scope.existingCompany = _.uniq($scope.products,'company');
+          $scope.sku.prod_name = $scope.products[0].prod_name;
+        }
+        $scope.$digest();
+      }
+    });
+  };
+  
+  /*
+  Get sku in the server
+  */
+  var getSKULists = function (){  
+    io.socket.request($scope.socketOptions('get','/sku'), function (body, JWR) {
+      console.log('Sails responded with get sku: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.skuLists = body;
+        $scope.$digest();
+      }
+    });
+  };
+    
+  getProducts(); 
+  getSKULists();
+
+    /*
+  Get products in the server
+   - if there are no products in the server set noExistingProduct to true.
+   - if there are already products in the server get the company and set the first option in the dropdown.
+  */
+  // var getProducts = function (){  
+  //     $sailsSocket.get('/products').success(function (data) {
+  //     $scope.products = data;
+
+      // if($scope.products.length === 0){
+      //   $scope.noExistingProduct = true;
+      // }else{
+      //   $scope.existingCompany = _.uniq($scope.products,'company');
+      //   $scope.sku.prod_name = $scope.products[0].prod_name;
+      // }
+  //     }).error(function (err) {
+  //     console.log(err);
+  //     });
+  // };
+  
+  /*
+  Get sku in the server
+  */
+  // var getSKULists = function (){  
+  //     $sailsSocket.get('/sku').success(function (data) {
+  //     $scope.skuLists = data;
+  //     console.log(data);
+  //     }).error(function (err) {
+  //     console.log(err);
+  //     });
+  // };
+    
   /*
   Show add sku form
   - If data is false clear the form.
   */
   $scope.showAddSkuForm = function (data) {
     $scope.addSKUForm = data;
-    console.log("add here");
     clearForm();
     if($scope.editOrDeleteSKUForm === true){
       $scope.showEditOrDeleteSkuForm(false);
-      console.log("false");
     } 
   }
   
@@ -103,41 +169,6 @@ angular.module('fmApp')
   }
   
   /*
-  Get products in the server
-   - if there are no products in the server set noExistingProduct to true.
-   - if there are already products in the server get the company and set the first option in the dropdown.
-  */
-	var getProducts = function (){  
-      $sailsSocket.get('/products').success(function (data) {
-      $scope.products = data;
-
-      if($scope.products.length === 0){
-        $scope.noExistingProduct = true;
-      }else{
-        $scope.existingCompany = _.uniq($scope.products,'company');
-        $scope.sku.prod_name = $scope.products[0].prod_name;
-      }
-      }).error(function (err) {
-      console.log(err);
-      });
-  };
-  
-  /*
-  Get sku in the server
-  */
-  var getSKULists = function (){  
-      $sailsSocket.get('/sku').success(function (data) {
-      $scope.skuLists = data;
-      console.log(data);
-      }).error(function (err) {
-      console.log(err);
-      });
-  };
-    
-  getProducts(); 
-  getSKULists();
-
-  /*
    Add SKU in the server
     - If success clear the form and close the form.
   */
@@ -154,13 +185,21 @@ angular.module('fmApp')
     }
     console.log(skuInfo);
 
-    $sailsSocket.post('/sku', skuInfo).success(function (data) {
-      console.log(data);
-      $scope.skuLists.push(data);
-      $scope.showAddSkuForm(false);
-      clearForm();
-    }).error(function (err) {
-      console.log(err);
+    // $sailsSocket.post('/sku', skuInfo).success(function (data) {
+    //   console.log(data);
+    //   $scope.skuLists.push(data);
+    //   $scope.showAddSkuForm(false);
+    //   clearForm();
+    // }).error(function (err) {
+    //   console.log(err);
+    // });
+
+    io.socket.request($scope.socketOptions('post','/sku',{},skuInfo), function (body, JWR) {
+      console.log('Sails responded with post sku: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 400){
+        console.log("SKU already exist");
+      }
     });
 
   };
@@ -183,22 +222,29 @@ angular.module('fmApp')
     }
     console.log(newInfo);
 
-    $sailsSocket.put('/sku/' + sku.id, newInfo).success(function (data) {
-      var index = _.findIndex($scope.skuLists, function(sku) { return sku.id == data.id; });
-      $scope.skuLists[index] = data;
-      $scope.showEditOrDeleteSkuForm(false);
-    }).error(function (err) {
-      console.log(err);
+    // $sailsSocket.put('/sku/' + sku.id, newInfo).success(function (data) {
+    //   var index = _.findIndex($scope.skuLists, function(sku) { return sku.id == data.id; });
+    //   $scope.skuLists[index] = data;
+    //   $scope.showEditOrDeleteSkuForm(false);
+    // }).error(function (err) {
+    //   console.log(err);
+    // });
+    io.socket.request($scope.socketOptions('put','/sku/' + sku.id,{},newInfo), function (body, JWR) {
+      console.log('Sails responded with edit sku: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        
+      }
     });
 
   };
 
   $scope.deleteSKU = function (sku) {
     $sailsSocket.delete('/sku/' + sku.id).success(function (data) {
-      var index = _.findIndex($scope.skuLists, function(skuItem) { return skuItem.id == data.id; });
-      console.log(index);
-      $scope.skuLists.splice(index,1);
-      $scope.showEditOrDeleteSkuForm(false);
+      // var index = _.findIndex($scope.skuLists, function(skuItem) { return skuItem.id == data.id; });
+      // console.log(index);
+      // $scope.skuLists.splice(index,1);
+      // $scope.showEditOrDeleteSkuForm(false);
     }).error(function (err) {
       console.log(err);
     });
@@ -207,30 +253,59 @@ angular.module('fmApp')
   /*
   Connect to socket and listen to products model
   */
-  $sailsSocket.subscribe('products', function(msg){
-    if(msg.verb === 'created'){   
-      console.log("CREATED CALL");
-	    if(_.findIndex($scope.existingCompany, function(prod) { return prod.company == msg.data.company; }) === -1){
-	        $scope.existingCompany.push(msg.data);
-	    }
-      $scope.products.push(msg.data);
-	  }
-
-    if(msg.verb === 'updated'){
-      console.log(msg.data);
-      var index = _.findIndex($scope.products, function(prod) { return prod.id == msg.data.id; });
-      $scope.products[index] = msg.data;
-      $scope.existingCompany = _.uniq($scope.products,'company');
-      console.log($scope.skuLists);
+  io.socket.on('products', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("Product Created");
+        $scope.products.push(msg.data);
+        $scope.existingCompany = _.uniq($scope.products, 'company');
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("Product Updated");
+        var index = _.findIndex($scope.products,{'id': msg.data.id});
+        $scope.products[index] = msg.data;
+        $scope.existingCompany = _.uniq($scope.products, 'company');
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Product Deleted");
+        var index = _.findIndex($scope.products,{'id': msg.data.id});
+        $scope.products.splice(index,1);
+        $scope.$digest();
     }
+  });
 
-    if(msg.verb === 'destroyed'){
-      console.log("Delete CALL");
-      var index = _.findIndex($scope.products, function(prod) { return prod.id ==  msg.id; });
-      $scope.products.splice(index,1);
-      $scope.existingCompany = _.uniq($scope.products,'company');
+  io.socket.on('sku', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("SKU Created");
+        $scope.skuLists.push(msg.data);
+        $scope.showAddSkuForm(false);
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("SKU Updated");
+        var index = _.findIndex($scope.skuLists,{'id': msg.data.id});
+        $scope.skuLists[index] = msg.data;
+        $scope.showEditOrDeleteSkuForm(false);
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("SKU Deleted");
+        var index = _.findIndex($scope.skuLists,{'id': msg.data.id});
+        $scope.skuLists.splice(index,1);
+        $scope.showEditOrDeleteSkuForm(false);
+        $scope.$digest();
     }
-
   });
 
 }]);
