@@ -34,7 +34,21 @@ module.exports = {
   	route : {
   		type : 'string',
   		required : true
-  	}
+  	},
+    carry_weight : {
+      type : 'integer'
+    },
+    current_load_weight : {
+      type : 'integer',
+      defaultsTo : 0
+    },
+    isAvailable : function(){
+      if(this.carry_weight > this.current_load_weight){
+        return true;
+      }else{
+        return false;
+      }
+    }
   },
 
   afterCreate : function(truck, next){
@@ -46,7 +60,7 @@ module.exports = {
   },
 
   afterDestroy : function(truck, next){
-    sails.sockets.blast('trucks', {verb : 'destroyed', data : truck[0].id});
+    sails.sockets.blast('trucks', {verb : 'destroyed', data : truck});
   }
 };
 
