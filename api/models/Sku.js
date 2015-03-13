@@ -40,21 +40,21 @@ module.exports = {
   },
 
   afterCreate : function(sku, next){
-    Sku.find({id : sku.id}).populate('prod_id')
+    Sku.findOne({id : sku.id}).populate('prod_id')
       .exec(function(err, populated){
-        sails.sockets.blast('sku', {verb : "created", data : populated[0]});  
+        sails.sockets.blast('sku', {verb : "created", data : populated});  
       });
   },
 
   afterUpdate : function(sku, next){
-    Sku.find({id : sku.id}).populate('prod_id')
+    Sku.findOne({id : sku.id}).populate('prod_id')
       .exec(function(err, populated){
-        sails.sockets.blast('sku', {verb : "updated", data : populated[0]});  
+        sails.sockets.blast('sku', {verb : "updated", data : populated});  
       });
   },
 
   afterDestroy : function(sku, next){
-    sails.sockets.blast('sku', {verb : 'destroyed', data : sku[0].id});
+    sails.sockets.blast('sku', {verb : 'destroyed', data : sku});
   }
 };
 

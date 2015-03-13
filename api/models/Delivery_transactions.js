@@ -34,8 +34,7 @@ module.exports = {
   		required : true
   	},
   	returns_id : {
-  		model : 'returns',
-  		required : true
+  		model : 'returns'
   	},
   	truck_id : {
   		model : 'trucks',
@@ -51,13 +50,9 @@ module.exports = {
       defaultsTo : 'pending'
   	},
   	user : {
-  		model : 'users',
-  		required : true
+  		type : 'string',
+      required : true
   	}
-  },
-
-  afterCreate : function(delivery_transaction, next){
-    Delivery_transactions.publishCreate(delivery_transaction);
   },
 
   afterUpdate : function(delivery_transaction, next){
@@ -65,7 +60,7 @@ module.exports = {
   },
 
   afterDestroy : function(delivery_transaction, next){
-    sails.sockets.blast('delivery_transactions', {verb : 'destroyed', data : delivery_transaction[0].id});
+    sails.sockets.blast('delivery_transactions', {verb : 'destroyed', data : delivery_transaction});
   }
 };
 

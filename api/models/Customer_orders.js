@@ -36,7 +36,12 @@ module.exports = {
   	user : {
   		type : 'string',
   		required : true
-  	}
+  	},
+
+    products : {
+      collection : 'customer_order_products',
+      via : 'order_id'
+    }
   },
 
   afterUpdate : function(customer_order, next){
@@ -44,7 +49,7 @@ module.exports = {
   },
 
   afterDestroy : function(customer_order, next){
-    sails.sockets.blast('customer_orders', {verb : 'destroyed', data : customer_order[0].id});
+    sails.sockets.blast('customer_orders', {verb : 'destroyed', data : customer_order});
   }
 };
 

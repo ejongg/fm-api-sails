@@ -22,16 +22,12 @@ module.exports = {
   	}
   },
 
-  afterCreate : function(delivery_product, next){
-    Delivery_products.publishCreate(delivery_product);
-  },
-
   afterUpdate : function(delivery_product, next){
     Delivery_products.publishUpdate(delivery_product.id, delivery_product);
   },
 
   afterDestroy : function(delivery_product, next){
-    sails.sockets.blast('delivery_products', {verb : 'destroyed', data : delivery_product[0].id});
+    sails.sockets.blast('delivery_products', {verb : 'destroyed', data : delivery_product});
   }
 };
 

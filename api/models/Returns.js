@@ -26,7 +26,7 @@ module.exports = {
   },
 
   afterDestroy : function(returns, next){
-    sails.sockets.blast('returns', {verb : 'destroyed', data : returns[0].id});
+    sails.sockets.blast('returns', {verb : 'destroyed', data : returns});
   }
 };
 

@@ -23,6 +23,10 @@ module.exports = {
   		type : 'integer',
       defaultsTo : 0
   	},
+    bottles : {
+      type : 'integer',
+      defaultsTo : 0
+    },
     physical_count : {
       type : 'integer',
       required : true
@@ -34,21 +38,21 @@ module.exports = {
   },
 
   afterCreate : function(inventory, next){
-    Inventory.find({id : inventory.id}).populate('sku_id').populate('bay_id')
+    Inventory.findOne({id : inventory.id}).populate('sku_id').populate('bay_id')
           .exec(function(err, populated){
-            sails.sockets.blast('inventory', {verb : 'created', data : populated[0]});
+            sails.sockets.blast('inventory', {verb : 'created', data : populated});
           });    
   },
 
   afterUpdate : function(inventory, next){
-    Inventory.find({id : inventory.id}).populate('sku_id').populate('bay_id')
+    Inventory.findOne({id : inventory.id}).populate('sku_id').populate('bay_id')
           .exec(function(err, populated){
-            sails.sockets.blast('inventory', {verb : 'updated', data : populated[0]});
+            sails.sockets.blast('inventory', {verb : 'updated', data : populated});
           });
   },
 
   afterDestroy : function(inventory, next){
-    sails.sockets.blast('inventory', {verb : 'destroyed', data : inventory[0].id});
+    sails.sockets.blast('inventory', {verb : 'destroyed', data : inventory});
   }
 };
 

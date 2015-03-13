@@ -42,7 +42,7 @@ module.exports = {
   },
 
   afterDestroy : function(customer, next){
-    sails.sockets.blast('customers', {verb : 'destroyed', data : customer[0].id});
+    sails.sockets.blast('customers', {verb : 'destroyed', data : customer});
 
   }
 };
