@@ -89,7 +89,7 @@ module.exports = {
 				}).value();
 				
 				sails.sockets.blast('purchases', {verb : 'created', data : newPurchase});
-				return res.ok();
+				return res.send(201);
 			});
 	},
 
