@@ -53,7 +53,7 @@ module.exports = function(req, res, next){
 		*/
 		if(notAvailableProducts.length == 0){
 			if(products.length == 0){
-				res.json({code : 0, message : 'Invalid! No products sent.'});
+				return res.json({code : 0, message : 'Invalid! No products sent.'});
 			}else{
 				req.result = true;
 			}
