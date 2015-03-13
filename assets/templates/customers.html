@@ -30,7 +30,8 @@
                 <td>{{order.date_received}}</td>
                 <td>{{order.status}}</td>
             </tr>
-      </table>  
+      </table> 
+      <button ng-click="showCustomerOrders(false)">Cancel</button> 
     </div>
 
     <!-- RIGHT PANEL -->
@@ -66,10 +67,6 @@
                 </tbody>
             </table>
 
-            <div class="icon-preview">
-              <a class="btn btn-primary pull-right btn-md" ng-click="showAddCustomerForm(true)">Add</a>
-            <br>
-            </div>
         </div>
 
     <!-- END OF TABLE -->
