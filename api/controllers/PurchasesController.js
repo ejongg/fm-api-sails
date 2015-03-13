@@ -10,11 +10,11 @@ var moment = require('moment');
 
 module.exports = {
 	add : function(req, res){
-		var products = req.body.purchases.products;
+		var products = req.body.products;
 
 		var purchase = {
-			total_cost : req.body.purchases.total_cost,
-			user : req.body.purchases.user,
+			total_cost : req.body.total_cost,
+			user : req.body.user,
 			date_received : moment().format('MM-DD-YYYY')
 		};
 		
@@ -33,7 +33,8 @@ module.exports = {
 					var productToBeCreated = {
 						purchase_id : newPurchase.id,
 						sku_id : prod.sku_id,
-						cases : prod.cases
+						cases : prod.cases,
+						amount : prod.amount
 					};
 
 					Purchase_products.create(productToBeCreated)
