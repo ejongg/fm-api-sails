@@ -12,6 +12,7 @@ module.exports = {
 
 		var bad_order = {
 			expense : req.body.total_expense,
+			accountable : req.body.accountable,
 			date : moment().format('MM-DD-YYYY')
 		};
 
@@ -34,6 +35,15 @@ module.exports = {
 							*	Question: How to determine what spefic item
 							*	in the inventory was labeled as bad order
 							*/
+							if(typeof product.bay_id == 'number'){
+								Inventory.findOne({sku_id : product.sku_id, bay_id : product.bay_id})
+									.exec(function(err, found_sku){
+										found_sku.physical_count = found_sku.physical_count - product.cases;
+										found_sku.logical_count = found_sku.logical_count - product.cases;
+										found_sku.save(function(err, saved){});
+									});	
+							}
+							
 						});
 				}).value();
 			});
