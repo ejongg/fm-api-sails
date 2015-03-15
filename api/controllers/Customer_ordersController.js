@@ -9,10 +9,10 @@ var moment = require('moment');
 
 module.exports = {
 	add : function(req, res){
-		var customer  = req.body.order.customer;
-		var orders = req.body.order.orders;
-		var cokeagent_name = req.body.order.cokeagent_name;
-		var user = req.body.order.user;
+		var customer  = req.body.customer;
+		var orders = req.body.orders;
+		var cokeagent_name = req.body.cokeagent_name;
+		var user = req.body.user;
 
 		/**
 		*	Find a customer if it doesn't exist create a new one
@@ -72,11 +72,17 @@ module.exports = {
 						Customer_orders.findOne({id : new_cust_order.id}).populate('customer_id')
 							.exec(function(err, populated_cust_order){
 
-								sails.sockets.blast('customer_orders', {verb : 'created', data : populated_cust_order});
+								sails.sockets.blast('customer_orders', {verb : 'created', data : populated_cust_order});								
 							});
-					});
+
+						DeliveryService.assignOrder(new_cust_order.id, user);
+					});				
 			});
 		});
+	},
+
+	test : function(req, res){
+		DeliveryService.assignOrder(1, 'Sonic');
 	}
 };
 
