@@ -7,6 +7,7 @@
 
 var _ = require('lodash');
 var moment = require('moment');
+var async = require('async');
 
 module.exports = {
 	add : function(req, res){
@@ -29,11 +30,13 @@ module.exports = {
 				*	add a purchase_id attribute to each of the objects
 				*	then create the purchase_product.
 				*/
-				_(products).forEach(function(prod){
+				(products).forEach(function(prod){
 					var productToBeCreated = {
 						purchase_id : newPurchase.id,
 						sku_id : prod.sku_id,
 						cases : prod.cases,
+						costpercase : prod.costpercase,
+						discountpercase : prod.discountpercase,
 						amount : prod.amount
 					};
 
@@ -58,43 +61,50 @@ module.exports = {
 								logical_count : prod.cases
 							};
 
-							/**
-							*	Check if the product already exists in the
-							*	inventory. If yes then only update the 
-							*	logical count and the physical count.
-							*/
-							Inventory.findOne({sku_id : item.sku_id, exp_date : item.exp_date, bay_id : prod.bay_id})
-								.exec(function(err, found){
-									if(err)
-										console.log(err);
 
-									if(found){
-										var p_count = found.physical_count = found.physical_count + parseInt(prod.cases, 10);
-										var l_count = found.logical_count = found.logical_count + parseInt(prod.cases, 10);
+							async.series([
+								function getTotalBottles(cb){
+									Sku.findOne({id : prod.sku_id})
+										.exec(function(err, found_sku){
+											item.bottles = found_sku.bottlespercase * prod.cases;
+										});
 
-										Inventory.update({id : found.id}, {physical_count : p_count, logical_count : l_count})
-											.exec(function(err, updated){});
-									}else{
+									cb();
+								},
 
-										/**
-										*	If it doesn't exist create an instance of the proudct
-										*	in the inventory.
-										*/
-										Inventory.create(item)
-											.exec(function(err, newItem){});
-									}
-								});
+								function updateInventory(cb){
+									/**
+									*	Check if the product already exists in the
+									*	inventory. If yes then only update the 
+									*	logical count and the physical count.
+									*/
+									Inventory.findOne({sku_id : item.sku_id, exp_date : item.exp_date, bay_id : prod.bay_id})
+										.exec(function(err, found){
+											if(err)
+												console.log(err);
+
+											if(found){
+												found.physical_count = found.physical_count + parseInt(prod.cases, 10);
+												found.logical_count = found.logical_count + parseInt(prod.cases, 10);
+												found.bottles = found.bottles + item.bottles;
+												found.save(function(err, saved){});
+
+												cb();
+											}else{
+												Inventory.create(item)
+													.exec(function(err, newItem){});
+
+												cb();
+											}
+										});
+								}
+							]);
 						});
+				});
 
-				}).value();
-				
 				sails.sockets.blast('purchases', {verb : 'created', data : newPurchase});
-				return res.send(201);
+				return res.send(201);				
 			});
-	},
-
-	test : function(req, res){
-		console.log(moment('12-12-2015', 'MM-DD-YYYY').add(7, 'months').format('MM-DD-YYYY'));
 	}
 };
 
