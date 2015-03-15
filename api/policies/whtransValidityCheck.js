@@ -12,21 +12,19 @@ module.exports = function(req, res, next){
 			.exec(function(err, found_sku){
 				if(found_sku){
 					var sku_total_case_count = 0;
+					var sku_total_bottles = 0;
 
-					/**
-					*	Find all instances of sku adding them all
-					*	together
-					*/
-					_(found_sku).forEach(function(sku){
+					(found_sku).forEach(function(sku){
 						sku_total_case_count = sku_total_case_count + sku.physical_count;
-					}).value();
+						sku_total_bottles = sku_total_bottles + sku.bottles;
+					});
 
 					/**
 					*	Check if the number of request product is greater than the total
 					*	count of the product in the inventory. If yes add that product to 
 					*	the array notAvailableProducts
 					*/
-					if(product.cases > sku_total_case_count){
+					if(product.cases > sku_total_case_count || product.bottles > sku_total_bottles){
 						notAvailableProducts.push(product.sku_name);
 						cb();
 					}else{
