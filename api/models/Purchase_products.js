@@ -20,6 +20,14 @@ module.exports = {
   		type : 'integer',
   		required : true
   	},
+    costpercase : {
+      type : 'integer',
+      defaultsTo : 0
+    },
+    discountpercase : {
+      type : 'float',
+      defaultsTo : 0
+    },
     amount : {
       type : 'float',
       required : true
