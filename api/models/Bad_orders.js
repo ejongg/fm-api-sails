@@ -23,6 +23,10 @@ module.exports = {
   		type : 'string',
   		required : true
   	},
+    accountable : {
+      type : 'string',
+      required : true
+    },
     products : {
       collection : 'bad_order_details',
       via : 'bad_order_id'
