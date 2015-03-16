@@ -35,15 +35,25 @@ module.exports = {
 							*	Question: How to determine what spefic item
 							*	in the inventory was labeled as bad order
 							*/
-							if(typeof product.bay_id == 'number'){
-								Inventory.findOne({sku_id : product.sku_id, bay_id : product.bay_id})
-									.exec(function(err, found_sku){
-										found_sku.bottles = found_sku.bottles - (product.cases * product.bottlespercase);
-										found_sku.physical_count = found_sku.physical_count - product.cases;
-										found_sku.logical_count = found_sku.logical_count - product.cases;
-										found_sku.save(function(err, saved){});
-									});	
-							}
+							async.series([
+								function deductInInventory(cb){
+									if(typeof product.bay_id == 'number'){
+										Inventory.findOne({sku_id : product.sku_id, bay_id : product.bay_id})
+											.exec(function(err, found_sku){
+												found_sku.bottles = found_sku.bottles - (product.cases * product.bottlespercase);
+												found_sku.physical_count = found_sku.physical_count - product.cases;
+												found_sku.logical_count = found_sku.logical_count - product.cases;
+												found_sku.save(function(err, saved){});
+											});	
+									}
+								},
+
+								function emit(cb){
+									sails.sockets.blast('bad_orders', created_bad_order);
+									return res.send(201);
+								}
+							]);
+							
 							
 						});
 				}).value();
