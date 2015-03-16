@@ -44,13 +44,17 @@ module.exports = {
 												found_sku.physical_count = found_sku.physical_count - product.cases;
 												found_sku.logical_count = found_sku.logical_count - product.cases;
 												found_sku.save(function(err, saved){});
-											});	
+											});
+										cb();	
+									}else{
+										cb();
 									}
 								},
 
 								function emit(cb){
 									sails.sockets.blast('bad_orders', created_bad_order);
 									return res.send(201);
+									cb();
 								}
 							]);
 							
