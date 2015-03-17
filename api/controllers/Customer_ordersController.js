@@ -75,7 +75,7 @@ module.exports = {
 								sails.sockets.blast('customer_orders', {verb : 'created', data : populated_cust_order});								
 							});
 
-						DeliveryService.assignOrder(new_cust_order.id, user);
+						// DeliveryService.assignOrder(new_cust_order.id, user);
 					});				
 			});
 		});
