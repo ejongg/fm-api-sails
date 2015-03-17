@@ -35,7 +35,11 @@ module.exports.policies = {
   },
 
   Warehouse_transactionsController : {
-    add : 'whtransValidityCheck'
+    add : 'WarehouseSalesPolicy'
+  },
+
+  Bad_ordersController : {
+    add : 'BadOrdersPolicy'
   }
 
   /***************************************************************************
