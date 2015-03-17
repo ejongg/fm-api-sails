@@ -93,75 +93,10 @@ module.exports = {
 										var bottlespercase = product.bottlespercase;
 										var index = 0;
 
-										async.whilst(
-											function whileCondition(){return cases_sold > 0},
+										InventoryService.POS_updateInventory(skus, cases_sold, extra_bottles, bottlespercase);
 
-											function bottlesAndCasesHandler(cb_whilst){
-												var current_physical_cases = skus[index].physical_count;
-												var current_bottles = skus[index].bottles;
-
-												async.series([
-													function bottlesHandler(cb_outer_series){
-														if(current_bottles > 0){
-
-															async.series([
-																function deductBottles(cb_inner_series){
-																	skus[index].bottles = Math.max(0, skus[index].bottles - extra_bottles);
-																	skus[index].bottles = Math.max(0, skus[index].bottles - (cases_sold * bottlespercase));	
-																	skus[index].save(function(err, saved){});
-
-																	cb_inner_series();
-																},
-
-																function deductCaseOfBottles(cb_inner_series){
-																	if((skus[index].bottles - (skus[index].physical_count * bottlespercase)) < bottlespercase){
-																		skus[index].physical_count = skus[index].physical_count - 1;
-																		skus[index].logical_count = skus[index].logical_count - 1;																		
-																	}
-
-																	cb_inner_series();																															
-																}
-															], function endOfInnerSeries(err, result){
-																cb_outer_series();
-															});																			
-														}else{
-															cb_outer_series();
-														}
-													},
-
-													function casesHandler(cb_outer_series){
-														if(current_physical_cases > 0){																									
-															skus[index].physical_count = Math.max(0, skus[index].physical_count - cases_sold);
-															skus[index].logical_count = Math.max(0, skus[index].logical_count - cases_sold);
-															skus[index].save(function(err, saved){});
-
-															if(cases_sold < skus[index].physical_count){
-																cases_sold = 0;
-																cb_outer_series();
-															}else{
-																cases_sold = cases_sold - current_physical_cases;
-																index++;
-																cb_outer_series();
-															}
-
-														}else{
-															index++;
-															cb_outer_series();
-														}
-													}
-												]);
-
-												cb_whilst();
-											},
-
-											function endOfWhile(err){
-												if(err)
-													console.log(err);
-
-												sails.sockets.blast('warehouse_transactions', {verb : 'created', data : created_transaction});
-												return res.json({code : 1, message : 'Transaction completed'});
-											}
-										); // end of async.whilst
+										sails.sockets.blast('warehouse_transactions', {verb : 'created', data : created_transaction});
+										return res.json({code : 1, message : 'Transaction completed'});
 									});
 							});
 						});
