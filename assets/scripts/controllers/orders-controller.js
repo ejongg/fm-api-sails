@@ -20,7 +20,7 @@ angular.module('fmApp')
     //   $scope.order.sku = $scope.skuList[0];
     // });
 
-    io.socket.request($scope.socketOptions('get','/sku'), function (body, JWR) {
+    io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
       console.log('Sails responded with get customers: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -44,7 +44,7 @@ angular.module('fmApp')
         $scope.$digest();
       }
     });
-  }
+  };
   
   getOrders();
   getSKU();
@@ -145,7 +145,7 @@ angular.module('fmApp')
     console.log(final_order);
 
     // io.socket.post('/customer_orders/add', {order : final_order});
-    io.socket.request($scope.socketOptions('post','/customer_orders/add',{},{order : final_order}), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/customer_orders/add',{},final_order), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){

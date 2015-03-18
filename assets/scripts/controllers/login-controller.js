@@ -29,7 +29,7 @@ angular.module('fmApp')
               $state.go('admin.dssr');
               break;
             case 'encoder':
-              $state.go('encoder.add-delivery');
+              $state.go('encoder.sku');
               break;
             case 'cashier':
               $state.go('cashier.pos');

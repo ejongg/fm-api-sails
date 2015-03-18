@@ -89,6 +89,8 @@ angular.module('fmApp')
   };
 
   $scope.addProduct = function (product) {
+    console.log("clicked add");
+    console.log(product);
     io.socket.request($scope.socketOptions('post','/products',{},product), function (body, JWR) {
       console.log('Sails responded with post product: ', body);
       console.log('and with status code: ', JWR.statusCode);

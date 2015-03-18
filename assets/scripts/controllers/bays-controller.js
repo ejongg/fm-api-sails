@@ -3,6 +3,7 @@
 angular.module('fmApp')
 .controller('BaysCtrl',['$scope','$sailsSocket','_','$http', function($scope, $sailsSocket, _, $http){
   $scope.bays = [];
+  $scope.bayItems = [];
 
   $scope.bay = {};
   $scope.bayEdit = {};
@@ -29,13 +30,21 @@ angular.module('fmApp')
       }
     });
 
-    $http.get('http://localhost:1337/inventory?where={"bay_id" : '+ 1 + '}').success(function(data){
-     console.log(data);
-   });
+  };
 
+  var getBayItems = function () {
+    io.socket.request($scope.socketOptions('get','/bays/bayitems'), function (body, JWR) {
+        console.log('Sails responded with get bay items: ', body);
+        console.log('and with status code: ', JWR.statusCode);
+        if(JWR.statusCode === 200){
+          $scope.bayItems = body;
+          $scope.$digest();
+        }
+    });
   };
 
   getBays();
+  getBayItems();
 
   $scope.showAddBayForm = function (data) {
       $scope.addBayForm = data;
@@ -58,7 +67,7 @@ angular.module('fmApp')
       } 
   };
     
-    $scope.bayClicked = function (user) {
+  $scope.bayClicked = function (user) {
       if($scope.addBayForm === true){
         $scope.showAddBayForm(false);
       }
@@ -70,11 +79,24 @@ angular.module('fmApp')
       $scope.bayDelete.pile_name = $scope.copiedBay.pile_name;
 
       $scope.showEditOrDeleteBayForm(true);
-    };
+  };
 
-    var clearForm = function () {
-      $scope.bay.pile_name = '';
-    }; 
+  var clearForm = function () {
+    $scope.bay.pile_name = '';
+  }; 
+  
+  $scope.getBayCount = function (index) {
+    if($scope.bayItems.length !== 0){
+      console.log($scope.bayItems);
+    console.log(index);
+    var itemIndex = _.findIndex($scope.bayItems, { 'bay_id':index});
+    console.log(itemIndex);
+    return $scope.bayItems[itemIndex].total_products; 
+    }else{
+      return '';
+    }
+    
+  };
 
   $scope.addBay = function (bay) {
       // $sailsSocket.post('/bays', bay).success(function (data) {
