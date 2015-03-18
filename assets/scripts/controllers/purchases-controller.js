@@ -30,6 +30,8 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.skuList = body;
+        console.log("SKU LIST");
+        console.log($scope.skuList);
         $scope.purchase.sku = $scope.skuList[0];
         $scope.$digest();
       }
@@ -96,7 +98,7 @@ angular.module('fmApp')
     $scope.itemExistingError = data;
 
     if(data === true){
-      $scope.itemExisting = sku + " in " + bay + " Bay is already added.";
+      $scope.itemExisting = sku + " in bay" + bay + " is already added.";
     }else{
       $scope.itemExisting= '';
     }
@@ -111,7 +113,8 @@ angular.module('fmApp')
     $scope.purchase.sku = $scope.skuList[0];
     $scope.purchase.bay = $scope.bays[0];
     $scope.purchase.cases = null;
-    $scope.purchase.amount = null;
+    $scope.purchase.cost = null;
+    $scope.purchase.discount = null;
     $scope.purchase.prod_date = new Date();
   };
 
@@ -147,16 +150,19 @@ angular.module('fmApp')
       "bay" : purchase.bay.pile_name,
       "prod_date" : $filter('date')(purchase.prod_date, "yyyy-MM-dd HH:mm:ss"),
       "cases" : purchase.cases,
-      "amount" : purchase.amount
+      "costpercase" : purchase.cost,
+      "discountpercase" : purchase.discount,
+      "amount" : purchase.cases * (purchase.cost - purchase.discount)
     };
     
-    if( _.findIndex($scope.purchases,{ 'sku_id': purchase.sku.id, 'bay_id':purchase.bay.id }) === -1 ){
+    if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id }) === -1 ){
            $scope.purchases.push(purchaseInfo);
-           $scope.totalCost += purchase.amount;
+           $scope.totalCost += purchaseInfo.amount;
     }else{
       $scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
-
+    
+    console.log("Purchases:");
     console.log($scope.purchases);
 
     clearForm();

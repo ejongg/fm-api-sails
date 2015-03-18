@@ -144,7 +144,8 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
         url:'/bad-order',
         views: {
           'mainContent': {
-            templateUrl: 'templates/bad-order.html'
+            templateUrl: 'templates/bad-order.html',
+            controller:'BadOrdersCtrl'
           }
         }  
       })
@@ -161,7 +162,8 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
         url:'/pos',
         views: {
           'mainContent': {
-            templateUrl: 'templates/pos.html'
+            templateUrl: 'templates/pos.html',
+            controller:'POSCtrl'
           }
         }  
       })

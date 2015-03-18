@@ -7,7 +7,7 @@
 <div class="row">
 
     <div class="pageheader-left">
-        <h1> Bad Order </h1>
+        <h1> Bad Orders </h1>
     </div>
 
     <div class="pageheader-right" align="center">
@@ -29,88 +29,108 @@
 
 <!-- DO NOT REMOVE-->
 <div class="container">
-
-
-
-  <div class="panel panel-left col-md-3">
-    <div class="panel-body">
-      <form class="form-horizontal">
-              <fieldset class = "forminput">
-
-                      <div class="form-group">
-                          <label for="inputProductname" class="col-md-6">Product Name</label>
-                          <div class="col-md-12"><input type="text" class="form-control" id="inputProductname" placeholder="Enter product name">
-                          </div>
-                      </div>
-
-                      <div class="form-group">
-                          <label for="inputSize" class="col-md-6">Size</label>
-                          <div class="col-md-12">
-                              <div class="form-control-wrapper"><input type="text" class="form-control" id="inputSize" placeholder="Enter size"><span class="material-input"></span></div>
-                          </div>
-                      </div>
-
-                      <div class="form-group">
-                          <label for="inputBrand" class="col-md-6">Brand</label>
-                          <div class="col-md-12">
-                              <div class="form-control-wrapper"><input type="text" class="form-control" id="inputBrand" placeholder="Enter brand"><span class="material-input"></span></div>
-                          </div>
-                      </div>
-
-                      <div class="form-group">
-                          <label for="inputPrice" class="col-md-6">Price</label>
-                          <div class="col-md-12">
-                              <div class="form-control-wrapper"><input type="number" class="form-control" id="inputPrice" placeholder="Enter price"><span class="material-input"></span></div>
-                          </div>
-                      </div>
+  
+   <div class="panel panel-left col-md-3" ng-show="addBadOrderForm">
+        <div class="panel-body">
+            <form class="form-horizontal" name="badOrderForm" ng-submit="addProduct(product)" novalidate>
+                <fieldset>
                     
-                      <div class="form-group">
-                          <label for="inputBottles" class="col-md-6">No. of Bottles</label>
-                          <div class="col-md-12">
-                              <div class="form-control-wrapper"><input type="number" class="form-control" id="inputBottles" placeholder="Enter no. of bottles"><span class="material-input"></span></div>
-                          </div>
-                      </div>
-
-                       <div class="form-group">
-                          <label for="inputExpense" class="col-md-6">Expense</label>
-                          <div class="col-md-12">
-                              <div class="form-control-wrapper"><input type="number" class="form-control" id="inputExpense" placeholder="Enter lifespan"><span class="material-input"></span></div>
-                          </div>
-                      </div>
-
-                      <div class="form-group">
-                          <label for="inputDate" class="col-md-6">Date</label>
-                          <div class="col-md-12">
-                              <div class="form-control-wrapper"><input type="inputDate" class="form-control" id="expense" placeholder="Enter lifespan"><span class="material-input"></span></div>
-                          </div>
-                      </div>
-
+                    <div class="form-group">
+                        <label for="select" class="col-md-3">Bay</label>
+                        <div class="col-md-12">
+                            <select class="form-control" id="selectType" ng-model="product.bay" ng-options="bay as bay.pile_name for bay in bays">
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
-                          <label for="inputStatus" class="col-md-6">Status</label>
-                          <div class="col-md-12">
-                              <div class="form-control-wrapper"><select class="form-control" id="selectStatus">
-                                    <option>Valid</option>
-                                    <option>Invalid</option>
-                                </select><span class="material-input"></span></div>
-                          </div>
-                      </div>
+                        <label for="select" class="col-md-3">SKU</label>
+                        <div class="col-md-12">
+                            <select class="form-control" id="selectType" ng-model="product.sku" ng-options="sku as combined(sku) for sku in skuList">
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="inputOwnerName" class="col-md-2 control-label">Cases</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" id="inputOwnerName" placeholder="Enter owner name."
+                        ng-model="product.cases" required>
+                        </div>
+                    </div>
 
-                  </fieldset>
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-2 control-label">Reason</label>
+                        <div class="col-md-12">
+                        <textarea name="" id="" cols="45" rows="5" ng-model="product.reason"></textarea>
+                        </div>
+                    </div>
 
+                       <div class="alert alert-dismissable alert-danger" ng-show="itemExistingError">
+                      <button type="button" class="close" ng-click="showItemExistingError(false)">×</button>
+                      <strong>{{itemExisting}}</strong>
+                    </div> 
 
-      </form>
+                    <div class="form-group rightalign">
+                        <button type="submit" class="btn btn-primary" ng-disabled="badOrderForm.$invalid">Add</button>
+                    </div>
 
+                </fieldset>
+            </form>
 
-    <div class="icon-preview">
-      <a class="btn btn-primary pull-right btn-md">Add</a>
-      <br>
+            <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Cases</th>
+                        <th>Expense</th>
+                        <th>Reason</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="product in products">
+                        <td>{{product.sku_name}}</td>
+                        <td>{{product.cases}}</td>
+                        <td>{{product.expense}}</td>
+                        <td>{{product.reason}}</td>
+                        <td><button ng-click="deleteProduct($index)">Delete</button></td>
+                    </tr>
+
+                    <!-- DON'T REMOVE CODE BELOW -->
+
+                </tbody>
+            </table>
+            
+            <form name="submitBadOrderForm" ng-submit="submitBadOrders()" novalidate>
+              
+                <div class="form-group">
+                    <label for="inputAddress" class="col-md-2 control-label">Accountable</label>
+                    <div class="col-md-12">
+                    <input type="text" class="form-control" id="inputOwnerName" placeholder="Enter owner name."
+                            ng-model="accountable" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                <label for="inputAddress" class="col-md-2 control-label">Total Cost</label>
+                  <div class="col-md-12"><input type="number" class="form-control" id="inputAddress" value=""
+                  ng-model="totalExpense" disabled>
+                </div>
+                </div>
+
+                <div class="icon-preview">
+                    <div class="form-group rightalign">
+                  <button type="submit" class="btn btn-primary" ng-disabled="submitBadOrderForm.$invalid || !products.length">Submit</button>  
+                  <button type="button" class="btn btn-default" ng-click="showAddBadOrderForm(false)">Cancel</button>
+                   </div>
+                <br>
+                </div>
+
+            </form>
+            
+        </div>
     </div>
-
-  
-  </div>
-</div>
 
     <!-- RIGHT PANEL -->
 
@@ -123,92 +143,27 @@
 
         <thead>
           <tr class="labels">
-            <th>Product Name</th>
-            <th>Size</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Bottles</th>
+            <th>Bad Order #</th>
             <th>Expense</th>
-            <th>Date</th>
-            <th>Status</th>
+            <th>Accountable</th>
+             <th>Date</th>
           </tr>
         </thead>
 
         <tbody>
-
-          <tr>
-            <td>Coke</td>
-            <td>1L</td>
-            <td>Coca-Cola</td>
-            <td>400</td>
-            <td>35.00</td>
-            <td>240.00</td>
-            <td>12/13/2014</td>
-            <td>Valid</td>
+          <tr ng-repeat="badOrder in badOrdersList" ng-click="getBadOrderDetails(badOrder.id)">
+            <td>{{badOrder.id}}</td>
+            <td>{{badOrder.expense}}</td>
+            <td>{{badOrder.accountable}}</td>
+            <td>{{badOrder.date}}</td>
           </tr>
-
-          <tr>
-            <td>Royal</td>
-            <td>12oz</td>
-            <td>Coca-Cola</td>
-            <td>400</td>
-            <td>35.00</td>
-            <td>240.00</td>
-            <td>12/13/2014</td>
-            <td>Valid</td>
-          </tr>
-
-          <tr>
-            <td>Royal</td>
-            <td>12oz</td>
-            <td>Coca-Cola</td>
-            <td>400</td>
-            <td>35.00</td>
-            <td>240.00</td>
-            <td>12/13/2014</td>
-            <td>Valid</td>
-          </tr>
-
-          <tr>
-            <td>Coke</td>
-            <td>1L</td>
-            <td>Coca-Cola</td>
-            <td>400</td>
-            <td>35.00</td>
-            <td>240.00</td>
-            <td>12/13/2014</td>
-            <td>Valid</td>
-          </tr>
-
-          <tr>
-            <td>Coke</td>
-            <td>1L</td>
-            <td>Coca-Cola</td>
-            <td>400</td>
-            <td>35.00</td>
-            <td>240.00</td>
-            <td>12/13/2014</td>
-            <td>Valid</td>
-          </tr>
-
-          <tr>
-            <td>Pale Pilsen</td>
-            <td>1L</td>
-            <td>SMB</td>
-            <td>400</td>
-            <td>35.00</td>
-            <td>240.00</td>
-            <td>12/13/2014</td>
-            <td>Valid</td>
-          </tr>
-
         </tbody>
 
       </table>
 
       
     <div class="icon-preview">
-      <a class="btn btn-primary pull-right btn-md">Add</a>
+      <a class="btn btn-primary pull-right btn-md" ng-click="showAddBadOrderForm(true)">Add</a>
       <br>
     </div>
 
@@ -221,7 +176,41 @@
     <br>
 
 
-</div>
+  </div>
+  </div>
+
+  <div class="panel panel-left col-md-3" ng-show="viewBadOrderDetails">
+        <div class="panel-body">
+            <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Cases</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="badOrder in badOrderDetails">
+                        <td>{{badOrder.sku_id.sku_name + " " + badOrder.sku_id.size}}</td>
+                        <td>{{badOrder.cases}}</td>
+                        <td>{{badOrder.reason}}</td>
+                    </tr>
+
+                    <!-- DON'T REMOVE CODE BELOW -->
+
+                </tbody>
+            </table>
+
+            <div class="icon-preview">
+               <div class="form-group rightalign">
+              <button type="button" class="btn btn-default" ng-click="showViewBadOrderDetails(false)">Close</button>
+               </div>
+            <br>
+            </div>
+        </div>
+    </div>
+
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->

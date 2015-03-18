@@ -261,6 +261,9 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         console.log("Product Created");
+        if($scope.products.length === 0){
+          $scope.noExistingProduct = false;
+        }
         $scope.products.push(msg.data);
         $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.$digest();
