@@ -47,7 +47,7 @@ module.exports = {
   	status : {
   		type : 'string',
   		required : true,
-      defaultsTo : 'pending'
+      defaultsTo : 'To be delivered'
   	},
   	user : {
   		type : 'string',
