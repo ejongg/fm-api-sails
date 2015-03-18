@@ -6,6 +6,7 @@
  */
 var _ = require('lodash');
 var moment = require('moment');
+var async = require('async');
 
 module.exports = {
 	add : function(req, res){
@@ -75,14 +76,40 @@ module.exports = {
 								sails.sockets.blast('customer_orders', {verb : 'created', data : populated_cust_order});								
 							});
 
-						// DeliveryService.assignOrder(new_cust_order.id, user);
 					});				
 			});
 		});
 	},
 
-	test : function(req, res){
-		DeliveryService.assignOrder(1, 'Sonic');
+	list : function(req, res){
+		var orders_with_products = [];
+
+		Customer_orders.find().populate('customer_id')
+			.then(function getOrders(orders){
+
+				async.each(orders, function(order, cb){
+					delete order.user;
+					delete order.createdAt;
+					delete order.updatedAt;
+
+					Customer_order_products.find({order_id : order.id}).populate('sku_id')
+						.then(function getProducts(products){
+							orders_with_products.push({order : order, products : products});
+							cb();							
+						});					
+
+				}, function(err){
+					if(err)
+						console.log(err);
+
+					return res.send(orders_with_products);
+				});
+
+			}, 
+
+			function(err){
+				console.log(err);
+			});
 	}
 };
 
