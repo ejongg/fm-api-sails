@@ -35,12 +35,9 @@ module.exports = {
 							if(bottles > 0){
 								if(skus[index].bottles > 0){
 									skus[index].bottles = Math.max(0, skus[index].bottles - bottles);
-
-									if((skus[index].bottles - (skus[index].physical_count * bottlespercase)) < bottlespercase){
-										skus[index].physical_count = Math.max(0, skus[index].physical_count - 1);
-										skus[index].logical_count = Math.max(0, skus[index].logical_count - 1);								
-									}
-
+									skus[index].physical_count = Math.max(0, skus[index].physical_count - 1);
+									skus[index].logical_count = Math.max(0, skus[index].logical_count - 1);								
+									
 									if(skus[index].bottles > bottles){
 										bottles = 0
 									}else{
@@ -54,6 +51,48 @@ module.exports = {
 						}else{
 							index++;
 						}
+
+						cb();		
+					},
+
+					function(err){
+						if(err)
+							console.log(err);
+					}
+				);
+				
+			})
+	},
+
+	LO_updateInventory : function(sku_id, cases, bottlespercase){
+		Inventory.find({sku_id : sku_id})
+			.then(function(skus){
+				var index = 0;
+
+				async.whilst(
+					function condition(){
+						return cases > 0;
+					},
+
+					function bottlesAndCasesHandler(cb){
+						var current_physical_count = skus[index].physical_count;
+
+							if(cases > 0){
+								if(skus[index].physical_count > 0){
+									skus[index].bottles = Math.max(0, skus[index].bottles - (cases * bottlespercase));
+									skus[index].physical_count = Math.max(0, skus[index].physical_count - cases);
+									skus[index].save(function(err, saved){});
+
+									if(skus[index].physical_count > cases){
+										cases = 0;
+									}else{
+										cases = cases - current_physical_count;
+										index++;
+									}
+								}else{
+									index++;
+								}
+							}
 
 						cb();		
 					},
