@@ -9,7 +9,7 @@ module.exports = {
 	available : function(req, res){
 		var available = [];
 
-		Inventory.find()
+		Inventory.find().populate('sku_id')
 			.then(function getAvailableSkus(inventory_items){
 
 				(inventory_items).forEach(function(item){
