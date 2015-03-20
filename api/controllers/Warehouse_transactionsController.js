@@ -71,7 +71,7 @@ module.exports = {
 								},
 
 								function updateInventory(cb){
-									InventoryService.updateInventory(product.sku_id, product.bottles, product.cases, product.bottlespercase);
+									InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase);
 									cb();
 								}
 
