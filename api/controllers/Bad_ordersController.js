@@ -19,6 +19,7 @@ module.exports = {
 		Bad_orders.create(bad_order)
 			.exec(function(err, created_bad_order){
 				(products).forEach(function(product){
+
 					var item = {
 						bad_order_id : 	created_bad_order.id,
 						sku_id : product.sku_id,
@@ -34,7 +35,7 @@ module.exports = {
 
 					async.series([
 						function deductInInventory(cb){
-							InventoryService.updateInventory(product.sku_id, product.bottles, product.cases, product.bottlespercase);
+							InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase);
 							cb();	
 						},
 
@@ -44,6 +45,7 @@ module.exports = {
 							cb();
 						}
 					]);
+
 				});
 			});
 	}
