@@ -14,10 +14,18 @@ module.exports = {
       autoIncrement : true,
       columnName: 'bay_id'
     },
-  	pile_name : {
+  	bay_name : {
   		type : 'string',
   		required : true
   	},
+    pile_status : {
+      type : 'string',
+      defaultsTo : 'Full goods'
+    },
+    bay_label : {
+      type : 'string',
+      required : true
+    },
   	products : {
   		collection : 'inventory',
   		via : 'bay_id'
@@ -25,15 +33,18 @@ module.exports = {
   },
 
   afterCreate : function(bay, next){
-    Bays.publishCreate(bay);
+    sails.sockets.blast('bays', {verb : 'created', data : bay});
+    next();
   },
 
   afterUpdate : function(bay, next){
-    Bays.publishUpdate(bay.id, bay);
+    sails.sockets.blast('bays', {verb : 'updated', data : bay});
+    next();
   },
 
   afterDestroy : function(bay, next){
     sails.sockets.blast('bays', {verb : 'destroyed', data : bay});
+    next();
   }
 };
 

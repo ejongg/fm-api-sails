@@ -38,11 +38,13 @@ module.exports = {
   },
 
   afterUpdate : function(warehouse_transaction, next){
-    Warehouse_transactions.publishUpdate(warehouse_transaction.id, warehouse_transaction);
+    sails.sockets.blast('warehouse_transactions', {verb : 'updated', data : warehouse_transaction});
+    next();
   },
 
   afterDestroy : function(warehouse_transaction, next){
-    sails.sockets.blast('warehouse_transactions', {verb : 'destroyed', data : warehouse_transaction});;
+    sails.sockets.blast('warehouse_transactions', {verb : 'destroyed', data : warehouse_transaction});
+    next();
   }
 };
 

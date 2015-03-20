@@ -56,11 +56,13 @@ module.exports = {
   },
 
   afterUpdate : function(delivery_transaction, next){
-    Delivery_transactions.publishUpdate(delivery_transaction.id, delivery_transaction);
+    sails.sockets.blast('delivery_transactions', {verb : 'updated', data : delivery_transaction});
+    next();
   },
 
   afterDestroy : function(delivery_transaction, next){
     sails.sockets.blast('delivery_transactions', {verb : 'destroyed', data : delivery_transaction});
+    next();
   }
 };
 

@@ -27,11 +27,13 @@ module.exports = {
   },
 
   afterUpdate : function(warehouse_product, next){
-    Warehouse_products.publishUpdate(warehouse_product.id, warehouse_product);
+    sails.sockets.blast('warehouse_products', {verb : 'updated', data : warehouse_product});
+    next();
   },
 
   afterDestroy : function(warehouse_product, next){
     sails.sockets.blast('warehouse_products', {verb : 'destroyed', data : warehouse_product});
+    next();
   }
 };
 
