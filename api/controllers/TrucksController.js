@@ -49,8 +49,9 @@ module.exports = {
 
 	confirm_loadout : function(req, res){
 		var truck = req.body.truck_id;
+		var delivery_date = req.body.delivery_date;
 
-		Delivery_transactions.find({truck_id : truck, status : 'To be delivered'})
+		Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date})
 			.then(function getDeliveries(delivery_transactions){
 
 				(delivery_transactions).forEach(function(transaction){
@@ -59,7 +60,7 @@ module.exports = {
 						.then(function getDeliveryProducts(products){
 
 							(products).forEach(function(product){
-								InventoryService.LO_updateInventory(product.sku_id.id, product.cases, product.sku_id.bottlespercase);								
+								InventoryService.LO_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase);								
 							});
 
 						});
