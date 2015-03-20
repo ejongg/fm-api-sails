@@ -37,7 +37,10 @@ module.exports = {
   		type : 'string',
   		required : true
   	},
-
+    total_amount : {
+      type : 'integer',
+      required : true
+    },
     products : {
       collection : 'customer_order_products',
       via : 'order_id'

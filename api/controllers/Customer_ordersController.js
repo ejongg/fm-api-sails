@@ -14,6 +14,7 @@ module.exports = {
 		var orders = req.body.orders;
 		var cokeagent_name = req.body.cokeagent_name;
 		var user = req.body.user;
+		var total_amount = req.body.total_amount;
 
 		/**
 		*	Find a customer if it doesn't exist create a new one
@@ -40,7 +41,8 @@ module.exports = {
 				customer_id : new_customer.id,
 				cokeagent_name : cokeagent_name,
 				date_received : moment().format('MM-DD-YYYY'),
-				user  : user
+				user  : user,
+				total_amount : total_amount
 			}).exec(function(err, new_cust_order){
 				if(err)
 					res.json({error : 'An error has occured'});

@@ -15,10 +15,10 @@ module.exports = {
 		(orders).forEach(function(order){
 			var delivery = {
 				total_amount : order.total_amount,				
-				customer_id : order.customer_id,
+				customer_id : order.customer_id.id,
 				delivery_date : delivery_date,
 				truck_id : truck_id,
-				order_id : order.order_id,
+				order_id : order.id,
 				user : user	
 			};
 
