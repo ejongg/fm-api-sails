@@ -2,7 +2,7 @@ module.exports = function(req, res, next){
 	var token;
 	
 	if(req.isSocket){
-		var auth = req.socket.handshake.headers.authorization;
+		var auth = req.headers.authorization;
 
 		if(auth){
 			var parts = auth.split(' ');
