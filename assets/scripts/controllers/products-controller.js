@@ -34,10 +34,11 @@ angular.module('fmApp')
   getProducts();
 
   $scope.showAddProductForm = function (data) {
-      $scope.addProductForm = data;
-      if($scope.editOrDeleteProductForm === true) {
-        $scope.editOrDeleteProductForm(false);
+    if($scope.editOrDeleteProductForm === true) {
+        $scope.showEditOrDeleteProductForm(false);
       }
+      
+      $scope.addProductForm = data;
       if(data === false){
         if($scope.newProductTab === false){
           $scope.setNewProductTab(true);
