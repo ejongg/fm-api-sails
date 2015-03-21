@@ -8,38 +8,37 @@ var async = require('async');
 
 module.exports = {
 	bayitems : function getBayProducts(req, res){
-		var bays_with_products = [];
+		
+		Bays.find()
+			.then(function getBays(bays){
+				return bays;
+			},
 
-		async.series([
-			function(cb){
-				Bays.find().exec(function(err, bays){
-					(bays).forEach(function(bay){
+			function(err){
+				console.log(err);
+			})
 
-						Inventory.find({bay_id : bay.id})
-							.exec(function(err, products){
-								var total_count = 0;
+			.then(function CountBayProducts(bays){
+				var baysWithProductCount = [];
 
-								async.each(products, function(product, cb){
-									total_count = total_count + product.physical_count;
-									cb();
-								}, function(err){
-									if(err) 
-										console.log(err);
-
-									bays_with_products.push({bay_id : bay.id, total_products : total_count});
-									cb();
-								});	
-							});	
+				async.each(bays, function fillArray(bay, cb){
+					BaysService.countBayItems(bay.id, function(err, count){
+						baysWithProductCount.push({bay_id : bay.id, total_products : count});
+						cb();
 					});
+				},
+				function (err){
+					if(err)
+						console.log(err);
+
+					return res.send(baysWithProductCount);
 				});
 
 			},
 
-			function(cb){
-				return res.send(bays_with_products);
-				cb();
-			}
-		]);
+			function(err){
+				console.log(err);
+			});
 	}
 };
 
