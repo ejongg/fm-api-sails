@@ -76,7 +76,7 @@ module.exports = {
 				function(cb){
 					if(availableTrucks[index].current_load_weight + total_weight < availableTrucks[index].carry_weight){
 						var delivery = {
-							delivery_date : moment().add(1, 'days').format('MM-DD-YYYY'),
+							delivery_date : moment().add(1, 'days').format('YYYY-MM-DD'),
 							customer_id : cust_id,
 							truck_id : availableTrucks[index].id,
 							order_id : order_id,
