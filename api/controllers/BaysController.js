@@ -39,6 +39,38 @@ module.exports = {
 			function(err){
 				console.log(err);
 			});
+	},
+
+	changemovingpile : function changeMovingPile(req, res){
+		var currentMovingPile = req.body.current_bay;
+		var newMovingPile = req.body.next_bay;
+
+		async.parallel([
+			function updateCurrentMovingPile(){
+				Bays.findOne({bay_id : currentMovingPile})
+					.then(function(current){
+						current.pile_status = "Full goods";
+						current.save(function(err, saved){});
+					},
+					function(err){
+						console.log(err);
+					});
+			},
+
+			function updateNewMovingPile(){
+				Bays.findOne({bay_id : newMovingPile})
+					.then(function(next){
+						next.pile_status = "Moving pile";
+						next.save(function(err, saved){});
+					},
+
+					function(err){
+						console.log(err);
+					});
+			}
+		], function emitEvent(err, cb){
+			sails.sockets.blast('bays', {verb : 'change_pile'});
+		});
 	}
 };
 
