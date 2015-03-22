@@ -1,70 +1,97 @@
+var async = require('async');
+var moment = require('moment');
+
 module.exports = {
 	
-	deduct : function (sku_id, bottles, cases, bottlespercase){
-		Inventory.find({sku_id : sku_id})
-			.then(function(skus){
-				var index = 0;
+	deduct : function (sku_id, bottles, cases, bottlespercase, exp_date){
+		var company;
+		var bay_id;
 
-				async.whilst(
-					function condition(){
-						return cases > 0 || bottles > 0;
-					},
+		async.series([
+			function getSkuCompany(cb_series){
+				Sku.findOne({sku_id : sku_id}).populate('prod_id')
+					.then(function(sku){
+						company = sku.prod_id.company;
+						cb_series();
+					});
+			},
 
-					function bottlesAndCasesHandler(cb){
-						var current_physical_count = skus[index].physical_count;
-						var current_bottles_count = skus[index].bottles;
+			function getMovingPile(cb_series){
+				Bays.findOne({pile_status : "Moving pile", bay_label : company})
+					.then(function(bay){
+						bay_id = bay.id;
+						cb_series();
+					});
+			},
 
-						if(skus[index].bottles > 0 || skus[index].physical_count > 0){
+			function updateInventory(cb_series){
+				Inventory.find({sku_id : sku_id, bay_id : bay_id})
+					.then(function(skus){
+						var index = 0;
 
-							if(bottles > 0){
-								if(skus[index].bottles > 0){
-									skus[index].bottles = Math.max(0, skus[index].bottles - bottles);
-									skus[index].physical_count = Math.max(0, skus[index].physical_count - 1);
-									skus[index].logical_count = Math.max(0, skus[index].logical_count - 1);								
-									
-									if(skus[index].bottles > bottles){
-										bottles = 0
-									}else{
-										bottles = bottles - current_bottles_count;
-									}
+						async.whilst(
+							function condition(){
+								return cases > 0 || bottles > 0;
+							},
 
-									skus[index].save(function(err, saved){});
-								}
-							}
+							function bottlesAndCasesHandler(cb_while){
+								var current_physical_count = skus[index].physical_count;
+								var current_bottles_count = skus[index].bottles;
 
-							if(cases > 0){
 								if(skus[index].physical_count > 0){
-									skus[index].bottles = Math.max(0, skus[index].bottles - (cases * bottlespercase));
-									skus[index].physical_count = Math.max(0, skus[index].physical_count - cases);
-									skus[index].logical_count = Math.max(0, skus[index].logical_count - cases);
-									skus[index].save(function(err, saved){});
 
-									if(skus[index].physical_count > cases){
-										cases = 0;
-									}else{
-										cases = cases - current_physical_count;
-										index++;
+									if(bottles > 0){
+										skus[index].bottles = Math.max(0, skus[index].bottles - bottlespercase);
+										skus[index].physical_count = Math.max(0, skus[index].physical_count - 1);
+										skus[index].logical_count = Math.max(0, skus[index].logical_count - 1);								
+										skus[index].save(function(err, saved){});
+
+										var inc_case = {
+											sku_id : sku_id,
+											exp_date : exp_date,
+											bottles : bottlespercase - bottles
+										};
+
+										Incomplete_cases.create(inc_case).exec(function(err, incompletes){});
 									}
+
+									if(cases > 0){
+										if(skus[index].physical_count > 0){
+											skus[index].bottles = Math.max(0, skus[index].bottles - (cases * bottlespercase));
+											skus[index].physical_count = Math.max(0, skus[index].physical_count - cases);
+											skus[index].logical_count = Math.max(0, skus[index].logical_count - cases);
+											skus[index].save(function(err, saved){});
+
+											if(skus[index].physical_count > cases){
+												cases = 0;
+											}else{
+												cases = cases - current_physical_count;
+												index++;
+											}
+										}
+									}							
+
+								}else{
+									index++;
 								}
-							}							
 
-						}else{
-							index++;
-						}
+								cb_while();
+							},
 
-						cb();		
-					},
+							function(err){
+								if(err)
+									console.log(err);
 
-					function(err){
-						if(err)
-							console.log(err);
-					}
-				);
-				
-			});
+								cb_series();
+							}
+						);
+						
+					});
+			}
+		]);
 	},
 
-	put : function(sku_id, cases, bottlespercase, bay_id, exp_date){
+	put : function(sku_id, cases, bottlespercase, bay_id, exp_date, lifespan){
 		
 		Inventory.findOne({sku_id : sku_id, bay_id : bay_id, exp_date : exp_date})
 			.then(function findInInventory(found_sku){
@@ -78,7 +105,7 @@ module.exports = {
 					var item = {
 						bay_id : bay_id,
 						sku_id : sku_id,
-						exp_date : exp_date,
+						exp_date : moment(exp_date, 'YYYY-MM-DD').add(lifespan, 'M'),
 						bottles : cases * bottlespercase,
 						physical_count : cases,
 						logical_count : cases
