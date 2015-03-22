@@ -13,7 +13,7 @@ module.exports = {
 		var bad_order = {
 			expense : req.body.total_expense,
 			accountable : req.body.accountable,
-			date : moment().format('MM-DD-YYYY')
+			date : moment().format('YYYY-MM-DD')
 		};
 
 		Bad_orders.create(bad_order)
