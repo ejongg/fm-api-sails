@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('PurchasesCtrl',['$scope','$sailsSocket','_','$http','$filter', function($scope, $sailsSocket, _, $http, $filter){
+.controller('PurchasesCtrl',['$scope','_','$http','$filter', function($scope, _, $http, $filter){
   $scope.purchasesList = [];
   $scope.skuList = [];
   $scope.bays = [];

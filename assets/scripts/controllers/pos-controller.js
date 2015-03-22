@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('POSCtrl',['$scope','$sailsSocket','_','$http', function($scope, $sailsSocket, _, $http){
+.controller('POSCtrl',['$scope','_','$http', function($scope, _, $http){
   $scope.skuList = [];
   $scope.transaction = {};
   $scope.transactionItems = [];

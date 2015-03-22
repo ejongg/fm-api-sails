@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('BaysCtrl',['$scope','$sailsSocket','_','$http', function($scope, $sailsSocket, _, $http){
+.controller('BaysCtrl',['$scope','_','$http', function($scope, _, $http){
   $scope.bays = [];
   $scope.bayItems = [];
   $scope.existingCompany = [];

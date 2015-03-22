@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('AccountsCtrl',['$scope','$sailsSocket','_', function($scope, $sailsSocket, _){
+.controller('AccountsCtrl',['$scope','_', function($scope, _){
 	$scope.types = ['admin','encoder','checker','cashier'];
 	$scope.users = [];
 

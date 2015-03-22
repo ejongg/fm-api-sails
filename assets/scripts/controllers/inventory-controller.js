@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('InventoryCtrl',['$scope','$http','$sailsSocket','$filter', function($scope, $http, $sailsSocket, $filter){
+.controller('InventoryCtrl',['$scope','$http','$filter', function($scope, $http, $filter){
   $scope.inventory = [];
   $scope.sku = [];
   $scope.bays = [];

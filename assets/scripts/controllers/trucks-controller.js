@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('TrucksCtrl',['$scope','$sailsSocket','_','$http', function($scope, $sailsSocket, _, $http){
+.controller('TrucksCtrl',['$scope','_','$http', function($scope, _, $http){
   $scope.trucks = [];
   $scope.editIndex = -1;
   $scope.truck = {};

@@ -29,6 +29,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
       url:'/admin',
       abstract: true,
       templateUrl: 'templates/main.html',
+      controller: 'MainCtrl',
       data: {
         access: accessLevels.admin
       }
@@ -109,6 +110,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
       url:'/encoder',
       abstract: true,
       templateUrl: 'templates/main.html',
+      controller: 'MainCtrl',
       data: {
         access: accessLevels.encoder
       }
@@ -154,6 +156,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
       url:'/cashier',
       abstract: true,
       templateUrl: 'templates/main.html',
+      controller: 'MainCtrl',
       data: {
         access: accessLevels.cashier
       }
@@ -173,6 +176,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
       url:'/checker',
       abstract: true,
       templateUrl: 'templates/main.html',
+      controller: 'MainCtrl',
       data: {
         access: accessLevels.checker
       }
@@ -235,7 +239,9 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
 
 
 
-.controller('MainCtrl',['$scope', 'authService', '$http','httpHost','$state','$filter', function($scope, authService, $http, serviceHost, $state, $filter){
+.controller('MainCtrl',['$scope', 'authService', '$state', 'userService', function($scope, authService, $state, userService){
+  $scope.userType =  userService.getUserType();
+
   $scope.logout = function () {
     authService.logout();
     $state.go('login');

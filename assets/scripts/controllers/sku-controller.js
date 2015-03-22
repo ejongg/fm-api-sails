@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('SKUCtrl',['$scope','$sailsSocket','_', function($scope, $sailsSocket, _){
+.controller('SKUCtrl',['$scope','_', function($scope, _){
 	$scope.products = [];
   $scope.skuLists = [];
 	$scope.existingCompany = [];

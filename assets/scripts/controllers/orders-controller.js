@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('OrdersCtrl',['$scope','$sailsSocket','_','$http', function($scope, $sailsSocket, _, $http){
+.controller('OrdersCtrl',['$scope','_','$http', function($scope, _, $http){
   $scope.distanceRatings = [1,2,3,4,5];
   $scope.skuList = [];
   $scope.ordersList = [];

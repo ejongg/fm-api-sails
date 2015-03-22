@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('ProductsCtrl2',['$scope','$sailsSocket','_','$filter', function($scope, $sailsSocket, _,$filter){
+.controller('ProductsCtrl2',['$scope','_','$filter', function($scope, _,$filter){
   $scope.addProduct = false;
   $scope.newProductTab = true;
   $scope.products = [];

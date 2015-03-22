@@ -12,8 +12,15 @@ angular.module('fmApp')
 	  getUser : function () {
 	  	token = authService.getToken();
       user = jwtHelper.decodeToken(token);
-      return user
-	  }
+      return user;
+	  },
+
+     getUserType : function () {
+      token = authService.getToken();
+      user = jwtHelper.decodeToken(token);
+      return user.type;
+     }
+
       
    //  setAccessLevel: function (userInfo) {
    //    switch (userInfo.type) {
