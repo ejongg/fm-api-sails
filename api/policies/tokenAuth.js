@@ -11,10 +11,10 @@ module.exports = function(req, res, next){
 				token = parts[1];
 			}
 		}else{
-			return res.json({error : "Unauthorized", message : "Wrong format"});
+			return res.forbidden({error : "Unauthorized", message : "Wrong format"});
 		}
 	}else{
-		return res.json({error : "Unauthorized", message : "Token not found"});
+		return res.forbidden({error : "Unauthorized", message : "Token not found"});
 	}
 	
 	Auth.verifyToken(token, function(err, token){
