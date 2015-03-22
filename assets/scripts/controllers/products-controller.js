@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost', function($scope, $http, _,$filter, httpHost){
+.controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost','authService', function($scope, $http, _,$filter, httpHost, authService){
 
   $scope.products = [];
   $scope.existingCompany = [];
@@ -109,7 +109,7 @@ angular.module('fmApp')
   $scope.addProduct = function (product) {
     console.log("clicked add");
     console.log(product);
-    io.socket.request($scope.socketOptions('post','/products',{},product), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/products',{"Authorization": "Bearer " + authService.getToken()},product), function (body, JWR) {
       console.log('Sails responded with post product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 400){
@@ -119,7 +119,7 @@ angular.module('fmApp')
   };
 
   $scope.editProduct = function (newInfo) {
-    io.socket.request($scope.socketOptions('put','/products/' + newInfo.id,{},newInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/products/' + newInfo.id,{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
       console.log('Sails responded with edit product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -130,7 +130,7 @@ angular.module('fmApp')
 
   $scope.deleteProduct = function (product) {
     console.log(product);
-    io.socket.request($scope.socketOptions('delete','/products/' + product.id,{}), function (body, JWR) {
+    io.socket.request($scope.socketOptions('delete','/products/' + product.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -148,7 +148,7 @@ angular.module('fmApp')
       case "created": 
         console.log("Product Created");
         
-        if($scope.products.length === 0){
+        if($scope.noProducts === true){
           $scope.noProducts = false;
         }
 

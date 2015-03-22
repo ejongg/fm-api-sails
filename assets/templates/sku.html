@@ -135,12 +135,17 @@
 
                     <div class="form-group">
                         <label for="inputProductName" class="col-md-12">
-
                         Product Name</label>
-
                         <div class="col-md-12">
-                          <select class="form-control" ng-model="skuEdit.sku_name" ng-options="product.brand_name as product.brand_name for product in products">
+                          <select class="form-control" ng-model="skuEdit.brand_name" ng-options="product.brand_name as product.brand_name for product in products">
                           </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice" class="col-md-12">
+                        SKU Name</label> 
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputPrice" placeholder="Enter sku name." ng-model="skuEdit.sku_name" required>
                         </div>
                     </div>
 
@@ -150,7 +155,7 @@
                         <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" id="inputSize" placeholder="Enter size." ng-model="skuEdit.size" required>
                         </div>
                         <div class="col-md-6">
-                          <select class="form-control" ng-model="skuEdit.unit">
+                          <select class="form-control" ng-model="skuEdit.unit" ng-init="skuEdit.unit = units[0]">
                             <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
                           </select>
                         </div>
@@ -158,16 +163,37 @@
 
                     <div class="form-group">
                         <label for="inputPrice" class="col-md-12">
-                        Price</label> 
-                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price." ng-model="skuEdit.price" required>
+                        Price per bottle</label> 
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price per bottle." ng-model="skuEdit.priceperbottle" required>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice" class="col-md-12">
+                        Price per case</label> 
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter price per case." ng-model="skuEdit.pricepercase" required>
+                       </div>
                     </div>
 
 
                     <div class="form-group">
                         <label for="inputBottlePerCase" class="col-md-12">
-                        No. of Bottle/Case</label> 
+                        No. of Bottle per Case</label> 
                         <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="skuEdit.bottlespercase" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice" class="col-md-12">
+                        Weight per case (kg)</label> 
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter price per case." ng-model="skuEdit.weightpercase" required>
+                       </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputBottlePerCase" class="col-md-12">
+                        Lifespan (Months)</label> 
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of lifespan." ng-model="skuEdit.lifespan"required>
                         </div>
                     </div>
 
@@ -192,20 +218,19 @@
                 <fieldset>
 
                     <div class="form-group">
-                        <label for="inputProductName" class="col-md-12">
-                        Product Name</label>
-                        <div class="col-md-12">
-                          <input type="text" class="form-control" id="inputPrice" placeholder="Enter price." ng-model="skuDelete.sku_name" disabled>
+                        <label for="inputPrice" class="col-md-12">
+                        SKU Name</label> 
+                        <div class="col-md-12"><input type="text" class="form-control" id="inputPrice" placeholder="Enter sku name." ng-model="skuDelete.sku_name" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSize" class="col-md-12">
                         Size</label> 
-                        <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" id="inputSize" placeholder="Enter size." ng-model="skuDelete.size" disabled>
+                        <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" id="inputSize" placeholder="Enter size." ng-model="skuDelete.size" required>
                         </div>
                         <div class="col-md-6">
-                          <select class="form-control" ng-model="skuDelete.unit" disabled>
+                          <select class="form-control" ng-model="skuDelete.unit" ng-init="skuDelete.unit = units[0]">
                             <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
                           </select>
                         </div>
@@ -213,16 +238,37 @@
 
                     <div class="form-group">
                         <label for="inputPrice" class="col-md-12">
-                        Price</label> 
-                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price." ng-model="skuDelete.price"disabled>
+                        Price per bottle</label> 
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputPrice" placeholder="Enter price per bottle." ng-model="skuDelete.priceperbottle" required>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice" class="col-md-12">
+                        Price per case</label> 
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter price per case." ng-model="skuDelete.pricepercase" required>
+                       </div>
                     </div>
 
 
                     <div class="form-group">
                         <label for="inputBottlePerCase" class="col-md-12">
-                        No. of Bottle/Case</label> 
-                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="skuDelete.bottlespercase" disabled>
+                        No. of Bottle per Case</label> 
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="skuDelete.bottlespercase" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice" class="col-md-12">
+                        Weight per case (kg)</label> 
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter price per case." ng-model="skuDelete.weightpercase" required>
+                       </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputBottlePerCase" class="col-md-12">
+                        Lifespan (Months)</label> 
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of lifespan." ng-model="skuDelete.lifespan"required>
                         </div>
                     </div>
 
@@ -256,7 +302,7 @@
     <div class="panel panel-right col-md-8">
         <div class="panel-body">
 
-        <div class="form-group">
+        <div class="form-group" ng-hide="noProducts">
           <label for="select" class="col-md-3">Company Name</label>
             <div class="col-md-5">
                 <select class="form-control" ng-model="companyFilter" ng-options="product.company as product.company for product in existingCompany">
@@ -265,7 +311,15 @@
             </div>
         </div>
 
+      <div ng-show="noProducts">
+        <p>NO PRODUCTS, ADD PRODUCT FIRST</p>
+      </div>
 
+      <div ng-show="noSKU && !noProducts">
+        <p>NO SKU</p>
+      </div>
+
+      <div ng-hide="noProducts || noSKU"> 
       <table class="table variantTable table-striped table-hover">
 
               <thead>
@@ -279,7 +333,10 @@
                       <th>Company&nbsp;
             <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
             <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Price&nbsp;
+                      <th>Price Per Bottle&nbsp;
+            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      <th>Price Per Case&nbsp;
             <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
             <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>Bottles&nbsp;
@@ -293,17 +350,19 @@
                     <td>{{sku.sku_name}}</td>
                     <td>{{sku.size}}</td>
                     <td>{{sku.prod_id.company}}</td>
-                    <td>{{sku.price}}</td>
+                    <td>{{sku.priceperbottle}}</td>
+                    <td>{{sku.pricepercase}}</td>
                     <td>{{sku.bottlespercase}}</td>
                   </tr>
               </tbody>
           </table>
+    </div>
 
     <!-- END OF TABLE -->
     
 
     <div class="icon-preview">
-      <a class="btn btn-primary pull-right btn-md" ng-click="showAddSkuForm(true)">Add</a>
+      <a class="btn btn-primary pull-right btn-md" ng-hide="noProducts" ng-click="showAddSkuForm(true)">Add</a>
       <br>
     </div>
 
