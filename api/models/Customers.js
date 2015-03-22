@@ -39,12 +39,10 @@ module.exports = {
 
   afterUpdate : function(customer, next){
     sails.sockets.blast('customers', {verb : 'updated', data : customer});
-    next();
   },
 
   afterDestroy : function(customer, next){
     sails.sockets.blast('customers', {verb : 'destroyed', data : customer});
-    next();
   }
 };
 

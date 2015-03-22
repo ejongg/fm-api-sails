@@ -31,17 +31,14 @@ module.exports = {
 
   afterCreate : function(product, next){
     sails.sockets.blast('products', {verb : 'created', data : product});
-    next();
   },
 
   afterUpdate : function(product, next){
     sails.sockets.blast('products', {verb : 'updated', data : product});
-    next();
   },
 
   afterDestroy : function(product, next){
     sails.sockets.blast('products', {verb : 'destroyed', data : product});
-    next();
   }
 };
 

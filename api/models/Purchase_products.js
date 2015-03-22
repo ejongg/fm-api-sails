@@ -31,12 +31,15 @@ module.exports = {
     amount : {
       type : 'float',
       required : true
+    },
+    promo : {
+      type : 'integer',
+      required : true
     }
   },
 
   afterDestroy : function(purchase_products, next){
     sails.sockets.blast('purchase_products', {verb : 'destroyed', data : purchase_products});
-    next();
   }
 };
 

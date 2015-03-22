@@ -15,29 +15,34 @@ module.exports = {
   		autoIncrement : true,
   		columnName: "emp_id"
   	},
-  	name : {
+  	emp_fname : {
   		type : "string",
   		required : true
   	},
+    emp_lname : {
+      type : "string",
+      required : true
+    },
   	position : {
   		type : "string",
   		required : true
-  	}
+  	},
+    office : {
+      type : "string",
+      required : true
+    }
   },
 
   afterCreate : function(employee, next){
   	sails.sockets.blast('employees', {verb : "created", data : employee});
-    next();
   },
 
   afterUpdate : function(employee, next){
   	sails.sockets.blast('employees', {verb : "updated", data : employee});
-    next();
   },
 
   afterDestroy : function(employee, next){
   	sails.sockets.blast('employees', {verb : "destroyed", data : employee});
-    next();
   }
 };
 

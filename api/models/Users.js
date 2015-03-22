@@ -76,17 +76,14 @@ module.exports = {
 
   afterCreate : function(user, next){
     sails.sockets.blast('users', {verb : 'created', data : user});
-    next();
   },
 
   afterUpdate : function(user, next){
     sails.sockets.blast('users', {verb : 'updated', data : user});
-    next();
   },
 
   afterDestroy : function(user, next){
     sails.sockets.blast('users', {verb : 'destroyed', data : user});
-    next();
   }  
 };
 

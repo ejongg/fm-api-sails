@@ -43,7 +43,6 @@ module.exports = {
     Sku.findOne({id : sku.id}).populate('prod_id')
       .exec(function(err, populated){
         sails.sockets.blast('sku', {verb : "created", data : populated});  
-        next();
       });
   },
 
@@ -51,13 +50,11 @@ module.exports = {
     Sku.findOne({id : sku.id}).populate('prod_id')
       .exec(function(err, populated){
         sails.sockets.blast('sku', {verb : "updated", data : populated});
-        next();
       });
   },
 
   afterDestroy : function(sku, next){
     sails.sockets.blast('sku', {verb : 'destroyed', data : sku});
-    next();
   }
 };
 

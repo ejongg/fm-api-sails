@@ -34,17 +34,14 @@ module.exports = {
 
   afterCreate : function(bay, next){
     sails.sockets.blast('bays', {verb : 'created', data : bay});
-    next();
   },
 
   afterUpdate : function(bay, next){
     sails.sockets.blast('bays', {verb : 'updated', data : bay});
-    next();
   },
 
   afterDestroy : function(bay, next){
     sails.sockets.blast('bays', {verb : 'destroyed', data : bay});
-    next();
   }
 };
 

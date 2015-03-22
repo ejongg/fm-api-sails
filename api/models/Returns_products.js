@@ -32,7 +32,6 @@ module.exports = {
 
   afterDestroy : function(returns_products, next){
     sails.sockets.blast('returns_products', {verb : 'destroyed', data : returns_products});
-    next();
   }
 };
 
