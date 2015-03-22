@@ -75,5 +75,16 @@ module.exports = {
 				console.log(err);
 				callback(err);
 			});
+	},
+
+	findMovingPile : function(company, callback){
+		Bays.findOne({bay_label : company, pile_status : "Moving pile"})
+			.then(function(bay){
+				callback(null, bay.id);
+			},
+
+			function(err){
+				callback(err);
+			});
 	}
 };
