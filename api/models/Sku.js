@@ -17,6 +17,7 @@ module.exports = {
     sku_name : {
       type : 'string',
       required :  true,
+      unique : true
     },
   	prod_id : {
       model : 'products',
@@ -24,18 +25,27 @@ module.exports = {
   	},
   	bottlespercase : {
   		type : 'integer',
-  		required : true
+  		required : true,
+      defaultsTo : 0
   	},
   	size : {
   		type : 'string',
   		required : true
   	},
-  	price : {
+  	pricepercase : {
   		type : 'float',
-  		required : true
+  		required : true,
+      defaultsTo : 0.00
   	},
+    priceperbottle : {
+      type : 'float',
+      required : true,
+      defaultsTo : 0.00
+    },
     weightpercase : {
-      type : 'float'
+      type : 'float',
+      required : true,
+      defaultsTo : 0.00
     }
   },
 

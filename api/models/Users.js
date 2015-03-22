@@ -40,7 +40,8 @@ module.exports = {
   	},
     status : {
       type : 'string',
-      defaultsTo : 'active'
+      defaultsTo : 'active',
+      enum : ['active', 'inactive']
     }
   },
 

@@ -25,7 +25,8 @@ module.exports = {
   	},
   	bottles : {
   		type : 'integer',
-  		required : true
+  		required : true,
+      defaultsTo : 0
   	}
   }
 };

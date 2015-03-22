@@ -18,7 +18,8 @@ module.exports = {
   	},
   	cases : {
   		type : 'integer',
-  		required : true
+  		required : true,
+      defaultsTo : 0
   	},
   	reason : {
   		type : 'string',

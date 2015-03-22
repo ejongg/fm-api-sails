@@ -29,7 +29,8 @@ module.exports = {
   	},
     total_amount : {
       type : 'float',
-      required : true
+      required : true,
+      defaultsTo : 0.00
     },
   	user : {
   		type : 'string',

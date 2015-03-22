@@ -17,10 +17,12 @@ module.exports = {
     },
   	total_amount : {
   		type : 'integer',
-  		required : true
+  		required : true,
+      defaultsTo : 0
   	},
   	paid_amount : {
-  		type : 'integer'
+  		type : 'integer',
+      defaultsTo : 0
   	},
   	delivery_date : {
   		type : 'string',
@@ -28,6 +30,7 @@ module.exports = {
   	},
   	payment_date : {
   		type : 'string',
+      defaultsTo : 'Unpaid'
   	},
   	customer_id : {
   		model : 'customers',

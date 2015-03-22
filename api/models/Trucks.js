@@ -36,11 +36,12 @@ module.exports = {
   		required : true
   	},
     carry_weight : {
-      type : 'integer'
+      type : 'float',
+      defaultsTo : 0
     },
     current_load_weight : {
-      type : 'integer',
-      defaultsTo : 0
+      type : 'float',
+      defaultsTo : 0.00
     },
     isAvailable : function(){
       if(this.carry_weight > this.current_load_weight){

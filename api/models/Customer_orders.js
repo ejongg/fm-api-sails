@@ -31,7 +31,7 @@ module.exports = {
   		type : 'string',
   		required : true,
       defaultsTo : 'pending',
-      enum : ['pending', 'delivered']
+      enum : ['Pending', 'Delivered', 'To be delivered']
   	},
   	user : {
   		type : 'string',
@@ -39,7 +39,8 @@ module.exports = {
   	},
     total_amount : {
       type : 'integer',
-      required : true
+      required : true,
+      defaultsTo : 0
     },
     products : {
       collection : 'customer_order_products',

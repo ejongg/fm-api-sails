@@ -17,7 +17,8 @@ module.exports = {
   	},
   	route_name : {
   		type : 'string',
-  		required : true
+  		required : true,
+      unique : true
   	},
   	address_id : {
   		model : 'address',

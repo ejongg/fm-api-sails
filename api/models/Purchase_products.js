@@ -18,23 +18,24 @@ module.exports = {
   	},
   	cases : {
   		type : 'integer',
-  		required : true
+  		required : true,
+      defaultsTo : 0
   	},
     costpercase : {
       type : 'integer',
-      defaultsTo : 0
+      defaultsTo : 0.00
     },
     discountpercase : {
       type : 'float',
-      defaultsTo : 0
+      defaultsTo : 0.00
     },
     amount : {
       type : 'float',
-      required : true
+      required : true,
+      defaultsTo : 0.00
     },
     promo : {
-      type : 'integer',
-      required : true
+      type : 'integer'
     }
   },
 

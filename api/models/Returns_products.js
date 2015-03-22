@@ -23,10 +23,6 @@ module.exports = {
   	cases : {
   		type : 'integer',
       defaultsTo : 0
-  	},
-  	deposit : {
-  		type : 'float',
-  		required : true
   	}
   },
 

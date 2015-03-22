@@ -18,7 +18,11 @@ module.exports = {
   	return_date : {
   		type : 'string',
   		required : true
-  	}
+  	},
+    deposit : {
+      type : 'float',
+      defaultsTo : 0.00
+    }
   },
 
   afterUpdate : function(returns, next){

@@ -16,7 +16,8 @@ module.exports = {
     },
   	bay_name : {
   		type : 'string',
-  		required : true
+  		required : true,
+      unique : true
   	},
     pile_status : {
       type : 'string',

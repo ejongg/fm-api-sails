@@ -17,12 +17,12 @@ module.exports = {
     },
   	date_received : {
   		type : 'string',
-  		required : true,
-  		unique : true
+  		required : true
   	},
   	total_cost : {
-  		type : 'string',
-  		required : true
+  		type : 'float',
+  		required : true,
+      defaultsTo : 0.00
   	},
     user : {
       type : 'string',

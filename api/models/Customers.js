@@ -17,7 +17,8 @@ module.exports = {
     },
   	establishment_name : {
   		type : 'string',
-  		required : true
+  		required : true,
+      unique : true
   	},
   	owner_name : {
   		type : 'string',
@@ -29,7 +30,8 @@ module.exports = {
   	},
   	distance_rating : {
   		type : 'integer',
-  		required : true
+  		required : true,
+      enum : [1, 2, 3, 4, 5]
   	},
   	orders : {
   		collection : 'customer_orders',
