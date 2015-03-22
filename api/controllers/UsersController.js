@@ -11,17 +11,17 @@ module.exports = {
 		Users.findOneByUsername(req.body.username)
 			.exec(function(err, user){
 				if(err)
-					return res.json({status : {code: 0, message: 'DB error'}});			
+					return res.json({status : {code: 0, message: "An error has occured"}});			
 
 				if(user){
 					bcrypt.compare(req.body.password, user.password, function(err, match){
 						if(err)
-							return res.json({status : {code : 0, message : 'Server error'}});
+							return res.json({status : {code : 0, message : "An error has occured"}});
 
 						if(match){
-							return res.json({status : {code : 1, message: 'Login succesful'} , userinfo : user, token : Auth.issueToken(req.body.username)});
+							return res.json({status : {code : 1, message: "Login successful"} , userinfo : user, token : Auth.issueToken(req.body.username)});
 						}else
-							return res.json({status : {code : 0, message : 'Passwords do not match'}});
+							return res.json({status : {code : 0, message : "Incorrect password"}});
 					});
 				}else{
 					return res.json({status : {code : 0, message: 'User not found'}});
