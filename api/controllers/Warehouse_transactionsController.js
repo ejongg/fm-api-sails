@@ -17,7 +17,7 @@ module.exports = {
 		var user = req.body.user;
 		var total_amount = req.body.total_amount;
 
-		Returns.create({return_date : moment().format('MM-DD-YYYY')})
+		Returns.create({return_date : moment().format('YYYY-MM-DD')})
 			.then(function returnsHandler(created_returns){
 
 				(returns).forEach(function(product){
@@ -42,7 +42,7 @@ module.exports = {
 			.then(function warehouseSalesHandler(created_returns){
 				var warehouse_transaction = {
 					customer_name : customer_name,
-					date : moment().format('MM-DD-YYYY'),
+					date : moment().format('YYYY-MM-DD'),
 					return_id : created_returns.id,
 					total_amount : total_amount,
 					user : user
@@ -71,7 +71,7 @@ module.exports = {
 								},
 
 								function updateInventory(cb){
-									InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase);
+									InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.exp_date);
 									cb();
 								}
 
@@ -86,11 +86,7 @@ module.exports = {
 					function(err){
 						console.log(err);
 					});
-			})
-
-			.catch(function(e){
-				console.log(e);
-			})				
+			});			
 	}
 };
 
