@@ -13,7 +13,7 @@ module.exports = {
 			.then(function getAvailableSkus(inventory_items){
 
 				(inventory_items).forEach(function(item){
-					if(item.physical_count > 0 || item.bottles > 0){
+					if(item.physical_count > 0){
 						available.push(item.sku_id);
 					}
 				});
