@@ -16,26 +16,28 @@ module.exports = {
 		var customer_name = req.body.customer_name;
 		var user = req.body.user;
 		var total_amount = req.body.total_amount;
+		var deposit = req.body.deposit;
 
-		Returns.create({return_date : moment().format('YYYY-MM-DD')})
+		Returns.create({return_date : moment().format('YYYY-MM-DD'), deposit : deposit})
 			.then(function returnsHandler(created_returns){
 
-				(returns).forEach(function(product){
+				if(returns.length > 0){
+					(returns).forEach(function(product){
 
-					var item = {
-						return_id : created_returns.id,
-						sku_id : product.sku_id,
-						bottles : product.bottles,
-						cases : product.cases,
-						deposit : product.deposit
-					};
+						var item = {
+							return_id : created_returns.id,
+							sku_id : product.sku_id,
+							bottles : product.bottles,
+							cases : product.cases
+						};
 
-					Returns_products.create(item).exec(function(err, created_return_item){
-						if(err)
-							console.log(err);
+						Returns_products.create(item).exec(function(err, created_return_item){
+							if(err)
+								console.log(err);
+						});
 					});
-				});
-
+				}
+				
 				return created_returns;
 			})
 
