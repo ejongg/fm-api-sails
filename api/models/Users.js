@@ -43,7 +43,7 @@ module.exports = {
       defaultsTo : 'active',
       enum : ['active', 'inactive']
     },
-    toJson : function(){
+    toJSON : function(){
       var user = this.toObject();
       delete user.password;
 
