@@ -241,6 +241,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
 
 .controller('MainCtrl',['$scope', 'authService', '$state', 'userService', function($scope, authService, $state, userService){
   $scope.userType =  userService.getUserType();
+  $scope.userName = userService.getUserName();
 
   $scope.logout = function () {
     authService.logout();

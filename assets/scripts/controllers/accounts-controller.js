@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('AccountsCtrl',['$scope','_', function($scope, _){
+.controller('AccountsCtrl',['$scope', '_', '$http', 'httpHost', function($scope, _, $http, httpHost){
 	$scope.types = ['admin','encoder','checker','cashier'];
 	$scope.users = [];
 
@@ -15,13 +15,12 @@ angular.module('fmApp')
 	$scope.editUserTab = true;
 
 	var getUsers = function () {
-    io.socket.request($scope.socketOptions('get','/users'), function (body, JWR) {
-      console.log('Sails responded with get user: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.users = body;
-        $scope.$digest();
-      }
+    $http.get(httpHost + '/users').success( function (data) {
+      $scope.users = data;
+        console.log("Users:");
+        console.log($scope.users);
+    }).error(function (err) {
+      console.log(err);
     });
 	};
 
