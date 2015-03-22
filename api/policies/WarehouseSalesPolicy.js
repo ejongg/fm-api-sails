@@ -4,7 +4,10 @@ module.exports = function(req, res, next){
 	
 
 	async.each(products, function(product, cb){
-		Inventory.find({sku_id : product.sku_id})
+
+		var bay_id = BaysService.findMovingPile(product.company);
+
+		Inventory.find({sku_id : product.sku_id, bay_id : bay_id})
 			.exec(function(err, found_sku){
 				if(found_sku){
 					var sku_total_case_count = 0;
