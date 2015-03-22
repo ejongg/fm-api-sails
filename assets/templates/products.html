@@ -23,32 +23,34 @@
 
 <!-- PANEL LEFT-->
 
-    <div class="panel panel-left col-md-4" ng-show="addProductForm">
+    <div class="panel col-md-4" ng-show="addProductForm">
 
         <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <a ng-click="setNewProductTab(true)">New Product</a>
+                            <a  class="btn" ng-click="setNewProductTab(true)">New Product</a>
                         </li>
                         <li>
-                            <a ng-click="setNewProductTab(false)">Existing Company</a>
+                            <a ng-class="products.length === 0 ? 'btn disabled' : 'btn'" ng-click="setNewProductTab(false)">Existing Company</a>
                         </li>
                     </ul>
 
         <div class="panel-body" ng-show="newProductTab">
-          <legend>ADD NEW PRODUCT</legend>
+
+          <h4><i class="mdi-content-add-circle"></i> ADD NEW PRODUCT </h4>
+
           <form class="form-horizontal" name="productForm" ng-submit="addProduct(product)" novalidate>
                 <fieldset>
                   <div class="form-group">
-                    <label for="inputProductName" class="col-md-12">Product Name</label>
+                    <label for="inputBrandName" class="col-md-12">Brand Name</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter product name." ng-model="product.prod_name" required>
+                      <input type="text" class="form-control empty" placeholder="Enter brand name." ng-model="product.brand_name" required>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="inputProductName" class="col-md-12">Company Name</label>
+                    <label for="inputCompanyName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control empty" id="inputBrand" placeholder="Enter the company." ng-model="product.company" required>
+                        <input type="text" class="form-control empty" id="inputBrand" placeholder="Enter company name." ng-model="product.company" required>
                     </div>                  
                   </div>
 
@@ -61,20 +63,22 @@
         </div>
 
         <div class="panel-body" ng-hide="newProductTab">
-          <legend>ADD PRODUCT W/ EXISTING COMPANY</legend>
+        
+        <h4><i class="mdi-content-add-circle"></i> ADD PRODUCT <small>W/ EXISTING COMPANY </small></h4>
+
           <form class="form-horizontal" name="productExistingCompanyForm" ng-submit="addProduct(productExistingCompany)" novalidate>
                 <fieldset>
                   <div class="form-group">
-                    <label for="inputProductName" class="col-md-12">Product Name</label>
+                    <label for="inputBrandName" class="col-md-12">Brand Name</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter product name." ng-model="productExistingCompany.prod_name" required>
+                      <input type="text" class="form-control empty" placeholder="Enter brand name." ng-model="productExistingCompany.brand_name" required>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="inputProductName" class="col-md-12">Company Name</label>
+                    <label for="inputCompanyName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
-                        <select name="" id="" ng-model="productExistingCompany.company" ng-options="product.company as product.company for product in existingCompany"></select>
+                        <select name="" class="form-control" ng-model="productExistingCompany.company" ng-options="product.company as product.company for product in existingCompany"></select>
                     </div>                  
                   </div>
 
@@ -100,25 +104,27 @@
                     </ul>
 
         <div class="panel-body" ng-show="editProductTab">
-          <legend>EDIT PRODUCT</legend>
+          
+          <h4><i class="mdi-image-edit"></i> EDIT PRODUCT </h4>
+
           <form class="form-horizontal" name="editProductForm" ng-submit="editProduct(productEdit)" novalidate>
                 <fieldset>
                   <div class="form-group">
-                    <label for="inputProductName" class="col-md-12">Product Name</label>
+                    <label for="inputBrandName" class="col-md-12">Brand Name</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter product name." ng-model="productEdit.prod_name" required>
+                      <input type="text" class="form-control empty" placeholder="Enter brand name." ng-model="productEdit.brand_name" required>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputProductName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control empty" id="inputBrand" placeholder="Enter the company." ng-model="productEdit.company" required>
+                        <input type="text" class="form-control empty" placeholder="Enter company name." ng-model="productEdit.company" required>
                     </div>                  
                   </div>
 
                     <div class="form-group rightalign">
-                        <button type="submit" class="btn btn-primary" ng-disabled="editProductForm.$invalid">Edit</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="editProductForm.$invalid">Save</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteProductForm(false)">Cancel</button> 
                     </div>
                 </fieldset>
@@ -126,20 +132,22 @@
         </div>
 
         <div class="panel-body" ng-hide="editProductTab">
-          <legend>DELETE PRODUCT</legend>
+          
+          <h4><i class="mdi-action-delete"></i> DELETE PRODUCT </h4>
+
           <form class="form-horizontal" name="deleteProductForm" ng-submit="deleteProduct(productDelete)" novalidate>
                 <fieldset>
                   <div class="form-group">
-                    <label for="inputProductName" class="col-md-12">Product Name</label>
+                    <label for="inputBrandName" class="col-md-12">Brand Name</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter product name." ng-model="productDelete.prod_name" disabled>
+                      <input type="text" class="form-control empty" placeholder="Enter brand name." ng-model="productDelete.brand_name" disabled>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputProductName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter product name." ng-model="productDelete.company" disabled>
+                        <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter company name." ng-model="productDelete.company" disabled>
                     </div>                  
                   </div>
 
@@ -156,10 +164,10 @@
 <!-- PANEL RIGHT-->
 
 
-    <div class="panel panel-right col-md-8">
+    <div class="panel col-md-8">
         <div class="panel-body">
 
-            <!-- SEARCH BAR -->
+        <!-- SEARCH BAR -->
 
          <div class="search">
               <div class="icon-preview rightalign magnify">
@@ -170,50 +178,54 @@
              </form>
          </div>
 
-          <div class="form-group">
-          <label for="select" class="col-md-2">Company Name</label>
+          <div class="form-group" ng-hide="products.length === 0">
+          <label for="select" class="col-md-3">Company Name</label>
             <div class="col-md-5">
                 <select class="form-control" ng-model="searchCompany" ng-show="!noExistingProduct" ng-options="product.company as product.company for product in existingCompany">
                 <option value="">All</option>
                 </select>
                 <input type="text" class="form-control empty" ng-hide="!noExistingProduct" value="No products added" disabled>
             </div>
+          </div>
+
+        <!-- IF NO PRODUCTS -->
+        <div ng-show="noProducts">
+          <p>NO PRODUCTS</p>
         </div>
 
         <!-- START OF TABLE -->
+        <div ng-hide="noProducts">
+          <table class="table table-striped table-hover ">
 
-        <table class="table table-striped table-hover ">
+                  <thead>
+                      <tr class="labels">
+                          <th>Product&nbsp;<a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                          <th>Company&nbsp;
+                          <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                      </tr>
+                  </thead>
 
-                <thead>
-                    <tr class="labels">
-                        <th>Product&nbsp;<a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-                        <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                        <th>Company&nbsp;
-                        <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-                        <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                  <tbody>
+
+
+                    <tr ng-repeat="product in products"  ng-click="productClicked(product)">
+
+                      <td>{{product.brand_name}}</td>
+                      <td>{{product.company}}</td>
+
                     </tr>
-                </thead>
 
-                <tbody>
-
-
-          <tr ng-repeat="product in products"  ng-click="productClicked(product)">
-
-            <td>{{product.prod_name}}</td>
-            <td>{{product.company}}</td>
-
-          </tr>
-
-                </tbody>
-        </table>
-
-         <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="5" class="pagination-sm" boundary-links="true"></pagination>
+                  </tbody>
+          </table>
+        </div>
 
 
     <!-- Add product button 
         //yung magshoshow ng right panel --> 
     <div class="icon-preview">
-      <a class="btn btn-primary pull-right btn-md" ng-click="showAddProductForm(true)">Add</a>
+      <a class="btn btn-primary pull-right btn-md" ng-hide="addProductForm" ng-click="showAddProductForm(true)">Add</a>
       <br>
     </div>
 

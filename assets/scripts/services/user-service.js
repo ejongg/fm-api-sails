@@ -2,47 +2,46 @@
 
 angular.module('fmApp')
 
-.factory('userService',['$http', '$window', '$log', function ($http, $window, $log) {
+.factory('userService',['authService','$window', '$log', 'jwtHelper', function (authService, $window, $log, jwtHelper) {
 	var userAccess = 0;
+  var token = '';
+  var user = {};
 
 	return {
-	  setUser : function (userInfo) {
-      $window.localStorage.setItem('ui',JSON.stringify(userInfo));
-      this.setAccessLevel(userInfo);
-	  	$log.debug(userAccess);
-	  },
 
 	  getUser : function () {
-	  	return $window.localStorage.getItem('ui');
-	  },
+	  	token = authService.getToken();
+      user = jwtHelper.decodeToken(token);
+      return user
+	  }
       
-    setAccessLevel: function (userInfo) {
-      switch (userInfo.type) {
-          case 'admin':
-             userAccess = 1;
-             break;
-          case 'encoder':
-             userAccess = 2;
-             break;
-          case 'cashier':
-            userAccess = 3;
-             break;
-          case 'checker':
-             userAccess = 4;
-             break;
-          default :
-             userAccess = 0;
-      }
-      $log.debug(userAccess);
-    },
+   //  setAccessLevel: function (userInfo) {
+   //    switch (userInfo.type) {
+   //        case 'admin':
+   //           userAccess = 1;
+   //           break;
+   //        case 'encoder':
+   //           userAccess = 2;
+   //           break;
+   //        case 'cashier':
+   //          userAccess = 3;
+   //           break;
+   //        case 'checker':
+   //           userAccess = 4;
+   //           break;
+   //        default :
+   //           userAccess = 0;
+   //    }
+   //    $log.debug(userAccess);
+   //  },
 
-	  getAccessLevel: function () {
-	  	return userAccess;
-	  },
+	  // getAccessLevel: function () {
+	  // 	return userAccess;
+	  // },
 
-    removeAccessLevel: function () {
-      userAccess = 0;
-    }
+   //  removeAccessLevel: function () {
+   //    userAccess = 0;
+   //  }
 	}
 }]);
   

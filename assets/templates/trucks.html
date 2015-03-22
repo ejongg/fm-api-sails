@@ -19,43 +19,46 @@
 <div class="container">
 
     <!-- LEFT PANEL -->
-    <div class="panel panel-left col-md-3" ng-show="addTruckForm">
+    <div class="panel col-md-3" ng-show="addTruckForm">
         <div class="panel-body">
+
+            <legend>Add Truck</legend>
+
             <form class="form-horizontal" name="truckForm" ng-submit="addTruck(truck)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
-                        <label for="inputUsername" class="col-md-2 control-label">Truck Driver</label>  
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputUsername" placeholder="Enter truck driver." ng-model="truck.driver" required>
+                        <label for="inputTruckname" class="col-md-4">Truck Driver</label>  
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter truck driver." ng-model="truck.driver" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputPassword" class="col-md-2 control-label">Dispatcher</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputPassword" placeholder="Enter dispatcher."
+                        <label for="inputCheckerName" class="col-md-4">Checker</label>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter checker name."
                         ng-model="truck.dispatcher" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputFirstName" class="col-md-4">Agent</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputFirstName" placeholder="Enter agent." ng-model="truck.agent" required>
+                        <label for="inpuDPName" class="col-md-6">Delivery Sales Personnel</label>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter the agent name." ng-model="truck.agent" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputLastName" class="col-md-4">Helper</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputLastName" placeholder="Enter Helper." ng-model="truck.helper" required>
+                        <label for="inputDHName" class="col-md-4">Delivery Helper</label> 
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter helper name." ng-model="truck.helper" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputLastName" class="col-md-4">Route</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputLastName" placeholder="Enter route." ng-model="truck.route" required>
+                        <label for="inputRoute" class="col-md-4">Route</label> 
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter route number." ng-model="truck.route" required>
                         </div>
                     </div>
 
-                    <div class="form-group rightalign">
+                    <div class="form-group pull-right">
                         <button type="submit" class="btn btn-primary" ng-disabled="truckForm.$invalid">Add</button>
                         <button type="button" class="btn btn-default" ng-click="showAddTruckForm(false)">Cancel</button> 
                     </div>
@@ -66,65 +69,115 @@
 
     <!-- RIGHT PANEL -->
 
-    <div class="panel panel-right col-md-8">
-        <div class="col-md-12">
-        <form class="navbar-form navbar-left">
+    <div class="panel col-md-9">
+
+        <div class="panel col-md-9">
+        <form class="navbar-form col-md-2">
                 <input type="text" class="form-control" placeholder="Search by:">
             </form>
         </div>
+
         <div class="panel-body">
 
-        <div class="panel panel-primary" class="col-md-3"  ng-repeat="truck in trucks">
-          <div class="panel-heading">
-          <h3 class="panel-title">Truck {{$index + 1}}</h3>
-          </div>
-          <div class="panel-body">
+        <div class="panel truck-table truck-tableout col-md-12">
+          <div class="panel panel-primary"  ng-repeat="truck in trucks">
+            <div class="panel-heading">
+              <h3 class="panel-title">Truck {{$index + 1}}</h3>
+            </div>
 
-          <div ng-hide="editIndex === $index">
-          <p>Driver: {{truck.driver}}</p>
-          <p>Dispatcher: {{truck.dispatcher}}</p>
-          <p>Agent: {{truck.agent}}</p>
-          <p>Helper: {{truck.helper}}</p>
-          <p>Route: {{truck.route}}</p>
-          </div>
+            <div class="panel-body">
 
-          <div ng-show="editIndex === $index">
-          <p>Driver: <input type="text" ng-model="truckEdit.driver"></p>
-          <p>Dispatcher: <input type="text" ng-model="truckEdit.dispatcher"></p>
-          <p>Agent: <input type="text" ng-model="truckEdit.agent"></p>
-          <p>Helper: <input type="text" ng-model="truckEdit.helper"></p>
-          <p>Route: <input type="text" ng-model="truckEdit.route"></p>   
-          </div>
+                <div ng-hide="editIndex === $index">
+                    <p>Truck Driver: {{truck.driver}}</p>
+                    <p>Checker: {{truck.dispatcher}}</p>
+                    <p>Delivery Sales Personnel: {{truck.agent}}</p>
+                    <p>Delivery Helper: {{truck.helper}}</p>
+                    <p>Route: {{truck.route}}</p>
+                </div>
 
-          </div>
+                <div ng-show="editIndex === $index">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <td>Truck Driver:</td>
+                            <td><input type="text" ng-model="truckEdit.driver"></td>
+                        </tr>
 
-          <div ng-hide="editIndex === $index">
-          <button ng-click="truckEditClicked($index,truck)">Edit</button>
-          <button ng-click="deleteTruck(truck.id)">Delete</button>
-          </div>
 
-          <div ng-show="editIndex === $index">
-          <button  ng-click="editTruck(truckEdit)">Save</button>
-          <button ng-click="truckEditClicked(-1)">Cancel</button>
-          </div>
+                        <tr>
+                            <td>Checker:</td>
+                            <td><input type="text" ng-model="truckEdit.dispatcher"></td>
+                        </tr>
 
-       </div>
+                        <tr>
+                            <td>Delivery Sales Personnel:</td>
+                            <td><input type="text" ng-model="truckEdit.agent"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Delivery Helper:</td>
+                            <td><input type="text" ng-model="truckEdit.helper"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Route:</td>
+                            <td><input type="text" ng-model="truckEdit.route"></td>
+                        </tr>
+
+                        <!--
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                    <p>Truck Driver:
+                    <input type="text" ng-model="truckEdit.driver"></p>
+                    <p>Checker:
+                    <input type="text" ng-model="truckEdit.dispatcher"></p>
+                    <p>Delivery Sales Personnel:
+                    <input type="text" ng-model="truckEdit.agent"></p>
+                    <p>Delivery Helper:
+                    <input type="text" ng-model="truckEdit.helper"></p>
+                    <p>Route:
+                    <input type="text" ng-model="truckEdit.route"></p>
+
+                -->
+
+                    </table>  
+                </div>
+
+                
+
+                <div ng-hide="editIndex === $index" class="pull-right">
+                  <button ng-click="truckEditClicked($index,truck)" class="btn btn-primary btn-xs">Edit</button>
+
+                  <button ng-click="deleteTruck(truck.id)" class="btn btn-primary btn-xs">Delete</button>
+                </div>
+            
+            <div ng-show="editIndex === $index" class="pull-right">
+              <button  ng-click="editTruck(truckEdit)" class="btn btn-primary btn-xs">Save</button>
+
+              <button ng-click="truckEditClicked(-1)" class="btn btn-primary btn-xs">Cancel</button>
+            </div>
+            </div>
+
+         </div>
 
             <div class="icon-preview">
               <a class="btn btn-primary pull-right btn-md" ng-click="showAddTruckForm(true)">Add</a>
-            <br>
+        
             </div>
-        </div>
+        </div></div>
 
-    <!-- END OF TABLE -->
-    
-
-    <!-- PRINT ICON -->
+                  <!-- PRINT ICON -->
     <br><br>
-    <div class="form-group" align="right">
-        <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a></div>
+    <div class="form-group pull-right" >
+        <div class="icon-preview"><a class="btn btn-success  btn-md"><i class="mdi-action-print"></i></a></div>
     </div>
     <br><br>
+
+
+
 
 
 </div>

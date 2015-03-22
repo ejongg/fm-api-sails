@@ -4,6 +4,7 @@ angular.module('fmApp')
 .controller('BaysCtrl',['$scope','$sailsSocket','_','$http', function($scope, $sailsSocket, _, $http){
   $scope.bays = [];
   $scope.bayItems = [];
+  $scope.existingCompany = [];
 
   $scope.bay = {};
   $scope.bayEdit = {};
@@ -32,6 +33,27 @@ angular.module('fmApp')
 
   };
 
+  var getSKU = function () {
+      // $sailsSocket.get('/bays').success(function (data) {
+      // $scope.bays = data;
+      // console.log($scope.bays);
+      // }).error(function (err) {
+      // console.log(err);
+      // });
+    io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {
+      console.log('Sails responded with get bay: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.existingCompany = _.uniq(body,'company');
+        console.log($scope.existingCompany); 
+        $scope.bay.bay_label = $scope.existingCompany[0].company;
+        $scope.$digest();
+      }
+    });
+
+  };
+
+
   var getBayItems = function () {
     io.socket.request($scope.socketOptions('get','/bays/bayitems'), function (body, JWR) {
         console.log('Sails responded with get bay items: ', body);
@@ -44,6 +66,7 @@ angular.module('fmApp')
   };
 
   getBays();
+  getSKU();
   getBayItems();
 
   $scope.showAddBayForm = function (data) {
@@ -63,7 +86,7 @@ angular.module('fmApp')
   $scope.setEditBayTab = function (data) {
       $scope.editBayTab = data;
       if(data === true){
-        $scope.bayEdit.pile_name = $scope.copiedBay.pile_name;
+        $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
       } 
   };
     
@@ -73,16 +96,16 @@ angular.module('fmApp')
       }
       $scope.copiedBay = angular.copy(user);
       $scope.bayEdit.id = $scope.copiedBay.id;
-      $scope.bayEdit.pile_name = $scope.copiedBay.pile_name;
+      $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
      
       $scope.bayDelete.id = $scope.copiedBay.id;
-      $scope.bayDelete.pile_name = $scope.copiedBay.pile_name;
+      $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;
 
       $scope.showEditOrDeleteBayForm(true);
   };
 
   var clearForm = function () {
-    $scope.bay.pile_name = '';
+    $scope.bay.bay_name = '';
   }; 
   
   $scope.getBayCount = function (index) {
@@ -107,6 +130,7 @@ angular.module('fmApp')
       // }).error(function (err) {
       // console.log(err);
       // });
+    console.log(bay);
     io.socket.request($scope.socketOptions('post','/bays',{},bay), function (body, JWR) {
       console.log('Sails responded with post bay: ', body);
       console.log('and with status code: ', JWR.statusCode);

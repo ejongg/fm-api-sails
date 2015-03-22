@@ -19,14 +19,17 @@
 <div class="container">
 
     <!-- LEFT PANEL -->
-    <div class="panel panel-left col-md-3" ng-show="addBayForm">
+    <div class="panel col-md-3" ng-show="addBayForm">
         <div class="panel-body">
+
+        <legend>ADD BAY</legend>
+
             <form class="form-horizontal" name="bayForm" ng-submit="addBay(bay)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-2 control-label">Pile Name</label>  
-                        <div class="col-md-12"><input type="text" maxlength="2" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="bay.pile_name" required>
+                        <label for="inputEstablishmentName" class="col-md-4">Bay name</label>  
+                        <div class="col-md-12"><input type="text" maxlength="2" class="form-control" placeholder="Enter bay name." ng-model="bay.pile_name" required>
                         </div>
                     </div>
 
@@ -41,7 +44,7 @@
     </div>
 
 
-    <div class="panel panel-left col-md-4" ng-show="editOrDeleteBayForm">
+    <div class="panel col-md-3" ng-show="editOrDeleteBayForm">
 
         <ul class="nav nav-tabs col-md-12">
                         <li>
@@ -53,12 +56,14 @@
                     </ul>
 
         <div class="panel-body" ng-show="editBayTab">
+
           <legend>EDIT BAY</legend>
+
           <form class="form-horizontal" name="editBayForm" ng-submit="editBay(bayEdit)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-2 control-label">Pile Name</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Pile Name</label>  
                         <div class="col-md-12"><input type="text" maxlength="2" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="bayEdit.pile_name" required>
                         </div>
                     </div>
@@ -72,12 +77,14 @@
         </div>
 
         <div class="panel-body" ng-hide="editBayTab">
+
           <legend>DELETE BAY</legend>
+
           <form class="form-horizontal" name="deleteBayForm" ng-submit="deleteBay(bayDelete)" novalidate>
                 <fieldset>
                    
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-2 control-label">Pile Name</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Pile Name</label>  
                         <div class="col-md-12"><input type="text" maxlength="2" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="bayDelete.pile_name" disabled>
                         </div>
                     </div>
@@ -94,11 +101,19 @@
 
     <!-- RIGHT PANEL -->
 
-    <div class="panel panel-right col-md-8">
-        <form class="navbar-form navbar-left">
-                <input type="text" class="form-control" placeholder="Search by:">
-            </form>
+    <div class="panel col-md-9">
         <div class="panel-body">
+
+    <!-- SEARCH BAR -->
+
+         <div class="search">
+              <div class="icon-preview rightalign magnify">
+                 <i class="mdi-action-search"></i>
+             </div>
+             <form class="navbar-form rightalign">
+                 <input type="text" class="form-control"  placeholder="Search">
+             </form>
+         </div>
 
     <!-- START OF TABLE -->  
     {{sample}}          

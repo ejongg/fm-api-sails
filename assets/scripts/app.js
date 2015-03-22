@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
+angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
 
-.constant('serviceHost','http://localhost:1337')
+.constant('httpHost','http://localhost:1337')
 .constant('_', window._)
 .constant('accessLevels', {
   'visitor': 0,
@@ -188,52 +188,54 @@ angular.module('fmApp', ['ui.router','sails.io','ngFx','ui.bootstrap'] )
 
 }])	
 
-.run(['$rootScope','$state','userService','authService', function ($rootScope, $state, userService,authService) {
+// .run(['$rootScope','$state','userService','authService', function ($rootScope, $state, userService,authService) {
   
-  if (!authService.getToken()) {
-    $state.go('login');
-    console.log('login run');
-  }else {
-    var user = JSON.parse(userService.getUser());
-    userService.setAccessLevel(user);
-  }
+//   if (!authService.getToken()) {
+//     $state.go('login');
+//     console.log('login run');
+//   }else {
+//     var user = JSON.parse(userService.getUser());
+//     userService.setAccessLevel(user);
+//   }
 
-  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-     console.log("state change");
-     console.log(userService.getAccessLevel());
-     console.log(toState.data.access);
+//   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+//      console.log("state change");
+//      console.log(userService.getAccessLevel());
+//      console.log(toState.data.access);
     
 
 
-      if (!(userService.getAccessLevel() === toState.data.access) ) {
-        if(userService.getAccessLevel() !== 1){
-          event.preventDefault();
+//       if (!(userService.getAccessLevel() === toState.data.access) ) {
+//         if(userService.getAccessLevel() !== 1){
+//           event.preventDefault();
 
-          switch (userService.getAccessLevel()) {
-            case 1:
-              $state.go('admin.dssr');
-              break;
-            case 2:
-              $state.go('encoder.add-delivery');
-              break;
-            case 3:
-              $state.go('cashier.pos');
-              break;
-            case 4:
-              $state.go('checker.tally');
-              break;
-            default:
-              userService.removeAccessLevel();
-              $state.go('login');
-          }
-        }
+//           switch (userService.getAccessLevel()) {
+//             case 1:
+//               $state.go('admin.dssr');
+//               break;
+//             case 2:
+//               $state.go('encoder.add-delivery');
+//               break;
+//             case 3:
+//               $state.go('cashier.pos');
+//               break;
+//             case 4:
+//               $state.go('checker.tally');
+//               break;
+//             default:
+//               userService.removeAccessLevel();
+//               $state.go('login');
+//           }
+//         }
 
-      }
-    });
+//       }
+//     });
 
-}])
+// }])
 
-.controller('MainCtrl',['$scope', 'authService', '$http','serviceHost','$state','$filter', function($scope, authService, $http, serviceHost, $state, $filter){
+
+
+.controller('MainCtrl',['$scope', 'authService', '$http','httpHost','$state','$filter', function($scope, authService, $http, serviceHost, $state, $filter){
   $scope.logout = function () {
     authService.logout();
     $state.go('login');

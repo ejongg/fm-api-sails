@@ -8,6 +8,7 @@ angular.module('fmApp')
   $scope.orders = [];
   $scope.orderProducts = [];
   $scope.order = {};
+  $scope.totalAmount = 0;
 
   $scope.itemExistingError = false;
   $scope.itemExisting = '';
@@ -21,7 +22,7 @@ angular.module('fmApp')
     // });
 
     io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
-      console.log('Sails responded with get customers: ', body);
+      console.log('Sails responded with get sku available: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.skuList = body;
@@ -37,7 +38,7 @@ angular.module('fmApp')
     // });
 
     io.socket.request($scope.socketOptions('get','/customer_orders'), function (body, JWR) {
-      console.log('Sails responded with get customers: ', body);
+      console.log('Sails responded with get customers orders: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.ordersList = body;
@@ -57,6 +58,7 @@ angular.module('fmApp')
     if(data === false){
       clearForm();
       $scope.orders = [];
+      $scope.totalAmount = 0;
     }
   };
 
@@ -84,8 +86,9 @@ angular.module('fmApp')
   }
 
   var clearForm = function () {
+    $scope.order.distance_rating = $scope.distanceRatings[0];
     $scope.order.sku = $scope.skuList[0];
-    $scope.order.cases = '';
+    $scope.order.cases = null;
   };
 
   $scope.getOrderProducts = function (order_id) {
@@ -112,11 +115,14 @@ angular.module('fmApp')
     var orderInfo = {
       "sku_id" : order.sku.id,
       "sku" : order.sku.sku_name + " " + order.sku.size,
-      "cases" : order.cases
+      "cases" : order.cases,
+      "price" : order.sku.price
     };
     
     if(_.findIndex($scope.orders, function(order) { return order.sku_id === orderInfo.sku_id; }) === -1){
            $scope.orders.push(orderInfo);
+           $scope.totalAmount += orderInfo.price;
+           console.log(order);
     }else{
       $scope.showItemExistingError(true,orderInfo.sku);
     }
@@ -125,6 +131,7 @@ angular.module('fmApp')
   };
 
   $scope.deleteOrder = function (index) {
+    $scope.totalAmount -= $scope.orders[index].price; 
     $scope.orders.splice(index,1);
   };
 
@@ -139,7 +146,9 @@ angular.module('fmApp')
       
       "orders" : $scope.orders,
       "cokeagent_name" : $scope.order.cokeagent_name,
-      "user" : 'Sonic'
+      "user" : 'Sonic',
+      "total_amount": $scope.totalAmount
+
     };
 
     console.log(final_order);

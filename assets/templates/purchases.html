@@ -19,15 +19,17 @@
 <div class="container">
 
     <!-- LEFT PANEL -->
-    <div class="panel panel-left col-md-5" ng-show="addPurchaseForm">
+    <div class="panel col-md-12" ng-show="addPurchaseForm">
         <div class="panel-body">
+    <legend>Add Purchases</legend>
+        <div class="col-md-3">
             <form class="form-horizontal" name="purchaseForm" ng-submit="addPurchase(purchase)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
                         <label for="select" class="col-md-3">SKU</label>
                         <div class="col-md-12">
-                            <select class="form-control" id="selectType" ng-model="purchase.sku" ng-options="sku as combined(sku) for sku in skuList">
+                            <select class="form-control" ng-model="purchase.sku" ng-options="sku as combined(sku) for sku in skuList">
                             </select>
                         </div>
                     </div>
@@ -35,130 +37,137 @@
                     <div class="form-group">
                         <label for="select" class="col-md-3">Bay</label>
                         <div class="col-md-12">
-                            <select class="form-control" id="selectType" ng-model="purchase.bay" ng-options="bay as bay.pile_name for bay in bays">
+                            <select class="form-control" ng-model="purchase.bay" ng-options="bay as bay.pile_name for bay in bays">
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress" class="col-md-2 control-label">Production Date</label>
-                        <div class="col-md-12"><input type="date" class="form-control" id="inputAddress" placeholder="Enter address."
-                        ng-model="purchase.prod_date" required>
+                        <label for="inputAddress" class="col-md-6">Production Date</label>
+                        <div class="col-md-12"><input type="date" class="form-control" placeholder="Enter address."
+                            ng-model="purchase.prod_date" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress" class="col-md-2 control-label">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" id="inputAddress" placeholder="Enter address."
-                        ng-model="purchase.cases" required>
+                        <label for="inputAddress" class="col-md-2">Cases</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases."
+                            ng-model="purchase.cases" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress" class="col-md-2 control-label">Cost Per Case</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" id="inputAddress" placeholder="Enter address."
-                        ng-model="purchase.cost" required>
+                        <label for="inputAddress" class="col-md-6">Cost Per Case</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter cost/case."
+                            ng-model="purchase.cost" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress" class="col-md-2 control-label">Discount Per Case</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" id="inputAddress" placeholder="Enter address."
-                        ng-model="purchase.discount" required>
+                        <label for="inputAddress" class="col-md-6">Discount Per Case</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter discount/case."
+                            ng-model="purchase.discount" required>
                         </div>
                     </div>
 
                     <div class="alert alert-dismissable alert-danger" ng-show="itemExistingError">
                       <button type="button" class="close" ng-click="showItemExistingError(false)">×</button>
                       <strong>{{itemExisting}}</strong>
-                    </div> 
+                  </div> 
 
-                    <div class="form-group rightalign">
-                        <button type="submit" class="btn btn-primary" ng-disabled="purchaseForm.$invalid">Add</button>
-                    </div>
+                  <div class="form-group rightalign">
+                    <button type="submit" class="btn btn-primary" ng-disabled="purchaseForm.$invalid">Add</button>
+                </div>
 
-                </fieldset>
-            </form>
+            </fieldset>
+        </form>
+    </div>
 
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Sku</th>
-                        <th>Company</th>
-                        <th>Cases</th>
-                        <th>Bay</th>
-                        <th>Production date</th>
-                        <th>Cost per case</th>
-                        <th>Discount per case</th>
-                        <th>Amount</th>
-                        <th></th>
-                    </tr>
-                </thead>
+    <div class="col-md-9 ">
+         <!-- User's Input table -->
+        <table class="table table-striped table-hover" style="background-color:#00FF00">
+            <thead>
+                <tr>
+                    <th>Sku</th>
+                    <th>Company</th>
+                    <th>Cases</th>
+                    <th>Bay</th>
+                    <th>Production date</th>
+                    <th>Cost per case</th>
+                    <th>Discount per case</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-                <tbody>
-                    <tr ng-repeat="purchase in purchases">
-                        <td>{{purchase.name}}</td>
-                        <td>{{purchase.company}}</td>
-                        <td>{{purchase.cases}}</td>
-                        <td>{{purchase.bay}}</td>
-                        <td>{{purchase.prod_date}}</td>
-                        <td>{{purchase.costpercase}}</td>
-                        <td>{{purchase.discountpercase}}</td>
-                        <td>{{purchase.amount}}</td>
-                        <td><button ng-click="deletePurchase($index)">Delete</button></td>
-                    </tr>
+            <tbody class="purchtt">
+                <tr ng-repeat="purchase in purchases">
+                    <td>{{purchase.name}}</td>
+                    <td>{{purchase.company}}</td>
+                    <td>{{purchase.cases}}</td>
+                    <td>{{purchase.bay}}</td>
+                    <td>{{purchase.prod_date}}</td>
+                    <td>{{purchase.costpercase}}</td>
+                    <td>{{purchase.discountpercase}}</td>
+                    <td>{{purchase.amount}}</td>
+                    <td><button ng-click="deletePurchase($index)" class="btn btn-primary btn-xs">Delete</button></td>
+                </tr>
 
-                    <!-- DON'T REMOVE CODE BELOW -->
+                <!-- DON'T REMOVE CODE BELOW -->
 
-                </tbody>
-            </table>
+            </tbody>
+        </table>
 
-             <div class="form-group">
-            <label for="inputAddress" class="col-md-2 control-label">Total Cost</label>
-              <div class="col-md-12"><input type="number" class="form-control" id="inputAddress" value=""
-              ng-model="totalCost" disabled>
+        <br/>
+
+        <div class="form-group " >
+            <label for="inputAddress" class="col-md-2" style="bottom:-0px;">Total Cost</label>
+            <div class="col-md-3"><input type="number" class="form-control" value="" ng-model="totalCost" disabled>
             </div>
-            </div>
+        </div>
 
-            <div class="icon-preview">
-                <div class="form-group rightalign">
+        <br/>
+        <br/>
+
+        <div class="icon-preview">
+            <div class="form-group rightalign">
               <button type="button" class="btn btn-primary" ng-disabled="!purchases.length" ng-click="submitPurchases()">Submit</button>  
-              <button type="button" class="btn btn-default" ng-click="showAddPurchaseForm(false)">Cancel</button>
-               </div>
 
-            <br>
+              <button type="button" class="btn btn-default" ng-click="showAddPurchaseForm(false)">Cancel</button>
             </div>
         </div>
     </div>
 
-    <!-- RIGHT PANEL -->
+    </div>
+</div>
 
-    <div class="panel panel-right col-md-8">
-        <div class="panel-body">
+<!-- RIGHT PANEL -->
 
-    <!-- START OF TABLE -->           
+<div class="panel col-md-12">
+    <div class="panel-body">
 
-            <table class="table table-striped table-hover ">
-                <thead>
-                    <tr>
-                        <th>Purchase #</th>
-                        <th>Date Received</th>
-                        <th>Total Cost</th>
-                        <th>User</th>
-                    </tr>
-                </thead>
+        <!-- START OF TABLE -->           
+        <table class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>Purchase #</th>
+                    <th>Date Received</th>
+                    <th>Total Cost</th>
+                    <th>User</th>
+                </tr>
+            </thead>
 
-                <tbody>
-                    <tr ng-repeat="purchase in purchasesList" ng-click="getPurchaseProducts(purchase.id)">
-                        <td>{{purchase.id}}</td>
-                        <td>{{purchase.date_received}}</td>
-                        <td>{{purchase.total_cost}}</td>
-                        <td>{{purchase.user}}</td>
-                    </tr>
+            <tbody>
+                <tr ng-repeat="purchase in purchasesList" ng-click="getPurchaseProducts(purchase.id)" data-toggle="modal" data-target="#myModal">
+                    <td>{{purchase.id}}</td>
+                    <td>{{purchase.date_received}}</td>
+                    <td>{{purchase.total_cost}}</td>
+                    <td>{{purchase.user}}</td>
+                </tr>
 
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
+    </div>
 
     <!-- END OF TABLE -->
     
@@ -167,46 +176,85 @@
     <br><br>
 
     <div class="icon-preview">
-    <a class="btn btn-primary pull-right btn-md" ng-click="showAddPurchaseForm(true)">Add</a>
-    <br>
+        <a class="btn btn-primary pull-right btn-md" ng-click="showAddPurchaseForm(true)">Add</a>
+        <br>
     </div>
     <br><br>
 
 
-    </div>
-
-     <div class="panel panel-left col-md-3" ng-show="viewProducts">
-        <div class="panel-body">
-            <table class="table table-striped table-hover ">
-                <thead>
-                    <tr>
-                        <th>SKU</th>
-                        <th>Bay</th>
-                        <th>Cases</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="product in purchaseProducts">
-                        <td>{{product.sku_id.sku_name + " " + product.sku_id.size}}</td>
-                        <td>{{}}</td>
-                        <td>{{product.cases}}</td>
-                    </tr>
-
-                    <!-- DON'T REMOVE CODE BELOW -->
-
-                </tbody>
-            </table>
-
-            <div class="icon-preview">
-               <div class="form-group rightalign">
-              <button type="button" class="btn btn-default" ng-click="showViewProducts(false)">Close</button>
-               </div>
-            <br>
-            </div>
-        </div>
-    </div>
+</div>
 
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
+<!-- <div class="panel panel-left col-md-3" ng-show="viewProducts">
+    <div class="panel-body">
+        <table class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>SKU</th>
+                    <th>Bay</th>
+                    <th>Cases</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="product in purchaseProducts">
+                    <td>{{product.sku_id.sku_name + " " + product.sku_id.size}}</td>
+                    <td>{{}}</td>
+                    <td>{{product.cases}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="icon-preview">
+           <div class="form-group rightalign">
+              <button type="button" class="btn btn-default" ng-click="showViewProducts(false)">Close</button>
+          </div>
+          <br>
+      </div>
+  </div>
+</div>  -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-show="viewProducts">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="showViewProducts(false)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Purchase details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>SKU</th>
+                    <th>Bay</th>
+                    <th>Cases</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="product in purchaseProducts">
+                    <td>{{product.sku_id.sku_name + " " + product.sku_id.size}}</td>
+                    <td>{{}}</td>
+                    <td>{{product.cases}}</td>
+                </tr>
+
+                <!-- DON'T REMOVE CODE BELOW -->
+
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="showViewProducts(false)">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+

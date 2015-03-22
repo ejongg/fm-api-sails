@@ -18,11 +18,12 @@ angular.module('fmApp')
 
 	 authService.login('/users/login',loginData).success(function (data) {
         var status = data.status;
-
+         
         if(status.code === 1) {
-          var userInfo = data.userinfo
-          userService.setUser(userInfo);
+           
           authService.setToken(data.token);
+          // userService.getUser();
+          var userInfo = userService.getUser();
 
           switch(userInfo.type) {
             case 'admin':

@@ -11,7 +11,7 @@ angular.module('fmApp')
   $scope.skuDelete = {};
   $scope.copiedSku = {};
 
-  $scope.units = ["L","oz"];
+  $scope.units = ["L","mL","oz"];
   
   $scope.addSKUForm = false;
   $scope.editOrDeleteSKUForm = false;
@@ -31,7 +31,7 @@ angular.module('fmApp')
           $scope.noExistingProduct = true;
         }else{
           $scope.existingCompany = _.uniq($scope.products,'company');
-          $scope.sku.prod_name = $scope.products[0].prod_name;
+          $scope.sku.brand_name = $scope.products[0].brand_name;
         }
         $scope.$digest();
       }
@@ -134,7 +134,7 @@ angular.module('fmApp')
     $scope.sku.size = null ;
     $scope.sku.price = null;
     $scope.sku.bottlespercase= null;
-    $scope.sku.prod_name = $scope.products[0].prod_name;
+    $scope.sku.brand_name = $scope.products[0].brand_name;
     $scope.sku.unit = $scope.units[0];
   }
   
@@ -175,12 +175,15 @@ angular.module('fmApp')
   $scope.addSKU = function (sku) {
     console.log(sku);
     var size = sku.size + ' ' +sku.unit;
-    var prod_id = _.result(_.find($scope.products, {'prod_name': sku.prod_name }), 'id');
+    var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
     var skuInfo = {
-      "sku_name":sku.prod_name,
+      "sku_name":sku.brand_name + " " + sku.sku_name,
       "size":size,
-      "price":sku.price,
+      "priceperbottle":sku.priceperbottle,
+      "pricepercase":sku.pricepercase,
       "bottlespercase": sku.bottlespercase,
+      "weightpercase": sku.weightpercase,
+      "lifespan": sku.lifespan,
       "prod_id": prod_id
     }
     console.log(skuInfo);
@@ -194,13 +197,13 @@ angular.module('fmApp')
     //   console.log(err);
     // });
 
-    io.socket.request($scope.socketOptions('post','/sku',{},skuInfo), function (body, JWR) {
-      console.log('Sails responded with post sku: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 400){
-        console.log("SKU already exist");
-      }
-    });
+    // io.socket.request($scope.socketOptions('post','/sku',{},skuInfo), function (body, JWR) {
+    //   console.log('Sails responded with post sku: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 400){
+    //     console.log("SKU already exist");
+    //   }
+    // });
 
   };
   
@@ -211,7 +214,7 @@ angular.module('fmApp')
   $scope.editSKU = function (sku) {
     console.log(sku);
     var size = sku.size + ' ' +sku.unit;
-    var prod_id = _.result(_.find($scope.products, {'prod_name': sku.prod_name }), 'id');
+    var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
 
     var newInfo = {
       "sku_name":sku.sku_name,

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('ProductsCtrl',['$scope','$sailsSocket','_','$filter', function($scope, $sailsSocket, _,$filter){
+.controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost', function($scope, $http, _,$filter, httpHost){
 
   $scope.products = [];
   $scope.existingCompany = [];
@@ -17,17 +17,34 @@ angular.module('fmApp')
   $scope.newProductTab = true;
   $scope.editProductTab = true;
 
+  $scope.noProducts = true;
+
 
   var getProducts = function () {
-    io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {
-      console.log('Sails responded with get user: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.products = body;
+    // io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {
+    //   console.log('Sails responded with get user: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.products = body;
+    //     $scope.existingCompany = _.uniq($scope.products, 'company');
+    //     $scope.productExistingCompany.company = $scope.existingCompany[0].company;
+    //     $scope.$digest();
+    //   }
+    // });
+    $http.get(httpHost + '/products').success( function (data) {
+      
+      if(data.length !== 0){
+        $scope.products = data;
         $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.productExistingCompany.company = $scope.existingCompany[0].company;
-        $scope.$digest();
+        $scope.noProducts = false;
+ 
+        console.log("Products:");
+        console.log($scope.products);
       }
+
+    }).error(function (err) {
+      console.log(err);
     });
   };
 
@@ -57,7 +74,7 @@ angular.module('fmApp')
     if(data === true){
       $scope.product = {};
     }else{
-      $scope.productExistingCompany.prod_name = '';
+      $scope.productExistingCompany.brand_name = '';
       $scope.productExistingCompany.company = $scope.existingCompany[0].company;
     }
   };
@@ -66,7 +83,7 @@ angular.module('fmApp')
     $scope.editProductTab = data;
     if(data === true){
       $scope.productEdit.id = $scope.copiedProduct.id;
-      $scope.productEdit.prod_name = $scope.copiedProduct.prod_name;
+      $scope.productEdit.brand_name = $scope.copiedProduct.brand_name;
       $scope.productEdit.company= $scope.copiedProduct.company;
     } 
   };
@@ -79,11 +96,11 @@ angular.module('fmApp')
     $scope.copiedProduct = angular.copy(product);
 
     $scope.productEdit.id = $scope.copiedProduct.id;
-    $scope.productEdit.prod_name = $scope.copiedProduct.prod_name;
+    $scope.productEdit.brand_name = $scope.copiedProduct.brand_name;
     $scope.productEdit.company= $scope.copiedProduct.company;
 
     $scope.productDelete.id = $scope.copiedProduct.id;
-    $scope.productDelete.prod_name = $scope.copiedProduct.prod_name;
+    $scope.productDelete.brand_name = $scope.copiedProduct.brand_name;
     $scope.productDelete.company= $scope.copiedProduct.company;
 
     $scope.showEditOrDeleteProductForm(true);
@@ -96,7 +113,7 @@ angular.module('fmApp')
       console.log('Sails responded with post product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 400){
-        console.log("User already exist");
+        console.log("Product already exist");
       }
     });
   };
@@ -130,6 +147,11 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         console.log("Product Created");
+        
+        if($scope.products.length === 0){
+          $scope.noProducts = false;
+        }
+
         $scope.products.push(msg.data);
         $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.showAddProductForm(false);
@@ -147,6 +169,11 @@ angular.module('fmApp')
         console.log("Product Deleted");
         var index = _.findIndex($scope.products,{'id': msg.data.id});
         $scope.products.splice(index,1);
+
+        if($scope.products.length === 0){
+          $scope.noProducts = true;
+        }
+
         $scope.showEditOrDeleteProductForm(false);
         $scope.$digest();
     }

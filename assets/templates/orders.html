@@ -19,33 +19,35 @@
 <div class="container">
 
     <!-- LEFT PANEL -->
-    <div class="panel panel-left col-md-3" ng-show="addOrderForm">
+    <div class="panel col-md-12" ng-show="addOrderForm">
         <div class="panel-body">
+        <legend>Add customer order</legend>
+            <div class="col-md-4">
             <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-2 control-label">Establisment Name</label>  
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="order.establishment" required>
+                        <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter establishment name." ng-model="order.establishment" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputOwnerName" class="col-md-2 control-label">Owner Name</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputOwnerName" placeholder="Enter owner name."
+                        <label for="inputOwnerName" class="col-md-6">Owner Name</label>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter owner name."
                         ng-model="order.owner" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress" class="col-md-2 control-label">Address</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputAddress" placeholder="Enter address."
+                        <label for="inputAddress" class="col-md-6">Address</label>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter address."
                         ng-model="order.address" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="select" class="col-md-3">Distance Rating</label>
+                        <label for="select" class="col-md-6">Distance Rating</label>
                         <div class="col-md-12">
                             <select class="form-control" id="selectType" ng-model="order.distance_rating" ng-init="order.distance_rating = distanceRatings[0]">
                                 <option ng-repeat="distanceRating in distanceRatings" value="{{distanceRating}}">{{distanceRating}}</option>
@@ -54,23 +56,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress" class="col-md-2 control-label">Coke Agent</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputAddress" placeholder="Enter address."
+                        <label for="inputAddress" class="col-md-6">Coke Agent</label>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter agent name."
                         ng-model="order.cokeagent_name" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="select" class="col-md-3">SKU</label>
+                        <label for="select" class="col-md-6">SKU</label>
                         <div class="col-md-12">
-                            <select class="form-control" id="selectType" ng-model="order.sku" ng-options="sku as combined(sku) for sku in skuList">
+                            <select class="form-control" ng-model="order.sku" ng-options="sku as combined(sku) for sku in skuList">
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputAddress" class="col-md-2 control-label">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" id="inputAddress" placeholder="Enter address."
+                        <label for="inputAddress" class="col-md-6">Cases</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases."
                         ng-model="order.cases" required>
                         </div>
                     </div>
@@ -86,7 +88,9 @@
 
                 </fieldset>
             </form>
+            </div>
 
+            <div class="col-md-7 col-md-offset-1">
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
@@ -108,20 +112,21 @@
                 </tbody>
             </table>
 
-            <div class="icon-preview">
-                <div class="form-group rightalign">
+            <div class="icon-preview" >
+                <div class="form-group rightalign" style="bottom:-100px;">
               <button type="button" class="btn btn-primary" ng-disabled="!orders.length" ng-click="submitOrders()">Submit</button>  
               <button type="button" class="btn btn-default" ng-click="showAddOrderForm(false)">Cancel</button>
                </div>
 
             <br>
             </div>
+            </div>
         </div>
     </div>
 
     <!-- RIGHT PANEL -->
 
-    <div class="panel panel-right col-md-8">
+    <div class="panel col-md-12">
         <div class="panel-body">
 
     <!-- START OF TABLE -->           
@@ -129,7 +134,7 @@
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
-                        <th>Establishment</th>
+                        <th>Establishment Name</th>
                         <th>Date</th>
                         <th>Coke Agent name</th>
                         <th>Status</th>
@@ -137,7 +142,7 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="order in ordersList" ng-click="getOrderProducts(order.id)">
+                    <tr ng-repeat="order in ordersList" ng-click="getOrderProducts(order.id)" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
                         <td>{{order.customer_id.establishment_name}}</td>
                         <td>{{order.date_received}}</td>
                         <td>{{order.cokeagent_name}}</td>
@@ -196,5 +201,41 @@
   
 
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-show="viewProducts">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="showViewProducts(false)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Order details</h4>
+      </div>
+      <div class="modal-body">
+       <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Cases</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="product in orderProducts">
+                        <td>{{product.sku_id.sku_name}}</td>
+                        <td>{{product.cases}}</td>
+                    </tr>
+
+                    <!-- DON'T REMOVE CODE BELOW -->
+
+                </tbody>
+            </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="showViewProducts(false)">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->

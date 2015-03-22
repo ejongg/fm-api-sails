@@ -2,7 +2,7 @@
 
 angular.module('fmApp')
 
-.factory('authService',['$http', '$window','serviceHost','userService','$log', function ($http, $window, serviceHost,userService,$log) {
+.factory('authService',['$http', '$window','httpHost','$log', function ($http, $window, httpHost,$log) {
 
     return {
       setToken: function (token) {
@@ -12,12 +12,12 @@ angular.module('fmApp')
         return $window.localStorage.getItem('auth_token');
       },
       login: function (uri, params) {
-      	return $http.post(serviceHost + uri, params);
+      	return $http.post(httpHost + uri, params);
       },
       logout: function () {
       	$window.localStorage.removeItem('auth_token');
-        $window.localStorage.removeItem('ui');
-        userService.removeAccessLevel();
+        // $window.localStorage.removeItem('ui');
+        // userService.removeAccessLevel();
       }
 
     }
