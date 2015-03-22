@@ -42,6 +42,12 @@ module.exports = {
       type : 'string',
       defaultsTo : 'active',
       enum : ['active', 'inactive']
+    },
+    toJson : function(){
+      var user = this.toObject();
+      delete user.password;
+
+      return user;
     }
   },
 
