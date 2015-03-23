@@ -30,7 +30,11 @@ module.exports = {
   	products : {
   		collection : 'inventory',
   		via : 'bay_id'
-  	}
+  	},
+    bay_limit : {
+      type : 'integer',
+      required : true
+    }
   },
 
   afterCreate : function(bay, next){
