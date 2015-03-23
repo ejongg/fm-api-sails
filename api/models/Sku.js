@@ -46,6 +46,10 @@ module.exports = {
       type : 'float',
       required : true,
       defaultsTo : 0.00
+    },
+    lifespan : {
+      type : 'integer',
+      required : true
     }
   },
 
