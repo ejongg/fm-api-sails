@@ -28,7 +28,7 @@ module.exports = {
   		type : 'string',
   		required : true
   	},
-  	distance_rating : {
+  	distance : {
   		type : 'integer',
   		required : true,
       enum : [1, 2, 3, 4, 5]
