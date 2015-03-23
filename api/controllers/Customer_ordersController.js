@@ -12,7 +12,7 @@ module.exports = {
 	add : function(req, res){
 		var customer  = req.body.customer;
 		var orders = req.body.orders;
-		var cokeagent_name = req.body.cokeagent_name;
+		var supplieragent_name = req.body.supplieragent_name;
 		var user = req.body.user;
 		var total_amount = req.body.total_amount;
 
@@ -20,7 +20,7 @@ module.exports = {
 			establishment_name : customer.establishment,
 			owner_name : customer.owner,
 			address : customer.address,
-			distance_rating : customer.distance
+			distance : customer.distance
 		};
 
 		Customers.findOrCreate({establishment_name : customer.establishment}, customer)
@@ -31,7 +31,7 @@ module.exports = {
 
 			Customer_orders.create({
 				customer_id : new_customer.id,
-				cokeagent_name : cokeagent_name,
+				supplieragent_name : supplieragent_name,
 				date_received : moment().format('YYYY-MM-DD'),
 				user  : user,
 				total_amount : total_amount
