@@ -1,15 +1,18 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('BaysCtrl',['$scope','_','$http', function($scope, _, $http){
+.controller('BaysCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
   $scope.bays = [];
   $scope.bayItems = [];
+  $scope.products = [];
   $scope.existingCompany = [];
 
   $scope.bay = {};
   $scope.bayEdit = {};
   $scope.bayDelete = {};
   $scope.copiedBay = {};
+
+  $scope.noBays = true;
 
   $scope.addBayForm = false;
   $scope.editOrDeleteBayForm = false;
@@ -22,33 +25,24 @@ angular.module('fmApp')
       // }).error(function (err) {
       // console.log(err);
       // });
-    io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
-      console.log('Sails responded with get bay: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.bays = body;
-        $scope.$digest();
-      }
-    });
+    // io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
+    //   console.log('Sails responded with get bay: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.bays = body;
+    //     $scope.$digest();
+    //   }
+    // });
 
-  };
-
-  var getSKU = function () {
-      // $sailsSocket.get('/bays').success(function (data) {
-      // $scope.bays = data;
-      // console.log($scope.bays);
-      // }).error(function (err) {
-      // console.log(err);
-      // });
-    io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {
-      console.log('Sails responded with get bay: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.existingCompany = _.uniq(body,'company');
-        console.log($scope.existingCompany); 
-        $scope.bay.bay_label = $scope.existingCompany[0].company;
-        $scope.$digest();
+    $http.get(httpHost + '/bays').success( function (data) {
+      if(data.length !== 0){
+      $scope.bays = data;
+      console.log("Bays:");
+      console.log($scope.bays);
+      $scope.noBays = false;
       }
+    }).error(function (err) {
+      console.log(err);
     });
 
   };
@@ -66,7 +60,6 @@ angular.module('fmApp')
   };
 
   getBays();
-  getSKU();
   getBayItems();
 
   $scope.showAddBayForm = function (data) {
@@ -87,6 +80,7 @@ angular.module('fmApp')
       $scope.editBayTab = data;
       if(data === true){
         $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
+        $scope.bayEdit.bay_label = $scope.copiedBay.bay_label;
       } 
   };
     
@@ -97,9 +91,11 @@ angular.module('fmApp')
       $scope.copiedBay = angular.copy(user);
       $scope.bayEdit.id = $scope.copiedBay.id;
       $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
+      $scope.bayEdit.bay_label = $scope.copiedBay.bay_label;
      
       $scope.bayDelete.id = $scope.copiedBay.id;
       $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;
+      $scope.bayDelete.bay_label = $scope.copiedBay.bay_label;
 
       $scope.showEditOrDeleteBayForm(true);
   };
@@ -131,13 +127,13 @@ angular.module('fmApp')
       // console.log(err);
       // });
     console.log(bay);
-    io.socket.request($scope.socketOptions('post','/bays',{},bay), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/bays',{"Authorization": "Bearer " + authService.getToken()},bay), function (body, JWR) {
       console.log('Sails responded with post bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.bays.push(body);
         $scope.showAddBayForm(false);
-        clearForm()
+        clearForm();
         $scope.$digest();
       }
     }); 
@@ -152,11 +148,11 @@ angular.module('fmApp')
       // }).error(function (err) {
       //   console.log(err);
       // });
-    io.socket.request($scope.socketOptions('put','/bays/' + newInfo.id,{},newInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/bays/' + newInfo.id,{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
       console.log('Sails responded with edit bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+         $scope.showEditOrDeleteBayForm(false);
       }
     });
   };
@@ -169,11 +165,11 @@ angular.module('fmApp')
       // }).error(function (err) {
       //   console.log(err);
       // });
-    io.socket.request($scope.socketOptions('delete','/bays/' + bay.id,{}), function (body, JWR) {
+    io.socket.request($scope.socketOptions('delete','/bays/' + bay.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+        $scope.showEditOrDeleteBayForm(false);
       }
     });
   };
@@ -186,6 +182,9 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         console.log("Bay Created");
+        if($scope.noBays === true){
+          $scope.noBays = false;
+        }
         $scope.bays.push(msg.data);
         $scope.showAddBayForm(false);
         clearForm()
@@ -197,17 +196,20 @@ angular.module('fmApp')
         console.log($scope.bays);
         console.log(index);
         $scope.bays[index] = msg.data;
-        $scope.showEditOrDeleteBayForm(false);
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Bay Deleted");
         var index = _.findIndex($scope.bays,{'id': msg.data.id});
         $scope.bays.splice(index,1);
-        $scope.showEditOrDeleteBayForm(false);
+        if($scope.bays.length === 0){
+          $scope.noBays = true;
+        }
         $scope.$digest();
     }
 
   });
+
+
 
 }]);

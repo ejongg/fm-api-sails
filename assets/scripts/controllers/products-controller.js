@@ -35,6 +35,7 @@ angular.module('fmApp')
       
       if(data.length !== 0){
         $scope.products = data;
+        console.log($scope.products);
         $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.productExistingCompany.company = $scope.existingCompany[0].company;
         $scope.noProducts = false;

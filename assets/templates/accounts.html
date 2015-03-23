@@ -71,16 +71,7 @@
 
     <div class="panel panel-left col-md-4" ng-show="editOrDeleteUserForm">
 
-        <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <a ng-click="setEditUserTab(true)">Edit User</a>
-                        </li>
-                        <li>
-                            <a ng-click="setEditUserTab(false)">Delete User</a>
-                        </li>
-                    </ul>
-
-        <div class="panel-body" ng-show="editUserTab">
+        <div class="panel-body" ng-hide="userType === 'admin' ">
           <legend>EDIT ACCOUNT</legend>
           <form class="form-horizontal" name="editUserForm" ng-submit="editUser(userEdit)" novalidate>
                 <fieldset>
@@ -127,7 +118,7 @@
             </form>
         </div>
 
-        <div class="panel-body" ng-hide="editUserTab">
+        <div class="panel-body" ng-show="userType === 'admin'">
           <legend>DELETE ACCOUNT</legend>
           <form class="form-horizontal" name="deleteUserForm" ng-submit="deleteUser(userDelete)" novalidate>
                 <fieldset>

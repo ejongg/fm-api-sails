@@ -12,7 +12,7 @@ angular.module('fmApp')
 
 	$scope.addUserForm = false;
 	$scope.editOrDeleteUserForm = false;
-	$scope.editUserTab = true;
+	// $scope.editUserTab = true;
 
 	var getUsers = function () {
     $http.get(httpHost + '/users').success( function (data) {
@@ -40,16 +40,16 @@ angular.module('fmApp')
       $scope.editOrDeleteUserForm = data;
 	};
 
-	$scope.setEditUserTab = function (data) {
-      $scope.editUserTab = data;
-      if(data === true){
-        $scope.userEdit.username = $scope.copiedUser.username;
-        $scope.userEdit.password = $scope.copiedUser.password;
-        $scope.userEdit.firstname = $scope.copiedUser.firstname;
-        $scope.userEdit.lastname = $scope.copiedUser.lastname;
-        $scope.userEdit.type = $scope.copiedUser.type;
-      } 
-	};
+	// $scope.setEditUserTab = function (data) {
+ //      $scope.editUserTab = data;
+ //      if(data === true){
+ //        $scope.userEdit.username = $scope.copiedUser.username;
+ //        $scope.userEdit.password = $scope.copiedUser.password;
+ //        $scope.userEdit.firstname = $scope.copiedUser.firstname;
+ //        $scope.userEdit.lastname = $scope.copiedUser.lastname;
+ //        $scope.userEdit.type = $scope.copiedUser.type;
+ //      } 
+	// };
     
     $scope.userClicked = function (user) {
       if($scope.addUserForm === true){

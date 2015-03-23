@@ -151,6 +151,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
           }
         }  
       })
+      .state('encoder.accounts', {
+        url:'/accounts',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/accounts.html',
+            controller: 'AccountsCtrl'
+          }
+        }  
+      })
 
     .state('cashier', {
       url:'/cashier',
@@ -167,6 +176,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
           'mainContent': {
             templateUrl: 'templates/pos.html',
             controller:'POSCtrl'
+          }
+        }  
+      })
+      .state('cashier.accounts', {
+        url:'/accounts',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/accounts.html',
+            controller: 'AccountsCtrl'
           }
         }  
       })
