@@ -12,13 +12,13 @@ var async = require('async');
 module.exports = {
 	add : function(req, res){
 		var products = req.body.products;
-		var totalCost = req.body.total_cost;
+		var totalAmount = req.body.total_amount;
 		var user = req.body.user;
 
 		var purchase = {
-			total_cost : totalCost,
+			total_amount : totalAmount,
 			user : user,
-			date_received : moment().format('MM-DD-YYYY')
+			date_received : moment().format('YYYY-MM-DD')
 		};
 		
 		Purchases.create(purchase)
