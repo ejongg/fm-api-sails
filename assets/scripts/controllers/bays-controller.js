@@ -49,14 +49,26 @@ angular.module('fmApp')
 
 
   var getBayItems = function () {
-    io.socket.request($scope.socketOptions('get','/bays/bayitems'), function (body, JWR) {
-        console.log('Sails responded with get bay items: ', body);
-        console.log('and with status code: ', JWR.statusCode);
-        if(JWR.statusCode === 200){
-          $scope.bayItems = body;
-          $scope.$digest();
-        }
+    // io.socket.request($scope.socketOptions('get','/bays/bayitems'), function (body, JWR) {
+    //     console.log('Sails responded with get bay items: ', body);
+    //     console.log('and with status code: ', JWR.statusCode);
+    //     if(JWR.statusCode === 200){
+    //       $scope.bayItems = body;
+    //       $scope.$digest();
+    //     }
+    // });
+
+    $http.get(httpHost + '/bays/bayitems').success( function (data) {
+      if(data.length !== 0){
+      $scope.bayItems = data;
+      console.log("Bay items:");
+      console.log($scope.bayItems);
+      $scope.noBays = false;
+      }
+    }).error(function (err) {
+      console.log(err);
     });
+
   };
 
   getBays();
@@ -105,9 +117,8 @@ angular.module('fmApp')
   }; 
   
   $scope.getBayCount = function (index) {
-    if($scope.bayItems.length !== 0){
-      console.log($scope.bayItems);
     console.log(index);
+    if($scope.bayItems.length !== 0){
     var itemIndex = _.findIndex($scope.bayItems, { 'bay_id':index});
     console.log(itemIndex);
     return $scope.bayItems[itemIndex].total_products; 

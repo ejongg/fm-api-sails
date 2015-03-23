@@ -82,7 +82,7 @@ angular.module('fmApp')
     }; 
 
 	$scope.addUser = function (user) {
-    io.socket.request($scope.socketOptions('post','/users',{},user), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/users',{"Authorization": "Bearer " + authService.getToken()},user), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
@@ -103,7 +103,7 @@ angular.module('fmApp')
 	};
 
 	$scope.deleteUser = function (user) {
-    io.socket.request($scope.socketOptions('delete','/users/' + user.id,{}), function (body, JWR) {
+    io.socket.request($scope.socketOptions('delete','/users/' + user.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){

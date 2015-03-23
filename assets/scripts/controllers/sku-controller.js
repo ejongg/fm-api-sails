@@ -160,11 +160,15 @@ angular.module('fmApp')
   Clear form inputs
   */
   var clearForm = function () {
-    $scope.sku.size = null ;
-    $scope.sku.price = null;
-    $scope.sku.bottlespercase= null;
     $scope.sku.brand_name = $scope.products[0].brand_name;
+    $scope.sku.sku_name = '';
+    $scope.sku.size = null;
     $scope.sku.unit = $scope.units[0];
+    $scope.sku.priceperbottle = null;
+    $scope.sku.pricepercase = null;
+    $scope.sku.bottlespercase = null;
+    $scope.sku.weightpercase = null;
+    $scope.sku.lifespan = null;
   }
   
   /*
@@ -179,7 +183,7 @@ angular.module('fmApp')
     $scope.skuEdit.id = $scope.copiedSku.id;
     $scope.skuEdit.brand_name = $scope.copiedSku.prod_id.brand_name;
     var sku_name = $scope.copiedSku.sku_name.split(" ");
-    $scope.skuEdit.sku_name = sku_name[1];
+    $scope.skuEdit.sku_name =  $scope.copiedSku.sku_name;
     $scope.skuEdit.size = parseInt($scope.copiedSku.size[0]);
     $scope.skuEdit.unit = $scope.copiedSku.size[1];
     $scope.skuEdit.priceperbottle = $scope.copiedSku.priceperbottle;
@@ -250,17 +254,17 @@ angular.module('fmApp')
   */
   $scope.editSKU = function (sku) {
     console.log(sku);
-    var size = sku.size + ' ' +sku.unit;
-    var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
+    // var size = sku.size + ' ' +sku.unit;
+    // var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
 
-    var newInfo = {
-      "sku_name":sku.sku_name,
-      "size":size,
-      "price":sku.price,
-      "bottlespercase": sku.bottlespercase,
-      "prod_id": prod_id
-    }
-    console.log(newInfo);
+    // var newInfo = {
+    //   "sku_name":sku.sku_name,
+    //   "size":size,
+    //   "price":sku.price,
+    //   "bottlespercase": sku.bottlespercase,
+    //   "prod_id": prod_id
+    // }
+    // console.log(newInfo);
 
     // $sailsSocket.put('/sku/' + sku.id, newInfo).success(function (data) {
     //   var index = _.findIndex($scope.skuLists, function(sku) { return sku.id == data.id; });
@@ -269,7 +273,7 @@ angular.module('fmApp')
     // }).error(function (err) {
     //   console.log(err);
     // });
-    io.socket.request($scope.socketOptions('put','/sku/' + sku.id,{},newInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/sku/' + sku.id,{"Authorization": "Bearer " + authService.getToken()},sku), function (body, JWR) {
       console.log('Sails responded with edit sku: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -309,10 +313,12 @@ angular.module('fmApp')
       case "created": 
         console.log("Product Created");
         if($scope.products.length === 0){
-          $scope.noExistingProduct = false;
+          $scope.noProducts = false;
+          $scope.noSKU = true;
         }
         $scope.products.push(msg.data);
         $scope.existingCompany = _.uniq($scope.products, 'company');
+        $scope.sku.brand_name = $scope.products[0].brand_name;
         $scope.$digest();
         break;
       case "updated":
@@ -320,12 +326,41 @@ angular.module('fmApp')
         var index = _.findIndex($scope.products,{'id': msg.data.id});
         $scope.products[index] = msg.data;
         $scope.existingCompany = _.uniq($scope.products, 'company');
+        $scope.sku.brand_name = $scope.products[0].brand_name;
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Product Deleted");
-        var index = _.findIndex($scope.products,{'id': msg.data.id});
+        var index = _.findIndex($scope.products,{'id': msg.data[0].prod_id});
         $scope.products.splice(index,1);
+
+        if($scope.products.length === 0){
+          $scope.noProducts = true;
+          if($scope.addSKUForm === true){
+            console.log("Close form");
+            $scope.addSKUForm = false;
+          }else if($scope.editOrDeleteSKUForm === true){
+            $scope.editOrDeleteSKUForm = false;
+          }
+        }else{
+          console.log("change filter");
+          $scope.existingCompany = _.uniq($scope.products, 'company');
+          console.log($scope.existingCompany);
+          $scope.sku.brand_name = $scope.products[0].brand_name;
+        }
+        
+       //  _.remove($scope.skuLists.prod_id,msg.data.prod_id);
+       // console.log(msg.data[0]);
+       // console.log(msg.data);
+
+        $scope.skuLists = _.remove($scope.skuLists, function(n) {
+          console.log(n.prod_id.id);
+          console.log(msg.data[0].prod_id);
+          return n.prod_id.id !== msg.data[0].prod_id;
+        });
+
+        // console.log($scope.skuLists);
+
         $scope.$digest();
     }
   });

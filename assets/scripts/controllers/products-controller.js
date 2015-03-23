@@ -168,7 +168,9 @@ angular.module('fmApp')
         break;
       case "destroyed":
         console.log("Product Deleted");
-        var index = _.findIndex($scope.products,{'id': msg.data.id});
+        console.log(msg.data[0].prod_id);
+        var index = _.findIndex($scope.products,{'id': msg.data[0].prod_id});
+        console.log(index);
         $scope.products.splice(index,1);
 
         if($scope.products.length === 0){

@@ -149,7 +149,7 @@
                 <tbody>
                     <tr ng-repeat="bay in bays" ng-click="bayClicked(bay)">
                         <td>Bay {{bay.bay_name}}</td> 
-                        <td>{{getBayCount($index + 1)}}</td>
+                        <td>{{getBayCount(bay.id)}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->
@@ -159,7 +159,7 @@
         </div>
 
             <div class="icon-preview">
-              <a class="btn btn-primary pull-right btn-md" ng-click="showAddBayForm(true)">Add</a>
+              <a class="btn btn-primary pull-right btn-md" ng-hide="addBayForm" ng-click="showAddBayForm(true)">Add</a>
             <br>
             </div>
         </div>
