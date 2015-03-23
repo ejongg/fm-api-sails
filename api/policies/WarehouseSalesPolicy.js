@@ -40,7 +40,7 @@ module.exports = function(req, res, next){
 				req.result = true;
 			}
 		}else{
-			return res.json({code : 0, message : 'Insufficient stocks in warehouse', data : notAvailableProducts});
+			return res.json({code : 0, message : 'Insufficient stocks in current moving pile', data : notAvailableProducts});
 		}
 
 		next();
