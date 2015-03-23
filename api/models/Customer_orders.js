@@ -19,9 +19,10 @@ module.exports = {
   		model : 'customers',
   		required : true
   	},
-  	cokeagent_name : {
+  	supplieragent_name : {
   		type : 'string',
-  		required : true
+  		required : true,
+      defaultsTo : 'N/A'
   	},
   	date_received : {
   		type : 'string',
