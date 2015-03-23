@@ -53,6 +53,8 @@ module.exports = {
 										};
 
 										Incomplete_cases.create(inc_case).exec(function(err, incompletes){});
+
+										bottles = 0;
 									}
 
 									if(cases > 0){
