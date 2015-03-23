@@ -24,7 +24,7 @@ module.exports = {
   		type : "string",
   		required : true,
   		minLength : 6,
-      defaultsTo : 'abcdef'
+      defaultsTo : 'fmmarketing'
   	},
   	type : {
   		type : "string",
