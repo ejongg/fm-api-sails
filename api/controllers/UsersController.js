@@ -30,34 +30,33 @@ module.exports = {
 	},
 	
 	changepassword : function(req, res){
-		var password = req.body.password;
+		var new_password = req.body.new_password;
+		var old_password = req.body.old_password;
+		var user_id = req.body.user_id;
 
-		bcrypt.genSalt(10, function(err, salt){
-			if(err)
-				return res.json({message : 'An error occured'});
+		Users.findOne({id : user_id})
+			.then(function(err, user){
 
-			bcrypt.hash(password, salt, null, function(err, hash){
-				password = hash;
-			});
-		});
+				bcrypt.compare(old_password, user.password, function(err, match){
+					if(err)
+						return res.json({status : {code : 0, message : "An error has occured"}});
 
-		Users.findOneByUsername(req.token)
-			.exec(function(err, user){
-				if(err)
-					return res.json({message : 'An error occured'});
+					if(match){
 
-				if(user){
-					Users.update({username : user.username}, {password : password})
-						.exec(function(err, updated){
-							if(err)
-								return res.json({message : 'An error occured'});
+						bcrypt.genSalt(10, function(err, salt){
+							bcrypt.hash(new_password, salt, null, function(err, hashed){
+								user.password = hashed;
+								user.save(function(err, saved){});
+
+								res.json({status : {code : 1, message : "Password successfully changed "}});
+							});
 						});
 
-					user.password = password;
-					return res.json(user);
-				}else{
-					return res.json({message : 'User not found'});
-				}
+					}else{
+						return res.json({status : {code : 0, message : "Wrong old password entered"}});
+					}
+					
+				});
 			});
 	}
 };
