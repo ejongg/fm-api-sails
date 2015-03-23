@@ -19,11 +19,15 @@ module.exports = {
   		type : 'string',
   		required : true
   	},
-  	total_cost : {
+  	total_amount : {
   		type : 'float',
   		required : true,
       defaultsTo : 0.00
   	},
+    status : {
+      type : 'string',
+      defaultsTo : 'Not verified'
+    },
     user : {
       type : 'string',
       required : true
