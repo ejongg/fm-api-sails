@@ -14,19 +14,6 @@ module.exports.sockets = {
 
   /***************************************************************************
   *                                                                          *
-  * This custom afterDisconnect function will be run each time a socket         *
-  * disconnects                                                              *
-  *                                                                          *
-  ***************************************************************************/
-  
-  afterDisconnect: function (session, socket, cb) {
-    // Be sure to call the callback
-    return cb();
-  },
-
-
-  /***************************************************************************
-  *                                                                          *
   * `transports`                                                             *
   *                                                                          *
   * A array of allowed transport methods which the clients will try to use.  *
