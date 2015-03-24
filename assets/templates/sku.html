@@ -337,6 +337,9 @@
                         <th>Size&nbsp;
               <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th>Brand&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th>Company&nbsp;
               <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
@@ -359,6 +362,7 @@
                     <tr ng-repeat="sku in skuLists" ng-click="skuClicked(sku)">
                       <td>{{sku.sku_name}}</td>
                       <td>{{sku.size}}</td>
+                      <td>{{sku.prod_id.brand_name}}</td>
                       <td>{{sku.prod_id.company}}</td>
                       <td>{{sku.priceperbottle}}</td>
                       <td>{{sku.pricepercase}}</td>

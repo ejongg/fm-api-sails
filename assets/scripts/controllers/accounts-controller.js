@@ -128,7 +128,9 @@ angular.module('fmApp')
       case "destroyed":
         console.log("User Deleted");
         console.log($scope.users);
-        var index = _.findIndex($scope.users,{'id': msg.data.id});
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.users,{'id': msg.data[0].user_id});
+        console.log(index);
         $scope.users.splice(index,1);
         $scope.showEditOrDeleteUserForm(false);
         $scope.$digest();

@@ -183,7 +183,8 @@ angular.module('fmApp')
     $scope.skuEdit.id = $scope.copiedSku.id;
     $scope.skuEdit.brand_name = $scope.copiedSku.prod_id.brand_name;
     var sku_name = $scope.copiedSku.sku_name.split(" ");
-    $scope.skuEdit.sku_name =  sku_name[1];
+    var lastWord = sku_name.length - 1;
+    $scope.skuEdit.sku_name =  sku_name[lastWord];
     $scope.skuEdit.size = parseInt($scope.copiedSku.size[0]);
     $scope.skuEdit.unit = $scope.copiedSku.size[1];
     $scope.skuEdit.priceperbottle = $scope.copiedSku.priceperbottle;
@@ -218,7 +219,7 @@ angular.module('fmApp')
     var size = sku.size + ' ' +sku.unit;
     var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
     var skuInfo = {
-      "sku_name":sku.brand_name + " " + sku.sku_name,
+      "sku_name":sku.sku_name,
       "size":size,
       "priceperbottle":sku.priceperbottle,
       "pricepercase":sku.pricepercase,
@@ -382,7 +383,8 @@ angular.module('fmApp')
         break;
       case "updated":
         console.log("SKU Updated");
-        var index = _.findIndex($scope.skuLists,{'id': msg.data.sku_id});
+        console.log(msg.data);
+        var index = _.findIndex($scope.skuLists,{'id': msg.data.id});
         $scope.skuLists[index] = msg.data;
         $scope.showEditOrDeleteSkuForm(false);
         $scope.$digest();

@@ -302,7 +302,7 @@ angular.module('fmApp')
         break;
       case "destroyed":
         console.log("SKU Deleted");
-        var index = _.findIndex($scope.skuList,{'id': msg.data.id});
+        var index = _.findIndex($scope.skuList,{'id': msg.data[0].sku_id});
         $scope.skuList.splice(index,1);
         if($scope.skuList.length === 0){
           $scope.noSKU = true;
