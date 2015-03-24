@@ -25,8 +25,7 @@ module.exports = {
 
 			.then(function(bay){
 				BaysService.countBayItems(bay.id, function(err, count){
-					bay.total_count = count;
-					sails.sockets.blast('bays', {verb : 'created', data : bay});
+					sails.sockets.blast('bays', {verb : 'created', data : bay, bayitem : {bay_id : bay.id, total_products : count}});
 				});
 			})
 	},
