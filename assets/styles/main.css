@@ -49,14 +49,12 @@ b {
   float: right !important; }
 
 .panel {
-
   background: white;
-  border-top: 5px solid #202020;
-  padding-top: 0px !important;
+  border-radius: 0px;
   /* width: 95%; */
-  border-radius: 0px !important;
   box-shadow: none !important;
   margin: 0px !important;
+
 }
 
 .panel-big {
@@ -116,25 +114,19 @@ h3.panel-heading {
 .pageheader-left {
   background-color: #202020;
   float: left !important;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-top: 5px;
-  padding-bottom: 0px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  margin-left: 60px;
-  margin-top: 0px;
-  margin-bottom: 20px;
-  height: 55px;
+  padding-left: 220px;
+  padding-right: 10px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-bottom-right-radius: 20px; 
+  border-top-right-radius: 20px; 
+  margin-top: 20px;
 }
 
 .pageheader-right {
-  background-color: transparent;
+  background-color: pink;
   float: right !important;
-  margin-top: 0px;
-  margin-right: 60px;
-  margin-bottom: 20px;
-
+  padding-right: 80px;
 }
 
 .user {
@@ -182,39 +174,39 @@ h3.panel-heading {
 
 
 .nav-tabs {
-  background: transparent; !important;
+  background: transparent !important;
   border-bottom: 0px;
+  margin: 5px;
   align: center;
   border-bottom: 0px; }
 
 .nav-tabs > li > a {
-  color: #202020 !important;
-  margin: 0px;
-  margin-right: 10px;
+  color: #1ca3a7 !important;
+  padding-bottom: 10px;
+  margin: 1px;
 }
 
 .nav-tabs > li > a:hover {
-  background: #aab919 !important;
+  background: #202020 !important;
   border: 0;
-  margin-right: 10px;
-      -webkit-transition: all 0.7s ease 0s;
-    -moz-transition: all 0.7s ease 0s;
-    -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
+  padding-bottom: 10px;
+  margin: 1px;
   }
 
 .nav-tabs > li > a, .nav-tabs > li > active, .nav-tabs > li > link, .nav-tabs > li > a:focus {
-  background-color: #202020 !important;
+  background-color: #aab919 !important;
   border: 0 !important;
   color: #FFFFFF !important;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px; }
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px; }
 
 .nav-tabs > li.disabled > a, .nav-tabs > li.disabled > a:hover {
   color: rgba(255, 255, 255, 0.5);
   background-color: #aab919; }
+
+
 
 .fmbanner {
   background-image: url("../../images/zxc.png");
@@ -267,19 +259,11 @@ h3.panel-heading {
   border-radius: 10px;
   margin: 0px !important; }
 
-.btn-warning {
+.btn-danger {
   background-color: #aab919 !important;
+  color: #000 !important;
   border-radius: 10px;
   margin: 0px !important; }
-
-.btn-safe {
-  background-color: #202020;
-  float: right !important;
-  margin-top: 0px;
-  margin-right: 60px;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-}
 
 .label-default {
   background-color: #202020;
@@ -292,7 +276,7 @@ h1 {
   /*padding-left: 82px !important;*/
   padding: 9px;
   font-weight: bold;
-  letter-spacing: 5px;
+  letter-spacing: 10px;
   /* background-image: url("../../images/headerbg.png"); */ */
   background-repeat: no-repeat;
   background-position: center left;
@@ -333,14 +317,11 @@ h5 {
   margin-bottom: 8px; }
 
 h6 {
-  font: 12px Arial,Helvetica,Sans-serif;
-  font-size: 100%;
   margin: 0px;
   padding-left: 25px;
   padding: 5px;
   margin-top: 5px;
-  margin-bottom: 8px;
-  text-transform: uppercase; }
+  margin-bottom: 8px; }
 
 .alert-danger {
   background-color: #ffa311 !important; }
@@ -482,13 +463,15 @@ labels
   margin: 0px 0px 0px 0px !important; }
 
 .panel-login {
-  width: 410px;
-  height: 405px;
+  min-width: 200px;
+  max-width: 410px;
   padding: 50px;
   padding-top: 30px;
   margin: 130px 0px 0px -50px !important;
-  border-radius: 25px;
+  border-radius: 25px; 
+  overflow-x: hidden !important; }
 }
+
 
 @media screen and (max-width: 300px) {
     body {
@@ -642,6 +625,7 @@ a.nav-main:hover {
   font-weight: bold;
   cursor: pointer !important;
   background-color: #e9e9e9 !important;
+
 }
 
 a:link {
@@ -676,7 +660,7 @@ a.user-account:hover {
 }
 
 legend {
-
+  padding: 3px;
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
   color: #000000;
@@ -701,39 +685,3 @@ legend {
   border: !px #202020 dashed;
     background-color: transparent !important;
 }
-
-#search {
-
-}
-
-#search input[type="text"] {
-    background-color: #202020;
-    background-image: url("../../images/search-white.png");
-    background-position: 10% 50%;
-    background-repeat: no-repeat;
-    border: 0 none;
-    font: 12px Arial,Helvetica,Sans-serif;
-    color: #ffffff !important;
-    width: 150px;
-    padding: 15px 15px 15px 40px;
-
-    margin-right: 10px;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -webkit-transition: all 0.7s ease 0s;
-    -moz-transition: all 0.7s ease 0s;
-    -o-transition: all 0.7s ease 0s;
-    transition: all 0.7s ease 0s;
-
-    height: 55px;
-    }
-
-#search input[type="text"]:focus {
-  color: #ffffff;
-    width: 200px;
-    }

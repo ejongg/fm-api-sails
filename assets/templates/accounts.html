@@ -9,29 +9,6 @@
         <h1> Accounts </h1>
     </div>
 
-    <div class="pageheader-right">
-        <div class="form-group">
-            <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <div class="search">
-                                <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
-                                </form>
-                            </div>
-                        </li>
-                        <li>
-                            <a ng-click="showAddUserForm(true)">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD USERS</h6></a>
-
-                        </li>
-                        <li>
-                            <a ng-click="">
-                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
-                        </li>
-                    </ul>
-                </div>
-    </div>
-
 </div>
 
 
@@ -234,6 +211,17 @@
                     </tbody>
                 </table> <!-- END OF TABLE -->
 
+                <div class="icon-preview">
+                  <a class="btn btn-primary pull-right btn-md" ng-click="showAddUserForm(true)">Add</a>
+                </div>
+
+                <br/><br/>
+
+                 <!-- PRINT ICON -->
+                <div class="form-group" align="right">
+                    <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a>
+                    </div>
+                </div>
 
             </div>
         </div>

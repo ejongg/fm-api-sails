@@ -9,29 +9,6 @@
         <h1> Orders </h1>
     </div>
 
-    <div class="pageheader-right">
-        <div class="form-group">
-            <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <div class="search">
-                                <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
-                                </form>
-                            </div>
-                        </li>
-                        <li>
-                            <a ng-click="showAddOrderForm(true)">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD ORDERS</h6></a>
-
-                        </li>
-                        <li>
-                            <a ng-click="">
-                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
-                        </li>
-                    </ul>
-                </div>
-    </div>
-
 </div>
 
 
@@ -178,6 +155,15 @@
 
     <!-- END OF TABLE -->
     
+
+    <!-- PRINT ICON -->
+    <br><br>
+
+    <div class="icon-preview">
+    <a class="btn btn-primary pull-right btn-md" ng-click="showAddOrderForm(true)">Add</a>
+    <br>
+    </div>
+    <br><br>
 
 
   </div>
