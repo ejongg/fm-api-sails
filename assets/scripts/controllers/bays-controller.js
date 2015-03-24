@@ -198,7 +198,9 @@ angular.module('fmApp')
         if($scope.noBays === true){
           $scope.noBays = false;
         }
+        console.log(msg);
         $scope.bays.push(msg.data);
+        $scope.bayItems.push(msg.bayitem);
         $scope.showAddBayForm(false);
         clearForm()
         $scope.$digest();
