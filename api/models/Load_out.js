@@ -27,6 +27,21 @@ module.exports = {
   		type : "integer",
   		required : true
   	}
+  },
+
+  afterCreate : function(loadout, next){
+    sails.sockets.blast('loadout', {verb : 'created', data : loadout});
+    next();
+  },
+
+  afterUpdate : function(loadout, next){
+    sails.sockets.blast('loadout', {verb : 'updated', data : loadout});
+    next();
+  },
+
+  afterDestroy : function(loadout, next){
+    sails.sockets.blast('loadout', {verb : 'destroyed', data : loadout});
+    next();
   }
 };
 

@@ -25,10 +25,12 @@ module.exports = {
 
   afterUpdate : function(delivery_product, next){
     sails.sockets.blast('delivery_products', {verb : 'updated', data : delivery_product});
+    next();
   },
 
   afterDestroy : function(delivery_product, next){
     sails.sockets.blast('delivery_products', {verb : 'destroyed', data : delivery_product});
+    next();
   }
 };
 

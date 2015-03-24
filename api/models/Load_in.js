@@ -32,6 +32,16 @@ module.exports = {
   		model : "load_out",
   		required : true
   	}
+  },
+
+  afterUpdate : function(loadin, next){
+    sails.sockets.blast('loadin', {verb : 'updated', data : loadin});
+    next();
+  },
+
+  afterDestroy : function(loadin, next){
+    sails.sockets.blast('loadin', {verb : 'destroyed', data : loadin});
+    next();
   }
 };
 

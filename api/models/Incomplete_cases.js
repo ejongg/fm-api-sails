@@ -28,6 +28,21 @@ module.exports = {
   		required : true,
       defaultsTo : 0
   	}
+  },
+
+  afterCreate : function(incomplete_case, next){
+    sails.sockets.blast('incomplete_cases', {verb : 'created', data : incomplete_case});
+    next();
+  },
+
+  afterUpdate : function(incomplete_case, next){
+    sails.sockets.blast('incomplete_cases', {verb : 'updated', data : incomplete_case});
+    next();
+  },
+
+  afterDestroy : function(incomplete_case, next){
+    sails.sockets.blast('incomplete_cases', {verb : 'destroyed', data : incomplete_case});
+    next();
   }
 };
 

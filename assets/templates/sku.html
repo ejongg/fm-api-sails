@@ -19,8 +19,8 @@
 <div class="container">
 
     <!-- LEFT PANEL -->
-
-    <div class="panel panel-left col-md-4" ng-show="addSKUForm">
+    <div ng-class="addSKUForm ? 'col-xs-12 col-md-4' : ''">
+      <div class="panel panel-left" ng-show="addSKUForm">
         <div class="panel-body">
           <div ng-show="!noExistingProduct">
             <legend>Add Safe Keeping Unit</legend>
@@ -28,8 +28,8 @@
                 <fieldset>
 
                     <div class="form-group">
-                        <label for="inputProductName" class="col-md-12">
-                        Product Name</label>
+                        <label for="inputBrandName" class="col-md-12">
+                        Brand Name</label>
                         <div class="col-md-12">
                           <select class="form-control" ng-model="sku.brand_name" ng-options="product.brand_name as product.brand_name for product in products">
                           </select>
@@ -112,12 +112,16 @@
           <div ng-hide="!noExistingProduct">
             Add product first..
           </div>
+
         </div>
+      </div>
     </div>
 
-    <div class="panel panel-left col-md-3" ng-show="editOrDeleteSKUForm">
 
-        <ul class="nav nav-tabs col-md-3">
+    <div ng-class="editOrDeleteSKUForm ? 'col-xs-12 col-md-4' : ''">
+      <div class="panel panel-left" ng-show="editOrDeleteSKUForm">
+
+        <ul class="nav nav-tabs col-md-12">
                         <li>
                             <a ng-click="setEditSKUTab(true)">Edit SKU</a>
                         </li>
@@ -286,6 +290,7 @@
                 </fieldset>
             </form>
         </div>
+      </div>
     </div>
 
 
@@ -298,134 +303,88 @@
 
 
     <!-- START OF TABLE -->
+    <div ng-class="addSKUForm || editOrDeleteSKUForm ? 'col-xs-12 col-md-8' : ''">
+      <div class="panel panel-right">
+          <div class="panel-body">
 
-    <div class="panel panel-right col-md-8">
-        <div class="panel-body">
+          <div class="form-group" ng-hide="noProducts || noSKU">
+            <label for="select" class="col-md-2">Company Name</label>
+              <div class="col-md-3">
+                  <select class="form-control" ng-model="companyFilter" ng-options="product.company as product.company for product in existingCompany">
+                    <option value="">All</option>
+                  </select>
+              </div>
+          </div>
 
-        <div class="form-group" ng-hide="noProducts">
-          <label for="select" class="col-md-3">Company Name</label>
-            <div class="col-md-5">
-                <select class="form-control" ng-model="companyFilter" ng-options="product.company as product.company for product in existingCompany">
-                  <option value="">All</option>
-                </select>
-            </div>
+        <div ng-show="noProducts" align="center">
+          <h3><strong>NO PRODUCTS!
+            <small> <br/>Please add product first.</small>
+          </strong></h3>
         </div>
 
-      <div ng-show="noProducts">
-        <p>NO PRODUCTS, ADD PRODUCT FIRST</p>
+        <div ng-show="noSKU && !noProducts" align="center">
+          <h3><strong>NO SAFE KEEPING UNIT ( SKU )</add></strong></h3>
+        </div>
+
+        <div ng-hide="noProducts || noSKU"> 
+        <table class="table variantTable table-striped table-hover">
+
+                <thead>
+                    <tr>
+                        <th>Name&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th>Size&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th>Company&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th>Price Per Bottle&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th>Price Per Case&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th>Bottles&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th>Lifespan&nbsp;
+              <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="sku in skuLists" ng-click="skuClicked(sku)">
+                      <td>{{sku.sku_name}}</td>
+                      <td>{{sku.size}}</td>
+                      <td>{{sku.prod_id.company}}</td>
+                      <td>{{sku.priceperbottle}}</td>
+                      <td>{{sku.pricepercase}}</td>
+                      <td>{{sku.bottlespercase}}</td>
+                      <td>{{sku.lifespan}}</td>
+                    </tr>
+                </tbody>
+            </table>
       </div>
 
-      <div ng-show="noSKU && !noProducts">
-        <p>NO SKU</p>
+      <!-- END OF TABLE -->
+      
+
+      <div class="icon-preview">
+        <a class="btn btn-primary pull-right btn-md" ng-hide="noProducts || addSKUForm"  ng-click="showAddSkuForm(true)">Add</a>
       </div>
 
-      <div ng-hide="noProducts || noSKU"> 
-      <table class="table variantTable table-striped table-hover">
 
-              <thead>
-                  <tr>
-                      <th>Name&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Size&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Company&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Price Per Bottle&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Price Per Case&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Bottles&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                      <th>Lifespan&nbsp;
-            <a href=""><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-            <a href=""><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                  </tr>
-              </thead>
+      <!-- PRINT ICON -->
+      <br><br>
+      <div class="form-group" align="right" ng-hide="noProducts || noSKU">
+          <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a></div>
+      </div>
+      <br><br>
 
-              <tbody>
-                  <tr ng-repeat="sku in skuLists" ng-click="skuClicked(sku)">
-                    <td>{{sku.sku_name}}</td>
-                    <td>{{sku.size}}</td>
-                    <td>{{sku.prod_id.company}}</td>
-                    <td>{{sku.priceperbottle}}</td>
-                    <td>{{sku.pricepercase}}</td>
-                    <td>{{sku.bottlespercase}}</td>
-                    <td>{{sku.lifespan}}</td>
-                  </tr>
-              </tbody>
-          </table>
+      </div>
     </div>
-
-    <!-- END OF TABLE -->
-    
-
-    <div class="icon-preview">
-      <a class="btn btn-primary pull-right btn-md" ng-hide="noProducts || addSKUForm"  ng-click="showAddSkuForm(true)">Add</a>
-      <br>
-    </div>
-
-
-    <!-- PRINT ICON -->
-    <br><br>
-    <div class="form-group" align="right">
-        <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a></div>
-    </div>
-    <br><br>
-
-
-</div>
-</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
-
+  </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
-
-
-<!-- Edit Variants modal-->
-<!-- <div class="modal" id="editStockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
->
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Edit Stock</h4>
-            </div>
-    <div class="modal-body">
-
-    <form class="form-horizontal">
-        <fieldset>
-            <div class="form-group">
-                <label for="inputEmail" class="col-md-3 control-label">Price:</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" id="inputUsername" placeholder="enter username">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputPassword" class="col-md-3 control-label">Lifespan:</label>
-                <div class="col-md-9">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="enter here.">
-                </div>
-            </div>
-
-        </fieldset>
-    </form>
-
-    </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-            </div>
-
-
-
-        </div>
-    </div>
-</div> -->
-

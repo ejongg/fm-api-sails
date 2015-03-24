@@ -39,10 +39,12 @@ module.exports = {
 
   afterUpdate : function(bay, next){
     sails.sockets.blast('bays', {verb : 'updated', data : bay});
+    next();
   },
 
   afterDestroy : function(bay, next){
     sails.sockets.blast('bays', {verb : 'destroyed', data : bay});
+    next();
   }
 };
 

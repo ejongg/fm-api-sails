@@ -23,6 +23,21 @@ module.exports = {
   		type : 'string',
   		required : true
   	}
+  },
+
+  afterCreate : function(address, next){
+    sails.sockets.blast('address', {verb : 'created', data : address});
+    next();
+  },
+
+  afterUpdate : function(address, next){
+    sails.sockets.blast('address', {verb : 'updated', data : address});
+    next();
+  },
+
+  afterDestroy : function(address, next){
+    sails.sockets.blast('address', {verb : 'destroyed', data : address});
+    next();
   }
 };
 

@@ -24,6 +24,21 @@ module.exports = {
   		model : 'address',
   		required : true
   	}
+  },
+
+  afterCreate : function(route, next){
+    sails.sockets.blast('routes', {verb : 'created', data : route});
+    next();
+  },
+
+  afterUpdate : function(route, next){
+    sails.sockets.blast('routes', {verb : 'updated', data : route});
+    next();
+  },
+
+  afterDestroy : function(route, next){
+    sails.sockets.blast('routes', {verb : 'destroyed', data : route});
+    next();
   }
 };
 
