@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('PurchasesCtrl',['$scope','_','$http','$filter','httpHost', function($scope, _, $http, $filter,httpHost){
+.controller('PurchasesCtrl',['$scope','_','$http','$filter','httpHost','authService', function($scope, _, $http, $filter,httpHost,authService){
   $scope.purchasesList = [];
   $scope.skuList = [];
   $scope.bays = [];
@@ -125,7 +125,7 @@ angular.module('fmApp')
     if(data === false){
       clearForm();
       $scope.purchases = [];
-      $scope.totalCost = 0;
+      $scope.totalAmount = 0;
     }
   };
 
@@ -159,20 +159,20 @@ angular.module('fmApp')
 
   $scope.getPurchaseProducts = function (id) {
    //  console.log(id);
-   // $http.get('http://localhost:1337/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){
-     // $scope.purchaseProducts = data;
-     // console.log($scope.purchaseProducts);
-     // $scope.showViewProducts(true);
-   // });
-   io.socket.request($scope.socketOptions('get','/purchase_products?where={"purchase_id" :'+ id +'}'), function (body, JWR) {
-      console.log('Sails responded with get purchases: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.purchaseProducts = body;
-        $scope.showViewProducts(true);
-        $scope.$digest();
-      }
+   $http.get('http://localhost:1337/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){
+     $scope.purchaseProducts = data;
+     console.log($scope.purchaseProducts);
+     $scope.showViewProducts(true);
    });
+   // io.socket.request($scope.socketOptions('get','/purchase_products?where={"purchase_id" :'+ id +'}'), function (body, JWR) {
+   //    console.log('Sails responded with get purchases: ', body);
+   //    console.log('and with status code: ', JWR.statusCode);
+   //    if(JWR.statusCode === 200){
+   //      $scope.purchaseProducts = body;
+   //      $scope.showViewProducts(true);
+   //      $scope.$digest();
+   //    }
+   // });
     
   };
 
@@ -187,7 +187,7 @@ angular.module('fmApp')
       "name" : purchase.sku.sku_name + " " + purchase.sku.size,
       "company" : purchase.sku.prod_id.company,
       "bay" : purchase.bay.pile_name,
-      "prod_date" : $filter('date')(purchase.prod_date, "yyyy-MM-dd HH:mm:ss"),
+      "prod_date" : $scope.formatDate(purchase.prod_date),
       "cases" : purchase.cases,
       "costpercase" : purchase.cost,
       "discountpercase" : purchase.discount,
@@ -196,7 +196,7 @@ angular.module('fmApp')
     
     if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id }) === -1 ){
            $scope.purchases.push(purchaseInfo);
-           $scope.totalCost += purchaseInfo.amount;
+           $scope.totalAmount += purchaseInfo.amount;
     }else{
       $scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
@@ -208,29 +208,29 @@ angular.module('fmApp')
   };
 
   $scope.deletePurchase = function (index) {
-    $scope.totalCost -= $scope.purchases[index].amount;
+    $scope.totalAmount -= $scope.purchases[index].amount;
     $scope.purchases.splice(index,1);
   };
 
   $scope.submitPurchases = function () {
     var purchase = {
-       products : $scope.purchases,
-       total_cost : $scope.totalAmount,
-       user : $scope.userName
+       "products" : $scope.purchases,
+       "total_amount" : $scope.totalAmount,
+       "user" : $scope.userName
     };
 
-    console.log();
+    console.log(purchase);
             
     // io.socket.post('/purchases/add', {purchases : purchase});
-    // $scope.totalCost = 0;
+    // $scope.totalAmount = 0;
     // $scope.showAddPurchaseForm(false);
 
-    io.socket.request($scope.socketOptions('post','/purchases/add',{},purchase), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/purchases/add',{"Authorization": "Bearer " + authService.getToken()},purchase), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showAddPurchaseForm(false);
-        $scope.totalCost = 0;
+        $scope.totalAmount = 0;
         $scope.$digest();
       }
     }); 

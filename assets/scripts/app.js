@@ -276,8 +276,8 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
     };
   };
 
-  $scope.minDate = function (passedDate) {
-    return $filter('date')(passedDate,'yyyy-MM-dd');;
+  $scope.formatDate = function (passedDate) {
+    return $filter('date')(passedDate,'yyyy-MM-dd');
   };
 
 }]);

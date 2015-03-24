@@ -164,6 +164,7 @@
                     <th>Date Received</th>
                     <th>Total Cost</th>
                     <th>User</th>
+                    <th>Status</th>
                 </tr>
             </thead>
 
@@ -171,8 +172,9 @@
                 <tr ng-repeat="purchase in purchasesList" ng-click="getPurchaseProducts(purchase.id)" data-toggle="modal" data-target="#myModal">
                     <td>{{purchase.id}}</td>
                     <td>{{purchase.date_received}}</td>
-                    <td>{{purchase.total_cost}}</td>
+                    <td>{{purchase.total_amount}}</td>
                     <td>{{purchase.user}}</td>
+                    <td>{{purchase.status}}</td>
                 </tr>
 
             </tbody>
@@ -241,7 +243,6 @@
             <thead>
                 <tr>
                     <th>SKU</th>
-                    <th>Bay</th>
                     <th>Cases</th>
                 </tr>
             </thead>
@@ -249,7 +250,6 @@
             <tbody>
                 <tr ng-repeat="product in purchaseProducts">
                     <td>{{product.sku_id.sku_name + " " + product.sku_id.size}}</td>
-                    <td>{{}}</td>
                     <td>{{product.cases}}</td>
                 </tr>
 
