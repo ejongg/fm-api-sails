@@ -191,7 +191,8 @@ angular.module('fmApp')
       "cases" : purchase.cases,
       "costpercase" : purchase.cost,
       "discountpercase" : purchase.discount,
-      "amount" : purchase.cases * (purchase.cost - purchase.discount)
+      "amount" : purchase.cases * (purchase.cost - purchase.discount),
+      "lifespan" : purchase.sku.lifespan
     };
     
     if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id }) === -1 ){

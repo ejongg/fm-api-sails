@@ -152,7 +152,7 @@
         <div ng-show="noSKU">
          <p>NO SKU, ADD SKU FIRST</p>
         </div>
-        <div ng-show="noPurchase" ng-hide="noSKU || noBays">
+        <div ng-show="noPurchase" ng-hide="noSKU || noBays || !noPurchase">
          <p>NO PURCHASE</p>
         </div>
 
