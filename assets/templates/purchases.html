@@ -145,9 +145,19 @@
 
 <div class="panel col-md-12">
     <div class="panel-body">
+        
+        <div ng-show="noBays">
+         <p>NO BAYS, ADD BAYS FIRST</p>
+        </div>
+        <div ng-show="noSKU">
+         <p>NO SKU, ADD SKU FIRST</p>
+        </div>
+        <div ng-show="noPurchase">
+         <p>NO PURCHASE</p>
+        </div>
 
-        <!-- START OF TABLE -->           
-        <table class="table table-striped table-hover ">
+        <!-- START OF TABLE -->             
+        <table ng-hide="noPurchase" class="table table-striped table-hover ">
             <thead>
                 <tr>
                     <th>Purchase #</th>
@@ -176,7 +186,7 @@
     <br><br>
 
     <div class="icon-preview">
-        <a class="btn btn-primary pull-right btn-md" ng-click="showAddPurchaseForm(true)">Add</a>
+        <a class="btn btn-primary pull-right btn-md" ng-hide="addPurchaseForm" ng-click="showAddPurchaseForm(true)">Add</a>
         <br>
     </div>
     <br><br>

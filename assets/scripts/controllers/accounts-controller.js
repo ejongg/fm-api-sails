@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('AccountsCtrl',['$scope', '_', '$http', 'httpHost', function($scope, _, $http, httpHost){
+.controller('AccountsCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
 	$scope.types = ['admin','encoder','checker','cashier'];
 	$scope.users = [];
 

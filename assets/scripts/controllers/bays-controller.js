@@ -140,7 +140,7 @@ angular.module('fmApp')
       // console.log(err);
       // });
     console.log(bay);
-    io.socket.request($scope.socketOptions('post','/bays',{"Authorization": "Bearer " + authService.getToken()},bay), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/bays/add',{"Authorization": "Bearer " + authService.getToken()},bay), function (body, JWR) {
       console.log('Sails responded with post bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){

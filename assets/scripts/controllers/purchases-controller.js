@@ -49,7 +49,7 @@ angular.module('fmApp')
         $scope.noSKU = false;
 
         console.log("SKU List:");
-        console.log($scope.skuLists);
+        console.log($scope.skuList);
       }
 
     }).error(function (err) {
@@ -98,14 +98,13 @@ angular.module('fmApp')
     //     $scope.$digest();
     //   }
     // });
-    $http.get(httpHost + '/bays').success( function (data) {
+    $http.get(httpHost + '/purchases').success( function (data) {
       if(data.length !== 0){
       $scope.purchasesList = data;
       $scope.noPurchase = false;
 
       console.log("Purchases:");
-      console.log($scope.bays);
-      $scope.noBays = false;
+      console.log($scope.purchasesList);
       }
     }).error(function (err) {
       console.log(err);
