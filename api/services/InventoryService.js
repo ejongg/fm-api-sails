@@ -115,8 +115,6 @@ module.exports = {
 						logical_count : cases
 					};
 
-					console.log(item);
-
 					Inventory.create(item).exec(function(err, created){});
 				}		
 			},
