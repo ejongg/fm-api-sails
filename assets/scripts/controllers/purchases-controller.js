@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('PurchasesCtrl',['$scope','_','$http','$filter', function($scope, _, $http, $filter){
+.controller('PurchasesCtrl',['$scope','_','$http','$filter','httpHost', function($scope, _, $http, $filter,httpHost){
   $scope.purchasesList = [];
   $scope.skuList = [];
   $scope.bays = [];
@@ -12,6 +12,10 @@ angular.module('fmApp')
   $scope.purchase.prod_date = new Date();
 
   $scope.totalCost = 0;
+
+  $scope.noBays = true;
+  $scope.noSKU = true;
+  $scope.noPurchase = true;
 
 
   $scope.itemExistingError = false;
@@ -25,17 +29,33 @@ angular.module('fmApp')
     //   $scope.skuList = data;
     //   $scope.purchase.sku = $scope.skuList[0];
     // });
-    io.socket.request($scope.socketOptions('get','/sku'), function (body, JWR) {
-      console.log('Sails responded with get sku: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.skuList = body;
-        console.log("SKU LIST");
-        console.log($scope.skuList);
+    // io.socket.request($scope.socketOptions('get','/sku'), function (body, JWR) {
+    //   console.log('Sails responded with get sku: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.skuList = body;
+    //     console.log("SKU LIST");
+    //     console.log($scope.skuList);
+    //     $scope.purchase.sku = $scope.skuList[0];
+    //     $scope.$digest();
+    //   }
+    // });
+
+    $http.get(httpHost + '/sku').success( function (data) {
+      
+      if(data.length !== 0){
+        $scope.skuList = data;
         $scope.purchase.sku = $scope.skuList[0];
-        $scope.$digest();
+        $scope.noSKU = false;
+
+        console.log("SKU List:");
+        console.log($scope.skuLists);
       }
+
+    }).error(function (err) {
+      console.log(err);
     });
+
   };
 
   var getBays = function (){
@@ -43,14 +63,26 @@ angular.module('fmApp')
     // $scope.bays = data;
     // $scope.purchase.bay = $scope.bays[0];
     // });
-    io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
-      console.log('Sails responded with get bays: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.bays = body;
-        $scope.purchase.bay = $scope.bays[0];
-        $scope.$digest();
+    // io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
+    //   console.log('Sails responded with get bays: ', body);                    
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.bays = body;
+    //     $scope.purchase.bay = $scope.bays[0];
+    //     $scope.$digest();
+    //   }
+    // });
+     $http.get(httpHost + '/bays').success( function (data) {
+      if(data.length !== 0){
+      $scope.bays = data;
+      $scope.purchase.bay = $scope.bays[0];
+                         
+      console.log("Bays:");
+      console.log($scope.bays);
+      $scope.noBays = false;
       }
+    }).error(function (err) {
+      console.log(err);
     });
   }
 
@@ -58,13 +90,25 @@ angular.module('fmApp')
     // $http.get('http://localhost:1337/purchases').success(function(data){
     //   $scope.purchasesList = data;
     // });
-    io.socket.request($scope.socketOptions('get','/purchases'), function (body, JWR) {
-      console.log('Sails responded with get purchases: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.purchasesList = body;
-        $scope.$digest();
+    // io.socket.request($scope.socketOptions('get','/purchases'), function (body, JWR) {
+    //   console.log('Sails responded with get purchases: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.purchasesList = body;
+    //     $scope.$digest();
+    //   }
+    // });
+    $http.get(httpHost + '/bays').success( function (data) {
+      if(data.length !== 0){
+      $scope.purchasesList = data;
+      $scope.noPurchase = false;
+
+      console.log("Purchases:");
+      console.log($scope.bays);
+      $scope.noBays = false;
       }
+    }).error(function (err) {
+      console.log(err);
     });
   }
   

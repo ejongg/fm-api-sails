@@ -104,10 +104,12 @@ angular.module('fmApp')
       $scope.bayEdit.id = $scope.copiedBay.id;
       $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
       $scope.bayEdit.bay_label = $scope.copiedBay.bay_label;
+      $scope.bayEdit.bay_limit = $scope.copiedBay.bay_limit;
      
       $scope.bayDelete.id = $scope.copiedBay.id;
       $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;
       $scope.bayDelete.bay_label = $scope.copiedBay.bay_label;
+      $scope.bayDelete.bay_limit = $scope.copiedBay.bay_limit;
 
       $scope.showEditOrDeleteBayForm(true);
   };
@@ -142,7 +144,7 @@ angular.module('fmApp')
       console.log('Sails responded with post bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-        $scope.bays.push(body);
+        // $scope.bays.push(body);
         $scope.showAddBayForm(false);
         clearForm();
         $scope.$digest();
