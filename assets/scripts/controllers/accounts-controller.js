@@ -122,7 +122,7 @@ angular.module('fmApp')
         console.log("User Created");
         $scope.users.push(msg.data);
         $scope.showAddUserForm(false);
-        clearForm()
+        clearForm();
         $scope.$digest();
         break;
       case "destroyed":

@@ -121,8 +121,8 @@
         <br/>
 
         <div class="form-group " >
-            <label for="inputAddress" class="col-md-2" style="bottom:-0px;">Total Cost</label>
-            <div class="col-md-3"><input type="number" class="form-control" value="" ng-model="totalCost" disabled>
+            <label for="inputAddress" class="col-md-2" style="bottom:-0px;">Total Amount</label>
+            <div class="col-md-3"><input type="number" class="form-control" value="" ng-model="totalAmount" disabled>
             </div>
         </div>
 
@@ -186,7 +186,7 @@
     <br><br>
 
     <div class="icon-preview">
-        <a class="btn btn-primary pull-right btn-md" ng-hide="addPurchaseForm || noSKU" ng-click="showAddPurchaseForm(true)">Add</a>
+        <a class="btn btn-primary pull-right btn-md" ng-hide="addPurchaseForm || noSKU || noBays" ng-click="showAddPurchaseForm(true)">Add</a>
         <br>
     </div>
     <br><br>

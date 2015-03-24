@@ -11,7 +11,7 @@ angular.module('fmApp')
   $scope.purchase = {};
   $scope.purchase.prod_date = new Date();
 
-  $scope.totalCost = 0;
+  $scope.totalAmount= 0;
 
   $scope.noBays = true;
   $scope.noSKU = true;
@@ -215,8 +215,8 @@ angular.module('fmApp')
   $scope.submitPurchases = function () {
     var purchase = {
        products : $scope.purchases,
-       total_cost : $scope.totalCost,
-       user : 'Sonic'
+       total_cost : $scope.totalAmount,
+       user : $scope.userName
     };
 
     console.log();
@@ -324,19 +324,32 @@ angular.module('fmApp')
       case "created": 
         console.log("Bay Created");
         $scope.bays.push(msg.data);
+        if($scope.noBays === true){
+          $scope.noBays = false;
+        }
+        $scope.purchase.bay = $scope.bays[0];
         $scope.$digest();
         break;
       case "updated":
         console.log("Bay Updated");
         var index = _.findIndex($scope.bays,{'id': msg.data.id});
         $scope.bays[index] = msg.data;
+        $scope.purchase.bay = $scope.bays[0];
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Bay Deleted");
-        var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
         $scope.bays.splice(index,1);
+        if($scope.bays.length === 0){
+          $scope.noBays = true;
+          if($scope.addPurchaseForm === true){
+            console.log("Close form");
+            $scope.addPurchaseForm = false;
+          }
+        }
         $scope.$digest();
+
     }
 
   });

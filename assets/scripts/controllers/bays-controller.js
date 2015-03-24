@@ -208,14 +208,14 @@ angular.module('fmApp')
       case "updated":
         console.log("Bay Updated");
         var index = _.findIndex($scope.bays,{'id': msg.data.id});
-        console.log($scope.bays);
         console.log(index);
         $scope.bays[index] = msg.data;
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Bay Deleted");
-        var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
         $scope.bays.splice(index,1);
         if($scope.bays.length === 0){
           $scope.noBays = true;
