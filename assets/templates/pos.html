@@ -38,11 +38,11 @@
          </div>
     </div> 
     <br/>
+    <br/>
     <br/>  
 
-<div class="well well-sm">
-<hr>
-<legend>Transaction Items</legend>
+<div class="panel"><!-well well-sm-->
+<h2>TRANSACTION ITEMS</h2>
 <hr>
 <div class="row content-view">
     <div class="col-md-3">
@@ -116,12 +116,11 @@
 
 </div>
 </div>
-  
-<br>
+<br/>
+<br/>
 
-<div class="well well-sm">
-<hr>
-<legend>Returned Items</legend>
+<div class="panel">
+<h2>RETURNED ITEMS</h2>
 <hr>
 <div class="row content-view">
     <div class="col-md-3">
@@ -197,7 +196,10 @@
     </div>
 </div>
 
- <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' " class="btn btn-primary pull-right">Done</div>
+<br/>
+<br/>
+
+ <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' " class="btn btn-primary btn-lg pull-right">Done</div>
 
 </div></div></div> <!-- END OF DIV: PANEL & PANEL-BODY | DON'T REMOVE! -->
 
