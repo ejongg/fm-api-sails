@@ -41,6 +41,7 @@ module.exports = {
     Inventory.findOne({id : inventory.id}).populate('sku_id').populate('bay_id')
           .exec(function(err, populated){
             sails.sockets.blast('inventory', {verb : 'created', data : populated});
+            next();
           });
   
   },
@@ -49,12 +50,14 @@ module.exports = {
     Inventory.findOne({id : inventory.id}).populate('sku_id').populate('bay_id')
           .exec(function(err, populated){
             sails.sockets.blast('inventory', {verb : 'updated', data : populated});
+            next();
           });
 
   },
 
   afterDestroy : function(inventory, next){
     sails.sockets.blast('inventory', {verb : 'destroyed', data : inventory});
+    next();
   }
 };
 
