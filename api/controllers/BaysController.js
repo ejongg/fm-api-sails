@@ -4,9 +4,33 @@
  * @description :: Server-side logic for managing bays
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-var async = require('async');
 
 module.exports = {
+	add : function createBay(req, res){
+		
+		var bay = {
+			bay_name : req.body.bay_name,
+			bay_label : req.body.bay_label,
+			bay_limit : req.body.bay_limit
+		}
+
+		Bays.create(bay)
+			.then(function(created_bay){
+				return created_bay;
+			}, 
+
+			function(err){
+				console.log(err);
+			})
+
+			.then(function(bay){
+				BaysService.countBayItems(bay.id, function(err, count){
+					bay.total_count = count;
+					sails.sockets.blast('bays', {verb : 'created', data : bay});
+				});
+			})
+	},
+
 	bayitems : function getBayProducts(req, res){
 		
 		Bays.find()

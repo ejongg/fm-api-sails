@@ -37,10 +37,6 @@ module.exports = {
     }
   },
 
-  afterCreate : function(bay, next){
-    sails.sockets.blast('bays', {verb : 'created', data : bay});
-  },
-
   afterUpdate : function(bay, next){
     sails.sockets.blast('bays', {verb : 'updated', data : bay});
   },
