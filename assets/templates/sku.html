@@ -16,7 +16,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide="noSKU || addSKUForm || editOrDeleteSKUForm"/>
                                 </form>
                             </div>
                         </li>
@@ -26,11 +26,7 @@
 
                         </li>
                         <li>
-                            <a ng-hide="noProducts || noSKU">
-                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
-                        </li>
-                        <li>
-                            <a ng-click="">
+                            <a ng-hide="noProducts || noSKU || addSKUForm || editOrDeleteSKUForm">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -160,14 +156,14 @@
 
         <div class="panel-body col-md3" ng-show="editSKUTab">
 
-            <legend>EDIT SKU</legend>
+            <legend>Edit Safe Keeping Unit</legend>
 
             <form class="form-horizontal" name="editskuForm" ng-submit="editSKU(skuEdit)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
-                        <label for="inputProductName" class="col-md-12">
-                        Product Name</label>
+                        <label for="inputBrandName" class="col-md-12">
+                        Brand Name</label>
                         <div class="col-md-12">
                           <select class="form-control" ng-model="skuEdit.brand_name" ng-options="product.brand_name as product.brand_name for product in products">
                           </select>
@@ -234,7 +230,7 @@
 
                         <div class="icon-preview">
                           <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteSkuForm(false)" >Cancel</button>
-                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="editskuForm.$invalid">Edit</button>
+                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="editskuForm.$invalid">Save</button>
 
                           <br>
                         </div>
@@ -245,7 +241,7 @@
         </div>
 
         <div class="panel-body" ng-hide="editSKUTab">
-            <legend>DELETE SKU</legend>
+            <legend>Delete Safe Keeping Unit</legend>
             <form class="form-horizontal" name="deleteskuForm" ng-submit="deleteSKU(skuDelete)" novalidate>
                 <fieldset>
 

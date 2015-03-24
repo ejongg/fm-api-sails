@@ -15,17 +15,17 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide="addUserForm || editOrDeleteUserForm"/>
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <a ng-click="showAddUserForm(true)">
+                            <a ng-click="showAddUserForm(true)" ng-hide="addUserForm">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD USERS</h6></a>
 
                         </li>
                         <li>
-                            <a ng-click="">
+                            <a ng-click="" ng-hide = "addUserForm || editOrDeleteUserForm">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -199,26 +199,14 @@
         <div class="panel panel-right">
             <div class="panel-body">
 
-        <!-- SEARCH BAR -->
-
-             <div class="search">
-                  <div class="icon-preview rightalign magnify">
-                     <i class="mdi-action-search"></i>
-                 </div>
-                 <form class="navbar-form rightalign">
-                     <input type="text" class="form-control"  placeholder="Search">
-                 </form>
-             </div>
-
-
         <!-- START OF TABLE -->            
 
                 <table class="table table-striped table-hover ">
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>Type</th>
-                            <th>Full Name</th>
+                            <th width="35%">Username</th>
+                            <th width="35%">Type</th>
+                            <th width="30%">Full Name</th>
                         </tr>
                     </thead>
 
