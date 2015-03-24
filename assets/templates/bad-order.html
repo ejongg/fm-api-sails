@@ -16,19 +16,19 @@
             <ul class="nav nav-tabs col-md-12">
                         <li>
                             <div class="search">
-                                <form method="get" action="/search" id="search">
+                                <form method="get" action="/search" id="search" ng-hide="addBadOrderForm">
                                     <input name="q" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <a ng-click="showAddBadOrderForm(true)">
+                            <a ng-click="showAddBadOrderForm(true)" ng-hide="addBadOrderForm">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD BAD ORDERS</h6></a>
 
                         </li>
                         <li>
-                            <a ng-click="">
-                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                            <a ng-click="" ng-hide="addBadOrderForm">
+                            <h6><i class="mdi-action-print center" /> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
                 </div>
