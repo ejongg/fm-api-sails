@@ -54,6 +54,7 @@ module.exports = {
 						},
 
 						function updateInventory(cb){
+
 							InventoryService.put(prod.sku_id, prod.cases, bottlespercase, prod.bay_id, prod.prod_date, prod.lifespan);
 
 							cb();
