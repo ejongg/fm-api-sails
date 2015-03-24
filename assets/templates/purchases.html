@@ -20,17 +20,20 @@
                             </div>
                         </li>
                         <li>
-                            <a ng-click="">
+                            <a ng-click="showAddPurchaseForm(true)">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASE</h6></a>
 
                         </li>
                         <li>
-                            <a ng-click="">
+                            <a ng-hide="addPurchaseForm || noSKU || noBays" ng-click="showAddPurchaseForm(true)">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
                 </div>
     </div>
+
+
+
 
 </div>
 
@@ -206,16 +209,6 @@
 
     <!-- END OF TABLE -->
     
-
-    <!-- PRINT ICON -->
-    <br><br>
-
-    <div class="icon-preview">
-        <a class="btn btn-primary pull-right btn-md" ng-hide="addPurchaseForm || noSKU || noBays" ng-click="showAddPurchaseForm(true)">Add</a>
-        <br>
-    </div>
-    <br><br>
-
 
 </div>
 
