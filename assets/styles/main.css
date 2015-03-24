@@ -377,7 +377,7 @@ labels
 
 .panel-login {
   width: 410px;
-  height: 380px;
+  height: 405px;
   padding: 50px;
   padding-top: 30px;
   margin: 130px 0px 0px -50px !important;
@@ -482,13 +482,15 @@ labels
   margin: 0px 0px 0px 0px !important; }
 
 .panel-login {
-  width: 410px;
-  height: 405px;
+  min-width: 200px;
+  max-width: 410px;
   padding: 50px;
   padding-top: 30px;
   margin: 130px 0px 0px -50px !important;
-  border-radius: 25px;
+  border-radius: 25px; 
+  overflow-x: hidden !important; }
 }
+
 
 @media screen and (max-width: 300px) {
     body {
