@@ -162,6 +162,7 @@
                     <tr>
                         <th>Bay name</th>
                         <th>No. of products in Bay</th>
+                        <th>Limit</th>
                     </tr>
                 </thead>
 
@@ -169,6 +170,7 @@
                     <tr ng-repeat="bay in bays" ng-click="bayClicked(bay)">
                         <td>Bay {{bay.bay_name}}</td> 
                         <td>{{getBayCount(bay.id)}}</td>
+                        <td>{{bay.bay_limit}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->
