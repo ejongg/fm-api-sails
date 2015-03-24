@@ -346,16 +346,16 @@ h6 {
   background-color: #ffa311 !important; }
 
 thead {
-  color: white;
+  font-size: 15px;
+  color: #ffffff;
   background-color: #202020 !important;
-text-transform: uppercase !important;}
+  text-transform: uppercase !important;}
 
 th {
   text-transform: uppercase !important;
 }
-labels
-. {
-  background-color: #0c5970; }
+
+ }
 
 .products .panel {
   margin-left: 10px;
@@ -646,8 +646,49 @@ a.nav-main:hover {
   background-color: #e9e9e9 !important;
 }
 
-a:link {
 
+a.arrowlink:link, a.arrowlink:visited, a.arrowlink:active {
+  font-size: 15px;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  background: #0e0e0e !important;
+  margin: 0px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-decoration: none;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+}
+
+a.arrowlink:hover {
+  font-size: 15px;
+  color: #ffa311 !important;
+  cursor: pointer !important;
+  background: #202020;
+  margin: 0px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-decoration: none;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+}
+
+
+a:link {
     color: #0c5970;
     cursor: pointer !important;
 }
@@ -678,7 +719,7 @@ a.user-account:hover {
 }
 
 legend {
-
+  text-transform: uppercase;
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
   color: #000000;
