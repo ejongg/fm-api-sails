@@ -22,8 +22,8 @@
 
 
 <!-- PANEL LEFT-->
-
-    <div class="panel col-md-4" ng-show="addProductForm">
+<div ng-class="addProductForm ? 'col-xs-12 col-md-4' : ''">
+    <div class="panel" ng-show="addProductForm">
 
         <ul class="nav nav-tabs col-md-12">
                         <li>
@@ -90,9 +90,10 @@
             </form>   
         </div>
     </div>
+</div>
 
-
-  <div class="panel panel-left col-md-4" ng-show="editOrDeleteProductForm">
+ <div ng-class="editOrDeleteProductForm ? 'col-xs-12 col-md-4' : ''">
+  <div class="panel" ng-show="editOrDeleteProductForm">
 
         <ul class="nav nav-tabs col-md-12">
                         <li>
@@ -159,17 +160,17 @@
             </form>   
         </div>
     </div>
-
+</div>
 
 <!-- PANEL RIGHT-->
 
-
-    <div class="panel col-md-8">
+<div ng-class = "addProductForm || editOrDeleteProductForm ? 'col-xs-12 col-md-8' : ''">
+    <div class="panel">
         <div class="panel-body">
 
         <!-- SEARCH BAR -->
 
-         <div class="search">
+         <div class="search" ng-hide="noProducts">
               <div class="icon-preview rightalign magnify">
                  <i class="mdi-action-search"></i>
              </div>
@@ -179,8 +180,8 @@
          </div>
 
           <div class="form-group" ng-hide="noProducts">
-          <label for="select" class="col-md-3">Company Name</label>
-            <div class="col-md-5">
+          <label for="select" class="col-md-2">Company Name</label>
+            <div class="col-md-3">
                 <select class="form-control" ng-model="searchCompany" ng-show="!noExistingProduct" ng-options="product.company as product.company for product in existingCompany">
                 <option value="">All</option>
                 </select>
@@ -189,8 +190,8 @@
           </div>
 
         <!-- IF NO PRODUCTS -->
-        <div ng-show="noProducts">
-          <p>NO PRODUCTS</p>
+       <div ng-show="noProducts" align="center">
+          <h3><strong>NO PRODUCTS! <small></br>Please add product first.</small></strong></h3>
         </div>
 
         <!-- START OF TABLE -->
@@ -233,7 +234,7 @@
     <br><br>
 
         <!-- PRINT ICON -->
-        <a class="icon-preview"><a class="btn btn-primary pull-right btn-md"><i class="mdi-action-print"></i></a>
+        <a class="icon-preview" ><a class="btn btn-primary pull-right btn-md" ng-hide="noProducts"><i class="mdi-action-print"></i></a>
 
 
 
