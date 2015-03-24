@@ -16,7 +16,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="javascript:void(0)"><img src="../../images/fmicon.png" class="img-responsive"></a>
+        <a ui-sref="admin.dssr" class="navbar-brand" href="javascript:void(0)"><img src="../../images/fmicon.png" class="img-responsive"></a>
     </div>
 
 <!-- NAVIGATION: LEFT SIDE -->
@@ -32,7 +32,8 @@
                     <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
                         &nbsp; Sales &nbsp;<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a ui-sref="admin.dssr" class="nav-main">DSSR</a></li>
+                        <li><a ui-sref="cashier.pos" class="nav-main">Warehouse Sales</a></li>
+                        
                     </ul>
                 </li>
 
@@ -40,69 +41,102 @@
                     <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
                         &nbsp; Inventory &nbsp;<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a ui-sref="admin.inventory" class="nav-main">Inventory</a></li>
+                        <li><a ui-sref="admin.bays" class="nav-main">Bays</a></li>
                         <li><a ui-sref="admin.products" class="nav-main">Products</a></li>
+                        <li><a ui-sref="encoder.purchases" class="nav-main">Purchases</a></li>
+                        <li><a ui-sref="encoder.sku" class="nav-main">SKU</a></li>
+                        <li><a ui-sref="admin.inventory" class="nav-main">View Inventory</a></li>
                     </ul>
                 </li>
 
-                <li><a ui-sref="admin.accounts">Accounts</a></li>
-                <li><a ui-sref="admin.customers">Customers</a></li>
-                <li><a ui-sref="admin.bays">Bays</a></li>
-                <li><a ui-sref="admin.trucks">Trucks</a></li>
-                 <li><a ui-sref="admin.employee"> Employee</a></li>
+                <li class="dropdown">
+                    <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        &nbsp; Delivery &nbsp;<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="encoder.bad-order" class="nav-main">Bad Orders</a></li>
+                        <li><a ui-sref="admin.customers" class="nav-main">Customers</a></li>
+                        <li><a class="nav-main">Load Out</a></li>
+                        <li><a ui-sref="encoder.orders" class="nav-main">Orders</a></li>
+                        <li><a class="nav-main">Routes</a></li>
+                        <li><a ui-sref="admin.trucks" class="nav-main">Trucks</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        &nbsp; Reports &nbsp;<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                         <li><a class="nav-main">Transaction History</a></li>
+                         <li><a ui-sref="checker.tally" class="nav-main">Tally</a></li>
+                    </ul>
+                </li>
 
 
                 <li class="dropdown">
-                    <a href="/templates/accounts.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
-                        &nbsp; Others &nbsp;<b class="caret"></b></a>
+                    <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        &nbsp; Personnel &nbsp;<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <!-- <li class="divider"></li> DIVIDER-->
-                        <li class="dropdown-header">Encoder</li>
-
-                        <li><a ui-sref="encoder.sku" class="nav-main">SKU</a></li>
-                        <li><a ui-sref="encoder.purchases" class="nav-main">Purchases</a></li>
-                        <li><a ui-sref="encoder.orders" class="nav-main">Orders</a></li>
-                        <li><a ui-sref="encoder.bad-order" class="nav-main">Bad Orders</a></li>
-
-                        <li class="dropdown-header">Checker</li>
-
-                        <li><a ui-sref="checker.tally" class="nav-main">Tally</a></li>
-
-                        <li class="dropdown-header">Cashier</li>
-                        <li><a ui-sref="cashier.pos" class="nav-main">POS</a></li>
+                        <li><a ui-sref="admin.accounts" class="nav-main">Accounts</a></li>
+                        <li><a ui-sref="admin.employee" class="nav-main">Employee</a></li>
                     </ul>
                 </li>
-                 </ul>
-              </div>
+                </li>
+                </ul>
+            </div>
             
-              <div ng-switch-when="encoder">
+             <div ng-switch-when="encoder">
                 <ul class="nav navbar-nav navbar-left">
-                <li><a ui-sref="encoder.sku" class="nav-main">SKU</a></li>
-                <li><a ui-sref="encoder.purchases" class="nav-main">Purchases</a></li>
-                <li><a ui-sref="encoder.orders" class="nav-main">Orders</a></li>
-                <li><a ui-sref="encoder.bad-order" class="nav-main">Bad Orders</a></li>
-                <li><a ui-sref="encoder.accounts" class="nav-main">Accounts</a></li>
+                <li class="dropdown">
+                    <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        &nbsp; Inventory &nbsp;<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="encoder.sku" class="nav-main">SKU</a></li>
+                        <li><a ui-sref="encoder.purchases" class="nav-main">Purchases</a></li>
+                        <li><a ui-sref="admin.inventory" class="nav-main">View Inventory</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        &nbsp; Delivery &nbsp;<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="encoder.orders" class="nav-main">Orders</a></li>
+                        <li><a ui-sref="" class="nav-main">Load Out</a></li>
+                        <li><a ui-sref="admin.customers" class="nav-main">Customers</a></li>
+                        <li><a ui-sref="encoder.bad-order" class="nav-main">Bad Orders</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        &nbsp; Reports &nbsp;<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="" class="nav-main">Transaction History</a></li>
+                    </ul>
+                </li>
                 </ul>   
               </div>
 
-              <div ng-switch-when="cashier">
-                <ul class="nav navbar-nav navbar-left">
-                <li><a ui-sref="cashier.pos" class="nav-main">POS</a></li>
-                <li><a ui-sref="cashier.accounts" class="nav-main">Accounts</a></li>
-                </ul>   
-              </div>
-           
-        
-        
+            <div ng-switch-when="cashier">
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="cashier.pos" class="nav-main"></a></li>    
+                    </ul>
+                </li>
+            </div>
       </div>
 
 <!-- NAVIGATION: RIGHT SIDE -->
 
-        <ul class="nav navbar-nav navbar-right">
+         <ul class="nav navbar-nav navbar-right">
             <li><img src="../../images/user.png" class="user"></li>
-            <li><a class="user-account">&nbsp; {{userName}} &nbsp;</a></li>
-            <li><a href="" ng-click="logout()">&nbsp; Logout &nbsp;</a></li>
+            <li class="dropdown">
+                    <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                        &nbsp; {{userName}} &nbsp;<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="" class="nav-main">Edit Profile</a></li>
+                        <li><a href="" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </li>
         </ul>
+
 
     </div>
 
