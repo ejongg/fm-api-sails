@@ -148,10 +148,6 @@ angular.module('fmApp')
 
   }
 
-  $scope.combined = function (sku) {
-    return sku.sku_name + ' ' + sku.size;
-  }
-
   var clearForm = function () {
     $scope.purchase.sku = $scope.skuList[0];
     $scope.purchase.bay = $scope.bays[0];
@@ -291,18 +287,30 @@ angular.module('fmApp')
       case "created": 
         console.log("SKU Created");
         $scope.skuList.push(msg.data);
+        if($scope.noSKU === true){
+          $scope.noSKU = false;
+        }
+        $scope.purchase.sku = $scope.skuList[0];
         $scope.$digest();
         break;
       case "updated":
         console.log("SKU Updated");
         var index = _.findIndex($scope.skuList,{'id': msg.data.id});
         $scope.skuList[index] = msg.data;
+        $scope.purchase.sku = $scope.skuList[0];
         $scope.$digest();
         break;
       case "destroyed":
         console.log("SKU Deleted");
         var index = _.findIndex($scope.skuList,{'id': msg.data.id});
         $scope.skuList.splice(index,1);
+        if($scope.skuList.length === 0){
+          $scope.noSKU = true;
+          if($scope.addPurchaseForm === true){
+            console.log("Close form");
+            $scope.addPurchaseForm = false;
+          }
+        }
         $scope.$digest();
     }
   });
