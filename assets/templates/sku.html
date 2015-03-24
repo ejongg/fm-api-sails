@@ -9,6 +9,34 @@
     <div class="pageheader-left">
         <h1> Safe Keeping Unit ( SKU ) </h1>
     </div>
+
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <div class="search">
+                                <form method="get" action="/search" id="search">
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <a ng-hide="noProducts || addSKUForm"  ng-click="showAddSkuForm(true)">
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD SKU</h6></a>
+
+                        </li>
+                        <li>
+                            <a ng-hide="noProducts || noSKU">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                        <li>
+                            <a ng-click="">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
+    </div>
+
 </div>
 
 
@@ -295,10 +323,6 @@
 
 
 
-   
-
-
-
 
 
 
@@ -374,19 +398,6 @@
       </div>
 
       <!-- END OF TABLE -->
-      
-
-      <div class="icon-preview">
-        <a class="btn btn-primary pull-right btn-md" ng-hide="noProducts || addSKUForm"  ng-click="showAddSkuForm(true)">Add</a>
-      </div>
-
-
-      <!-- PRINT ICON -->
-      <br><br>
-      <div class="form-group" align="right" ng-hide="noProducts || noSKU">
-          <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a></div>
-      </div>
-      <br><br>
 
       </div>
     </div>

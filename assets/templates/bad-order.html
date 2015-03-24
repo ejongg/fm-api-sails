@@ -10,15 +10,28 @@
         <h1> Bad Orders </h1>
     </div>
 
-    <div class="pageheader-right" align="center">
-        <span class="label label-default">DATE:</span>
-        <span class="label label-default">FEBRUARY. 09, 2015</span>
-        <span class="label label-default"><a href="">▼</a></span>
-        <br>
 
-        <form class="navbar-form navbar-left">
-            <input type="text" class="form-control" placeholder="Search by:">
-        </form>
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <div class="search">
+                                <form method="get" action="/search" id="search">
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <a ng-click="showAddBadOrderForm(true)">
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD BAD ORDERS</h6></a>
+
+                        </li>
+                        <li>
+                            <a ng-click="">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
     </div>
 
 </div>
@@ -176,20 +189,6 @@
 </table>
 
 
-<div class="icon-preview">
-  <a class="btn btn-primary pull-right btn-md" ng-click="showAddBadOrderForm(true)">Add</a>
-  <br>
-</div>
-
-
-<!-- PRINT ICON -->
-<br><br>
-<div class="form-group" align="right">
-    <div class="icon-preview"><a class="btn btn-success pull-right btn-md" ><i class="mdi-action-print"></i></a></div>
-</div>
-<br>
-
-
 </div>
 </div>
 
@@ -233,34 +232,3 @@
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
-
-
-<!-- <div class="panel panel-left col-md-3" ng-show="viewBadOrderDetails">
-    <div class="panel-body">
-        <table class="table table-striped table-hover ">
-            <thead>
-                <tr>
-                    <th>SKU</th>
-                    <th>Cases</th>
-                    <th>Reason</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="badOrder in badOrderDetails">
-                    <td>{{badOrder.sku_id.sku_name + " " + badOrder.sku_id.size}}</td>
-                    <td>{{badOrder.cases}}</td>
-                    <td>{{badOrder.reason}}</td>
-                </tr>
-
-            </tbody>
-        </table>
-
-        <div class="icon-preview">
-         <div class="form-group rightalign">
-          <button type="button" class="btn btn-default" ng-click="showViewBadOrderDetails(false)">Close</button>
-      </div>
-      <br>
-  </div>
-</div>
-</div> -->
