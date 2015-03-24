@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-3">SKU</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.sku" ng-options="sku as sku.sku_name for sku in skuList">
+                            <select class="form-control" ng-model="purchase.sku" ng-options="sku as combine(sku) for sku in skuList">
                             </select>
                         </div>
                     </div>
