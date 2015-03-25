@@ -255,7 +255,39 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
 
 // }])
 
+// function isEmpty(value) {
+//   return angular.isUndefined(value) || value === '' || value === null || value !== value;
+// }
 
+// var isEmpty = function (value) {
+//   return angular.isUndefined(value) || value === '' || value === null || value !== value;
+// }
+
+.directive('ngMax', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+          console.log(attr.ngMax);
+            scope.$watch(attr.ngMax, function(){
+                ctrl.$setViewValue(ctrl.$viewValue);
+            });
+            var maxValidator = function(value) {
+              var max = scope.$eval(attr.ngMax) || Infinity;
+              if (!isEmpty(value) && value > max) {
+                ctrl.$setValidity('ngMax', false);
+                return undefined;
+              } else {
+                ctrl.$setValidity('ngMax', true);
+                return value;
+              }
+            };
+
+            ctrl.$parsers.push(maxValidator);
+            ctrl.$formatters.push(maxValidator);
+        }
+    };
+})
 
 .controller('MainCtrl',['$scope', 'authService', '$state', 'userService','$filter', function($scope, authService, $state, userService, $filter){
   $scope.userType =  userService.getUserType();
@@ -281,4 +313,8 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
   };
 
 }]);
+
+var isEmpty = function (value) {
+  return angular.isUndefined(value) || value === '' || value === null || value !== value;
+}
 

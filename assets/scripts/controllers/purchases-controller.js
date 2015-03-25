@@ -190,7 +190,7 @@ angular.module('fmApp')
       "bay_id" : purchase.bay.id,
       "name" : purchase.sku.sku_name + " " + purchase.sku.size,
       "company" : purchase.sku.prod_id.company,
-      "bay" : purchase.bay.pile_name,
+      "bay" : purchase.bay.bay_name,
       "prod_date" : $scope.formatDate(purchase.prod_date),
       "cases" : purchase.cases,
       "costpercase" : purchase.cost,
@@ -199,10 +199,15 @@ angular.module('fmApp')
       "lifespan" : purchase.sku.lifespan
     };
     
-    if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id }) === -1 ){
+    if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date, 
+      'cases': purchaseInfo.cases, 'costpercase': purchaseInfo.costpercase, 'discountpercase': purchaseInfo.discountpercase }) === -1 ){
            $scope.purchases.push(purchaseInfo);
            $scope.totalAmount += purchaseInfo.amount;
     }else{
+      var index = _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date, 
+      'cases': purchaseInfo.cases, 'costpercase': purchaseInfo.costpercase, 'discountpercase': purchaseInfo.discountpercase });
+
+      $scope.purchases[index].cases += purchaseInfo.cases;
       $scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
     

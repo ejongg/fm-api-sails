@@ -77,21 +77,21 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-2">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases."
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter number of cases."
                             ng-model="purchase.cases" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Cost Per Case</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter cost/case."
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter cost/case."
                             ng-model="purchase.cost" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Discount Per Case</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter discount/case."
+                        <div class="col-md-12"><input type="number" name="discountpercase" ng-max="purchase.cost" step="0.01" class="form-control" placeholder="Enter discount/case."
                             ng-model="purchase.discount" required>
                         </div>
                     </div>
@@ -100,6 +100,7 @@
                       <button type="button" class="close" ng-click="showItemExistingError(false)">×</button>
                       <strong>{{itemExisting}}</strong>
                   </div> 
+
 
                   <div class="form-group rightalign">
                     <button type="submit" class="btn btn-primary" ng-disabled="purchaseForm.$invalid">Add</button>
