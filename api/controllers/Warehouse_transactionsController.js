@@ -59,7 +59,8 @@ module.exports = {
 								wtrans_id : created_transaction.id,
 								sku_id : product.sku_id,
 								bottles : product.bottles,
-								cases : product.cases
+								cases : product.cases,
+								discountpercase : product.discountpercase
 							};
 
 							async.parallel([

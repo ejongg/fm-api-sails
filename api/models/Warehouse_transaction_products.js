@@ -23,7 +23,11 @@ module.exports = {
   	cases : {
   		type : 'integer',
       defaultsTo : 0
-  	}
+  	},
+    discountpercase : {
+      type : 'integer',
+      required : true
+    }
   },
 
   afterUpdate : function(warehouse_product, next){
