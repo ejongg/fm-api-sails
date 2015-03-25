@@ -278,6 +278,9 @@ angular.module('fmApp')
     if(msg.verb === 'created'){
       console.log("Purchase Created");
       $scope.purchasesList.push(msg.data);
+      if($scope.noPurchase === true){
+          $scope.noPurchase = false;
+      }
       $scope.$digest();
     }
 

@@ -195,12 +195,12 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="purchase in purchasesList" ng-click="getPurchaseProducts(purchase.id)" data-toggle="modal" data-target="#myModal">
-                    <td>{{purchase.id}}</td>
-                    <td>{{purchase.date_received}}</td>
-                    <td>{{purchase.total_amount}}</td>
-                    <td>{{purchase.user}}</td>
-                    <td>{{purchase.status}}</td>
+                <tr ng-repeat="purchaseInfo in purchasesList" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
+                    <td>{{purchaseInfo.id}}</td>
+                    <td>{{purchaseInfo.date_received}}</td>
+                    <td>{{purchaseInfo.total_amount}}</td>
+                    <td>{{purchaseInfo.user}}</td>
+                    <td>{{purchaseInfo.status}}</td>
                 </tr>
 
             </tbody>
