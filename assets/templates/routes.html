@@ -1,0 +1,189 @@
+<!-- START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Routes </h1>
+    </div>
+
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <div class="search" ng-hide="">
+                                <form method="get" action="/search" id="search">
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <a ng-click="" ng-hide="">
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASE</h6></a>
+
+                        </li>
+                        <li>
+                            <a ng-hide="" ng-click="">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+<!-- BODY -->
+
+<!-- DO NOT REMOVE-->
+<div class="container">
+
+    <!-- LEFT PANEL -->
+    <div class="panel col-md-12" ng-show="">
+        <div class="panel-body">
+   
+        <div class="col-md-4">
+         <legend>Add Routes</legend>
+            <form class="form-horizontal" name="" ng-submit="" novalidate>
+                <fieldset>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-model="purchase.sku" ng-options="sku as combine(sku) for sku in skuList">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-3">Bay</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-model="purchase.bay" ng-options="bay as bay.bay_name for bay in bays">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-6">Production Date</label>
+                        <div class="col-md-12"><input type="date" class="form-control" placeholder="Enter address."
+                            ng-model="purchase.prod_date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-2">Cases</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases."
+                            ng-model="purchase.cases" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-6">Cost Per Case</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter cost/case."
+                            ng-model="purchase.cost" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-md-6">Discount Per Case</label>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter discount/case."
+                            ng-model="purchase.discount" required>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-dismissable alert-danger" ng-show="itemExistingError">
+                      <button type="button" class="close" ng-click="">×</button>
+                      <strong>{{itemExisting}}</strong>
+                  </div> 
+
+                  <div class="form-group rightalign">
+                    <button type="submit" class="btn btn-primary" ng-disabled="purchaseForm.$invalid">Add</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="col-md-9 ">
+         <!-- User's Input table -->
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Sku</th>
+                    <th>Company</th>
+                    <th>Cases</th>
+                    <th>Bay</th>
+                    <th>Production date</th>
+                    <th>Cost per case</th>
+                    <th>Discount per case</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><button ng-click="" class="btn btn-primary btn-xs">Delete</button></td>
+                </tr>
+
+                <!-- DON'T REMOVE CODE BELOW -->
+
+            </tbody>
+        </table>
+
+        <br/>
+
+        
+
+        <br/>
+        
+
+        <div class="icon-preview">
+            <div class="form-group rightalign">
+              <button type="button" class="btn btn-primary" ng-disabled="" ng-click="">Submit</button>  
+
+              <button type="button" class="btn btn-default" ng-click="">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+
+<!-- RIGHT PANEL -->
+
+<div class="panel col-md-12">
+    <div class="panel-body" align="center">
+
+        <!-- START OF TABLE -->             
+        <table  class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr></tr>
+          
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- END OF TABLE -->
+    
+
+</div>
+
+</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+
+</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+
