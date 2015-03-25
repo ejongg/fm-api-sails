@@ -93,10 +93,10 @@ module.exports = {
 		]);
 	},
 
-	put : function(sku_id, cases, bottlespercase, bay_id, exp_date, lifespan){
-		
-		console.log(sku_id + ' ' + cases + ' ' + bottlespercase + ' ' + bay_id + ' ' + exp_date + ' ' + lifespan);
+	put : function(sku_id, cases, bottlespercase, bay_id, prod_date, lifespan){
 
+		var exp_date = moment(prod_date).add(lifespan, 'M').format('YYYY-MM-DD');
+		
 		Inventory.findOne({sku_id : sku_id, bay_id : bay_id, exp_date : exp_date})
 			.then(function findInInventory(found_sku){
 				if(found_sku){
@@ -109,7 +109,7 @@ module.exports = {
 					var item = {
 						bay_id : bay_id,
 						sku_id : sku_id,
-						exp_date : moment(exp_date).add(lifespan, 'M').format('YYYY-MM-DD'),
+						exp_date : exp_date,
 						bottles : cases * bottlespercase,
 						physical_count : cases,
 						logical_count : cases
