@@ -96,6 +96,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
           }
         }  
       })
+      .state('admin.employees', {
+        url:'/employee',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/employees.html',
+            controller:'EmployeesCtrl'
+          }
+        }  
+      })
       .state('admin.products2', {
         url:'/inventory/products2',
         views: {
