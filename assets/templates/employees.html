@@ -9,6 +9,29 @@
         <h1> Employees </h1>
     </div>
 
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <div class="search"  ng-hide="addEmployeeForm || editOrDeleteEmployeeForm || noEmployees">
+                                <form method="get" action="/search" id="search">
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <a ng-click="showAddEmployeeForm(true)" ng-hide="addEmployeeForm">
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD EMPLOYEE</h6></a>
+
+                        </li>
+                        <li>
+                            <a ng-hide="addEmployeeForm || editOrDeleteEmployeeForm || noEmployees">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
+    </div>
+
 </div>
 
 
@@ -19,25 +42,27 @@
 <div class="container">
 
     <!-- LEFT PANEL -->
-    <div class="panel panel-left col-md-3" ng-show="addEmployeeForm">
+    <div ng-class="addEmployeeForm ? 'col-xs-12 col-md-4' : ''">
+    <div class="panel" ng-show="addEmployeeForm">
         <div class="panel-body">
+            <h4><i class="mdi-content-add-circle"></i> ADD EMPLOYEE </h4>
             <form class="form-horizontal" name="employeeForm" ng-submit="addEmployee(employee)" novalidate>
                 <fieldset>
                     <div class="form-group">
                         <label for="inputFirstName" class="col-md-4">First Name</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputFirstName" placeholder="Enter first name." ng-model="employee.emp_fname" required>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter first name." ng-model="employee.emp_fname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputLastName" class="col-md-4">Last Name</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputLastName" placeholder="Enter last name." ng-model="employee.emp_lname" required>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter last name." ng-model="employee.emp_lname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputLastName" class="col-md-4">Office</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputLastName" placeholder="Enter last name." ng-model="employee.office" required>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter office name." ng-model="employee.office" required>
                         </div>
                     </div>
 
@@ -58,9 +83,10 @@
             </form>
         </div>
     </div>
+    </div>
 
-
-    <div class="panel panel-left col-md-4" ng-show="editOrDeleteEmployeeForm">
+    <div ng-class="editOrDeleteEmployeeForm ? 'col-xs-12 col-md-4' : ''">
+    <div class="panel" ng-show="editOrDeleteEmployeeForm">
 
         <ul class="nav nav-tabs col-md-12">
                         <li>
@@ -72,39 +98,40 @@
                     </ul>
 
         <div class="panel-body" ng-show="editEmployeeTab">
-          <legend>EDIT ACCOUNT</legend>
+          <h4><i class="mdi-image-edit"></i> EDIT EMPLOYEE </h4>
+
           <form class="form-horizontal" name="editEmployeeForm" ng-submit="editEmployee(employeeEdit)" novalidate>
                 <fieldset>
 
                     <div class="form-group">
                         <label for="inputFirstName" class="col-md-4">First Name</label>
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputFirstName" placeholder="Enter first name." ng-model="employeeEdit.emp_fname" required>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter first name." ng-model="employeeEdit.emp_fname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputLastName" class="col-md-4">Last Name</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputLastName" placeholder="Enter last name." ng-model="employeeEdit.emp_lname" required>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter last name." ng-model="employeeEdit.emp_lname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputLastName" class="col-md-4">Office</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputLastName" placeholder="Enter last name." ng-model="employeeEdit.office" required>
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter last name." ng-model="employeeEdit.office" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="select" class="col-md-3">Position</label>
                         <div class="col-md-12">
-                            <select class="form-control" id="selectType" ng-model="employeeEdit.position">
+                            <select class="form-control" ng-model="employeeEdit.position">
                                 <option ng-repeat="position in positions" value="{{position}}">{{position}}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group rightalign">
-                        <button type="submit" class="btn btn-primary" ng-disabled="editEmployeeForm.$invalid">Edit</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="editEmployeeForm.$invalid">Save</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteEmployeeForm(false)">Cancel</button> 
                     </div>
                 </fieldset>
@@ -112,7 +139,8 @@
         </div>
 
         <div class="panel-body" ng-hide="editEmployeeTab">
-          <legend>DELETE ACCOUNT</legend>
+           <h4><i class="mdi-action-delete"></i> DELETE EMPLOYEE </h4>
+
           <form class="form-horizontal" name="deleteEmployeeForm" ng-submit="deleteEmployee(employeeDelete)" novalidate>
                 <fieldset>
 
@@ -151,13 +179,11 @@
             </form>   
         </div>
     </div>
+    </div>
 
     <!-- RIGHT PANEL -->
-
-    <div class="panel panel-right col-md-8">
-        <form class="navbar-form navbar-left" ng-hide="noEmployees">
-                <input type="text" class="form-control" placeholder="Search by:">
-            </form>
+    <div ng-class="addEmployeeForm || editOrDeleteEmployeeForm ? 'col-xs-12 col-md-8' : ''">
+    <div class="panel">
         <div class="panel-body">
 
         <div ng-show="noEmployees" align="center">
@@ -165,8 +191,8 @@
         </div>
 
     <!-- START OF TABLE -->            
-
-            <table class="table table-striped table-hover" ng-hide="noEmployees">
+        <div ng-hide="noEmployees">
+            <table class="table table-striped table-hover" >
                 <thead>
                     <tr>
                         <th>First Name</th>
@@ -184,26 +210,12 @@
                         <td>{{employee.position}}</td>
                     </tr>
 
-                    <!-- DON'T REMOVE CODE BELOW -->
-
                 </tbody>
             </table>
 
-            <div class="icon-preview">
-              <a class="btn btn-primary pull-right btn-md" ng-hide="addEmployeeForm" ng-click="showAddEmployeeForm(true)">Add</a>
-            <br>
-            </div>
-        </div>
-
-    <!-- END OF TABLE -->
-    
-
-    <!-- PRINT ICON -->
-    <br><br>
-    <div class="form-group" align="right">
-        <div class="icon-preview"><a class="btn btn-success pull-right btn-md"><i class="mdi-action-print"></i></a></div>
+            
+        </div><!-- END OF TABLE -->
     </div>
-    <br><br>
 
 
 </div>

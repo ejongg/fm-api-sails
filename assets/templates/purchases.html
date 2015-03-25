@@ -21,7 +21,7 @@
                         </li>
                         <li>
                             <a ng-click="showAddPurchaseForm(true)" ng-hide="noBays || noSKU || addPurchaseForm">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASE</h6></a>
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASES</h6></a>
 
                         </li>
                         <li>
@@ -47,8 +47,9 @@
     <!-- LEFT PANEL -->
     <div class="panel col-md-12" ng-show="addPurchaseForm">
         <div class="panel-body">
-    <legend>Add Purchases</legend>
+  
         <div class="col-md-3">
+            <h4><i class="mdi-content-add-circle"></i> ADD PURCHASES  </h4>
             <form class="form-horizontal" name="purchaseForm" ng-submit="addPurchase(purchase)" novalidate>
                 <fieldset>
 
@@ -84,14 +85,14 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Cost Per Case</label>
-                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter cost/case."
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter cost per case."
                             ng-model="purchase.cost" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Discount Per Case</label>
-                        <div class="col-md-12"><input type="number" name="discountpercase" ng-max="purchase.cost" step="0.01" class="form-control" placeholder="Enter discount/case."
+                        <div class="col-md-12"><input type="number" name="discountpercase" ng-max="purchase.cost" step="0.01" class="form-control" placeholder="Enter discount per case."
                             ng-model="purchase.discount" required>
                         </div>
                     </div>

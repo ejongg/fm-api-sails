@@ -45,8 +45,9 @@
 
  <div class="panel col-md-12" ng-show="addBadOrderForm">
     <div class="panel-body">
-        <legend>Add bad order</legend>
+
         <div class="col-md-4">
+        <h4><i class="mdi-content-add-circle"></i> ADD BAD ORDER  </h4>
         <form class="form-horizontal" name="badOrderForm" ng-submit="addProduct(product)" novalidate>
             <fieldset>
 
@@ -101,7 +102,15 @@
     </form>
     </div>
 
-    <div class="col-md-7 col-md-offset-1">
+
+    <div class="col-md-8">
+        <div class="form-group" >
+             <div class="col-md-2 pull-right"><input type="number" class="form-control" value="" ng-model="totalExpense" disabled>
+            </div>
+            <legend class="col-md-3 pull-right control-label">Total Expense</legend>
+        </div>
+
+        <br/>
 
         <table class="table table-striped table-hover ">
             <thead>
@@ -132,12 +141,7 @@
 
             <br/>
 
-            <div class="form-group tcount">
-                <label for="inputAddress" class="col-md-2">Total Cost</label>
-                <div class="col-md-3"><input type="number" class="form-control" id="inputAddress" value=""
-                  ng-model="totalExpense" disabled>
-              </div>
-          </div>
+            
 
           <br/>
           <br/>

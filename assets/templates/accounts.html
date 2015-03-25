@@ -21,7 +21,7 @@
                         </li>
                         <li>
                             <a ng-click="showAddUserForm(true)" ng-hide="addUserForm">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD USERS</h6></a>
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD ACCOUNTS</h6></a>
 
                         </li>
                         <li>
@@ -45,7 +45,7 @@
     <div ng-class="addUserForm ? 'col-xs-12 col-md-4' : ''">
         <div class="panel panel-left" ng-show="addUserForm">
             <div class="panel-body">
-                <legend>Add User</legend>
+                <h4><i class="mdi-content-add-circle"></i> ADD NEW ACCOUNT </h4>
                 <form class="form-horizontal" name="userForm" ng-submit="addUser(user)" novalidate>
                     <fieldset>
 
@@ -98,7 +98,8 @@
         <div class="panel panel-left" ng-show="editOrDeleteUserForm">
 
             <div class="panel-body" ng-hide="userType === 'admin' ">
-              <legend>EDIT ACCOUNT</legend>
+
+              <h4><i class="mdi-image-edit"></i> EDIT ACCOUNT </h4>
               <form class="form-horizontal" name="editUserForm" ng-submit="editUser(userEdit)" novalidate>
                     <fieldset>
 
@@ -145,7 +146,8 @@
             </div>
 
             <div class="panel-body" ng-show="userType === 'admin'">
-              <legend>DELETE ACCOUNT</legend>
+
+              <h4><i class="mdi-action-delete"></i> DELETE ACCOUNT </h4>
               <form class="form-horizontal" name="deleteUserForm" ng-submit="deleteUser(userDelete)" novalidate>
                     <fieldset>
 

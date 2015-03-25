@@ -47,7 +47,8 @@
       <div class="panel panel-left" ng-show="addSKUForm">
         <div class="panel-body">
           <div ng-show="!noExistingProduct">
-            <legend>Add Safe Keeping Unit</legend>
+    
+            <h4><i class="mdi-content-add-circle"></i> ADD SAFE KEEPING UNIT </h4>
             <form class="form-horizontal" name="skuForm" ng-submit="addSKU(sku)" novalidate>
                 <fieldset>
 
@@ -96,7 +97,7 @@
 
                     <div class="form-group">
                         <label for="inputBottlePerCase" class="col-md-12">
-                        No. of Bottle per Case</label> 
+                        No. of Bottle per case</label> 
                         <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="sku.bottlespercase" required>
                         </div>
                     </div>
@@ -156,8 +157,7 @@
 
         <div class="panel-body col-md3" ng-show="editSKUTab">
 
-            <legend>Edit Safe Keeping Unit</legend>
-
+            <h4><i class="mdi-image-edit"></i> EDIT SAFE KEEPING UNIT</h4>
             <form class="form-horizontal" name="editskuForm" ng-submit="editSKU(skuEdit)" novalidate>
                 <fieldset>
 
@@ -241,7 +241,8 @@
         </div>
 
         <div class="panel-body" ng-hide="editSKUTab">
-            <legend>Delete Safe Keeping Unit</legend>
+
+            <h4><i class="mdi-action-delete"></i> DELETE SAFE KEEPING UNIT </h4>
             <form class="form-horizontal" name="deleteskuForm" ng-submit="deleteSKU(skuDelete)" novalidate>
                 <fieldset>
 

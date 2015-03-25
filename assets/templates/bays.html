@@ -21,7 +21,7 @@
                         </li>
                         <li>
                             <a ng-hide="addBayForm" ng-click="showAddBayForm(true)">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD BAY</h6></a>
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD BAYS</h6></a>
 
                         </li>
                          <li>
@@ -46,7 +46,7 @@
     <div class="panel" ng-show="addBayForm">
         <div class="panel-body">
 
-        <legend>ADD BAY</legend>
+        <h4><i class="mdi-content-add-circle"></i> ADD NEW BAY  </h4>
 
             <form class="form-horizontal" name="bayForm" ng-submit="addBay(bay)" novalidate>
                 <fieldset>
@@ -95,7 +95,7 @@
 
         <div class="panel-body" ng-show="editBayTab">
 
-          <legend>EDIT BAY</legend>
+         <h4><i class="mdi-image-edit"></i> EDIT BAY </h4>
 
           <form class="form-horizontal" name="editBayForm" ng-submit="editBay(bayEdit)" novalidate>
                 <fieldset>
@@ -128,7 +128,7 @@
 
         <div class="panel-body" ng-hide="editBayTab">
 
-          <legend>DELETE BAY</legend>
+         <h4><i class="mdi-action-delete"></i> DELETE BAY </h4>
 
           <form class="form-horizontal" name="deleteBayForm" ng-submit="deleteBay(bayDelete)" novalidate>
                 <fieldset>
@@ -176,15 +176,17 @@
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
-                        <th width="35%">Bay name</th>
-                        <th width="35%">No. of cases in Bay</th>
-                        <th width="30%">Limit</th>
+                        <th width="25%">Bay name</th>
+                        <th width="25%"> Bay label</th>
+                        <th width="25%">No. of cases in Bay</th>
+                        <th width="20%">Limit</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr ng-repeat="bay in bays" ng-click="bayClicked(bay)">
-                        <td>Bay {{bay.bay_name}}</td> 
+                        <td>Bay {{bay.bay_name}}</td>
+                        <td>{{bay.bay_label}}</td> 
                         <td>{{getBayCount(bay.id)}}</td>
                         <td>{{bay.bay_limit}}</td>
                     </tr>
