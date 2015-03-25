@@ -25,7 +25,7 @@ module.exports = {
 			},
 
 			function updateInventory(cb_series){
-				Inventory.find({sku_id : sku_id, bay_id : bay_id})
+				Inventory.find({sku_id : sku_id, bay_id : bay_id}).sort("exp_date ASC")
 					.then(function(skus){
 						var index = 0;
 
