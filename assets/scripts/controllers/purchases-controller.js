@@ -161,6 +161,10 @@ angular.module('fmApp')
     return sku.prod_id.brand_name + ' ' + sku.sku_name;
   };
 
+  $scope.combineBay = function (bay){
+    return bay.bay_name + ' ' + bay.bay_label;
+  };
+
   $scope.getPurchaseProducts = function (id) {
    //  console.log(id);
    $http.get('http://localhost:1337/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){

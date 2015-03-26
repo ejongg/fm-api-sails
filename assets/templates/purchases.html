@@ -64,7 +64,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-3">Bay</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.bay" ng-options="bay as bay.bay_name for bay in bays">
+                            <select class="form-control" ng-model="purchase.bay" ng-options="bay as combineBay(bay) for bay in bays">
                             </select>
                         </div>
                     </div>
