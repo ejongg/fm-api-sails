@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('TrucksCtrl',['$scope','_','$http', function($scope, _, $http){
+.controller('TrucksCtrl',['$scope','_','$http','httpHost', 'authService', function($scope, _, $http, httpHost, authService){
   $scope.trucks = [];
   $scope.editIndex = -1;
   $scope.truck = {};
   $scope.truckEdit = {};
+
+  $scope.noTrucks = true;
 
   $scope.addTruckForm = false;
 
@@ -20,13 +22,24 @@ angular.module('fmApp')
       // console.log(err);
       // });
 
-    io.socket.request($scope.socketOptions('get','/trucks'), function (body, JWR) {
-      console.log('Sails responded with get trucks: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.trucks = body;
-        $scope.$digest();
+    // io.socket.request($scope.socketOptions('get','/trucks'), function (body, JWR) {
+    //   console.log('Sails responded with get trucks: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.trucks = body;
+    //     $scope.$digest();
+    //   }
+    // });
+    $http.get(httpHost + '/trucks').success( function (data) {
+      if(data.length !== 0){
+        $scope.trucks = data; 
+        $scope.noTrucks = false;
+ 
+        console.log("Trucks:");
+        console.log($scope.trucks);
       }
+    }).error(function (err) {
+      console.log(err);
     });
   };
 
@@ -48,7 +61,7 @@ angular.module('fmApp')
       $scope.truckEdit = angular.copy(truck);
       $scope.editIndex = index;
     }else{
-      $scope.editIndex = {};
+      $scope.editIndex = -1;
     }
 
   };
@@ -57,11 +70,12 @@ angular.module('fmApp')
       // console.log("Add Truck");
       // console.log(truck);
       // io.socket.post('http://localhost:1337/trucks', truck);
-      io.socket.request($scope.socketOptions('post','/trucks',{},truck), function (body, JWR) {
+      io.socket.request($scope.socketOptions('post','/trucks',{"Authorization": "Bearer " + authService.getToken()},truck), function (body, JWR) {
       console.log('Sails responded with post truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-      
+        $scope.showAddTruckForm(false);
+        $scope.$digest();
       }
     });  
   }; 
@@ -71,22 +85,24 @@ angular.module('fmApp')
       // console.log(newInfo);
       // io.socket.put('/trucks/' + newInfo.id, newInfo);
       // $scope.truckEditClicked(-1);
-    io.socket.request($scope.socketOptions('put','/trucks/' + newInfo.id,{},newInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/trucks/' + newInfo.id,{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
       console.log('Sails responded with edit truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+         $scope.editIndex = -1;
+         $scope.$digest();
       }
     });
   };
 
   $scope.deleteTruck = function (truckId) {
       // io.socket.delete('/trucks/' + truckId);
-    io.socket.request($scope.socketOptions('delete','/trucks/' + truckId,{}), function (body, JWR) {
+    io.socket.request($scope.socketOptions('delete','/trucks/' + truckId,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+         $scope.editIndex = -1;
+         $scope.$digest();
       }
     }); 
   };
@@ -125,21 +141,23 @@ angular.module('fmApp')
       case "created": 
         console.log("Truck Created");
         $scope.trucks.push(msg.data);
-        $scope.showAddTruckForm(false);
         $scope.$digest();
         break;
       case "updated": 
         console.log("Truck Updated");
         var index = _.findIndex($scope.trucks, {id : msg.data.id});
+        console.log(index);
         $scope.trucks[index] = msg.data;
-        $scope.editIndex = -1; 
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Truck Deleted");
-        var index = _.findIndex($scope.trucks, {id : msg.data.id});
-        $scope.trucks.splice(index,1);
-        $scope.editIndex = -1;
+        console.log(msg.data);
+        var index = _.findIndex($scope.trucks, {id : msg.data[0].truck_id});
+        $scope.trucks.splice(index,1);   
+        if($scope.trucks.length === 0){
+          $scope.noTrucks = true;
+        }
         $scope.$digest();
     }
 
