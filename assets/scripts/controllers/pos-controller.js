@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('POSCtrl',['$scope','_','$http','httpHost', function($scope, _, $http, httpHost){
+.controller('POSCtrl',['$scope','_','$http','httpHost','authService', function($scope, _, $http, httpHost, authService){
   $scope.skuList = [];
   $scope.transaction = {};
   $scope.transactionItems = [];
@@ -94,7 +94,11 @@ angular.module('fmApp')
       $scope.transactionItems.push(itemInfo);
       $scope.totalAmount += itemInfo.amount ;
     }else{
+      var index = _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id });
+      $scope.transactionItems[index].bottles += itemInfo.bottles;
+      $scope.transactionItems[index].cases += itemInfo.cases;
       $scope.showItemExistingTransactionError(true,itemInfo.sku_name);
+
     }
               
  };
@@ -120,6 +124,10 @@ angular.module('fmApp')
     if( _.findIndex($scope.returnsItems,{ 'sku_id': returnInfo.sku_id }) === -1 ){
       $scope.returnsItems.push(returnInfo);
     }else{
+      var index = _.findIndex($scope.returnsItems,{ 'sku_id': returnInfo.sku_id });
+      $scope.returnsItems[index].bottles += returnInfo.bottles;
+      $scope.returnsItems[index].cases += returnInfo.cases;
+      $scope.returnsItems[index].deposit += returnInfo.deposit;
       $scope.showItemExistingReturnsError(true,returnInfo.sku_name);
     }
             
@@ -149,7 +157,7 @@ angular.module('fmApp')
     //     $scope.show_alert = true;
     //     $scope.$digest();
     // });  
-    io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{},transaction), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{"Authorization": "Bearer " + authService.getToken()},transaction), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
