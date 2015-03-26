@@ -235,18 +235,16 @@
                     <th>Production Date</th>
                     <th>Cost Per Case</th>
                     <th>Discount Per Case</th>
-                    <th>Status</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr ng-repeat="product in purchaseProducts">
+                <tr ng-repeat="product in purchaseProducts" ng-repeat="purchaseInfo in purchasesList"  ng-click="getPurchaseProducts(purchaseInfo.id)">
                     <td>{{product.sku_id.sku_name + " " + product.sku_id.size}}</td>
                     <td>{{product.cases}}</td>
                     <td>{{product.purchase_id.date_received}}</td>
                     <td>{{product.costpercase}}</td>
                     <td>{{product.discountpercase}}</td>
-                    <td></td>
                 </tr>
 
                 <!-- DON'T REMOVE CODE BELOW -->
@@ -255,7 +253,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="showViewProducts(false)">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="showViewProducts(false)">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
