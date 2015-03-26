@@ -13,10 +13,23 @@ module.exports = {
 			.then(function getAvailableSkus(inventory_items){
 
 				(inventory_items).forEach(function(item){
-					if(item.physical_count > 0){
-						available.push(item.sku_id);
+					if(item.physical_count > 0 ){
+
+						if(available.length == 0){
+							available.push(item.sku_id);
+						}else{
+							for(var i = 0 ; i < available.length; i++){
+								if(available[i].id != item.sku_id.id){
+									available.push(item.sku_id);
+								}
+							}	
+						}
+						
 					}
+
 				});
+
+				
 
 				return res.send(available);
 			},
