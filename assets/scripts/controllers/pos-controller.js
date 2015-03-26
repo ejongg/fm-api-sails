@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('POSCtrl',['$scope','_','$http', function($scope, _, $http){
+.controller('POSCtrl',['$scope','_','$http','httpHost', function($scope, _, $http, httpHost){
   $scope.skuList = [];
   $scope.transaction = {};
   $scope.transactionItems = [];
@@ -14,19 +14,34 @@ angular.module('fmApp')
   $scope.itemExistingReturnsError = false;
   $scope.itemExistingReturns = '';
 
+  $scope.noSKU = true;
+
 
   $scope.totalAmount = 0;
 
   var getSKU = function () {
-    io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
-      console.log('Sails responded with get sku: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.skuList = body;
+    // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
+    //   console.log('Sails responded with get sku: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.skuList = body;
+    //     $scope.transaction.sku = $scope.skuList[0];
+    //     $scope.returns.sku = $scope.skuList[0];
+    //     $scope.$digest();
+    //   }
+    // });
+    $http.get(httpHost + '/sku/available').success( function (data) {
+      if(data.length !== 0){
+        $scope.skuList = data;
         $scope.transaction.sku = $scope.skuList[0];
         $scope.returns.sku = $scope.skuList[0];
-        $scope.$digest();
+        $scope.noSKU = false;
+
+        console.log("Available SKU:");
+        console.log($scope.skuList);
       }
+    }).error(function (err) {
+      console.log(err);
     });
   };
 
