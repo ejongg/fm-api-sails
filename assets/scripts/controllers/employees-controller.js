@@ -23,7 +23,9 @@ angular.module('fmApp')
         $scope.noEmployees = false;
 
         console.log("Employees:");
-        console.log($scope.employees);
+        console.log($scope.employees.length);
+      }else{
+        $scope.noEmployees = true;
       }
 
     }).error(function (err) {
@@ -96,6 +98,7 @@ angular.module('fmApp')
         $scope.showAddEmployeeForm(false);
         $scope.$digest(); 
       }
+      getEmployees();
     });   
 	}; 
 
@@ -128,6 +131,7 @@ angular.module('fmApp')
         $scope.showEditOrDeleteEmployeeForm(false); 
         $scope.$digest(); 
       }
+      getEmployees();
     }); 
 	};
 
