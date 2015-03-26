@@ -144,6 +144,9 @@ angular.module('fmApp')
       case "created": 
         console.log("Employee Created");
         $scope.employees.push(msg.data);
+        if($scope.noEmployees === true){
+          $scope.noEmployees = false;
+        }
         $scope.$digest();
         break;
       case "updated":
@@ -158,6 +161,9 @@ angular.module('fmApp')
         var index = _.findIndex($scope.employees,{'id': msg.data[0].emp_id});
         console.log(index);
         $scope.employees.splice(index,1);
+        if($scope.employees.length === 0){
+          $scope.noEmployees = true;
+        }
         $scope.$digest();
     }
 
