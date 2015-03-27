@@ -161,14 +161,14 @@ angular.module('fmApp')
     //     $scope.$digest();
     // });
     console.log(transaction);  
-    // io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{"Authorization": "Bearer " + authService.getToken()},transaction), function (body, JWR) {
-    //   console.log('Sails responded with post bad order: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 201){
-    //     console.log("Success");
-    //     $scope.$digest();
-    //   }
-    // }); 
+    io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{"Authorization": "Bearer " + authService.getToken()},transaction), function (body, JWR) {
+      console.log('Sails responded with post bad order: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 201){
+        console.log("Success");
+        $scope.$digest();
+      }
+    }); 
 
   };
 }]);
