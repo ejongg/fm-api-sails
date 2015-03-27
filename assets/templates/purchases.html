@@ -50,7 +50,7 @@
   
         <div class="col-md-3">
             <h4><i class="mdi-content-add-circle"></i> ADD PURCHASES  </h4>
-            <form class="form-horizontal" name="purchaseForm" ng-submit="addPurchase(purchase)" novalidate>
+            <form class="form-horizontal" name="purchaseForm" ng-submit="addPurchase(purchase)">
                 <fieldset>
 
                     <div class="form-group">
@@ -78,7 +78,7 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-2">Cases</label>
-                        <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter number of cases."
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases."
                             ng-model="purchase.cases" required>
                         </div>
                     </div>
