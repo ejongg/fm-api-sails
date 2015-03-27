@@ -30,7 +30,7 @@ angular.module('fmApp')
     //     $scope.$digest();
     //   }
     // });
-    $http.get(httpHost + '/trucks').success( function (data) {
+  $http.get(httpHost + '/trucks').success( function (data) {
       if(data.length !== 0){
         $scope.trucks = data; 
         $scope.noTrucks = false;
@@ -41,6 +41,14 @@ angular.module('fmApp')
     }).error(function (err) {
       console.log(err);
     });
+  };
+
+  var getDrivers = function () {
+    $http.get(httpHost + '/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){
+     $scope.purchaseProducts = data;
+     console.log($scope.purchaseProducts);
+     $scope.showViewProducts(true);
+   });
   };
 
   getTrucks();
