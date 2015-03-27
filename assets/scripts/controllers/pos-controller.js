@@ -87,7 +87,7 @@ angular.module('fmApp')
       "bottlespercase" : item.sku.bottlespercase,
       "bottles" : item.extraBottles,
       "cases" : item.cases,
-      "discount": item.discount,
+      "discountpercase": item.discount,
       "amount" : (item.extraBottles * item.sku.priceperbottle) + (item.cases * item.sku.pricepercase)
     };
 
