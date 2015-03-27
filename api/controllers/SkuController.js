@@ -12,26 +12,31 @@ module.exports = {
 		Inventory.find().populate('sku_id')
 			.then(function getAvailableSkus(inventory_items){
 
-				(inventory_items).forEach(function(item){
+				async.each(inventory_items, function (item, cb){
 					if(item.physical_count > 0 ){
 
-						if(available.length == 0){
-							available.push(item.sku_id);
-						}else{
-							for(var i = 0 ; i < available.length; i++){
-								if(available[i].id != item.sku_id.id){
-									available.push(item.sku_id);
+						Sku.findOne({id : item.sku_id.id}).populate('prod_id')
+							.then(function (sku){
+								if(available.length == 0){							
+									available.push(sku);
+									cb();
+								}else{
+									for(var i = 0 ; i < available.length; i++){
+										if(available[i].id != sku.id){
+											available.push(sku);																				
+										}								
+									}
+									cb();	
 								}
-							}	
-						}
-						
+							});												
 					}
 
-				});
+				}, function (err){
+					if(err)
+						console.log(err);
 
-				
-
-				return res.send(available);
+					return res.send(available);
+				});				
 			},
 
 			function(err){
