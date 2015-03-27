@@ -146,7 +146,7 @@ angular.module('fmApp')
       "customer_name" : $scope.customerName,
       "total_amount" : $scope.totalAmount,
       "deposit" : $scope.deposit,
-      "user" : 'Sonic'
+      "user" : $scope.userName
     };
             
     // io.socket.post('/warehouse_transactions/add', transaction, function(response){
