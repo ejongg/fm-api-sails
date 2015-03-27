@@ -345,18 +345,6 @@ h6 {
 .alert-danger {
   background-color: #ffa311 !important; }
 
-thead {
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #202020 !important;
-  text-transform: uppercase !important;}
-
-th {
-  text-transform: uppercase !important;
-}
-
- }
-
 .products .panel {
   margin-left: 10px;
   margin-right: 600px; }
@@ -383,13 +371,6 @@ th {
   margin: 130px 0px 0px -50px !important;
   border-radius: 25px; }
 
-.variantTable {
-  margin-top: 50px; }
-
-.row.selectcompany {
-  width: 250px; }
-
-/*asdasdasd */
 
 
 /*onclick show - right panel*/
@@ -651,7 +632,7 @@ a.arrowlink:link, a.arrowlink:visited, a.arrowlink:active {
   font-size: 15px;
   color: #ffffff !important;
   cursor: pointer !important;
-  background: #0e0e0e !important;
+  background: #1c1c1c !important;
   margin: 0px;
   padding-top: 0px;
   padding-bottom:0px;
@@ -732,19 +713,6 @@ legend {
   font-weight: bold;
 }
 
-.truck-table {
-  padding: 20px;
-  margin: 10px;
-}
-
-.panel-body {
-  /*border: !px #202020 dashed;*/
-}
-.truck-tableout {
-  border: !px #202020 dashed;
-    background-color: transparent !important;
-}
-
 #search {
 
 }
@@ -780,3 +748,191 @@ legend {
   color: #ffffff;
     width: 200px;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+.variantTable {
+  margin-top: 50px; }
+
+.row.selectcompany {
+  width: 250px; }
+
+
+.truck-table {
+  padding: 20px;
+  margin: 10px;
+}
+
+
+.truck-tableout {
+  border: !px #202020 dashed;
+  background-color: transparent !important;
+}
+
+
+thead {
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #202020 !important;
+  text-transform: uppercase !important;
+  text-shadow: 0px 0px 5px #ffffff;
+}
+
+th {
+  text-transform: uppercase !important;
+}
+
+
+.table-fill {
+  color: #202020;
+  background: #000000;
+  border-radius:30px;
+  /*
+  border-collapse: collapse;
+  height: 320px;
+  margin: auto;
+  max-width: 600px;
+  padding:5px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  animation: float 5s infinite; */
+}
+
+.table {
+  color: #000000 !important;
+}
+
+.table-fill {
+  color: #000000 !important;
+  background: #202020;
+  border-radius:30px;
+  /*
+  border-collapse: collapse;
+  height: 320px;
+  margin: auto;
+  max-width: 600px;
+  padding:5px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);*/
+  animation: float 5s infinite;
+}
+
+tbody {
+  color:  #ffffff !important;
+}
+
+tfoot {
+  color: #202020;
+  background: #ffffff;
+  border-bottom: 30px solid #151515;
+  border-right: 30px solid #151515;
+}
+ 
+th {
+  color: #ffffff;
+  background: #202020;
+  border-bottom:10px solid red;
+  border-right: 1px solid #151515;
+  /*font-size:23px;
+  font-weight: 300;
+  padding:24px;
+  text-align:left;
+  vertical-align:middle;
+  text-shadow: 0px 0px 15px #494949;*/
+}
+
+th:first-child {
+  border-top-left-radius:18px;
+}
+ 
+th:last-child {
+  border-top-right-radius:18px;
+  border-right:none;
+}
+  
+tr {
+  border-top: 1px solid red;
+  border-bottom-: 1px solid red;
+  color:#666B85;
+  font-weight:normal;
+  text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+}
+ 
+tr:hover td {
+  background: transparent;
+  color:#FFFFFF;
+  border-top: 5px solid #ffa311;
+  border-bottom: 5px solid #ffa311;
+}
+ 
+tr:first-child {
+  border-top:none;}
+
+tr:last-child {
+  border-bottom:none;
+}
+ 
+tr:nth-child(odd) td {
+  background: white;
+}
+ 
+tr:nth-child(odd):hover td {
+  color: #202020;
+  background: transparent;
+}
+
+/*tr:last-child td:first-child {
+  border-bottom-left-radius:0px;
+}
+ 
+tr:last-child td:last-child {
+  border-bottom-right-radius:0px;
+}
+ */
+td {
+  background: #cfcfcf;
+  /*padding:20px;
+    font-size:18px;*/
+  text-align:left;
+  vertical-align:middle;
+  font-weight:300;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid #C1C3D1;
+}
+
+td:last-child {
+  border-right: 0px;
+}
+
+th.text-left {
+  text-align: left;
+}
+
+th.text-center {
+  text-align: center;
+}
+
+th.text-right {
+  text-align: right;
+}
+
+td.text-left {
+  text-align: left;
+}
+
+td.text-center {
+  text-align: center;
+}
+
+td.text-right {
+  text-align: right;
+}

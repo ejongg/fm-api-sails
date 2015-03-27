@@ -50,22 +50,40 @@
             <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
                 <fieldset>
 
+                <!--<div class="alert alert-dismissable alert-danger">
+                      <button type="button" class="close" data-dismiss="alert">×</button>
+
+                        <strong class="row" ng-show="productForm.addProductBrandName.$invalid && !productForm.addProductBrandName.$pristine"> Invalid Establishment Name </strong>
+                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Owner Name </strong>
+
+                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Address </strong>
+
+                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Distance / Priority </strong>
+
+                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Supplier Agent </strong>
+
+                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Cases </strong>
+
+                    </div>-->
+
+
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter establishment name." ng-model="order.establishment" required>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="orderEstablishmentName"placeholder="Enter establishment name." ng-model="order.establishment" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputOwnerName" class="col-md-6">Owner Name</label>
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter owner name."
+                        <div class="col-md-12"><input type="text" class="form-control" name="orderOwnerName" placeholder="Enter owner name."
                         ng-model="order.owner" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Address</label>
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter address."
+                        <div class="col-md-12"><input type="text" class="form-control" name="orderAddressName" placeholder="Enter address."
                         ng-model="order.address" required>
                         </div>
                     </div>
@@ -73,7 +91,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-6">Distance / Priority</label>
                         <div class="col-md-12">
-                            <select class="form-control" id="selectType" ng-model="order.distance_rating" ng-init="order.distance_rating = distanceRatings[0]">
+                            <select class="form-control"  name="orderDistancePriority" id="selectType" ng-model="order.distance_rating" ng-init="order.distance_rating = distanceRatings[0]">
                                 <option ng-repeat="distanceRating in distanceRatings" value="{{distanceRating}}">{{distanceRating}}</option>
                             </select>
                         </div>
@@ -81,12 +99,12 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Supplier Agent</label>
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter agent name."
+                        <div class="col-md-12"><input type="text" class="form-control" name="orderSupplierAgent" placeholder="Enter agent name."
                         ng-model="order.cokeagent_name" required>
                         </div>
                     </div>
 
-                    <hr style="margin-top:50px;   border-top: 3px solid #202020;">
+                    <hr style="margin-top:50px; border-top: 3px solid #202020;">
 
                     <div class="form-group">
                         <label for="select" class="col-md-6">Safe Keeping Unit</label>
@@ -98,7 +116,7 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases."
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases." name="orderCases"
                         ng-model="order.cases" required>
                         </div>
                     </div>
