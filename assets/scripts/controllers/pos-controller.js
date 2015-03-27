@@ -18,6 +18,7 @@ angular.module('fmApp')
 
 
   $scope.totalAmount = 0;
+  $scope.deposit = 0;
 
   var getSKU = function () {
     // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
@@ -78,6 +79,7 @@ angular.module('fmApp')
      $scope.showItemExistingTransactionError(false);
     }
 
+    console.log(item);
     var itemInfo = {
       "sku_id" : item.sku.id,
       "sku_name" : item.sku.sku_name + " " + item.sku.size,
@@ -85,7 +87,7 @@ angular.module('fmApp')
       "bottlespercase" : item.sku.bottlespercase,
       "bottles" : item.extraBottles,
       "cases" : item.cases,
-      "amount" : item.sku.price * item.cases
+      "amount" : (item.extraBottles * item.sku.priceperbottle) + (item.cases * item.sku.pricepercase)
     };
 
      console.log("Add Transaction Item");
@@ -118,8 +120,7 @@ angular.module('fmApp')
      "sku_id" : returns.sku.id,
      "sku_name" : returns.sku.sku_name + " " + returns.sku.size,
      "bottles" : returns.bottles,
-     "cases" : returns.cases,
-     "deposit" : returns.deposit
+     "cases" : returns.cases
    };
 
     if( _.findIndex($scope.returnsItems,{ 'sku_id': returnInfo.sku_id }) === -1 ){
@@ -144,6 +145,7 @@ angular.module('fmApp')
       "returns" : $scope.returnsItems,
       "customer_name" : $scope.customerName,
       "total_amount" : $scope.totalAmount,
+      "deposit" : $scope.deposit,
       "user" : 'Sonic'
     };
             
@@ -157,15 +159,16 @@ angular.module('fmApp')
     //     $scope.message = response.message;
     //     $scope.show_alert = true;
     //     $scope.$digest();
-    // });  
-    io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{"Authorization": "Bearer " + authService.getToken()},transaction), function (body, JWR) {
-      console.log('Sails responded with post bad order: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
-        console.log("Success");
-        $scope.$digest();
-      }
-    }); 
+    // });
+    console.log(transaction);  
+    // io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{"Authorization": "Bearer " + authService.getToken()},transaction), function (body, JWR) {
+    //   console.log('Sails responded with post bad order: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 201){
+    //     console.log("Success");
+    //     $scope.$digest();
+    //   }
+    // }); 
 
   };
 }]);

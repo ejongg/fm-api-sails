@@ -7,6 +7,11 @@ angular.module('fmApp')
   $scope.truck = {};
   $scope.truckEdit = {};
 
+  $scope.employeeDrivers = [];
+  $scope.employeeCheckers = [];
+  $scope.employeeDeliverySalesPersonel = [];
+  $scope.employeeDeliveryHelper = [];
+
   $scope.noTrucks = true;
 
   $scope.addTruckForm = false;
@@ -44,13 +49,42 @@ angular.module('fmApp')
   };
 
   var getDrivers = function () {
-    $http.get(httpHost + '/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){
-     $scope.purchaseProducts = data;
-     console.log($scope.purchaseProducts);
-     $scope.showViewProducts(true);
-   });
+    $http.get(httpHost + '/employees?where={"position" : "Driver"}').success(function(data){
+     $scope.employeeDrivers = data;
+     $scope.truck.driver = $scope.employeeDrivers[0];
+     console.log("Drivers");
+     console.log($scope.employeeDrivers);
+    });
   };
 
+  var getCheckers = function () {
+    $http.get(httpHost + '/employees?where={"position" : "Checker"}').success(function(data){
+     $scope.employeeCheckers = data;
+     console.log("Checkers");
+     console.log($scope.employeeCheckers);
+    });
+  };
+  
+  var getDeliverySalesPersonel = function () {
+    $http.get(httpHost + '/employees?where={"position" : "Delivery Sales Personel"}').success(function(data){
+     $scope.employeeDeliverySalesPersonel = data;
+     console.log("Delivery Sales Personel");
+     console.log($scope.employeeDeliverySalesPersonel);
+    });
+  };
+
+  var getDeliveryHelper = function () {
+    $http.get(httpHost + '/employees?where={"position" : "Delivery Helper"}').success(function(data){
+     $scope.employeeDeliveryHelper = data;
+     console.log("Delivery Helper");
+     console.log($scope.employeeDeliveryHelper);
+    });
+  };
+  
+  getDrivers();
+  getCheckers();
+  getDeliverySalesPersonel();
+  getDeliveryHelper();
   getTrucks();
 
   $scope.showAddTruckForm = function (data) {
@@ -63,6 +97,10 @@ angular.module('fmApp')
   var clearForm = function () {
     $scope.truck = {};
   }; 
+
+  $scope.fullName = function (driver) {
+    return driver.emp_fname + ' ' + driver.emp_lname;
+  };
 
   $scope.truckEditClicked = function (index,truck) {
     if(index !== -1){

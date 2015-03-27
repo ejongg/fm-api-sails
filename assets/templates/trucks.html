@@ -49,7 +49,10 @@
 
                     <div class="form-group">
                         <label for="inputTruckname" class="col-md-6">Truck Driver</label>  
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter truck driver name." ng-model="truck.driver" required>
+                        <div class="col-md-12">
+                          <select class="form-control" id="selectType" ng-model="truck.driver" 
+                          ng-options="driver as fullName(driver) for driver in employeeDrivers">
+                          </select>
                         </div>
                     </div>
 
