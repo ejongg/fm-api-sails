@@ -2,7 +2,25 @@
 
 angular.module('fmApp')
 .controller('EmployeesCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
-	$scope.positions = ['Driver','Checker','Delivery Sales Personel','Delivery Helper'];
+	// $scope.positions = ['Driver','Checker','Delivery Sales Personel','Delivery Helper'];
+  $scope.positions = [
+    {
+      "position": "Truck Driver",
+      "value": "driver"
+    },
+    {
+      "position": "Checker",
+      "value": "checker"
+    },
+    {
+      "position": "Delivery Sales Personel",
+      "value": "dsp"
+    },
+    {
+      "position": "Delivery Helper",
+      "value": "dh"
+    }
+  ];
 	$scope.employees = [];
 
   $scope.noEmployees = true;

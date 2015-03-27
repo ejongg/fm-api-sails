@@ -81,6 +81,7 @@ angular.module('fmApp')
     var itemInfo = {
       "sku_id" : item.sku.id,
       "sku_name" : item.sku.sku_name + " " + item.sku.size,
+      "company" : item.sku.prod_id.company,
       "bottlespercase" : item.sku.bottlespercase,
       "bottles" : item.extraBottles,
       "cases" : item.cases,
