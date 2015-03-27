@@ -80,7 +80,12 @@ module.exports = {
 	findMovingPile : function(company, callback){
 		Bays.findOne({bay_label : company, pile_status : "Moving pile"})
 			.then(function(bay){
-				callback(null, bay.id);
+
+				if(bay){
+					callback(null, bay.id);
+				}else{
+					callback(null, "There is no moving pile for company " + company);
+				}
 			},
 
 			function(err){
