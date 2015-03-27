@@ -53,6 +53,7 @@
 
                 <div class="form-group">
                     <label for="select" class="col-md-3">Bay</label>
+
                     <div class="col-md-12">
                         <select class="form-control" ng-model="product.bay" ng-options="bay as bay.pile_name for bay in bays">
                         </select>
@@ -61,6 +62,7 @@
 
                 <div class="form-group">
                     <label for="select" class="col-md-3">SKU</label>
+
                     <div class="col-md-12">
                         <select class="form-control" ng-model="product.sku" ng-options="sku as combined(sku) for sku in skuList">
                         </select>
@@ -69,23 +71,40 @@
 
                 <div class="form-group">
                     <label for="inputOwnerName" class="col-md-2 control-label">Cases</label>
-                    <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter the number of cases."
+
+                    <div class="col-md-12">
+
+                     <!-- Error Message -->
+                        <div ng-show="badOrderForm.inputCases.$invalid && !badOrderForm.inputCases.$pristine">Invalid! Please input cases and numbers only. </div>
+
+                        <input type="number" name="inputCases" min="1" class="form-control" placeholder="Enter the number of cases."
                         ng-model="product.cases" required>
+
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="inputEmplyeeName" class="col-md-2 control-label">Accountable</label>
+                    <label for="inputEmplyeeName"  class="col-md-2 control-label">Accountable</label>
+
                     <div class="col-md-12">
-                        <input type="text" class="form-control" placeholder="Enter the employee name."
+
+                    <!-- Error Message -->
+                        <div ng-show="badOrderForm.inputEmployeeName.$invalid && !badOrderForm.inputEmployeeName.$pristine">Invalid! Please input employee name. </div>
+
+                        <input type="text" name="inputEmployeeName" class="form-control" placeholder="Enter the employee name."
                         ng-model="accountable" required>
+
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="inputAddress" class="col-md-2 control-label">Reason</label>
+
                     <div class="col-md-12">
-                        <textarea name="" cols="45" rows="5" ng-model="product.reason"></textarea>
+                     <!-- Error Message -->
+                        <div ng-show="badOrderForm.inputReason.$invalid && !badOrderForm.inputReason.$pristine">Invalid! Please input reason. </div>
+
+                        <textarea name="inputReason"  cols="45" rows="5" ng-model="product.reason"></textarea>
                     </div>
                 </div>
 
