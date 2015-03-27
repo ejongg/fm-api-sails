@@ -116,3 +116,6 @@ npm-debug.log
 nbproject
 .idea
 .node_history
+test/bootstrap.test.js
+test/mocha.opts
+test/unit/models/Users.test.js
