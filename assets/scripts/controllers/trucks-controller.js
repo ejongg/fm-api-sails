@@ -60,6 +60,7 @@ angular.module('fmApp')
   var getCheckers = function () {
     $http.get(httpHost + '/employees?where={"position" : "Checker"}').success(function(data){
      $scope.employeeCheckers = data;
+     $scope.truck.dispatcher = $scope.employeeCheckers[0];
      console.log("Checkers");
      console.log($scope.employeeCheckers);
     });
@@ -68,6 +69,7 @@ angular.module('fmApp')
   var getDeliverySalesPersonel = function () {
     $http.get(httpHost + '/employees?where={"position" : "Delivery Sales Personel"}').success(function(data){
      $scope.employeeDeliverySalesPersonel = data;
+     $scope.truck.agent = $scope.employeeDeliverySalesPersonel[0];
      console.log("Delivery Sales Personel");
      console.log($scope.employeeDeliverySalesPersonel);
     });
@@ -76,6 +78,7 @@ angular.module('fmApp')
   var getDeliveryHelper = function () {
     $http.get(httpHost + '/employees?where={"position" : "Delivery Helper"}').success(function(data){
      $scope.employeeDeliveryHelper = data;
+     $scope.truck.helper = $scope.employeeDeliveryHelper[0];
      console.log("Delivery Helper");
      console.log($scope.employeeDeliveryHelper);
     });

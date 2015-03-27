@@ -58,20 +58,28 @@
 
                     <div class="form-group">
                         <label for="inputCheckerName" class="col-md-6">Checker</label>
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter checker name."
-                        ng-model="truck.dispatcher" required>
+                        <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="truck.dispatcher" 
+                        ng-options="checker as fullName(checker) for checker in employeeCheckers">
+                        </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inpuDPName" class="col-md-9">Delivery Sales Personnel</label>
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter sales personnel name." ng-model="truck.agent" required>
+                        <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="truck.agent" 
+                        ng-options="agent as fullName(agent) for agent in employeeDeliverySalesPersonel">
+                        </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputDHName" class="col-md-6">Delivery Helper</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter helper name." ng-model="truck.helper" required>
+                        <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="truck.helper" 
+                        ng-options="helper as fullName(helper) for helper in employeeDeliveryHelper">
+                        </select>
                         </div>
                     </div>
 
