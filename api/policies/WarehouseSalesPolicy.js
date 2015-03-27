@@ -3,33 +3,38 @@ module.exports = function(req, res, next){
 	var notAvailableProducts = [];
 	
 
-	async.each(products, function(product, cb){
+	async.each(products, function (product, cb){
 
-		var bay_id = BaysService.findMovingPile(product.company);
+		BaysService.findMovingPile(product.company, function(err, bay_result){
 
-		Inventory.find({sku_id : product.sku_id, bay_id : bay_id})
-			.exec(function(err, found_sku){
-				if(found_sku){
-					var sku_total_case_count = 0;
+			if(typeof bay_result == 'number'){
+				Inventory.find({sku_id : product.sku_id, bay_id : bay_result})
+					.exec(function (err, found_sku){
+						if(found_sku){
+							var sku_total_case_count = 0;
 
-					(found_sku).forEach(function(sku){
-						sku_total_case_count = sku_total_case_count + sku.physical_count;
-					});
+							(found_sku).forEach(function (sku){
+								sku_total_case_count = sku_total_case_count + sku.physical_count;
+							});
 
-					if(product.cases > sku_total_case_count){
-						notAvailableProducts.push(product.sku_name);
-						cb();
-					}else{
-						cb();
-					}
+							if(product.cases > sku_total_case_count){
+								notAvailableProducts.push(product.sku_name);
+								cb();
+							}else{
+								cb();
+							}
 
-				}else{
-					return res.json({code : 0, message : product.sku_name + ' not found in inventory'});
-					cb();
-				}
-			});
+						}else{
+							return res.json({code : 0, message : product.sku_name + ' not found in current moving pile'});
+							cb();
+						}
+					});	
+			}else{
+				return res.send({code : 0, message : bay_result});
+			}
+		});
 
-	}, function(err){
+	}, function (err){
 		if(err)
 			console.log(err);
 
