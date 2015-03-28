@@ -36,7 +36,6 @@ module.exports = {
 
 							function bottlesAndCasesHandler(cb_while){
 								var current_physical_count = skus[index].physical_count;
-								var current_bottles_count = skus[index].bottles;
 
 								if(skus[index].physical_count > 0){
 
@@ -48,11 +47,24 @@ module.exports = {
 
 										var inc_case = {
 											sku_id : sku_id,
-											exp_date : exp_date,
+											exp_date : skus[index].exp_date,
 											bottles : bottlespercase - bottles
 										};
 
-										Incomplete_cases.create(inc_case).exec(function(err, incompletes){});
+										Incomplete_cases.findOne({sku_id : sku_id, exp_date : skus[index].exp_date})
+											.then(function(found){
+
+												if(found){
+													found.bottles = found.bottles + inc_case.bottles;
+													found.save(function(err, saved){});
+												}else{
+													Incomplete_cases.create(inc_case).exec(function(err, incompletes){});
+												}
+											},
+
+											function(err){
+												console.log(err);
+											});
 
 										bottles = 0;
 									}

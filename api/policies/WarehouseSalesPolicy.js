@@ -1,8 +1,11 @@
 module.exports = function(req, res, next){
 	var products = req.body.products;
 	var notAvailableProducts = [];
-	
 
+	if(products.length == 0){
+		return res.json({code : 0, message : 'Invalid! No products sent.'});
+	}
+	
 	async.each(products, function (product, cb){
 
 		BaysService.findMovingPile(product.company, function(err, bay_result){
@@ -13,7 +16,7 @@ module.exports = function(req, res, next){
 						if(found_sku){
 							var sku_total_case_count = 0;
 
-							(found_sku).forEach(function (sku){
+							_(found_sku).forEach(function (sku){
 								sku_total_case_count = sku_total_case_count + sku.physical_count;
 							});
 
@@ -25,12 +28,11 @@ module.exports = function(req, res, next){
 							}
 
 						}else{
-							return res.json({code : 0, message : product.sku_name + ' not found in current moving pile'});
-							cb();
+							return res.json({code : 0, message : product.sku_name + ' not found in current moving pile'});							
 						}
 					});	
 			}else{
-				return res.send({code : 0, message : bay_result});
+				return res.json({code : 0, message : bay_result});
 			}
 		});
 
@@ -38,16 +40,10 @@ module.exports = function(req, res, next){
 		if(err)
 			console.log(err);
 
-		if(notAvailableProducts.length == 0){
-			if(products.length == 0){
-				return res.json({code : 0, message : 'Invalid! No products sent.'});
-			}else{
-				req.result = true;
-			}
-		}else{
+		if(notAvailableProducts.length > 0){
 			return res.json({code : 0, message : 'Insufficient stocks in current moving pile', data : notAvailableProducts});
+		}else{
+			next();
 		}
-
-		next();
 	});
 }
