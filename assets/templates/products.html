@@ -94,8 +94,7 @@
                       <!--
                         <input type="text" class="form-control empty" name="addProductCompanyName" placeholder="Enter company name." ng-model="product.company" required> -->
 
-                        <input type="text" name="addProductCompanyName" class="form-control empty" ng-model="product.company" placeholder="Enter company name" typeahead="product.company as product.company for product in existingCompany" typeahead-loading="loadingLocations" required>
-    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                        <input type="text" name="addProductCompanyName" class="form-control empty" ng-model="product.company" placeholder="Enter company name" typeahead="product.company as product.company for product in existingCompany | filter:$viewValue | limitTo:8" required>
 
 
 
