@@ -51,9 +51,6 @@
                         <li>
                             <a  class="btn" ng-click="setNewProductTab(true)">New Product</a>
                         </li>
-                        <li>
-                            <a ng-class="products.length === 0 ? 'btn disabled' : 'btn'" ng-click="setNewProductTab(false)">Existing Company</a>
-                        </li>
                     </ul>
 
         <div class="panel-body" ng-show="newProductTab">
@@ -63,12 +60,11 @@
           <form class="form-horizontal" name="productForm" ng-submit="addProduct(product)" novalidate>
                 <fieldset>
 
-                   <div class="alert alert-dismissable alert-danger">
-                      <button type="button" class="close" data-dismiss="alert">×</button>
+                   <div class="alert alert-danger" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
 
-                        <strong class="row" ng-show="productForm.addProductBrandName.$invalid && !productForm.addProductBrandName.$pristine"> Invalid Product Name </strong>
+                        <strong class="row" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Invalid Product Name </strong>
 
-                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Company Name </strong>
+                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty"> Invalid Company Name </strong>
 
                     </div>
 
@@ -94,9 +90,19 @@
                     <label for="inputCompanyName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
                       <!--<div ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine">Invalid Company Name!</div>-->
-                        <input type="text" class="form-control empty" name="addProductCompanyName" placeholder="Enter company name." ng-model="product.company" required>
+
+                      <!--
+                        <input type="text" class="form-control empty" name="addProductCompanyName" placeholder="Enter company name." ng-model="product.company" required> -->
+
+                        <input type="text" name="addProductCompanyName" class="form-control empty" ng-model="product.company" placeholder="Enter company name" typeahead="product.company as product.company for product in existingCompany" typeahead-loading="loadingLocations" required>
+    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+
+
+
                     </div>                  
                   </div>
+
+
 
                     <div class="form-group rightalign">
                         <button type="submit" class="btn btn-primary" ng-disabled="productForm.$invalid">Add</button>
@@ -104,34 +110,6 @@
                     </div>
                 </fieldset>
             </form>
-        </div>
-
-        <div class="panel-body" ng-hide="newProductTab">
-        
-        <h4><i class="mdi-content-add-circle"></i> ADD PRODUCT <small>W/ EXISTING COMPANY </small></h4>
-
-          <form class="form-horizontal" name="productExistingCompanyForm" ng-submit="addProduct(productExistingCompany)" novalidate>
-                <fieldset>
-                  <div class="form-group">
-                    <label for="inputBrandName" class="col-md-12">Brand Name</label>
-                    <div class="col-md-12">
-                      <input type="text" class="form-control empty" placeholder="Enter brand name." ng-model="productExistingCompany.brand_name" required>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputCompanyName" class="col-md-12">Company Name</label>
-                    <div class="col-md-12">
-                        <select name="" class="form-control" ng-model="productExistingCompany.company" ng-options="product.company as product.company for product in existingCompany"></select>
-                    </div>                  
-                  </div>
-
-                    <div class="form-group rightalign">
-                        <button type="submit" class="btn btn-primary" ng-disabled="productExistingCompanyForm.$invalid">Add</button>
-                        <button type="button" class="btn btn-default" ng-click="showAddProductForm(false)">Cancel</button> 
-                    </div>
-                </fieldset>
-            </form>   
         </div>
     </div>
 </div>
