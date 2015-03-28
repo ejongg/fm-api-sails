@@ -86,6 +86,7 @@ angular.module('fmApp')
   }
 
   var clearForm = function () {
+    $scope.orderForm.$setPristine();
     $scope.order.distance_rating = $scope.distanceRatings[0];
     $scope.order.sku = $scope.skuList[0];
     $scope.order.cases = null;

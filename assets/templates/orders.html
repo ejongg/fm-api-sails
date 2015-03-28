@@ -50,21 +50,21 @@
             <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
                 <fieldset>
 
-                <!--<div class="alert alert-dismissable alert-danger">
-                      <button type="button" class="close" data-dismiss="alert">×</button>
+                        <div class="alert alert-danger" ng-show="(orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid) || (orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty) || (orderForm.orderAddressName.$invalid && orderForm.orderAddressName.$dirty)  || (orderForm.orderCases.$invalid && orderForm.orderCases.$dirty)">
 
-                        <strong class="row" ng-show="productForm.addProductBrandName.$invalid && !productForm.addProductBrandName.$pristine"> Invalid Establishment Name </strong>
-                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Owner Name </strong>
+                        <strong class="row" ng-show="orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
 
-                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Address </strong>
+                        <strong class="row" ng-show="orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty"> Please input Owner Name</strong>
 
-                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Distance / Priority </strong>
+                        <strong class="row" ng-show="orderForm.orderAddressName.$dirty && orderForm.orderAddressName.$invalid"> Please input address </strong>
 
-                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Invalid Supplier Agent </strong>
+                        <strong class="row" ng-show="orderForm.orderSupplierAgent.$dirty && orderForm.orderSupplierAgent.$invalid"> Please input Supplier Agent </strong>
 
-                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine"> Cases </strong>
+                        <strong class="row" ng-show="orderForm.orderCases.$dirty && orderForm.orderCases.$invalid"> Invalid! Please input cases and numbers only. </strong>
 
-                    </div>-->
+                    </div>
+
+
 
 
                     <div class="form-group">
