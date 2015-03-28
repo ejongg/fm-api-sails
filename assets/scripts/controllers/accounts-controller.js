@@ -74,6 +74,7 @@ angular.module('fmApp')
     };
 
     var clearForm = function () {
+      $scope.userForm.$setPristine();
       $scope.user.username = '';
       $scope.user.firstname = '';
       $scope.user.lastname = '';
