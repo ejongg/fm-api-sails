@@ -149,6 +149,7 @@ angular.module('fmApp')
   }
 
   var clearForm = function () {
+    $scope.purchaseForm.$setPristine();
     $scope.purchase.sku = $scope.skuList[0];
     $scope.purchase.bay = $scope.bays[0];
     $scope.purchase.cases = null;
