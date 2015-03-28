@@ -669,6 +669,91 @@ a.arrowlink:hover {
 }
 
 
+
+a.arrowlink1:link, a.arrowlink1:visited, a.arrowlink2:active {
+  font-size: 15px;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  background: #202020 !important;
+  margin: 0px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-decoration: none;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+    -webkit-transition: all 0.2s ease 0s;
+    -moz-transition: all 0.2s ease 0s;
+    -o-transition: all 0.2s ease 0s;
+    transition: all 0.2s ease 0s;
+}
+
+a.arrowlink1:hover {
+  font-size: 15px;
+  color: #ffa311 !important;
+  cursor: pointer !important;
+  background: #202020;
+  margin: 0px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-decoration: none;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+}
+
+
+a.arrowlink2:link, a.arrowlink2:visited, a.arrowlink2:active {
+  font-size: 15px;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  background: #202020 !important;
+  margin: 0px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left: 2px;
+  padding-right: 3px;
+  text-decoration: none;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  margin-left: -10px;
+    -webkit-transition: all 0.2s ease 0s;
+    -moz-transition: all 0.2s ease 0s;
+    -o-transition: all 0.2s ease 0s;
+    transition: all 0.2s ease 0s;
+}
+
+a.arrowlink2:hover {
+  font-size: 15px;
+  color: #ffa311 !important;
+  cursor: pointer !important;
+  background: #202020;
+  margin: 0px;
+  padding-top: 0px;
+  padding-bottom:0px;
+  padding-left: 2px;
+  padding-right: 3px;
+  text-decoration: none;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  margin-left: -10px;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+}
+
+
 a:link {
     color: #0c5970;
     cursor: pointer !important;
