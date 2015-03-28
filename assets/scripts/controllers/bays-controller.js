@@ -115,7 +115,10 @@ angular.module('fmApp')
   };
 
   var clearForm = function () {
+    $scope.bayForm.$setPristine();
     $scope.bay.bay_name = '';
+    $scope.bay.bay_label = '';
+    $scope.bay.bay_limit = '';
   }; 
   
   $scope.getBayCount = function (index) {
