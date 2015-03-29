@@ -56,8 +56,9 @@
 
                    <div class="alert alert-danger" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
 
-                        <strong ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Product name required!  </strong>
+                        <strong ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong>
 
+                        <br/>
                         <strong ng-show="productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty"> Company name required!  </strong>
 
                     </div>
@@ -125,17 +126,27 @@
 
           <form class="form-horizontal" name="editProductForm" ng-submit="editProduct(productEdit)" novalidate>
                 <fieldset>
+
+                 <div class="alert alert-danger" ng-show="(editProductForm.addProductBrandName.$dirty && editProductForm.addProductBrandName.$invalid) || (editProductForm.addProductCompanyName.$invalid && editProductForm.addProductCompanyName.$dirty) ">
+
+                        <strong ng-show="editProductForm.addProductBrandName.$dirty && editProductForm.addProductBrandName.$invalid"> Brand name required!  </strong>
+
+                        <br/>
+                        <strong ng-show="editProductForm.addProductCompanyName.$invalid && editProductForm.addProductCompanyName.$dirty"> Company name required!  </strong>
+
+                    </div>
+
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Brand Name</label>
                     <div class="col-md-12">
-                      <input type="text" class="form-control empty" placeholder="Enter brand name." ng-model="productEdit.brand_name" required>
+                      <input type="text" name="addProductBrandName" class="form-control empty" placeholder="Enter brand name." ng-model="productEdit.brand_name" required>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputProductName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control empty" placeholder="Enter company name." ng-model="productEdit.company" required>
+                        <input type="text" name= "addProductCompanyName" class="form-control empty" placeholder="Enter company name." ng-model="productEdit.company" required>
                     </div>                  
                   </div>
 
