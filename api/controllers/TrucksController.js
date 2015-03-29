@@ -23,6 +23,7 @@ module.exports = {
 				}else{
 					Trucks.create(truck).exec(function(err, created_truck){
 						sails.sockets.blast('trucks', {verb : 'created', data : created_truck});
+						return res.send(201);
 					});
 				}
 			})
