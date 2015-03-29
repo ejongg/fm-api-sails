@@ -6,6 +6,26 @@
  */
 
 module.exports = {
+	add : function(req, res){
+		var truck = {
+		    driver : req.body.driver,
+			dispatcher : req.body.dispatcher,
+			agent : req.body.agent,
+			helper : req.body.helper,
+			route : req.body.route,
+			carry_weight : req.body.carry_weight
+		}
+
+		Trucks.findOne(employee)
+			.then(function(found_truck){
+				if(found_truck){
+					return res.send("You are entering a duplicate entry");
+				}else{
+					Trucks.create(truck).exec(function(err, created_truck){});
+				}
+			})
+	},
+
 	loadout : function(req, res){
 		var orders = req.body.orders;
 		var truck_id = req.body.truck_id;
