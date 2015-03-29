@@ -16,7 +16,7 @@ module.exports = {
 			carry_weight : req.body.carry_weight
 		}
 
-		Trucks.findOne(employee)
+		Trucks.findOne(truck)
 			.then(function(found_truck){
 				if(found_truck){
 					return res.send("You are entering a duplicate entry");
