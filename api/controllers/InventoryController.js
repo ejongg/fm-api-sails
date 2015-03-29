@@ -26,7 +26,6 @@ module.exports = {
 							item.sku_name = foundSku.sku_name;
 							item.size = foundSku.size;
 
-							console.log(item);
 							inventory.push(item);
 							cb();
 						});
