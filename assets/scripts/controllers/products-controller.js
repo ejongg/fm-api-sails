@@ -52,6 +52,7 @@ angular.module('fmApp')
   getProducts();
 
   $scope.showAddProductForm = function (data) {
+    $scope.productForm.$setPristine();
     if($scope.editOrDeleteProductForm === true) {
         $scope.showEditOrDeleteProductForm(false);
       }
