@@ -95,6 +95,7 @@ angular.module('fmApp')
   }
 
   var clearForm = function () {
+    $scope.badOrderForm.$setPristine();
     $scope.product.sku = $scope.skuList[0];
     $scope.product.cases = null;
     $scope.product.reason = '';

@@ -9,7 +9,6 @@ module.exports = function(req, res, next){
 	async.each(products, function (product, cb){
 
 		BaysService.findMovingPile(product.company, function(err, bay_result){
-
 			if(typeof bay_result == 'number'){
 				Inventory.find({sku_id : product.sku_id, bay_id : bay_result})
 					.exec(function (err, found_sku){
@@ -19,6 +18,10 @@ module.exports = function(req, res, next){
 							_(found_sku).forEach(function (sku){
 								sku_total_case_count = sku_total_case_count + sku.physical_count;
 							});
+
+							if(product.bottles > 0){
+								product.cases  = product.cases + 1;
+							}
 
 							if(product.cases > sku_total_case_count){
 								notAvailableProducts.push(product.sku_name);
