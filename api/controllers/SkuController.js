@@ -14,7 +14,6 @@ module.exports = {
 
 				async.each(inventory_items, function (item, cb){
 					if(item.physical_count > 0 ){
-
 						Sku.findOne({id : item.sku_id.id}).populate('prod_id')
 							.then(function (sku){
 								if(available.length == 0){							
@@ -29,6 +28,8 @@ module.exports = {
 									cb();	
 								}
 							});												
+					}else{
+						cb();
 					}
 
 				}, function (err){
