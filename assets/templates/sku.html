@@ -52,23 +52,9 @@
             <form class="form-horizontal" name="skuForm" ng-submit="addSKU(sku)" novalidate>
                 <fieldset>
 
-                    <div class="alert alert-danger" ng-show="(skuForm.inputSkuName.$dirty && skuForm.inputSkuName.$invalid) || (skuForm.inputSize.$invalid && skuForm.inputSize.$dirty) || (skuForm.inputSkuPrice.$invalid && skuForm.inputSkuPrice.$dirty)|| (skuForm.inputSkuPriceB.$invalid && skuForm.inputSkuPriceB.$dirty) || (skuForm.inputBottlePerCase.$invalid && skuForm.inputBottlePerCase.$dirty) || (skuForm.inputWeightPerCase.$invalid && skuForm.inputWeightPerCase.$dirty) || (skuForm.inputLifeSpan.$invalid && skuForm.inputLifeSpan.$dirty)">
-
-                        <strong class="row" ng-show="skuForm.inputSkuName.$dirty && skuForm.inputSkuName.$invalid"> SKU Name Required! </strong>
-
-                        <strong class="row" ng-show="skuForm.inputSize.$invalid && skuForm.inputSize.$dirty">SKU Size Required!</strong>
-
-                        <strong class="row" ng-show="skuForm.inputSkuPrice.$invalid && skuForm.inputSkuPrice.$dirty">Price per Bottle Required! </strong>
-
-                        <strong class="row" ng-show="skuForm.inputSkuPriceB.$invalid && skuForm.inputSkuPriceB.$dirty">Price per Case Required!</strong>
-
-                        <strong class="row" ng-show="skuForm.inputBottlePerCase.$invalid && skuForm.inputBottlePerCase.$dirty">Number of bottles Required!</strong>
-
-                        <strong class="row" ng-show="skuForm.inputWeightPerCase.$invalid && skuForm.inputWeightPerCase.$dirty">Weight per case Required!</strong>
-
-                        <strong class="row" ng-show="skuForm.inputLifeSpan.$invalid && skuForm.inputLifeSpan.$dirty">Life Span Required!</strong>
-
-
+                    <div class="alert alert-warning" ng-show="(skuForm.inputSkuName.$dirty && skuForm.inputSkuName.$invalid) || (skuForm.inputSize.$invalid && skuForm.inputSize.$dirty) || (skuForm.inputSkuPrice.$invalid && skuForm.inputSkuPrice.$dirty)|| (skuForm.inputSkuPriceB.$invalid && skuForm.inputSkuPriceB.$dirty) || (skuForm.inputBottlePerCase.$invalid && skuForm.inputBottlePerCase.$dirty) || (skuForm.inputWeightPerCase.$invalid && skuForm.inputWeightPerCase.$dirty) || (skuForm.inputLifeSpan.$invalid && skuForm.inputLifeSpan.$dirty)">
+                        
+                        <div class="icon-preview"><i class="mdi-alert-error"></i><small> Some fields are empty or incorrect.</small></div> 
 
                     </div>
 
@@ -86,12 +72,17 @@
                         <label for="inputSkuName" class="col-md-12">
                         SKU Name</label> 
                         <div class="col-md-12"><input type="text" class="form-control" name="inputSkuName" placeholder="Enter SKU name." ng-model="sku.sku_name" required>
+                             <strong class= "fbackMsg" ng-show="skuForm.inputSkuName.$dirty && skuForm.inputSkuName.$invalid">SKU Name Required! </strong>
+
                         </div>
+                        
+                       
                     </div>
 
                     <div class="form-group">
                         <label for="inputSize" class="col-md-12">
                         Size</label> 
+
                         <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" name="inputSize" placeholder="Enter size." ng-model="sku.size" required>
                         </div>
                         <div class="col-md-6">
@@ -99,12 +90,16 @@
                             <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
                           </select>
                         </div>
+                        <strong class= "fbackMsg" ng-show="skuForm.inputSize.$invalid && skuForm.inputSize.$dirty"> </br>SKU Size Required!</strong>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Price per bottle</label> 
                         <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPrice" placeholder="Enter price per bottle." ng-model="sku.priceperbottle" required>
+
+                        <strong class= "fbackMsg" ng-show="skuForm.inputSkuPrice.$invalid && skuForm.inputSkuPrice.$dirty">Price per Bottle Required! </strong>
+
                         </div>
                     </div>
 
@@ -112,6 +107,9 @@
                         <label for="inputSkuName" class="col-md-12">
                         Price per case</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPriceB" placeholder="Enter price per case." ng-model="sku.pricepercase" required>
+
+                        <strong class= "fbackMsg" ng-show="skuForm.inputSkuPriceB.$invalid && skuForm.inputSkuPriceB.$dirty">Price per Case Required!</strong>
+
                        </div>
                     </div>
 
@@ -120,6 +118,9 @@
                         <label for="inputBottlePerCase" class="col-md-12">
                         No. of Bottle per case</label> 
                         <div class="col-md-12"><input type="number" min="0" class="form-control" name="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="sku.bottlespercase" required>
+
+                        <strong class= "fbackMsg" ng-show="skuForm.inputBottlePerCase.$invalid && skuForm.inputBottlePerCase.$dirty">Number of bottles Required!</strong>
+
                         </div>
                     </div>
 
@@ -127,6 +128,9 @@
                         <label for="inputSkuName" class="col-md-12">
                         Weight per case (kg)</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputWeightPerCase" placeholder="Enter price per case." ng-model="sku.weightpercase" required>
+                       
+                        <strong class= "fbackMsg" ng-show="skuForm.inputWeightPerCase.$invalid && skuForm.inputWeightPerCase.$dirty">Weight per case Required!</strong>
+
                        </div>
                     </div>
 
@@ -134,6 +138,8 @@
                         <label for="inputBottlePerCase" class="col-md-12">
                         Lifespan (Months)</label> 
                         <div class="col-md-12"><input type="number" min="0" class="form-control" name="inputLifeSpan" placeholder="Enter lifespan." ng-model="sku.lifespan"required>
+                        <strong class= "fbackMsg" ng-show="skuForm.inputLifeSpan.$invalid && skuForm.inputLifeSpan.$dirty">Life Span Required!</strong>
+
                         </div>
                     </div>
  
@@ -182,6 +188,12 @@
             <form class="form-horizontal" name="editskuForm" ng-submit="editSKU(skuEdit)" novalidate>
                 <fieldset>
 
+                    <div class="alert alert-warning" ng-show="(editskuForm.inputSkuName.$dirty && editskuForm.inputSkuName.$invalid) || (editskuForm.inputSize.$invalid && editskuForm.inputSize.$dirty) || (editskuForm.inputSkuPrice.$invalid && editskuForm.inputSkuPrice.$dirty)|| (editskuForm.inputSkuPriceB.$invalid && editskuForm.inputSkuPriceB.$dirty) || (editskuForm.inputBottlePerCase.$invalid && editskuForm.inputBottlePerCase.$dirty) || (editskuForm.inputWeightPerCase.$invalid && editskuForm.inputWeightPerCase.$dirty) || (editskuForm.inputLifeSpan.$invalid && editskuForm.inputLifeSpan.$dirty)">
+                        
+                        <div class="icon-preview"><i class="mdi-alert-error"></i><small> Some fields are empty or incorrect.</small></div> 
+
+                    </div>
+
                     <div class="form-group">
                         <label for="inputBrandName" class="col-md-12">
                         Brand Name</label>
@@ -194,33 +206,44 @@
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         SKU Name</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" id="inputSkuName" placeholder="Enter sku name." ng-model="skuEdit.sku_name" required>
+                        <div class="col-md-12"><input type="text" class="form-control" name="inputSkuName" placeholder="Enter sku name." ng-model="skuEdit.sku_name" required>
+
+                             <strong class= "fbackMsg" ng-show="editskuForm.inputSkuName.$dirty && editskuForm.inputSkuName.$invalid">SKU Name Required! </strong>
+
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSize" class="col-md-12">
                         Size</label> 
-                        <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" id="inputSize" placeholder="Enter size." ng-model="skuEdit.size" required>
+                        <div class="col-md-6"><input type="number" min="0" step="0.1" class="form-control" name="inputSize" placeholder="Enter size." ng-model="skuEdit.size" required>
                         </div>
                         <div class="col-md-6">
                           <select class="form-control" ng-model="skuEdit.unit">
                             <option ng-repeat="unit in units" value="{{unit}}" >{{unit}}</option>
                           </select>
                         </div>
+                        <strong class= "fbackMsg" ng-show="editskuForm.inputSize.$invalid && editskuForm.inputSize.$dirty"> </br>SKU Size Required!</strong>
+
                     </div>
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Price per bottle</label> 
-                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputSkuName" placeholder="Enter price per bottle." ng-model="skuEdit.priceperbottle" required>
+                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPrice" placeholder="Enter price per bottle." ng-model="skuEdit.priceperbottle" required>
+                            
+                             <strong class= "fbackMsg" ng-show="editskuForm.inputSkuPrice.$invalid && editskuForm.inputSkuPrice.$dirty">Price per Bottle Required! </strong>
+
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Price per case</label> 
-                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter price per case." ng-model="skuEdit.pricepercase" required>
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPriceB" placeholder="Enter price per case." ng-model="skuEdit.pricepercase" required>
+                        
+                         <strong class= "fbackMsg" ng-show="editskuForm.inputSkuPriceB.$invalid && editskuForm.inputSkuPriceB.$dirty">Price per Case Required!</strong>
+
                        </div>
                     </div>
 
@@ -228,21 +251,27 @@
                     <div class="form-group">
                         <label for="inputBottlePerCase" class="col-md-12">
                         No. of Bottle per Case</label> 
-                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="skuEdit.bottlespercase" required>
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" name="inputBottlePerCase" placeholder="Enter no. of bottle per case." ng-model="skuEdit.bottlespercase" required>
+                            <strong class= "fbackMsg" ng-show="editskuForm.inputBottlePerCase.$invalid && editskuForm.inputBottlePerCase.$dirty">Number of bottles Required!</strong>
+
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Weight per case (kg)</label> 
-                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter price per case." ng-model="skuEdit.weightpercase" required>
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" name="weightPerCase" class="form-control" placeholder="Enter price per case." ng-model="skuEdit.weightpercase" required>
+                        <strong class= "fbackMsg" ng-show="editskuForm.inputWeightPerCase.$invalid && editskuForm.inputWeightPerCase.$dirty">Weight per case Required!</strong>
+
                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputBottlePerCase" class="col-md-12">
                         Lifespan (Months)</label> 
-                        <div class="col-md-12"><input type="number" min="0" class="form-control" id="inputBottlePerCase" placeholder="Enter no. of lifespan." ng-model="skuEdit.lifespan"required>
+                        <div class="col-md-12"><input type="number" min="0" class="form-control" name="inputLifeSpan" placeholder="Enter no. of lifespan." ng-model="skuEdit.lifespan"required>
+                         <strong class= "fbackMsg" ng-show="editskuForm.inputLifeSpan.$invalid && editskuForm.inputLifeSpan.$dirty">Life Span Required!</strong>
+
                         </div>
                     </div>
 
@@ -271,6 +300,7 @@
                         <label for="inputSkuName" class="col-md-12">
                         SKU Name</label> 
                         <div class="col-md-12"><input type="text" class="form-control" id="inputSkuName" placeholder="Enter sku name." ng-model="skuDelete.sku_name" disabled>
+
                         </div>
                     </div>
 
