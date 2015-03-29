@@ -136,6 +136,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
+                          <div class="col-md-12">
+                            <select ng-model="bayEdit.pile_status">
+                                <option ng-repeat="status in pileStatus" value="{{status}}">{{status}}</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group rightalign">
                         <button type="submit" class="btn btn-primary" ng-disabled="editBayForm.$invalid">Save</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteBayForm(false)">Cancel</button> 

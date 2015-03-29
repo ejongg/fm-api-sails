@@ -2,6 +2,7 @@
 
 angular.module('fmApp')
 .controller('BaysCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
+  $scope.pileStatus = ["Full goods", "Moving pile"];
   $scope.bays = [];
   $scope.bayItems = [];
   $scope.products = [];
@@ -100,11 +101,14 @@ angular.module('fmApp')
       if($scope.addBayForm === true){
         $scope.showAddBayForm(false);
       }
+
       $scope.copiedBay = angular.copy(user);
+      console.log($scope.copiedBay);
       $scope.bayEdit.id = $scope.copiedBay.id;
       $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
       $scope.bayEdit.bay_label = $scope.copiedBay.bay_label;
       $scope.bayEdit.bay_limit = $scope.copiedBay.bay_limit;
+      $scope.bayEdit.pile_status = $scope.copiedBay.pile_status;
      
       $scope.bayDelete.id = $scope.copiedBay.id;
       $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;

@@ -24,7 +24,7 @@ angular.module('fmApp')
      getUserName : function () {
        token = authService.getToken();
        user = jwtHelper.decodeToken(token); 
-       return user.firstname;
+       return user.firstname + " " + user.lastname;
      }
 
       
