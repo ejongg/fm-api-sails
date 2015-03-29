@@ -60,7 +60,9 @@ module.exports = {
 							.then(function(foundCustomerOrder){
 								sails.sockets.blast('customer_orders', {verb : "created", data : foundCustomerOrder});
 								return res.send(201);
-							});							
+							});
+
+						sails.sockets.blast('customers',  {verb : "created", data : createdCustomer});							
 					});
 		});
 	},
