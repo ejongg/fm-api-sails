@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('OrdersCtrl',['$scope','_','$http', function($scope, _, $http){
+.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService', function($scope, _, $http, httpHost, authService){
   $scope.distanceRatings = [1,2,3,4,5];
   $scope.skuList = [];
   $scope.ordersList = [];
@@ -14,6 +14,9 @@ angular.module('fmApp')
   $scope.itemExisting = '';
   $scope.addOrderForm = false;
   $scope.viewProducts = false;
+
+  $scope.noSKU = true;
+  $scope.noOrders = true;
   
   var getSKU = function () {
     // $http.get('http://localhost:1337/sku').success(function(data){
@@ -21,15 +24,28 @@ angular.module('fmApp')
     //   $scope.order.sku = $scope.skuList[0];
     // });
 
-    io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
-      console.log('Sails responded with get sku available: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.skuList = body;
-        $scope.order.sku = $scope.skuList[0];
-        $scope.$digest();
+    // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
+    //   console.log('Sails responded with get sku available: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.skuList = body;
+    //     $scope.order.sku = $scope.skuList[0];
+    //     $scope.$digest();
+    //   }
+    // });
+
+    $http.get(httpHost + '/sku').success( function (data) {
+      if(data.length !== 0){
+        $scope.skuList = data;
+        $scope.noSKU = false;
+        $scope.order.sku = $scope.skuList[0]
+        console.log("SKU:");
+        console.log($scope.skuList);
       }
+    }).error(function (err) {
+      console.log(err);
     });
+
   };
 
   var getOrders = function (){
@@ -37,14 +53,27 @@ angular.module('fmApp')
     //   $scope.ordersList = data;
     // });
 
-    io.socket.request($scope.socketOptions('get','/customer_orders'), function (body, JWR) {
-      console.log('Sails responded with get customers orders: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.ordersList = body;
-        $scope.$digest();
+    // io.socket.request($scope.socketOptions('get','/customer_orders'), function (body, JWR) {
+    //   console.log('Sails responded with get customers orders: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.ordersList = body;
+    //     $scope.$digest();
+    //   }
+    // });
+
+    $http.get(httpHost + '/customer_orders').success( function (data) {
+      if(data.length !== 0){
+         $scope.ordersList = data;
+        $scope.noOrders = false;
+
+        console.log("Orders:");
+        console.log($scope.ordersList);
       }
+    }).error(function (err) {
+      console.log(err);
     });
+
   };
   
   getOrders();
@@ -155,7 +184,7 @@ angular.module('fmApp')
     console.log(final_order);
 
     // io.socket.post('/customer_orders/add', {order : final_order});
-    io.socket.request($scope.socketOptions('post','/customer_orders/add',{},final_order), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/customer_orders/add',{"Authorization": "Bearer " + authService.getToken()},final_order), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){

@@ -176,10 +176,21 @@
 
     <div class="panel col-md-12" ng-hide="addOrderForm">
         <div class="panel-body" >
+            
+        <div ng-show="noSKU" align="center">
+          <h3><strong>NO SKU!
+            <small> <br/>Please add sku first.</small>
+          </strong></h3>
+        </div>
+
+        <div ng-show="noOrders && !noSKU" align="center">
+          <h3><strong>NO ORDERS
+          </strong></h3>
+        </div>
 
     <!-- START OF TABLE -->           
 
-            <table class="table table-striped table-hover ">
+            <table ng-hide="noSKU || noOrders" class="table table-striped table-hover ">
                 <thead>
                     <tr>
                         <th width="25%">Establishment Name&nbsp;
