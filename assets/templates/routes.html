@@ -1,4 +1,4 @@
-<!-- START OF CONTENT -->
+<!--START OF CONTENT -->
 
 
 <!-- PAGE HEADERS -->
@@ -19,11 +19,11 @@
                                 </form>
                             </div>
                         </li>
-                        <li>
+ <!--                        <li>
                             <a ng-click="" ng-hide="">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASE</h6></a>
 
-                        </li>
+                        </li> -->
                         <li>
                             <a ng-hide="" ng-click="">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
@@ -44,76 +44,168 @@
 <!-- DO NOT REMOVE-->
 <div class="container">
 
-    <div class="addressList col-md-4">
+     <!-- LEFT PANEL -->
+    <div class="col-md-6">
+
+
+<h4><i class="mdi-content-add-circle"></i> ADDRESS </h4>
+
+        <div class="panel panel-body">
+              
+
+                 <ul class="nav nav-tabs">
+                        <li>
+                            <a ng-click="showAddAdressForm(true)"><i class="mdi-content-add-box"/>
+                              &nbsp;ADD&nbsp;</a>
+                        </li>
+                        <li>
+                            <a ng-click="editState = !editState"><i class="mdi-editor-mode-edit"/>
+                              &nbsp;EDIT&nbsp;</a>
+                        </li>
+                        <li>
+                            <a ng-click="deleteState = !deleteState"><i class="mdi-navigation-cancel"/>
+                              &nbsp;DELETE&nbsp;</a>
+                        </li>
+                    </ul>
+<br><br>
+
+<!-- <div class="addressList">
         <p>ADDRESS</p> 
         <button ng-click="showAddAdressForm(true)">+</button>
         <button ng-click="editState = !editState">Edit</button>
         <button ng-click="deleteState = !deleteState">Delete</button>
-        <table>
-            <thead>
-                <th>Adress Name</th>
-                <th>Days</th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" ng-drag-success="onDragComplete($data,$event)">
-                    <td>{{address.address_name}}</td>
-                    <td>{{address.days}}</td>
-                    <td>
-                        <button ng-show="editState" ng-click="addressEditClicked(address)">Edit</button>
-                        <button ng-show="deleteState" ng-click="deleteAddress(address)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
-        <div ng-show="addAdressForm">
+ -->
+
+
+
+        <div ng-show="addAdressForm" class="form-group">
         <form name="addressForm" ng-submit="addAddress(address)" novalidate>
-            <input type="text" ng-model="address.address_name" required>
-            <p>Days: {{address.days}}</p>
+            <label>Address: &nbsp; </label>
+            <input type="text" ng-model="address.address_name" required><p>
+            <label>Days: {{address.days}}</label>
          
             <div ng-repeat="day in days">
-                <button type="button" ng-click="addDay(day)">{{day | uppercase}}</button>
+                <a ng-click="addDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a>
             </div>
-            <button type="submit" ng-disabled="addressForm.$invalid || address.days.length === 0">Add</button>
-            <button type="button" ng-click="showAddAdressForm(false)">Cancel</button>
+            <br>
+            <button type="submit" ng-disabled="addressForm.$invalid || address.days.length === 0" class="btn btn-flat btn-default">Add</button>
+            <a type="button" ng-click="showAddAdressForm(false)" class="btn btn-flat btn-default">Cancel</a>
         </form>
         </div>
 
-        <div ng-show="editAdressForm">
+        <div ng-show="editAdressForm" class="form-group">
         <form name="addressEditForm" ng-submit="editAddress(addressEdit)" novalidate>
-            <input type="text" ng-model="addressEdit.address_name" required>
-            <p>Days: {{addressEdit.days}}</p>
+            <label>Address: &nbsp; </label>
+            <input type="text" ng-model="addressEdit.address_name" required><p>
+            <label>Days: {{addressEdit.days}}</label>
 
             <div ng-repeat="day in days">
-                <button type="button" ng-click="editDay(day)">{{day | uppercase}}</button>
+                <a type="button" ng-click="editDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a>
             </div>
-            <button type="submit" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0">Edit</button>
-            <button type="button" ng-click="showEditAdressForm(false)">Cancel</button>
+            <br>
+            <a type="submit" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0" class="btn btn-flat btn-default">Edit</a>
+            <a type="button" ng-click="showEditAdressForm(false)" class="btn btn-flat btn-default">Cancel</a>
+
+
+
+
+
+
+
         </form>
         </div>
+
+
+<table class="table table-condensed" style="border-collapse: collapse;">
+        
+              <thead>
+                  <tr>
+                      <th colspan="2"><font size="1px">Address Name</font></th>
+                      <th><font size="1px">Days</font></th>
+                      <th><font size="1px">&nbsp;</font></tr>
+
+              </thead>
+              
+              <tbody>
+
+                  <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" ng-drag-success="onDragComplete($data,$event)">
+                      <td colspan="2"><font size="1px" style="text-transform:uppercase;">{{address.address_name}}</font></td>
+                      <td><font size="1px" style="text-transform:uppercase;">{{address.days}}</font></td>
+                      <td>
+<a ng-show="editState" ng-click="addressEditClicked(address)" class="btn btn-primary btn-xs">Edit</a>
+<a ng-show="deleteState" ng-click="deleteAddress(address)" class="btn btn-primary btn-xs">Delete</a>
+                      </td>
+                  </tr>
+
+              </tbody>
+
+      </table>
+
+
+
 
     </div>
 
-    <div class="routeList col-md-8">
-      ROUTE
+</div>
+
+
+
+
+
+    <div class="col-md-6">
+
+      <h4><i class="mdi-content-add-circle"></i> ROUTE </h4>
+
+              <div class="panel panel-body">
+
+                 <ul class="nav nav-tabs">
+                        <li>
+                            <a ng-click="showAddRouteBox(true)"><i class="mdi-content-add-box"/>
+                              &nbsp;ADD&nbsp;</a>
+                        </li>
+                    </ul>
+
+
+
+<br>
+<br>
+
+
+
+
+      
       <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
-      <button ng-click="showAddRouteBox(true)">+</button>
-      <div ng-show="addRouteBox">
+
+      <div ng-show="addRouteBox" class="form-group">
+          
+
           <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
-              <input type="text" ng-model="route.route_name" required>
-              <div style="background-color:green;width:100%;height:200px;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
+
+              <label>Route: &nbsp; </label>
+              <input type="text" ng-model="route.route_name" required><p>
+
+              <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
+
              <div ng-repeat="address in addressesInRoute">
+
                  {{address.address_name}}
+
+
+
              </div>
              </div>
-             <button type="submit" ng-disabled="routeAddForm.$invalid || addressesInRoute.length === 0" >Add Route</button>
+
+             <br>
+             <button type="submit" ng-disabled="routeAddForm.$invalid || addressesInRoute.length === 0" class="btn btn-flat btn-default">Add</button>
+
+
           </form>
            
       </div>
        
       <div>
-         <div style="background-color:green;width:100%;height:200px;" ng-repeat="routeInfo in routes">
+         <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-repeat="routeInfo in routes">
            <div>
              {{routeInfo}}     
            </div>
@@ -133,4 +225,4 @@
 
 <div style="background-color:green;width:100%;height:200px;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
   Drop area
-</div> -->
+</div>
