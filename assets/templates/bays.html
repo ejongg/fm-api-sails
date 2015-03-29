@@ -47,33 +47,30 @@
             <form class="form-horizontal" name="bayForm" ng-submit="addBay(bay)" novalidate>
                 <fieldset>
 
-                <div class="alert alert-danger" ng-show="(bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid) || (bayForm.inputBayLabel.$invalid && bayForm.inputBayLabel.$dirty) || (bayForm.inputBayLimit.$invalid && bayForm.inputBayLimit.$dirty)">
+                <div class="alert alert-warning" ng-show="(bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid) || (bayForm.inputBayLabel.$invalid && bayForm.inputBayLabel.$dirty) || (bayForm.inputBayLimit.$invalid && bayForm.inputBayLimit.$dirty)">
 
-                        <strong ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Bay name required!  </strong>
+                <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
 
-                        <br/>
-                        <strong ng-show="bayForm.inputBayLabel.$invalid &&bayForm.inputBayLabel.$dirty"> Bay label required!  </strong>
-
-                         <br/>
-                        <strong ng-show="bayForm.inputBayLimit.$invalid &&bayForm.inputBayLimit.$dirty"> Bay limit required! Enter numbers only. </strong>
-
-                    </div>
+                </div>
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay name</label>  
                         <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="2" class="form-control" placeholder="Enter bay name." ng-model="bay.bay_name" required>
+                         <strong class="fbackMsg" ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Bay name required!  </strong>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Label</label>  
                           <div class="col-md-12"><input type="text" name = "inputBayLabel" class="form-control" placeholder="Enter bay label." ng-model="bay.bay_label" required>
+                          <strong class="fbackMsg" ng-show="bayForm.inputBayLabel.$invalid &&bayForm.inputBayLabel.$dirty"> Bay label required!  </strong>
                         </div>
                     </div>
                     
                      <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
-                          <div class="col-md-12"><input type="number" name = "inputBayLimit" min="0" class="form-control" placeholder="Enter bay limit (case)." ng-model="bay.bay_limit" required> 
+                          <div class="col-md-12"><input type="number" name = "inputBayLimit" min="0" class="form-control" placeholder="Enter bay limit (case)." ng-model="bay.bay_limit" required>
+                          <strong class="fbackMsg" ng-show="bayForm.inputBayLimit.$invalid &&bayForm.inputBayLimit.$dirty"> Bay limit required! Enter numbers only. </strong> 
                         </div>
                     </div>
 
@@ -108,35 +105,34 @@
           <form class="form-horizontal" name="editBayForm" ng-submit="editBay(bayEdit)" novalidate>
                 <fieldset>
 
-                 <div class="alert alert-danger" ng-show="(editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid) || (editBayForm.inputBayLabel.$invalid && editBayForm.inputBayLabel.$dirty) || (editBayForm.inputBayLimit.$invalid && editBayForm.inputBayLimit.$dirty)">
+                 <div class="alert alert-warning" ng-show="(editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid) || (editBayForm.inputBayLabel.$invalid && editBayForm.inputBayLabel.$dirty) || (editBayForm.inputBayLimit.$invalid && editBayForm.inputBayLimit.$dirty)">
 
-                        <strong ng-show="editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid"> Bay name required!  </strong>
+                  <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
 
-                        <br/>
-                        <strong ng-show="editBayForm.inputBayLabel.$invalid &&editBayForm.inputBayLabel.$dirty"> Bay label required!  </strong>
-
-                         <br/>
-                        <strong ng-show="editBayForm.inputBayLimit.$invalid &&editBayForm.inputBayLimit.$dirty"> Bay limit required! Enter numbers only. </strong>
-
-                    </div>
+                </div>
 
 
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Name</label>  
                         <div class="col-md-12"><input type="text" name="inputBayName" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" required>
+                         <strong class="fbackMsg" ng-show="editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid"> Bay name required!  </strong>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Label</label>  
                           <div class="col-md-12"><input type="text" name="inputBayLabel" class="form-control" placeholder="Enter bay label." ng-model="bayEdit.bay_label" required>
+                          <strong class="fbackMsg" ng-show="editBayForm.inputBayLabel.$invalid &&editBayForm.inputBayLabel.$dirty"> Bay label required!  </strong>
+
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
                           <div class="col-md-12"><input type="number" name="inputBayLimit" min="0" class="form-control" placeholder="Enter bay label." ng-model="bayEdit.bay_limit" required>
+                          <strong class="fbackMsg" ng-show="editBayForm.inputBayLimit.$invalid &&editBayForm.inputBayLimit.$dirty"> Bay limit required! Enter numbers only. </strong>
+
                         </div>
                     </div>
 
@@ -238,3 +234,6 @@
 </div>
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+
+

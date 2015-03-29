@@ -54,28 +54,17 @@
           <form class="form-horizontal" name="productForm" ng-submit="addProduct(product)" novalidate>
                 <fieldset>
 
-                   <div class="alert alert-danger" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
+                   <div class="alert alert-warning" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
 
-                        <strong ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong>
-
-                        <br/>
-                        <strong ng-show="productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty"> Company name required!  </strong>
-
+                     <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
                     </div>
 
-                   <!--<div class="alert alert-dismissable alert-danger" >
-                      <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong> Invalid Company Name </strong>
-                    </div>-->
 
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Brand Name</label>
                     <div class="col-md-12">
-
-
-
-                      <!--<div ng-show="productForm.addProductBrandName.$invalid && !productForm.addProductBrandName.$pristine">Invalid Brand Name!</div>-->
                       <input type="text" class="form-control empty" name="addProductBrandName" placeholder="Enter brand name." ng-model="product.brand_name" required>
+                      <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong>
                     </div>
                   </div>
 
@@ -83,16 +72,10 @@
 
                   <div class="form-group">
                     <label for="inputCompanyName" class="col-md-12">Company Name</label>
+
                     <div class="col-md-12">
-                      <!--<div ng-show="productForm.addProductCompanyName.$invalid && !productForm.addProductCompanyName.$pristine">Invalid Company Name!</div>-->
-
-                      <!--
-                        <input type="text" class="form-control empty" name="addProductCompanyName" placeholder="Enter company name." ng-model="product.company" required> -->
-
                         <input type="text" name="addProductCompanyName" class="form-control empty" ng-model="product.company" placeholder="Enter company name" typeahead="product.company as product.company for product in existingCompany | filter:$viewValue | limitTo:8" required>
-
-
-
+                        <strong class= "fbackMsg" ng-show="productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty"> Company name required!</strong>
                     </div>                  
                   </div>
 
@@ -127,19 +110,16 @@
           <form class="form-horizontal" name="editProductForm" ng-submit="editProduct(productEdit)" novalidate>
                 <fieldset>
 
-                 <div class="alert alert-danger" ng-show="(editProductForm.addProductBrandName.$dirty && editProductForm.addProductBrandName.$invalid) || (editProductForm.addProductCompanyName.$invalid && editProductForm.addProductCompanyName.$dirty) ">
+                 <div class="alert alert-warning" ng-show="(editProductForm.addProductBrandName.$dirty && editProductForm.addProductBrandName.$invalid) || (editProductForm.addProductCompanyName.$invalid && editProductForm.addProductCompanyName.$dirty) ">
 
-                        <strong ng-show="editProductForm.addProductBrandName.$dirty && editProductForm.addProductBrandName.$invalid"> Brand name required!  </strong>
-
-                        <br/>
-                        <strong ng-show="editProductForm.addProductCompanyName.$invalid && editProductForm.addProductCompanyName.$dirty"> Company name required!  </strong>
-
-                    </div>
+                     <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
+                  </div>
 
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Brand Name</label>
-                    <div class="col-md-12">
+                    <div class="col-md-12" >
                       <input type="text" name="addProductBrandName" class="form-control empty" placeholder="Enter brand name." ng-model="productEdit.brand_name" required>
+                      <strong class = "fbackMsg"  ng-show="editProductForm.addProductBrandName.$dirty && editProductForm.addProductBrandName.$invalid"> Brand name required!  </strong>
                     </div>
                   </div>
 
@@ -147,6 +127,7 @@
                     <label for="inputProductName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
                         <input type="text" name= "addProductCompanyName" class="form-control empty" placeholder="Enter company name." ng-model="productEdit.company" required>
+                        <strong class = "fbackMsg"  ng-show="editProductForm.addProductCompanyName.$invalid && editProductForm.addProductCompanyName.$dirty"> Company name required!  </strong>
                     </div>                  
                   </div>
 

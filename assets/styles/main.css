@@ -997,6 +997,10 @@ td {
 td:last-child {
   border-right: 0px;
 }
+
+.fbackMsg {
+  color: #ff5722;
+}
 /*
 th.text-left {
   text-align: left;
