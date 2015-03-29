@@ -110,6 +110,7 @@
     </div>
 
     <!-- RIGHT PANEL -->
+
     <div ng-class="addTruckForm ? 'col-xs-12 col-md-8' : ''">
         <div class="panel">
             <div class="panel-body">
@@ -118,9 +119,12 @@
             <h3><strong>NO TRUCKS!</strong></h3>
              </div>
 
-            <div class="panel truck-table truck-tableout col-md-12">
-              <div class="panel panel-primary"  ng-repeat="truck in trucks">
-                <div class="panel-heading">
+            <div class="truck-table truck-tableout col-md-2">
+            </div>
+
+            <div class="truck-table truck-tableout col-md-7">
+              <div class="panel-primary" ng-repeat="truck in trucks">
+                <div class="panel-heading" align="center">
                   <h3 class="panel-title">Truck {{$index + 1}}</h3>
                 </div>
 
