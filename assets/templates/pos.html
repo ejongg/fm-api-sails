@@ -6,7 +6,7 @@
 
 <div class="row">
 
-    <div class="pageheader-left">
+    <div class="pageheader-left" id="resultSection">
         <h1> Point of Sales (POS) </h1>
     </div>
 </div>
@@ -30,16 +30,21 @@
  
     <div class="col-md-12">
 
-         <div class="form-group">
+         <div class="form-group col-md-6">
           <label for="customerName " class="col-md-2">Customer Name</label>
             <div class="col-md-5">
              <input ng-model="customerName" type="text" class="form-control control-label" placeholder="Customer name">
             </div>
          </div>
+         
+         <div class="alert alert-dismissable alert-danger col-md-6" ng-show="postResult">
+              <button type="button" class="close" ng-click="showPostResult(false)">×</button>
+              <strong>{{postResultMessage}}</strong>
+         </div> 
     </div> 
     <br/>
     <br/>
-    <br/>  
+    <br/> 
 
 <div class="panel"><!-well well-sm-->
 <h2>TRANSACTION ITEMS</h2>
@@ -101,6 +106,9 @@
                     <th>Sku name&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                  <th>Brand&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     <th>Bottles&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
@@ -113,6 +121,7 @@
             <tbody>
                 <tr ng-repeat="item in transactionItems">
                     <td>{{item.sku_name}}</td>
+                    <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
                     <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
@@ -178,6 +187,9 @@
                     <th>Sku name&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                    <th>Brand&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     <th>Bottles&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
@@ -189,6 +201,7 @@
            <tbody> 
                 <tr ng-repeat="item in returnsItems">
                     <td>{{item.sku_name}}</td>
+                    <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
                     <td><button  class="btn btn-primary btn-xs" ng-click="deleteReturnsItem($index)">Delete</button></td>
@@ -202,6 +215,7 @@
 <br/>
 
  <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' || deposit === null " class="btn btn-primary btn-lg pull-right">Done</div>
+
 
 </div></div></div> <!-- END OF DIV: PANEL & PANEL-BODY | DON'T REMOVE! -->
 

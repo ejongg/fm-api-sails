@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('POSCtrl',['$scope','_','$http','httpHost','authService', function($scope, _, $http, httpHost, authService){
+.controller('POSCtrl',['$scope','_','$http','httpHost','authService','$location', '$anchorScroll', function($scope, _, $http, httpHost, authService, $location,$anchorScroll){
   $scope.skuList = [];
   $scope.transaction = {};
   $scope.transactionItems = [];
@@ -13,6 +13,8 @@ angular.module('fmApp')
   $scope.itemExistingTransaction = '';
   $scope.itemExistingReturnsError = false;
   $scope.itemExistingReturns = '';
+  $scope.postResult = false;
+  $scope.postResultMessage = '';
 
   $scope.noSKU = true;
 
@@ -49,7 +51,7 @@ angular.module('fmApp')
   getSKU();
 
   $scope.combined = function (sku) {
-    return sku.sku_name + ' ' + sku.size;
+    return sku.prod_id.brand_name+ ' ' + sku.sku_name + ' ' + sku.size;
   }
 
   $scope.showItemExistingTransactionError = function (data, sku) {
@@ -74,6 +76,43 @@ angular.module('fmApp')
 
   }
 
+  $scope.showPostResult = function (data, msg) {
+    $scope.postResult = data;
+    if (data === true) {
+      $scope.postResultMessage = msg;
+    }
+  };
+
+  var clearForms = function () {
+    $scope.customerName = '';
+    $scope.transaction.sku = $scope.skuList[0];
+    $scope.transaction.extraBottles = null;
+    $scope.transaction.cases = null;
+    $scope.transaction.discount = null;
+    
+    $scope.deposit = null;
+    $scope.returns.sku = $scope.skuList[0];
+    $scope.returns.bottles = null;
+    $scope.returns.cases = null;
+
+    $scope.transactionItems = [];
+    $scope.returnsItems = [];
+    $scope.totalAmount = 0;
+  };
+
+  var clearTransactionForm = function () {
+    $scope.transaction.sku = $scope.skuList[0];
+    $scope.transaction.extraBottles = null;
+    $scope.transaction.cases = null;
+    $scope.transaction.discount = null;
+  };
+
+  var clearReturnForm = function () {
+    $scope.returns.sku = $scope.skuList[0];
+    $scope.returns.bottles = null;
+    $scope.returns.cases = null;
+  };
+
   $scope.addTransactionItem = function (item) {
     if($scope.itemExistingTransactionError === true){
      $scope.showItemExistingTransactionError(false);
@@ -84,6 +123,7 @@ angular.module('fmApp')
       "sku_id" : item.sku.id,
       "sku_name" : item.sku.sku_name + " " + item.sku.size,
       "company" : item.sku.prod_id.company,
+      "brand_name": item.sku.prod_id.brand_name,
       "bottlespercase" : item.sku.bottlespercase,
       "bottles" : item.extraBottles,
       "cases" : item.cases,
@@ -102,8 +142,9 @@ angular.module('fmApp')
       $scope.transactionItems[index].bottles += itemInfo.bottles;
       $scope.transactionItems[index].cases += itemInfo.cases;
       $scope.showItemExistingTransactionError(true,itemInfo.sku_name);
-
     }
+
+     clearTransactionForm();
               
  };
 
@@ -120,6 +161,7 @@ angular.module('fmApp')
    var returnInfo = {
      "sku_id" : returns.sku.id,
      "sku_name" : returns.sku.sku_name + " " + returns.sku.size,
+     "brand_name" : returns.sku.prod_id.brand_name,
      "bottles" : returns.bottles,
      "cases" : returns.cases
    };
@@ -133,6 +175,8 @@ angular.module('fmApp')
       $scope.returnsItems[index].deposit += returnInfo.deposit;
       $scope.showItemExistingReturnsError(true,returnInfo.sku_name);
     }
+
+    clearReturnForm();
             
   };
 
@@ -165,8 +209,11 @@ angular.module('fmApp')
     io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{"Authorization": "Bearer " + authService.getToken()},transaction), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
-        console.log("Success");
+      if(JWR.statusCode === 200){
+        clearForms();
+        $scope.showPostResult(true,body.message);
+        $location.hash('resultSection');
+        $anchorScroll();
         $scope.$digest();
       }
     }); 
