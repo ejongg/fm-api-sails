@@ -44,146 +44,93 @@
 <!-- DO NOT REMOVE-->
 <div class="container">
 
-    <!-- LEFT PANEL -->
-    <div class="panel col-md-12" ng-show="">
-        <div class="panel-body">
-   
-        <div class="col-md-4">
-         <legend>Add Routes</legend>
-            <form class="form-horizontal" name="" ng-submit="" novalidate>
-                <fieldset>
-
-                    <div class="form-group">
-                        <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
-                        <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.sku" ng-options="sku as combine(sku) for sku in skuList">
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="select" class="col-md-3">Bay</label>
-                        <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.bay" ng-options="bay as bay.bay_name for bay in bays">
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputAddress" class="col-md-6">Production Date</label>
-                        <div class="col-md-12"><input type="date" class="form-control" placeholder="Enter address."
-                            ng-model="purchase.prod_date" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputAddress" class="col-md-2">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases."
-                            ng-model="purchase.cases" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputAddress" class="col-md-6">Cost Per Case</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter cost/case."
-                            ng-model="purchase.cost" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputAddress" class="col-md-6">Discount Per Case</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter discount/case."
-                            ng-model="purchase.discount" required>
-                        </div>
-                    </div>
-
-                    <div class="alert alert-dismissable alert-danger" ng-show="itemExistingError">
-                      <button type="button" class="close" ng-click="">×</button>
-                      <strong>{{itemExisting}}</strong>
-                  </div> 
-
-                  <div class="form-group rightalign">
-                    <button type="submit" class="btn btn-primary" ng-disabled="purchaseForm.$invalid">Add</button>
-                </div>
-
-            </fieldset>
-        </form>
-    </div>
-
-    <div class="col-md-9 ">
-         <!-- User's Input table -->
-        <table class="table table-striped table-hover">
+    <div class="addressList col-md-4">
+        <p>ADDRESS</p> 
+        <button ng-click="showAddAdressForm(true)">+</button>
+        <button ng-click="editState = !editState">Edit</button>
+        <button ng-click="deleteState = !deleteState">Delete</button>
+        <table>
             <thead>
-                <tr>
-                    <th>Sku</th>
-                    <th>Company</th>
-                    <th>Cases</th>
-                    <th>Bay</th>
-                    <th>Production date</th>
-                    <th>Cost per case</th>
-                    <th>Discount per case</th>
-                    <th>Amount</th>
-                    <th></th>
-                </tr>
+                <th>Adress Name</th>
+                <th>Days</th>
+                <th></th>
             </thead>
-
             <tbody>
-                <tr>
-                    <td><button ng-click="" class="btn btn-primary btn-xs">Delete</button></td>
+                <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" ng-drag-success="onDragComplete($data,$event)">
+                    <td>{{address.address_name}}</td>
+                    <td>{{address.days}}</td>
+                    <td>
+                        <button ng-show="editState" ng-click="addressEditClicked(address)">Edit</button>
+                        <button ng-show="deleteState" ng-click="deleteAddress(address)">Delete</button>
+                    </td>
                 </tr>
-
-                <!-- DON'T REMOVE CODE BELOW -->
-
             </tbody>
         </table>
 
-        <br/>
-
-        
-
-        <br/>
-        
-
-        <div class="icon-preview">
-            <div class="form-group rightalign">
-              <button type="button" class="btn btn-primary" ng-disabled="" ng-click="">Submit</button>  
-
-              <button type="button" class="btn btn-default" ng-click="">Cancel</button>
+        <div ng-show="addAdressForm">
+        <form name="addressForm" ng-submit="addAddress(address)" novalidate>
+            <input type="text" ng-model="address.address_name" required>
+            <p>Days: {{address.days}}</p>
+         
+            <div ng-repeat="day in days">
+                <button type="button" ng-click="addDay(day)">{{day | uppercase}}</button>
             </div>
+            <button type="submit" ng-disabled="addressForm.$invalid || address.days.length === 0">Add</button>
+            <button type="button" ng-click="showAddAdressForm(false)">Cancel</button>
+        </form>
         </div>
-    </div>
+
+        <div ng-show="editAdressForm">
+        <form name="addressEditForm" ng-submit="editAddress(addressEdit)" novalidate>
+            <input type="text" ng-model="addressEdit.address_name" required>
+            <p>Days: {{addressEdit.days}}</p>
+
+            <div ng-repeat="day in days">
+                <button type="button" ng-click="editDay(day)">{{day | uppercase}}</button>
+            </div>
+            <button type="submit" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0">Edit</button>
+            <button type="button" ng-click="showEditAdressForm(false)">Cancel</button>
+        </form>
+        </div>
 
     </div>
-</div>
 
-<!-- RIGHT PANEL -->
+    <div class="routeList col-md-8">
+      ROUTE
+      <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
+      <button ng-click="showAddRouteBox(true)">+</button>
+      <div ng-show="addRouteBox">
+          <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
+              <input type="text" ng-model="route.route_name" required>
+              <div style="background-color:green;width:100%;height:200px;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
+             <div ng-repeat="address in addressesInRoute">
+                 {{address.address_name}}
+             </div>
+             </div>
+             <button type="submit" ng-disabled="routeAddForm.$invalid || addressesInRoute.length === 0" >Add Route</button>
+          </form>
+           
+      </div>
+       
+      <div>
+         <div style="background-color:green;width:100%;height:200px;" ng-repeat="routeInfo in routes">
+           <div>
+             {{routeInfo}}     
+           </div>
+        </div>      
+      </div>
 
-<div class="panel col-md-12">
-    <div class="panel-body" align="center">
-
-        <!-- START OF TABLE -->             
-        <table  class="table table-striped table-hover ">
-            <thead>
-                <tr>
-                    <th</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr></tr>
-          
-
-            </tbody>
-        </table>
     </div>
-
-    <!-- END OF TABLE -->
-    
-
-</div>
 
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 
 
+<!-- <div style="background-color:red;" ng-repeat="address in addresses" ng-drag="true" ng-drag-data="address" ng-drag-success="onDragComplete($data,$event)">
+  Draggable div
+</div>
+
+<div style="background-color:green;width:100%;height:200px;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
+  Drop area
+</div> -->

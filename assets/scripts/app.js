@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
+angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable'] )
 
 .constant('httpHost','http://localhost:1337')
 .constant('_', window._)
@@ -97,11 +97,20 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap'] )
         }  
       })
       .state('admin.employees', {
-        url:'/employee',
+        url:'/employees',
         views: {
           'mainContent': {
             templateUrl: 'templates/employees.html',
             controller:'EmployeesCtrl'
+          }
+        }  
+      })
+      .state('admin.routes', {
+        url:'/routes',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/routes.html',
+            controller:'RoutesCtrl'
           }
         }  
       })
