@@ -49,15 +49,10 @@
             <form class="form-horizontal" name="employeeForm" ng-submit="addEmployee(employee)" novalidate>
                 <fieldset>
 
-                    <div class="alert alert-danger" ng-show="(employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid) || (employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty) || (employeeForm.inputOfficeName.$dirty && employeeForm.inputOfficeName.$invalid)">
+                    <div class="alert alert-warning" ng-show="(employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid) || (employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty) || (employeeForm.inputOfficeName.$dirty && employeeForm.inputOfficeName.$invalid)">
 
-                        <strong ng-show="employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid"> First name required! </strong>
+                    <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div>
 
-                        <br/>
-                        <strong ng-show="employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty"> Last name required! </strong>
-
-                        <br/>
-                        <strong ng-show="employeeForm.inputOfficeName.$invalid && employeeForm.inputOfficeName.$dirty"> Office name required! </strong>
                     </div>
 
                     <div class="form-group">
@@ -66,6 +61,9 @@
 
                         <div class="col-md-12">
                          <input type="text" name="inputFirstName" class="form-control" placeholder="Enter first name." ng-model="employee.emp_fname" required>
+
+                         <strong class="fbackMsg" ng-show="employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid"> First name required! </strong>
+
                         </div>
                     </div>
 
@@ -75,6 +73,8 @@
 
                         <div class="col-md-12">
                         <input type="text" name="inputLastName" class="form-control" placeholder="Enter last name." ng-model="employee.emp_lname" required>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty"> Last name required! </strong>
                         </div>
                     </div>
 
@@ -83,6 +83,8 @@
                         <label for="inputLastName" class="col-md-4">Office</label> 
                         <div class="col-md-12">
                         <input type="text" name="inputOfficeName" class="form-control" placeholder="Enter office name." ng-model="employee.office" required>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputOfficeName.$invalid && employeeForm.inputOfficeName.$dirty"> Office name required! </strong>
                         </div>
                     </div>
 
@@ -123,13 +125,9 @@
           <form class="form-horizontal" name="editEmployeeForm" ng-submit="editEmployee(employeeEdit)" novalidate>
                 <fieldset>
                         
-                        <div class="alert alert-danger" ng-show="(editEmployeeForm.inputFirstName.$dirty && editEmployeeForm.inputFirstName.$invalid) || (editEmployeeForm.inputLastName.$invalid && editEmployeeForm.inputLastName.$dirty) || (editEmployeeForm.inputOffice.$invalid && editEmployeeForm.inputOffice.$dirty)">
+                        <div class="alert alert-warning" ng-show="(editEmployeeForm.inputFirstName.$dirty && editEmployeeForm.inputFirstName.$invalid) || (editEmployeeForm.inputLastName.$invalid && editEmployeeForm.inputLastName.$dirty) || (editEmployeeForm.inputOffice.$invalid && editEmployeeForm.inputOffice.$dirty)">
 
-                        <strong class="row" ng-show="editEmployeeForm.inputFirstName.$dirty && editEmployeeForm.inputFirstName.$invalid"> First name required. </strong>
-
-                        <strong class="row" ng-show="editEmployeeForm.inputLastName.$invalid && editEmployeeForm.inputLastName.$dirty"> Last name required.</strong>
-
-                        <strong class="row" ng-show="editEmployeeForm.inputOfficeName.$dirty && editEmployeeForm.inputOfficeName.$invalid"> Please specify the Office name</strong>
+                        <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div>
 
                         </div>
 
@@ -137,11 +135,11 @@
                         <label for="inputFirstName" class="col-md-4">First Name</label>
 
                         <div class="col-md-12">
-                        <div ng-show="employeeForm.inputFirstName.$invalid && !employeeForm.inputFirstName.$pristine">First Name Required!
-                            
-                        </div>
+                        
 
                         <input type="text" class="form-control" name="inputFirstName" placeholder="Enter first name." ng-model="employeeEdit.emp_fname" required>
+
+                        <strong class="fbackMsg" ng-show="editEmployeeForm.inputFirstName.$dirty && editEmployeeForm.inputFirstName.$invalid"> First name required. </strong> 
                         </div>
                     </div>
 
@@ -149,23 +147,25 @@
                         <label for="inputLastName" class="col-md-4">Last Name</label> 
 
                         <div class="col-md-12">
-                        <div ng-show="employeeForm.inputLastName.$invalid && !employeeForm.inputLastName.$pristine">Last Name Required!
-                            
-                        </div>
+                           
+                        
 
                         <input type="text" class="form-control" name="inputLastName" placeholder="Enter last name." ng-model="employeeEdit.emp_lname" required>
+
+                        <strong class="fbackMsg" ng-show="editEmployeeForm.inputLastName.$invalid && editEmployeeForm.inputLastName.$dirty"> Last name required.</strong>
+
                         </div>
+
                     </div>
 
                     <div class="form-group">
                         <label for="inputLastName" class="col-md-4">Office</label> 
 
                         <div class="col-md-12">
-                        <div ng-show="employeeForm.inputOfficeName.$invalid && !employeeForm.inputOfficeName.$pristine">Office Name Required!
-                            
-                        </div>
 
                         <input type="text" class="form-control" name="inputOfficeName" placeholder="Enter office." ng-model="employeeEdit.office" required>
+
+                        <strong class="fbackMsg" ng-show="editEmployeeForm.inputOfficeName.$dirty && editEmployeeForm.inputOfficeName.$invalid"> Please specify the Office name</strong>
                         </div>
                     </div>
 

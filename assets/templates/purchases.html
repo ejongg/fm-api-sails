@@ -53,13 +53,9 @@
             <form class="form-horizontal" name="purchaseForm" ng-submit="addPurchase(purchase)" novalidate>
                 <fieldset>
 
-                <div class="alert alert-danger" ng-show="(purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid) || (purchaseForm.inputCost.$invalid && purchaseForm.inputCost.$dirty) || (purchaseForm.discountpercase.$invalid && purchaseForm.discountpercase.$dirty)">
+                <div class="alert alert-warning" ng-show="(purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid) || (purchaseForm.inputCost.$invalid && purchaseForm.inputCost.$dirty) || (purchaseForm.discountpercase.$invalid && purchaseForm.discountpercase.$dirty)">
 
-                        <strong class="row" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid"> Invalid! Please input cases and numbers only. </strong>
-
-                        <strong class="row" ng-show="purchaseForm.inputCost.$invalid && purchaseForm.inputCost.$dirty"> Please input cost per case</strong>
-
-                        <strong class="row" ng-show="purchaseForm.discountpercase.$dirty && purchaseForm.discountpercase.$invalid"> Please input discount per case </strong>
+                    <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
 
                     </div>
 
@@ -91,6 +87,8 @@
                         <div class="col-md-12">
 
                             <input type="number"  name="inputCases" min="1" class="form-control" placeholder="Enter number of cases." ng-model="purchase.cases" required>
+
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid"> Invalid! Please input cases and numbers only. </strong>
                             
                         </div>
                     </div>
@@ -99,8 +97,9 @@
                         <label for="inputCost" class="col-md-6">Cost Per Case</label>
                         <div class="col-md-12">
             
-                            <input type="number" name="inputCost"min="0" step="0.01" class="form-control" placeholder="Enter cost per case."
-                            ng-model="purchase.cost" required>
+                            <input type="number" name="inputCost"min="0" step="0.01" class="form-control" placeholder="Enter cost per case." ng-model="purchase.cost" required>
+
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputCost.$invalid && purchaseForm.inputCost.$dirty"> Please input cost per case</strong>
 
                         </div>
                     </div>
@@ -109,8 +108,9 @@
                         <label for="inputDiscount" class="col-md-6">Discount Per Case</label>
                         <div class="col-md-12">
                             
-                            <input type="number" name="discountpercase" ng-max="purchase.cost" step="0.01" class="form-control" placeholder="Enter discount per case."
-                            ng-model="purchase.discount" required>
+                            <input type="number" name="discountpercase" ng-max="purchase.cost" step="0.01" class="form-control" placeholder="Enter discount per case." ng-model="purchase.discount" required>
+
+                            <strong class="fbackMsg" ng-show="purchaseForm.discountpercase.$dirty && purchaseForm.discountpercase.$invalid"> Please input discount per case </strong>
 
                         </div>
                     </div>
