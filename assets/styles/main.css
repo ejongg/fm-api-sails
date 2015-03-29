@@ -684,6 +684,7 @@ a.arrowlink1:link, a.arrowlink1:visited, a.arrowlink2:active {
   border-radius: 50%;
   text-align: center;
   font-weight: bold;
+  height: auto;
     -webkit-transition: all 0.2s ease 0s;
     -moz-transition: all 0.2s ease 0s;
     -o-transition: all 0.2s ease 0s;
@@ -704,6 +705,7 @@ a.arrowlink1:hover {
   border-radius: 50%;
   text-align: center;
   font-weight: bold;
+  height: auto;
     -webkit-transition: all 0.7s ease 0s;
     -moz-transition: all 0.7s ease 0s;
     -o-transition: all 0.7s ease 0s;
@@ -725,7 +727,8 @@ a.arrowlink2:link, a.arrowlink2:visited, a.arrowlink2:active {
   border-radius: 50%;
   text-align: center;
   font-weight: bold;
-  margin-left: -10px;
+  margin-left: 0px;
+  height: auto;
     -webkit-transition: all 0.2s ease 0s;
     -moz-transition: all 0.2s ease 0s;
     -o-transition: all 0.2s ease 0s;
@@ -746,7 +749,8 @@ a.arrowlink2:hover {
   border-radius: 50%;
   text-align: center;
   font-weight: bold;
-  margin-left: -10px;
+  margin-left: 0px;
+  height: auto;
     -webkit-transition: all 0.7s ease 0s;
     -moz-transition: all 0.7s ease 0s;
     -o-transition: all 0.7s ease 0s;
@@ -864,6 +868,17 @@ legend {
 }
 
 
+.fbackMsg {
+  color: #ff5722;
+}
+
+
+thead {
+  text-transform: uppercase !important;
+  margin: 0px;
+}
+
+/*
 thead {
   font-size: 15px;
   color: #ffffff;
@@ -890,7 +905,7 @@ th {
   width: 100%;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite; */
-}
+/*}
 
 .table {
   color: #000000 !important;
@@ -899,7 +914,7 @@ th {
 .table-fill {
   color: #000000 !important;
   background: #202020;
-  border-radius:30px;
+  border-radius:30px;*/
   /*
   border-collapse: collapse;
   height: 320px;
@@ -908,7 +923,7 @@ th {
   padding:5px;
   width: 100%;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);*/
-  animation: float 5s infinite;
+/*  animation: float 5s infinite;
 }
 
 tbody {
@@ -927,14 +942,17 @@ th {
   background: #202020;
   border-bottom:10px solid red;
   border-right: 1px solid #151515;
+*/
+
+
   /*font-size:23px;
   font-weight: 300;
   padding:24px;
   text-align:left;
   vertical-align:middle;
-  text-shadow: 0px 0px 15px #494949;*/
-}
-
+  text-shadow: 0px 0px 15px #494949;
+}*/
+/*
 th:first-child {
   border-top-left-radius:18px;
 }
@@ -973,7 +991,7 @@ tr:nth-child(odd) td {
 tr:nth-child(odd):hover td {
   color: #202020;
   background: transparent;
-}
+}*/
 
 /*tr:last-child td:first-child {
   border-bottom-left-radius:0px;
@@ -983,14 +1001,15 @@ tr:last-child td:last-child {
   border-bottom-right-radius:0px;
 }
  */
+
 td {
-  background: #cfcfcf;
-  /*padding:20px;
-    font-size:18px;*/
+  /*background: #cfcfcf;
+  //padding:20px;
+  //  font-size:18px;
   text-align:left;
   vertical-align:middle;
   font-weight:300;
-  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);*/
   border-right: 1px solid #C1C3D1;
 }
 
@@ -998,10 +1017,12 @@ td:last-child {
   border-right: 0px;
 }
 
-.fbackMsg {
-  color: #ff5722;
-}
 /*
+
+
+
+
+
 th.text-left {
   text-align: left;
 }
