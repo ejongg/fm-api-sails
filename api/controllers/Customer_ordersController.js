@@ -56,7 +56,8 @@ module.exports = {
 								});
 						});
 
-						sails.sockets.blast('customer_orders', {verb : "created", data : createdCustomerOrder});							
+						sails.sockets.blast('customer_orders', {verb : "created", data : createdCustomerOrder});
+						return res.send(201);							
 					});
 		});
 	},
