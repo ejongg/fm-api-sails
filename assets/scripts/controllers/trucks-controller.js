@@ -11,6 +11,7 @@ angular.module('fmApp')
   $scope.employeeCheckers = [];
   $scope.employeeDeliverySalesPersonel = [];
   $scope.employeeDeliveryHelper = [];
+  $scope.routes = [];
 
   $scope.noTrucks = true;
 
@@ -45,6 +46,15 @@ angular.module('fmApp')
       }
     }).error(function (err) {
       console.log(err);
+    });
+  };
+
+  var getRoutes = function () {
+    $http.get(httpHost + '/routes').success(function(data){
+     $scope.routes = data;
+     $scope.truck.route = $scope.routes[0];
+     console.log("Routes");
+     console.log($scope.routes);
     });
   };
 
@@ -84,11 +94,13 @@ angular.module('fmApp')
     });
   };
   
+  getTrucks();
   getDrivers();
   getCheckers();
   getDeliverySalesPersonel();
   getDeliveryHelper();
-  getTrucks();
+  getRoutes();
+  
 
   $scope.showAddTruckForm = function (data) {
       $scope.addTruckForm = data;
@@ -98,7 +110,11 @@ angular.module('fmApp')
   };
   
   var clearForm = function () {
-    $scope.truck = {};
+    $scope.truck.route = $scope.routes[0];
+    $scope.truck.driver = $scope.employeeDrivers[0];
+    $scope.truck.dispatcher = $scope.employeeCheckers[0];
+    $scope.truck.agent = $scope.employeeDeliverySalesPersonel[0];
+    $scope.truck.helper = $scope.employeeDeliveryHelper[0];
   }; 
 
   $scope.fullName = function (driver) {
@@ -116,17 +132,29 @@ angular.module('fmApp')
   };
 
   $scope.addTruck = function (truck) {
-      // console.log("Add Truck");
-      // console.log(truck);
+      console.log("Add Truck");
+      console.log(truck);
+      var truckInfo = {
+        "agent": truck.agent.emp_fname + " " + truck.agent.emp_lname,
+        "dispatcher": truck.dispatcher.emp_fname + " " + truck.dispatcher.emp_lname,
+        "driver": truck.driver.emp_fname + " " + truck.driver.emp_lname,
+        "helper": truck.helper.emp_fname + " " + truck.helper.emp_lname,
+        "route": truck.route.route_name
+      };
+
+      console.log(truckInfo);
       // io.socket.post('http://localhost:1337/trucks', truck);
-      io.socket.request($scope.socketOptions('post','/trucks',{"Authorization": "Bearer " + authService.getToken()},truck), function (body, JWR) {
+      
+      io.socket.request($scope.socketOptions('post','/trucks/add',{"Authorization": "Bearer " + authService.getToken()},truckInfo), function (body, JWR) {
       console.log('Sails responded with post truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showAddTruckForm(false);
         $scope.$digest();
       }
-    });  
+      });  
+  
+
   }; 
 
   $scope.editTruck = function (newInfo) {

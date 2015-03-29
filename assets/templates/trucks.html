@@ -85,7 +85,10 @@
 
                     <div class="form-group">
                         <label for="inputRoute" class="col-md-6">Route</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter route number." ng-model="truck.route" required>
+                        <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="truck.route" 
+                        ng-options="route as route.route_name for route in routes">
+                        </select>
                         </div>
                     </div>
 
