@@ -17,10 +17,6 @@ module.exports = {
 		Bays.create(bay)
 			.then(function(created_bay){
 				return created_bay;
-			}, 
-
-			function(err){
-				console.log(err);
 			})
 
 			.then(function(bay){
@@ -28,6 +24,10 @@ module.exports = {
 					sails.sockets.blast('bays', {verb : 'created', data : bay, bayitem : {bay_id : bay.id, total_products : count}});
 				});
 			})
+
+			.catch(function(err){
+				return res.send(err);
+			});
 	},
 
 	bayitems : function getBayProducts(req, res){
