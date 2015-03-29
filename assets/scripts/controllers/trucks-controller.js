@@ -139,7 +139,8 @@ angular.module('fmApp')
         "dispatcher": truck.dispatcher.emp_fname + " " + truck.dispatcher.emp_lname,
         "driver": truck.driver.emp_fname + " " + truck.driver.emp_lname,
         "helper": truck.helper.emp_fname + " " + truck.helper.emp_lname,
-        "route": truck.route.route_name
+        "route": truck.route.route_name,
+        "carry_weight": truck.carry_weight
       };
 
       console.log(truckInfo);
