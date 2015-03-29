@@ -21,15 +21,12 @@ module.exports = {
 				if(found_truck){
 					return res.send("You are entering a duplicate entry");
 				}else{
-					Trucks.create(truck).exec(function(err, created_truck){
-						sails.sockets.blast('trucks', {verb : 'created', data : created_truck});
-						return res.send(201);
-					});
+					Trucks.create(truck).exec(function(err, created_truck){});
 				}
 			})
 
 			.catch(function(err){
-				return res.send("An error has occured");
+				console.log(err);
 			});
 	},
 
