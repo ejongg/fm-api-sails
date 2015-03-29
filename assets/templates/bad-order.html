@@ -37,7 +37,6 @@
 </div>
 
 
-
 <!-- BODY -->
 
 <!-- DO NOT REMOVE-->
@@ -50,6 +49,20 @@
         <h4><i class="mdi-content-add-circle"></i> ADD BAD ORDER  </h4>
         <form class="form-horizontal" name="badOrderForm" ng-submit="addProduct(product)" novalidate>
             <fieldset>
+
+             <div class="alert alert-danger" ng-show="(badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid) || (badOrderForm.inputEmployeeForm.$invalid && badOrderForm.inputEmployeeForm.$dirty) || (badOrderForm.inputReason.$invalid && badOrderForm.inputReason.$dirty) ">
+
+                        <strong ng-show="badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid"> Cases required! Enter numbers only. </strong>
+
+                        <br/>
+                        <strong ng-show="badOrderForm.inputEmployeeName.$invalid && badOrderForm.inputEmployeeName.$dirty"> Employee name required! </strong>
+
+                         <br/>
+                        <strong ng-show="badOrderForm.inputReason.$invalid && badOrderForm.inputReason.$dirty"> Reason required!  </strong>
+
+
+                    </div>
+
 
                 <div class="form-group">
                     <label for="select" class="col-md-3">Bay</label>
@@ -73,10 +86,6 @@
                     <label for="inputOwnerName" class="col-md-2 control-label">Cases</label>
 
                     <div class="col-md-12">
-
-                     <!-- Error Message -->
-                        <div ng-show="badOrderForm.inputCases.$invalid && !badOrderForm.inputCases.$pristine">Invalid! Please input cases and numbers only. </div>
-
                         <input type="number" name="inputCases" min="1" class="form-control" placeholder="Enter the number of cases."
                         ng-model="product.cases" required>
 
@@ -89,8 +98,6 @@
                     <div class="col-md-12">
 
                     <!-- Error Message -->
-                        <div ng-show="badOrderForm.inputEmployeeName.$invalid && !badOrderForm.inputEmployeeName.$pristine">Invalid! Please input employee name. </div>
-
                         <input type="text" name="inputEmployeeName" class="form-control" placeholder="Enter the employee name."
                         ng-model="accountable" required>
 
@@ -101,9 +108,6 @@
                     <label for="inputAddress" class="col-md-2 control-label">Reason</label>
 
                     <div class="col-md-12">
-                     <!-- Error Message -->
-                        <div ng-show="badOrderForm.inputReason.$invalid && !badOrderForm.inputReason.$pristine">Invalid! Please input reason. </div>
-
                         <textarea name="inputReason"  cols="45" rows="5" ng-model="product.reason"></textarea>
                     </div>
                 </div>
@@ -190,7 +194,7 @@
 
 <!-- RIGHT PANEL -->
 
-<div class="panel col-md-12">
+<div class="panel col-md-12" ng-hide = "addBadOrderForm">
     <div class="panel-body">
 
         <!-- START OF TABLE -->    

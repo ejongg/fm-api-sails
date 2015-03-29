@@ -81,6 +81,7 @@ angular.module('fmApp')
   };
 
   var clearForm = function () {
+    $scope.employeeForm.$setPristine();
     $scope.employee.emp_fname = '';
     $scope.employee.emp_lname = '';
     $scope.employee.office = '';

@@ -49,24 +49,23 @@
             <form class="form-horizontal" name="employeeForm" ng-submit="addEmployee(employee)" novalidate>
                 <fieldset>
 
+                    <div class="alert alert-danger" ng-show="(employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid) || (employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty) || (employeeForm.inputOfficeName.$dirty && employeeForm.inputOfficeName.$invalid)">
+
+                        <strong ng-show="employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid"> First name required! </strong>
+
+                        <br/>
+                        <strong ng-show="employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty"> Last name required! </strong>
+
+                        <br/>
+                        <strong ng-show="employeeForm.inputOfficeName.$invalid && employeeForm.inputOfficeName.$dirty"> Office name required! </strong>
+                    </div>
 
                     <div class="form-group">
                 
                         <label for="inputFirstName" class="col-md-4">First Name</label>
 
                         <div class="col-md-12">
-                          <!-- Error Message -->
-                        <div class="alert alert-dismissable alert-danger" ng-show="employeeForm.$invalid && !employeeForm.$pristine">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-
-                             <h4 ng-show="employeeForm.inputFirstName.$invalid && !employeeForm.inputFirstName.$pristine">  Invalid! Please input last name.</h4> 
-
-                             <h4 ng-show="employeeForm.inputOfficeName.$invalid && !employeeForm.inputOfficeName.$pristine"> Invalid! Please input office name.</h4>
-
-                        
-                        </div>
-
-                        <input type="text" name="inputFirstName" class="form-control" placeholder="Enter first name." ng-model="employee.emp_fname" required>
+                         <input type="text" name="inputFirstName" class="form-control" placeholder="Enter first name." ng-model="employee.emp_fname" required>
                         </div>
                     </div>
 
@@ -83,9 +82,6 @@
 
                         <label for="inputLastName" class="col-md-4">Office</label> 
                         <div class="col-md-12">
-                         <!-- Error Message -->
-                        <div ng-show="employeeForm.inputOfficeName.$invalid && !employeeForm.inputOfficeName.$pristine">Invalid! Please input office name. </div>
-
                         <input type="text" name="inputOfficeName" class="form-control" placeholder="Enter office name." ng-model="employee.office" required>
                         </div>
                     </div>
@@ -129,19 +125,37 @@
 
                     <div class="form-group">
                         <label for="inputFirstName" class="col-md-4">First Name</label>
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter first name." ng-model="employeeEdit.emp_fname" required>
+
+                        <div class="col-md-12">
+                        <div ng-show="employeeForm.inputFirstName.$invalid && !employeeForm.inputFirstName.$pristine">First Name Required!
+                            
+                        </div>
+
+                        <input type="text" class="form-control" placeholder="Enter first name." ng-model="employeeEdit.emp_fname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputLastName" class="col-md-4">Last Name</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter last name." ng-model="employeeEdit.emp_lname" required>
+
+                        <div class="col-md-12">
+                        <div ng-show="employeeForm.inputLastName.$invalid && !employeeForm.inputLastName.$pristine">Last Name Required!
+                            
+                        </div>
+
+                        <input type="text" class="form-control" placeholder="Enter last name." ng-model="employeeEdit.emp_lname" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputLastName" class="col-md-4">Office</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter last name." ng-model="employeeEdit.office" required>
+
+                        <div class="col-md-12">
+                        <div ng-show="employeeForm.inputOfficeName.$invalid && !employeeForm.inputOfficeName.$pristine">Office Name Required!
+                            
+                        </div>
+
+                        <input type="text" class="form-control" placeholder="Enter last name." ng-model="employeeEdit.office" required>
                         </div>
                     </div>
 

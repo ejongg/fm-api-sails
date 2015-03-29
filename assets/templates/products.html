@@ -47,12 +47,6 @@
 <div ng-class="addProductForm ? 'col-xs-12 col-md-4' : ''">
     <div class="panel" ng-show="addProductForm">
 
-        <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <a  class="btn" ng-click="setNewProductTab(true)">New Product</a>
-                        </li>
-                    </ul>
-
         <div class="panel-body" ng-show="newProductTab">
 
           <h4><i class="mdi-content-add-circle"></i> ADD NEW PRODUCT </h4>
@@ -62,9 +56,9 @@
 
                    <div class="alert alert-danger" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
 
-                        <strong class="row" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Invalid Product Name </strong>
+                        <strong ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Product name required!  </strong>
 
-                        <strong class="row" ng-show="productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty"> Invalid Company Name </strong>
+                        <strong ng-show="productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty"> Company name required!  </strong>
 
                     </div>
 
