@@ -56,8 +56,11 @@ module.exports = {
 								});
 						});
 
-						sails.sockets.blast('customer_orders', {verb : "created", data : createdCustomerOrder});
-						return res.send(201);							
+						Customer_orders.findOne({id : createdCustomerOrder.id}).populate('cust_id')
+							.then(function(foundCustomerOrder){
+								sails.sockets.blast('customer_orders', {verb : "created", data : foundCustomerOrder});
+								return res.send(201);
+							});							
 					});
 		});
 	},
