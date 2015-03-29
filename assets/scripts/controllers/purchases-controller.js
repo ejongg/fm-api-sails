@@ -328,6 +328,8 @@ angular.module('fmApp')
             console.log("Close form");
             $scope.addPurchaseForm = false;
           }
+        }else{
+          $scope.purchase.sku = $scope.skuList[0];
         }
         $scope.$digest();
     }

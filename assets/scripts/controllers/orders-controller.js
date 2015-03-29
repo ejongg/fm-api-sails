@@ -146,13 +146,16 @@ angular.module('fmApp')
       "sku_id" : order.sku.id,
       "sku" : order.sku.sku_name + " " + order.sku.size,
       "cases" : order.cases,
-      "price" : order.sku.price
+      "price" : order.sku.pricepercase * order.cases
     };
+
+    console.log(order);
+    console.log(orderInfo);
     
     if(_.findIndex($scope.orders, function(order) { return order.sku_id === orderInfo.sku_id; }) === -1){
            $scope.orders.push(orderInfo);
            $scope.totalAmount += orderInfo.price;
-           console.log(order);
+          
     }else{
       $scope.showItemExistingError(true,orderInfo.sku);
     }
@@ -183,16 +186,14 @@ angular.module('fmApp')
 
     console.log(final_order);
 
-    // io.socket.post('/customer_orders/add', {order : final_order});
+    io.socket.post('/customer_orders/add', {order : final_order});
     io.socket.request($scope.socketOptions('post','/customer_orders/add',{"Authorization": "Bearer " + authService.getToken()},final_order), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-      
+       $scope.showAddOrderForm(false);
       }
     });  
-
-    $scope.showAddOrderForm(false);
 
   };
 
@@ -216,20 +217,35 @@ angular.module('fmApp')
       case "created": 
         console.log("SKU Created");
         $scope.skuList.push(msg.data);
+        if($scope.noSKU === true){
+          $scope.noSKU = false;
+        }
+        $scope.order.sku = $scope.skuList[0];
         $scope.$digest();
         break;
       case "updated":
         console.log("SKU Updated");
         var index = _.findIndex($scope.skuList,{'id': msg.data.id});
         $scope.skuList[index] = msg.data;
+        $scope.order.sku = $scope.skuList[0];
         $scope.$digest();
         break;
       case "destroyed":
         console.log("SKU Deleted");
-        var index = _.findIndex($scope.skuList,{'id': msg.data.id});
+        var index = _.findIndex($scope.skuList,{'id': msg.data[0].sku_id});
         $scope.skuList.splice(index,1);
+        if($scope.skuList.length === 0){
+          $scope.noSKU = true;
+          if($scope.addPurchaseForm === true){
+            console.log("Close form");
+            $scope.addPurchaseForm = false;
+          }
+        }else{
+          $scope.order.sku = $scope.skuList[0];
+        }
         $scope.$digest();
     }
+
   });
   
   io.socket.on('customer_orders', function(msg){

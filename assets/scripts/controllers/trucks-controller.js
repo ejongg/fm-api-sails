@@ -154,7 +154,6 @@ angular.module('fmApp')
         $scope.$digest();
       }
       });  
-  
 
   }; 
 
