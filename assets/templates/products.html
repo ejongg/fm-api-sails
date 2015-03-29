@@ -15,7 +15,7 @@
             <ul class="nav nav-tabs col-md-12">
                         <li>
                             <div class="search">
-                                <form method="get" action="/search" id="search" ng-hide="addProductForm || editOrDeleteProductForm">
+                                <form method="get" action="/search" id="search" ng-hide="addProductForm || editOrDeleteProductForm || noProducts">
                                     <input name="q" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
@@ -26,7 +26,7 @@
 
                         </li>
                         <li>
-                            <a ng-click="" ng-hide="addProductForm || editOrDeleteProductForm">
+                            <a ng-click="" ng-hide="addProductForm || editOrDeleteProductForm || noProducts">
                             <h6><i class="mdi-action-print center" ng-hide="noProducts"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -190,7 +190,7 @@
 
         <!-- IF NO PRODUCTS -->
        <div ng-show="noProducts" align="center">
-          <h3><strong>NO PRODUCTS! <small></br>Please add product first.</small></strong></h3>
+          <h3><strong>NO PRODUCTS! </strong></h3>
         </div>
 
         <!-- START OF TABLE -->
