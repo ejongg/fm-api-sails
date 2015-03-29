@@ -4,9 +4,8 @@
  * @description :: Server-side logic for managing customer_orders
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-var _ = require('lodash');
+
 var moment = require('moment');
-var async = require('async');
 
 module.exports = {
 	add : function(req, res){
@@ -16,48 +15,49 @@ module.exports = {
 		var user = req.body.user;
 		var totalAmount = req.body.total_amount;
 
-		var customer = {
+		var customerDetails = {
 			establishment_name : customer.establishment,
 			owner_name : customer.owner,
 			address : customer.address,
 			distance : customer.distance
 		};
 
-		Customers.findOrCreate({establishment_name : customer.establishment}, customer)
+		Customers.findOrCreate({establishment_name : customer.establishment}, customerDetails)
 			.exec(function(err, createdCustomer){
 
-			if(err)
-				return res.json({error : 'An error has occured'});
+				if(err)
+					return res.send(err);
 
-			var customerOrder = {
-				customer_id : createdCustomer.id,
-				supplieragent_name : supplierAgentName,
-				date_received : moment().format('YYYY-MM-DD'),
-				user  : user,
-				total_amount : totalAmount
-			};
+				var customerOrder = {
+					customer_id : createdCustomer.id,
+					supplieragent_name : supplierAgentName,
+					date_received : moment().format('YYYY-MM-DD'),
+					user  : user,
+					total_amount : totalAmount
+				};
 
-			Customer_orders.create(customerOrder)
-				.exec(function(err, createdCustomerOrder){
-					if(err)
-						return res.json({error : 'An error has occured'});
+				Customer_orders.create(customerOrder)
+					.exec(function(err, createdCustomerOrder){
+						if(err)
+							return res.send(err);
 
-					_(orders).forEach(function(order){
-						var orderProduct = {
-							order_id : createdCustomerOrder.id,
-							sku_id : order.sku_id,
-							cases : order.cases
-						};
+						_(orders).forEach(function(order){
 
-						Customer_order_products.create(orderProduct)
-							.exec(function(err, createOrderProduct){
-								if(err)
-									return res.send(err);
-							});
+							var orderProduct = {
+								order_id : createdCustomerOrder.id,
+								sku_id : order.sku_id,
+								cases : order.cases
+							};
+
+							Customer_order_products.create(orderProduct)
+								.exec(function(err, createOrderProduct){
+									if(err)
+										return res.send(err);
+								});
+						});
+
+						sails.sockets.blast('customer_orders', {verb : "created", data : createdCustomerOrder});							
 					});
-
-					sails.sockets.blast('customer_orders', {verb : "created", data : createdCustomerOrder});							
-				});
 		});
 	},
 

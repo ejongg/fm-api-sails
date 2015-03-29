@@ -31,7 +31,7 @@ module.exports = {
   	status : {
   		type : 'string',
   		required : true,
-      defaultsTo : 'pending',
+      defaultsTo : 'Pending',
       enum : ['Pending', 'Delivered', 'To be delivered']
   	},
   	user : {
