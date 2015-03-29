@@ -38,7 +38,7 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.skuList = data;
         $scope.noSKU = false;
-        $scope.order.sku = $scope.skuList[0]
+        $scope.order.sku = $scope.skuList[0];
         console.log("SKU:");
         console.log($scope.skuList);
       }
@@ -178,7 +178,7 @@ angular.module('fmApp')
       },
       
       "orders" : $scope.orders,
-      "cokeagent_name" : $scope.order.cokeagent_name,
+      "supplieragent_name" : $scope.order.cokeagent_name,
       "user" : 'Sonic',
       "total_amount": $scope.totalAmount
 

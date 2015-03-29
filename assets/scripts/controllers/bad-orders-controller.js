@@ -17,39 +17,74 @@ angular.module('fmApp')
   $scope.addBadOrderForm = false;
   $scope.viewBadOrderDetails = false;
 
+  $scope.noBadOrders = true;
+  $scope.noBays = true;
+
   var getBadOrderList = function () {
-    io.socket.request($scope.socketOptions('get','/bad_orders'), function (body, JWR) {
-      console.log('Sails responded with get bad orders: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.badOrdersList = body;
+    // io.socket.request($scope.socketOptions('get','/bad_orders'), function (body, JWR) {
+    //   console.log('Sails responded with get bad orders: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.badOrdersList = body;
+    //     console.log($scope.badOrdersList);
+    //     $scope.$digest();
+    //   }
+    // });
+    $http.get(httpHost + '/bad_orders').success( function (data) {
+      if(data.length !== 0){
+        $scope.badOrdersList = data;
+        $scope.noBadOrders = false;
+        console.log("Bad Orders:");
         console.log($scope.badOrdersList);
-        $scope.$digest();
       }
+    }).error(function (err) {
+      console.log(err);
     });
   };
 
   var getBays = function (){
-    io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
-      console.log('Sails responded with get bays: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.bays = body;
+    // io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
+    //   console.log('Sails responded with get bays: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.bays = body;
+    //     $scope.product.bay = $scope.bays[0];
+    //     $scope.$digest();
+    //   }
+    // });
+    $http.get(httpHost + '/bays').success( function (data) {
+      if(data.length !== 0){
+        $scope.bays = data;
         $scope.product.bay = $scope.bays[0];
-        $scope.$digest();
+        $scope.noBays = false;
+        console.log("Bad Orders:");
+        console.log($scope.bays);
       }
+    }).error(function (err) {
+      console.log(err);
     });
   }
   
   var getSKU = function () {
-    io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
-      console.log('Sails responded with get sku: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.skuList = body;
+    // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
+    //   console.log('Sails responded with get sku: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.skuList = body;
+    //     $scope.product.sku = $scope.skuList[0];
+    //     $scope.$digest();
+    //   }
+    // });
+    $http.get(httpHost + '/sku').success( function (data) {
+      if(data.length !== 0){
+        $scope.skuList = data;
         $scope.product.sku = $scope.skuList[0];
-        $scope.$digest();
+        $scope.noSKU = false;
+        console.log("SKU:");
+        console.log($scope.skuList);
       }
+    }).error(function (err) {
+      console.log(err);
     });
   };
 
