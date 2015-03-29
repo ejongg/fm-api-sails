@@ -171,8 +171,8 @@
 
                 <tbody>
                     <tr ng-repeat="item in inventory" ng-click="itemClicked(item)">
-                        <td>{{item.bay_id.pile_name}}</td>
-                        <td>{{item.sku_id.sku_name}}</td>
+                        <td>{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
+                        <td>{{item.sku_name + " " + item.size}}</td>
                         <td>{{item.exp_date}}</td>
                         <td>{{item.age}}</td>
                         <td>{{item.physical_count}}</td>

@@ -39,9 +39,14 @@
         <div class="panel-body">
 
 
-    <!-- START OF TABLE -->           
+    <!-- START OF TABLE -->  
+        <div ng-show="noCustomers" align="center">
+          <h3><strong>NO ORDERS!
+            <small> <br/>Please add orders first.</small>
+          </strong></h3>
+        </div>         
 
-            <table class="table table-striped table-hover ">
+            <table ng-hide="noCustomers" class="table table-striped table-hover ">
                 <thead>
                     <tr>
                         <th>Establishment Name&nbsp;
@@ -67,7 +72,8 @@
                         <td>{{customer.establishment_name}}</td>
                         <td>{{customer.owner_name}}</td>
                         <td>{{customer.address}}</td>
-                        <td>{{customer.distance_rating}}</td>
+                        <td>{{customer.distance}}</td>
+                        <td>{{customer.orders.length}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->

@@ -14,6 +14,8 @@ angular.module('fmApp')
   $scope.itemExisting = '';
   $scope.addOrderForm = false;
   $scope.viewProducts = false;
+  
+  $scope.totalAmountView = 0;
 
   $scope.noSKU = true;
   $scope.noOrders = true;
@@ -125,16 +127,24 @@ angular.module('fmApp')
    // $http.get('http://localhost:1337/customer_order_products?where={"order_id" :' + order_id +'}').success(function(data){
    //   $scope.orderProducts = data;
    // });
-    io.socket.request($scope.socketOptions('get','/customer_order_products?where={"order_id" :' + order_id +'}'), function (body, JWR) {
-      console.log('Sails responded with get customer orders: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.orderProducts =  body;
-        $scope.$digest();
-      }
+    // io.socket.request($scope.socketOptions('get','/customer_order_products?where={"order_id" :' + order_id +'}'), function (body, JWR) {
+    //   console.log('Sails responded with get customer orders: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.orderProducts =  body;
+    //     $scope.$digest();
+    //   }
+    // });
+
+    $http.get(httpHost + '/customer_order_products?where={"order_id" :' + order_id +'}').success( function (data) {  
+      $scope.orderProducts = data;
+      console.log(data[0].order_id);
+      $scope.totalAmountView = data[0].order_id.total_amount;
+      $scope.showViewProducts(true);
+    }).error(function (err) {
+      console.log(err);
     });
 
-   $scope.showViewProducts(true);
   };
 
   $scope.addOrder = function (order) {
@@ -186,12 +196,14 @@ angular.module('fmApp')
 
     console.log(final_order);
 
-    io.socket.post('/customer_orders/add', {order : final_order});
+    // io.socket.post('/customer_orders/add', {order : final_order});
     io.socket.request($scope.socketOptions('post','/customer_orders/add',{"Authorization": "Bearer " + authService.getToken()},final_order), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
+       console.log("close form");
        $scope.showAddOrderForm(false);
+       $scope.$digest();
       }
     });  
 
@@ -236,9 +248,9 @@ angular.module('fmApp')
         $scope.skuList.splice(index,1);
         if($scope.skuList.length === 0){
           $scope.noSKU = true;
-          if($scope.addPurchaseForm === true){
+          if($scope.addOrderForm === true){
             console.log("Close form");
-            $scope.addPurchaseForm = false;
+            $scope.addOrderForm = false;
           }
         }else{
           $scope.order.sku = $scope.skuList[0];
@@ -259,6 +271,9 @@ angular.module('fmApp')
         console.log(msg.data);
         $scope.ordersList.push(msg.data);
         console.log($scope.ordersList);
+        if($scope.noOrders === true) {
+          $scope.noOrders = false;
+        }
         $scope.$digest();
     }
 
