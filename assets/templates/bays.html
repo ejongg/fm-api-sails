@@ -136,6 +136,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
+                          <div class="col-md-12">
+                            <select ng-model="bayEdit.pile_status">
+                                <option ng-repeat="status in pileStatus" value="{{status}}">{{status}}</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group rightalign">
                         <button type="submit" class="btn btn-primary" ng-disabled="editBayForm.$invalid">Save</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteBayForm(false)">Cancel</button> 
@@ -194,16 +203,19 @@
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
-                        <th width="25%">Bay name&nbsp;
+                        <th width="20%">Bay name&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                        <th width="25%">Bay label&nbsp;
+                        <th width="20%">Bay label&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                        <th width="25%">No. of cases in Bay&nbsp;
+                        <th width="20%">No. of cases in Bay&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                        <th width="20%">Limit&nbsp;
+                        <th width="20%">Bay limit&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        <th width="20%">Pile status&nbsp;
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     </tr>
@@ -215,6 +227,7 @@
                         <td>{{bay.bay_label}}</td> 
                         <td>{{getBayCount(bay.id)}}</td>
                         <td>{{bay.bay_limit}}</td>
+                        <td>{{bay.pile_status}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->

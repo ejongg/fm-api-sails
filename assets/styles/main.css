@@ -1013,6 +1013,10 @@ td {
   border-right: 1px solid #C1C3D1;
 }
 
+tr:hover td {
+  border-bottom: 2px solid #ffa311;
+}
+
 td:last-child {
   border-right: 0px;
 }

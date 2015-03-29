@@ -76,7 +76,8 @@ angular.module('fmApp')
     //     $scope.$digest();
     //   }
     // });
-    $http.get(httpHost + '/sku').success( function (data) {
+  console.log("SKU GET");
+    $http.get(httpHost + '/sku/available').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = data;
         $scope.product.sku = $scope.skuList[0];
@@ -144,14 +145,22 @@ angular.module('fmApp')
      // console.log($scope.purchaseProducts);
      // $scope.showViewProducts(true);
    // });
-   io.socket.request($scope.socketOptions('get','/bad_order_details?where={"bad_order_id" :'+ id +'}'), function (body, JWR) {
-      console.log('Sails responded with get bad order details: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.badOrderDetails = body;
-        $scope.showViewBadOrderDetails(true);
-        $scope.$digest();
-      }
+   // io.socket.request($scope.socketOptions('get','/bad_order_details?where={"bad_order_id" :'+ id +'}'), function (body, JWR) {
+   //    console.log('Sails responded with get bad order details: ', body);
+   //    console.log('and with status code: ', JWR.statusCode);
+   //    if(JWR.statusCode === 200){
+   //      $scope.badOrderDetails = body;
+   //      $scope.showViewBadOrderDetails(true);
+   //      $scope.$digest();
+   //    }
+   // });
+
+   $http.get(httpHost + '/bad_order_details?where={"bad_order_id" :'+ id +'}').success( function (data) {
+     $scope.badOrderDetails = data;
+     console.log(data);
+     $scope.showViewBadOrderDetails(true);
+   }).error(function (err) {
+      console.log(err);
    });
     
   };
@@ -228,7 +237,52 @@ angular.module('fmApp')
       case "created": 
         console.log("Bad Order Created");
         $scope.badOrdersList.push(msg.data);
+        if($scope.noBadOrders === true){
+          console.log("set no bad orders to false");
+          $scope.noBadOrders = false;
+        }
         $scope.$digest();
+    }
+
+  });
+
+  io.socket.on('bays', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("Bay Created");
+        $scope.bays.push(msg.data);
+        if($scope.noBays === true){
+          $scope.noBays = false;
+        }
+        $scope.product.bay = $scope.bays[0];
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("Bay Updated");
+        var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        $scope.bays[index] = msg.data;
+        $scope.product.bay = $scope.bays[0];
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Bay Deleted");
+        var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
+        $scope.bays.splice(index,1);
+        if($scope.bays.length === 0){
+          $scope.noBays = true;
+          if($scope.addBadOrderForm === true){
+            console.log("Close form");
+            $scope.addBadOrderForm = false;
+          }
+        }else{
+          $scope.product.bay = $scope.bays[0];
+        }
+        $scope.$digest();
+
     }
 
   });

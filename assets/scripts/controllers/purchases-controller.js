@@ -367,6 +367,8 @@ angular.module('fmApp')
             console.log("Close form");
             $scope.addPurchaseForm = false;
           }
+        }else{
+          $scope.purchase.bay = $scope.bays[0];
         }
         $scope.$digest();
 
