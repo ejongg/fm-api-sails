@@ -88,7 +88,7 @@ angular.module('fmApp')
   }; 
 
 	$scope.addEmployee = function (employee) {
-    io.socket.request($scope.socketOptions('post','/employees',{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/employees/add',{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
       console.log('Sails responded with post employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){

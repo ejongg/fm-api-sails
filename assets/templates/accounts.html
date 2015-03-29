@@ -75,7 +75,7 @@
                             <label for="inputFirstName" class="col-md-4">First Name</label>
                             <div class="col-md-12">
                                 <div ng-show="userForm.inputFirstName.$invalid && !userForm.inputFirstName.$pristine">First Name Required!</div>
-                                <input type="text" class="form-control" name="inputFirstName" placeholder="Enter first name." ng-model="user.firstname" ng-pattern="/^[A-z]+$/" required>
+                                <input type="text" class="form-control" name="inputFirstName" placeholder="Enter first name." ng-model="user.firstname" ng-pattern="/^[A-Za-z *]+$/" required>
                             </div>
                         </div>
 
@@ -83,7 +83,7 @@
                             <label for="inputLastName" class="col-md-4">Last Name</label> 
                             <div class="col-md-12">
                                 <div ng-show="userForm.inputLastName.$invalid && !userForm.inputLastName.$pristine">Last Name Required!</div>
-                                <input type="text" class="form-control" name="inputLastName" placeholder="Enter last name." ng-model="user.lastname" ng-pattern="/^[A-z]+$/" required>
+                                <input type="text" class="form-control" name="inputLastName" placeholder="Enter last name." ng-model="user.lastname" ng-pattern="/^[A-Za-z *]+$/" required>
                             </div>
                         </div>
 
