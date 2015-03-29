@@ -50,7 +50,7 @@ module.exports = {
         return false;
       }
     }
-  }
+  },
 
   afterUpdate : function(truck, next){
     sails.sockets.blast('trucks', {verb : 'updated', data : truck});
