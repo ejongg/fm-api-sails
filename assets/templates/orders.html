@@ -13,7 +13,7 @@
         <div class="form-group">
             <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <div class="search">
+                            <div class="search" ng-hide="noOrders">
                                 <form method="get" action="/search" id="search">
                                     <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide="addOrderForm || editOrDeleteOrderForm" />
                                 </form>
@@ -25,7 +25,7 @@
 
                         </li>
                         <li>
-                            <a ng-click="" ng-hide="addOrderForm || editOrDeleteForm">
+                            <a ng-click="" ng-hide="addOrderForm || noOrders || editOrDeleteForm">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -50,18 +50,9 @@
             <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
                 <fieldset>
 
-                        <div class="alert alert-danger" ng-show="(orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid) || (orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty) || (orderForm.orderAddressName.$invalid && orderForm.orderAddressName.$dirty)  || (orderForm.orderCases.$invalid && orderForm.orderCases.$dirty)">
+                        <div class="alert alert-warning" ng-show="(orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid) || (orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty) || (orderForm.orderAddressName.$invalid && orderForm.orderAddressName.$dirty)  || (orderForm.orderCases.$invalid && orderForm.orderCases.$dirty)">
 
-                        <strong class="row" ng-show="orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
-
-                        <strong class="row" ng-show="orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty"> Please input Owner Name</strong>
-
-                        <strong class="row" ng-show="orderForm.orderAddressName.$dirty && orderForm.orderAddressName.$invalid"> Please input address </strong>
-
-                        <strong class="row" ng-show="orderForm.orderSupplierAgent.$dirty && orderForm.orderSupplierAgent.$invalid"> Please input Supplier Agent </strong>
-
-                        <strong class="row" ng-show="orderForm.orderCases.$dirty && orderForm.orderCases.$invalid"> Invalid! Please input cases and numbers only. </strong>
-
+                        <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
                     </div>
 
 
@@ -71,20 +62,24 @@
                         <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
                         <div class="col-md-12">
                             <input type="text" class="form-control" name="orderEstablishmentName"placeholder="Enter establishment name." ng-model="order.establishment" required>
+
+                            <strong class="fbackMsg" ng-show="orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputOwnerName" class="col-md-6">Owner Name</label>
-                        <div class="col-md-12"><input type="text" class="form-control" name="orderOwnerName" placeholder="Enter owner name."
-                        ng-model="order.owner" required>
+                        <div class="col-md-12"><input type="text" class="form-control" name="orderOwnerName" placeholder="Enter owner name." ng-model="order.owner" required>
+
+                        <strong class="fbackMsg" ng-show="orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty"> Please input Owner Name</strong>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Address</label>
-                        <div class="col-md-12"><input type="text" class="form-control" name="orderAddressName" placeholder="Enter address."
-                        ng-model="order.address" required>
+                        <div class="col-md-12"><input type="text" class="form-control" name="orderAddressName" placeholder="Enter address." ng-model="order.address" required>
+
+                        <strong class="fbackMsg" ng-show="orderForm.orderAddressName.$dirty && orderForm.orderAddressName.$invalid"> Please input address </strong>
                         </div>
                     </div>
 
@@ -99,8 +94,9 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Supplier Agent</label>
-                        <div class="col-md-12"><input type="text" class="form-control" name="orderSupplierAgent" placeholder="Enter agent name."
-                        ng-model="order.cokeagent_name" required>
+                        <div class="col-md-12"><input type="text" class="form-control" name="orderSupplierAgent" placeholder="Enter agent name." ng-model="order.cokeagent_name" required>
+
+                        <strong class="fbackMsg" ng-show="orderForm.orderSupplierAgent.$dirty && orderForm.orderSupplierAgent.$invalid"> Please input Supplier Agent </strong>
                         </div>
                     </div>
 
@@ -116,8 +112,9 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases." name="orderCases"
-                        ng-model="order.cases" required>
+                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases." name="orderCases" ng-model="order.cases" required>
+
+                        <strong class="fbackMsg" ng-show="orderForm.orderCases.$dirty && orderForm.orderCases.$invalid"> Invalid! Please input cases and numbers only. </strong>
                         </div>
                     </div>
 
