@@ -6,9 +6,38 @@
  */
 
 var moment = require('moment');
-var async = require('async');
 
 module.exports = {
+	getInventory : function(req, res){
+		var inventory = [];
+
+		Inventory.find()
+			.then(function(inventoryItems){
+				return inventoryItems;
+			})
+
+			.then(function(inventoryItems){				
+				async.each(inventoryItems, function(item, cb){
+					
+					Sku.findOne({id : item.sku_id}).populate('prod_id')
+						.then(function(foundSku){
+							item.company = foundSku.prod_id.company;
+							item.brand_name = foundSku.prod_id.brand_name;
+							
+							inventory.push(item);
+							cb();
+						});
+				},
+
+				function(err){
+					if(err)
+						return res.send(err);
+
+					return res.send(inventory);
+				});
+			});
+	},
+
 	dssr : function(req, res){
 		var dssr = {};
 		var date = moment().format('MM-DD-YYYY');
