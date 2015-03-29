@@ -12,9 +12,9 @@ module.exports = {
 	add : function(req, res){
 		var customer  = req.body.customer;
 		var orders = req.body.orders;
-		var supplieragent_name = req.body.supplieragent_name;
+		var supplierAgentName = req.body.supplieragent_name;
 		var user = req.body.user;
-		var total_amount = req.body.total_amount;
+		var totalAmount = req.body.total_amount;
 
 		var customer = {
 			establishment_name : customer.establishment,
@@ -24,40 +24,40 @@ module.exports = {
 		};
 
 		Customers.findOrCreate({establishment_name : customer.establishment}, customer)
-			.exec(function(err, new_customer){
+			.exec(function(err, createdCustomer){
 
 			if(err)
-				res.json({error : 'An error has occured'});
+				return res.json({error : 'An error has occured'});
 
-			Customer_orders.create({
-				customer_id : new_customer.id,
-				supplieragent_name : supplieragent_name,
+			var customerOrder = {
+				customer_id : createdCustomer.id,
+				supplieragent_name : supplierAgentName,
 				date_received : moment().format('YYYY-MM-DD'),
 				user  : user,
-				total_amount : total_amount
-			}).exec(function(err, new_cust_order){
-				if(err)
-					res.json({error : 'An error has occured'});
+				total_amount : totalAmount
+			};
 
-				(orders).forEach(function(order){
-					order.order_id = new_cust_order.id;
-					delete order.sku;
-					delete order.$$hashKey;
-				});
+			Customer_orders.create(customerOrder)
+				.exec(function(err, createdCustomerOrder){
+					if(err)
+						return res.json({error : 'An error has occured'});
 
-				Customer_order_products.create(orders)
-					.exec(function(err, new_orders){
-						if(err)
-							res.json({error : 'An error has occured'});
+					_(orders).forEach(function(order){
+						var orderProduct = {
+							order_id : createdCustomerOrder.id,
+							sku_id : order.sku_id,
+							cases : order.cases
+						};
 
-						Customer_orders.findOne({id : new_cust_order.id}).populate('customer_id')
-							.exec(function(err, populated_cust_order){
-
-								sails.sockets.blast('customer_orders', {verb : 'created', data : populated_cust_order});								
+						Customer_order_products.create(orderProduct)
+							.exec(function(err, createOrderProduct){
+								if(err)
+									return res.send(err);
 							});
+					});
 
-					});				
-			});
+					sails.sockets.blast('customer_orders', {verb : "created", data : createdCustomerOrder});							
+				});
 		});
 	},
 
