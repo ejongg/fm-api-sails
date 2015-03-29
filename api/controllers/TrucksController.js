@@ -21,7 +21,10 @@ module.exports = {
 				if(found_truck){
 					return res.send("You are entering a duplicate entry");
 				}else{
-					Trucks.create(truck).exec(function(err, created_truck){});
+					Trucks.create(truck).exec(function(err, created_truck){
+						sails.sockets.blast('trucks', {verb : 'created', data : truck});
+						return res.send(201);
+					});
 				}
 			})
 
