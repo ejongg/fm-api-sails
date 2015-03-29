@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('BadOrdersCtrl',['$scope','_','$http', function($scope, _, $http){
+.controller('BadOrdersCtrl',['$scope','_','$http','httpHost', 'authService', function($scope, _, $http, httpHost, authService){
   $scope.skuList = [];
   $scope.bays = [];
   $scope.badOrdersList = [];
@@ -19,6 +19,7 @@ angular.module('fmApp')
 
   $scope.noBadOrders = true;
   $scope.noBays = true;
+  $scope.noSKU = true;
 
   var getBadOrderList = function () {
     // io.socket.request($scope.socketOptions('get','/bad_orders'), function (body, JWR) {
@@ -57,7 +58,7 @@ angular.module('fmApp')
         $scope.bays = data;
         $scope.product.bay = $scope.bays[0];
         $scope.noBays = false;
-        console.log("Bad Orders:");
+        console.log("Bays:");
         console.log($scope.bays);
       }
     }).error(function (err) {
@@ -174,10 +175,11 @@ angular.module('fmApp')
       "bay_id" : product.bay.id,
       "sku_name" : product.sku.sku_name + " " + product.sku.size,
       "bottlespercase" : product.sku.bottlespercase,
-      "expense" : product.cases * (product.sku.price * product.sku.bottlespercase),
+      "expense" : product.cases * product.sku.pricepercase,
       "cases" : product.cases,
       "reason" : product.reason
     };
+    console.log(product);
     console.log("Product Info:");
     console.log(productInfo);
 
@@ -206,7 +208,7 @@ angular.module('fmApp')
     console.log("Bad Order");
     console.log(badOrder);
 
-    io.socket.request($scope.socketOptions('post','/bad_orders/add',{},badOrder), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/bad_orders/add',{"Authorization": "Bearer " + authService.getToken()},badOrder), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
