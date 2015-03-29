@@ -40,7 +40,7 @@ module.exports = {
 						},
 
 						function emit(cb){
-							sails.sockets.blast('bad_orders', created_bad_order);
+							sails.sockets.blast('bad_orders', {verb : "created", data :created_bad_order});
 							return res.send(201);
 							cb();
 						}
