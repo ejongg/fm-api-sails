@@ -218,6 +218,9 @@ angular.module('fmApp')
       case "created": 
         console.log("Truck Created");
         $scope.trucks.push(msg.data);
+        if($scope.noTrucks === true){
+          $scope.noTrucks = false;
+        }
         $scope.$digest();
         break;
       case "updated": 
