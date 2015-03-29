@@ -14,7 +14,7 @@ module.exports = {
 			office : req.body.office
 		}
 
-		Employees.find(employee)
+		Employees.findOne(employee)
 			.then(function(found_employee){
 				if(found_employee){
 					return res.send("You are entering a duplicate entry");
