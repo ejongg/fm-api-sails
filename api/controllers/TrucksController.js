@@ -16,6 +16,8 @@ module.exports = {
 			carry_weight : req.body.carry_weight
 		}
 
+		console.log("Trucks");
+
 		Trucks.findOne(truck)
 			.then(function(found_truck){
 				if(found_truck){
@@ -24,6 +26,10 @@ module.exports = {
 					Trucks.create(truck).exec(function(err, created_truck){});
 				}
 			})
+
+			.catch(function(err){
+				return res.send("An error has occured");
+			});
 	},
 
 	loadout : function(req, res){
