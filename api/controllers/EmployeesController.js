@@ -8,10 +8,10 @@
 module.exports = {
 	add : function(req, res){
 		var employee = {
-		    emp_fname = req.body.emp_fname,
-			emp_lname = req.body.emp_lname,
-			position = req.body.position,
-			office = req.body.office
+		    emp_fname : req.body.emp_fname,
+			emp_lname : req.body.emp_lname,
+			position : req.body.position,
+			office : req.body.office
 		}
 
 		Employees.find(employee)
