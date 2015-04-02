@@ -87,7 +87,8 @@ angular.module('fmApp')
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-      
+          $scope.showAddUserForm(false);
+          $scope.$digest();
       }
     });   
 	}; 
@@ -108,7 +109,8 @@ angular.module('fmApp')
       console.log('Sails responded with delete user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+        $scope.showEditOrDeleteUserForm(false);
+        $scope.$digest();
       }
     }); 
 	};
@@ -122,8 +124,6 @@ angular.module('fmApp')
       case "created": 
         console.log("User Created");
         $scope.users.push(msg.data);
-        $scope.showAddUserForm(false);
-        clearForm();
         $scope.$digest();
         break;
       case "destroyed":
@@ -133,7 +133,6 @@ angular.module('fmApp')
         var index = _.findIndex($scope.users,{'id': msg.data[0].user_id});
         console.log(index);
         $scope.users.splice(index,1);
-        $scope.showEditOrDeleteUserForm(false);
         $scope.$digest();
     }
 

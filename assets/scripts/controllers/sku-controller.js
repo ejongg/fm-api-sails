@@ -242,7 +242,10 @@ angular.module('fmApp')
     io.socket.request($scope.socketOptions('post','/sku',{"Authorization": "Bearer " + authService.getToken()},skuInfo), function (body, JWR) {
       console.log('Sails responded with post sku: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 400){
+      if (JWR.statusCode === 201) {
+        $scope.showAddSkuForm(false);
+        $scope.$digest();
+      }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
       }
     });
@@ -278,7 +281,8 @@ angular.module('fmApp')
       console.log('Sails responded with edit sku: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+        $scope.showEditOrDeleteSkuForm(false);
+        $scope.$digest();
       }
     });
 
@@ -297,7 +301,8 @@ angular.module('fmApp')
       console.log('Sails responded with delete sku: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+        $scope.showEditOrDeleteSkuForm(false);
+        $scope.$digest();
       }
     });
   }
@@ -378,7 +383,6 @@ angular.module('fmApp')
         if($scope.noSKU === true){
           $scope.noSKU = false;
         }
-        $scope.showAddSkuForm(false);
         $scope.$digest();
         break;
       case "updated":
@@ -386,7 +390,6 @@ angular.module('fmApp')
         console.log(msg.data);
         var index = _.findIndex($scope.skuLists,{'id': msg.data.id});
         $scope.skuLists[index] = msg.data;
-        $scope.showEditOrDeleteSkuForm(false);
         $scope.$digest();
         break;
       case "destroyed":
@@ -398,7 +401,6 @@ angular.module('fmApp')
         if($scope.skuLists.length === 0){
           $scope.noSKU = true;
         }
-        $scope.showEditOrDeleteSkuForm(false);
         $scope.$digest();
     }
   });

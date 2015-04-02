@@ -95,6 +95,10 @@ angular.module('fmApp')
       $scope.showAddProductForm(false);
     }
     
+    if($scope.editProductTab === false){
+      $scope.setEditProductTab(true);
+    }
+
     $scope.copiedProduct = angular.copy(product);
 
     $scope.productEdit.id = $scope.copiedProduct.id;
@@ -114,9 +118,16 @@ angular.module('fmApp')
     io.socket.request($scope.socketOptions('post','/products',{"Authorization": "Bearer " + authService.getToken()},product), function (body, JWR) {
       console.log('Sails responded with post product: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 400){
+
+      if(JWR.statusCode === 201){
+        $scope.showAddProductForm(false);
+      }else if (JWR.statusCode === 400){
         console.log("Product already exist");
+      }else{
+        console.log("Error!!!");
       }
+    
+      $scope.$digest();
     });
   };
 
@@ -125,7 +136,8 @@ angular.module('fmApp')
       console.log('Sails responded with edit product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+        $scope.showEditOrDeleteProductForm(false);
+        $scope.$digest();
       }
     });
   };
@@ -136,7 +148,8 @@ angular.module('fmApp')
       console.log('Sails responded with delete product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        
+        $scope.showEditOrDeleteProductForm(false);
+        $scope.$digest();
       }
     });
   };
@@ -149,14 +162,12 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         console.log("Product Created");
-        
         if($scope.noProducts === true){
           $scope.noProducts = false;
         }
 
         $scope.products.push(msg.data);
         $scope.existingCompany = _.uniq($scope.products, 'company');
-        $scope.showAddProductForm(false);
         $scope.$digest();
         break;
       case "updated":
@@ -164,7 +175,6 @@ angular.module('fmApp')
         var index = _.findIndex($scope.products,{'id': msg.data.id});
         $scope.products[index] = msg.data;
         $scope.existingCompany = _.uniq($scope.products, 'company');
-        $scope.showEditOrDeleteProductForm(false);
         $scope.$digest();
         break;
       case "destroyed":
@@ -177,8 +187,6 @@ angular.module('fmApp')
         if($scope.products.length === 0){
           $scope.noProducts = true;
         }
-
-        $scope.showEditOrDeleteProductForm(false);
         $scope.$digest();
     }
   });
