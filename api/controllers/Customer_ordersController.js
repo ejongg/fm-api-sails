@@ -68,7 +68,7 @@ module.exports = {
 	},
 
 	list : function(req, res){
-		var orders_with_products = [];
+		var ordersWithProducts = [];
 
 		Customer_orders.find().populate('customer_id')
 			.then(function getOrders(orders){
@@ -80,7 +80,7 @@ module.exports = {
 
 					Customer_order_products.find({order_id : order.id}).populate('sku_id')
 						.then(function getProducts(products){
-							orders_with_products.push({order : order, products : products});
+							ordersWithProducts.push({order : order, products : products});
 							cb();							
 						});					
 
@@ -88,7 +88,7 @@ module.exports = {
 					if(err)
 						console.log(err);
 
-					return res.send(orders_with_products);
+					return res.send(ordersWithProducts);
 				});
 
 			}, 
