@@ -19,10 +19,6 @@ module.exports = {
   		type : 'string',
   		required : true,
       unique : true
-  	},
-  	address_id : {
-  		model : 'address',
-  		required : true
   	}
   },
 

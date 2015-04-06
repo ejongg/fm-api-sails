@@ -22,7 +22,10 @@ module.exports = {
   	days : {
   		type : 'string',
   		required : true
-  	}
+  	},
+    route_id : {
+      model : 'routes'
+    }
   },
 
   afterCreate : function(address, next){
