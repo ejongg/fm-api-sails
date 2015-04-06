@@ -9,7 +9,9 @@ module.exports = function(req, res, next){
 	async.each(products, function (product, cb){
 
 		BaysService.findMovingPile(product.company, function(err, bay_result){
+
 			if(typeof bay_result == 'number'){
+
 				Inventory.find({sku_id : product.sku_id, bay_id : bay_result})
 					.exec(function (err, found_sku){
 						if(found_sku){
@@ -34,6 +36,7 @@ module.exports = function(req, res, next){
 							return res.json({code : 0, message : product.sku_name + ' not found in current moving pile'});							
 						}
 					});	
+
 			}else{
 				return res.json({code : 0, message : bay_result});
 			}
@@ -41,7 +44,7 @@ module.exports = function(req, res, next){
 
 	}, function (err){
 		if(err)
-			console.log(err);
+			return res.send(err);
 
 		if(notAvailableProducts.length > 0){
 			return res.json({code : 0, message : 'Insufficient stocks in current moving pile', data : notAvailableProducts});
