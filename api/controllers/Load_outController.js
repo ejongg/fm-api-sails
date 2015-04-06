@@ -37,7 +37,7 @@ module.exports = {
 			Delivery_transactions.create(delivery)
 				.then(function createDeliveryProducts(created_delivery){
 
-					(order.products).forEach(function(product){
+					_(order.products).forEach(function(product){
 						var order_product = {
 							dtrans_id : created_delivery.id,
 							sku_id : product.sku_id,
@@ -45,7 +45,10 @@ module.exports = {
 						};
 
 						Delivery_products.create(order_product)
-							.exec(function(err, created_product){});
+							.exec(function(err, created_product){
+								if(err)
+									return res.send(err);
+							});
 					});
 
 					return res.json({code : 1, message : "Delivery added"});
