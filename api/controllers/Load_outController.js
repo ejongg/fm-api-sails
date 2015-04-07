@@ -64,6 +64,13 @@ module.exports = {
 				function(err){
 					return res.send(err);
 				});
+		},
+
+		function(err){
+			if(err)
+				return res.send(err);
+
+			return res.send("Loadout successfully added");
 		});
 	},
 
