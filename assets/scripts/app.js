@@ -123,6 +123,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
           }
         }  
       })
+      .state('admin.load-outs', {
+        url:'/delivery/load-outs',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/load-outs.html',
+            controller:'LoadOutsCtrl'
+          }
+        }  
+      })
 
     .state('encoder', {
       url:'/encoder',

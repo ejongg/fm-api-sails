@@ -1,0 +1,161 @@
+<!--START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Load Out </h1>
+    </div>
+
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <div class="search" ng-hide="">
+                                <form method="get" action="/search" id="search">
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                </form>
+                            </div>
+                        </li>
+ <!--                        <li>
+                            <a ng-click="" ng-hide="">
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASE</h6></a>
+
+                        </li> -->
+                        <li>
+                            <a ng-hide="" ng-click="">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+<!-- BODY -->
+
+<!-- DO NOT REMOVE-->
+<div class="container">
+
+     <!-- LEFT PANEL -->
+    <div class="col-md-6">
+
+
+<h4><i class="mdi-content-add-circle"></i> CUSTOMERS ORDERS </h4>
+
+        <div class="panel panel-body">
+              
+<table class="table table-condensed" style="border-collapse: collapse;">
+        
+              <thead>
+                  <tr>
+                      <th colspan="2"><font size="1px">Customer Name</font></th>
+                      <th><font size="1px">Distance</font></th>
+              </thead>
+              
+              <tbody>
+
+                  <tr ng-repeat="order in customerOrders" ng-drag="true" ng-drag-data="order" style="cursor:button;">
+                      <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.establishment_name}}</font></td>
+                      <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.distance}}</font></td>
+                  </tr>
+
+              </tbody>
+
+      </table>
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+    <div class="col-md-6">
+
+      <h4><i class="mdi-content-add-circle"></i> LOAD OUT </h4>
+
+              <div class="panel panel-body">
+
+                 <ul class="nav nav-tabs">
+                        <li>
+                            <a ng-click="showAddLoadOutBox(true)"><i class="mdi-content-add-box"/>
+                              &nbsp;ADD&nbsp;</a>
+                        </li>
+                    </ul>
+
+
+
+<br>
+<br>
+
+
+
+
+      
+      <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
+
+      <div ng-show="addLoadOutBox" class="form-group">
+          
+
+          <form name="loadOutAddForm" ng-submit="addLoadOut(loadOut)" novalidate>
+
+              <label>Truck: &nbsp; </label>
+              <select ng-model="loadOut.truck_id" ng-options=" truck.id as truckName(truck) for truck in trucks"></select>
+              <label>Load Out #: &nbsp; </label>
+              <select ng-model="loadOut.loadout_no" ng-init="loadOut.loadout_no = loadOutNumbers[0]">
+                <option ng-repeat="number in loadOutNumbers" value="{{number}}">{{number}}</option>
+              </select>
+
+              <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
+
+             <div ng-repeat="order in loadOut.orders">
+
+                 {{order}}
+
+
+             </div>
+             </div>
+
+             <br>
+             <button type="submit" ng-disabled="routeAddForm.$invalid || addressesInRoute.length === 0" class="btn btn-flat btn-default">Add</button>
+             <button type="button" ng-click="showAddLoadOutBox(false)">Cancel</button>
+
+
+          </form>
+           
+      </div>
+       
+      <div>
+         <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-repeat="routeInfo in routes">
+           <div>
+             {{routeInfo}}     
+           </div>
+        </div>      
+      </div>
+
+    </div>
+
+</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+
+</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+
+<!-- <div style="background-color:red;" ng-repeat="address in addresses" ng-drag="true" ng-drag-data="address" ng-drag-success="onDragComplete($data,$event)">
+  Draggable div
+</div>
+
+<div style="background-color:green;width:100%;height:200px;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
+  Drop area
+</div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService', function($scope, _, $http, httpHost, authService){
+.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService', function($scope, _, $http, httpHost, authService,userService){
   $scope.distanceRatings = [1,2,3,4,5];
   $scope.skuList = [];
   $scope.ordersList = [];
@@ -191,7 +191,7 @@ angular.module('fmApp')
       
       "orders" : $scope.orders,
       "supplieragent_name" : $scope.order.cokeagent_name,
-      "user" : 'Sonic',
+      "user" : userService.getUserName(),
       "total_amount": $scope.totalAmount
 
     };
