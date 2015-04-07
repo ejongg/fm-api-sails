@@ -5,6 +5,8 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+ var moment = require('moment');
+
 module.exports = {
 	add : function(req, res){
 		var orders = req.body.orders;
@@ -14,8 +16,8 @@ module.exports = {
 		var loadoutNumber = req.body.loadout_no;
 
 		var loadout = {
-			load_number : loadoutNumber,
-			date_created : moment().format('YYYY-MM-DD')
+			loadout_number : loadoutNumber,
+			date_created : moment(delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD')
 		};
 
 		Load_out.create(loadout)
@@ -24,7 +26,7 @@ module.exports = {
 					return res.send(err);
 			});
 
-		(orders).forEach(function(order){
+		async.each(orders, function(order, cb){
 			var delivery = {
 				total_amount : order.total_amount,				
 				customer_id : order.customer_id.id,
@@ -37,7 +39,7 @@ module.exports = {
 			Delivery_transactions.create(delivery)
 				.then(function createDeliveryProducts(created_delivery){
 
-					_(order.products).forEach(function(product){
+					async.each(order.products, function(product, cb_inner){
 						var order_product = {
 							dtrans_id : created_delivery.id,
 							sku_id : product.sku_id,
@@ -48,17 +50,21 @@ module.exports = {
 							.exec(function(err, created_product){
 								if(err)
 									return res.send(err);
+
+								cb_inner();
 							});
+
+					}, 
+
+					function(err){
+						cb();
 					});
-
-					return res.json({code : 1, message : "Delivery added"});
-
 				},
 
 				function(err){
 					return res.send(err);
 				});
-		});		
+		});
 	},
 
 	confirm : function(req, res){
