@@ -72,7 +72,7 @@ angular.module('fmApp')
 
   $scope.addLoadOut = function (loadOut) {
     console.log(loadOut);
-     io.socket.request($scope.socketOptions('post','/load_out',{"Authorization": "Bearer " + authService.getToken()},loadOut), function (body, JWR) {
+     io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},loadOut), function (body, JWR) {
       console.log('Sails responded with post loadout: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
