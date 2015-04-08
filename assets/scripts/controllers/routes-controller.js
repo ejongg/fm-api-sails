@@ -21,8 +21,6 @@ angular.module('fmApp')
   $scope.copiedAddress = {};
 
   $scope.route = {};
-  $scope.route.address_id = [];
-  $scope.addressesInRoute = [];
 
   $scope.mondayButton = false;
   $scope.tuesdayButton = false;
@@ -88,8 +86,6 @@ angular.module('fmApp')
     $scope.addRouteBox = data;
     if(data === false){
       $scope.route.route_name = '';
-      $scope.route.address_id = [];
-      $scope.addressesInRoute = [];
     }
   };
 

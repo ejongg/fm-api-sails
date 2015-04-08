@@ -14,7 +14,6 @@ angular.module('fmApp')
 
   $scope.addProductForm = false;
   $scope.editOrDeleteProductForm = false;
-  $scope.newProductTab = true;
   $scope.editProductTab = true;
 
   $scope.noProducts = true;
@@ -59,26 +58,12 @@ angular.module('fmApp')
       
       $scope.addProductForm = data;
       if(data === false){
-        if($scope.newProductTab === false){
-          $scope.setNewProductTab(true);
-        }else{
           $scope.product = {};
-        }
       }
   };
 
   $scope.showEditOrDeleteProductForm = function (data) {
       $scope.editOrDeleteProductForm = data;
-  };
-
-  $scope.setNewProductTab = function (data){
-    $scope.newProductTab = data;
-    if(data === true){
-      $scope.product = {};
-    }else{
-      $scope.productExistingCompany.brand_name = '';
-      $scope.productExistingCompany.company = $scope.existingCompany[0].company;
-    }
   };
 
   $scope.setEditProductTab = function (data) {

@@ -185,29 +185,21 @@
               <label>Route: &nbsp; </label>
               <input type="text" ng-model="route.route_name" required><p>
 
-              <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
-
-             <div ng-repeat="address in addressesInRoute">
-
-                 {{address.address_name}}
-
-
-
-             </div>
-             </div>
-
              <br>
              <button type="submit" ng-disabled="routeAddForm.$invalid || addressesInRoute.length === 0" class="btn btn-flat btn-default">Add</button>
+             <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-flat btn-default">Cancel</button>
+
 
 
           </form>
            
       </div>
        
-      <div>
-         <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-repeat="routeInfo in routes">
+      <div ng-repeat="routeInfo in routes">
+        <p>{{routeInfo.route_name}}</p>
+         <div style="background-color:#202020;width:100%;height:200px;color:white;" >
            <div>
-             {{routeInfo}}     
+                
            </div>
         </div>      
       </div>
