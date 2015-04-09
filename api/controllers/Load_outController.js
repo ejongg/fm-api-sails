@@ -110,33 +110,26 @@ module.exports = {
 	list : function(req, res){
 		var loadoutList = [];
 
-		Load_out.find().then(function(loadouts){
+		Load_out.find().populate('deliveries')
+			.then(function(loadouts){
 
-			if(loadouts.length > 0){
-				async.each(loadouts, function (loadout, cb){
-					Delivery_transactions.find({loadout_id : loadout.id})
+			async.each(loadouts, function(loadout, cb){
+				loadout.total_amount = 0;
 
-						.then(function (deliveries){
-							_(deliveries).forEach(function (delivery){
-								loadout.total_amount = loadout.total_amount + delivery.total_amount;
-							});
-
-							loadoutList.push(loadout);
-							cb();
-						})
-
-						.catch(function(err){
-							return res.send(err);
-						});
-
-				}, function(err){
-					if(err) return res.send(err);
-
-					return loadoutList;
+				_(loadout.deliveries).forEach(function(delivery){
+					loadout.total_amount = loadout.total_amount + delivery.total_amount;
 				});
-			}else{
-				return res.json("No loadouts found");
-			}
+				
+				loadoutList.push(loadout);
+				cb();
+			},
+
+			function(err){
+				if(err) return res.send(err);
+
+				return res.send(loadoutList);
+			});
+
 		});
 	}
 };

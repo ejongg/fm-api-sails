@@ -26,7 +26,11 @@ module.exports = {
   	loadout_number : {
   		type : "integer",
   		required : true
-  	}
+  	},
+    deliveries : {
+      collection : "delivery_transactions",
+      via : "loadout_id"
+    }
   },
 
   afterUpdate : function(loadout, next){
