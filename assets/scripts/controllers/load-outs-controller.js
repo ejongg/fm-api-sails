@@ -18,7 +18,6 @@ angular.module('fmApp')
   $scope.loadOut.orders = [];
   $scope.loadOut.user = userService.getUserName();
   $scope.loadOut.delivery_date = $filter('date')(todayDay,"yyyy-MM-dd");
-  console.log($scope.loadOut.deliverDate);
   
   var getCustomerOrders = function () {
     $http.get(httpHost + '/customer_orders').success( function (data) {
@@ -41,7 +40,18 @@ angular.module('fmApp')
     });
   }
 
+  var getLoadOuts = function () {
+    $http.get(httpHost + '/load_out').success( function (data) {
+      $scope.loadOuts = data;
+      console.log("Load Out:");
+      console.log($scope.loadOuts);
+    }).error(function (err) {
+      console.log(err);
+    });
+  };
+
   getCustomerOrders();
+  getLoadOuts();
   getTrucks();
 
   $scope.showAddLoadOutBox = function (data){

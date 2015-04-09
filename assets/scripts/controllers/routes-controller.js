@@ -21,6 +21,7 @@ angular.module('fmApp')
   $scope.copiedAddress = {};
 
   $scope.route = {};
+  $scope.route.address = [];
 
   $scope.mondayButton = false;
   $scope.tuesdayButton = false;
@@ -161,14 +162,21 @@ angular.module('fmApp')
 
   $scope.addRoute = function (route) {
     console.log(route);
-    io.socket.request($scope.socketOptions('post','/routes',{"Authorization": "Bearer " + authService.getToken()},route), function (body, JWR) {
-      console.log('Sails responded with post user: ', body);
+    // io.socket.request($scope.socketOptions('post','/routes',{"Authorization": "Bearer " + authService.getToken()},route), function (body, JWR) {
+    //   console.log('Sails responded with post user: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 201){
+    //     $scope.showAddRouteBox(false);
+    //     $scope.$digest();
+    //   }
+    // });
+    io.socket.request($scope.socketOptions('put','/address/assign_route',{"Authorization": "Bearer " + authService.getToken()},route), function (body, JWR) {
+      console.log('Sails responded with put address: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-        $scope.showAddRouteBox(false);
-        $scope.$digest();
+        console.log("Ok");
       }
-    });
+    }); 
   };
 
 
@@ -304,33 +312,45 @@ angular.module('fmApp')
 
   };
 
-  $scope.onDropComplete = function (data, evt, index){
+  $scope.onDropAddComplete = function (data, evt, index){
     console.log("Dropped");
     console.log(data);
     var addresses = [];
-    if(_.findIndex($scope.addressesInRoute,{ 'address_id': data.address_id}) === -1 ){
-      // $scope.route.address_id.push(data.address_id);
-      // console.log($scope.route.address_id);
-      // $scope.addressesInRoute.push(data);
-      //console.log(index);
-      addresses.push(data);
-        var x = {
-          "route": index,
-          "address": addresses
-        };
-
-        console.log(x);
-
-      io.socket.request($scope.socketOptions('put','/address/assign_route',{"Authorization": "Bearer " + authService.getToken()},x), function (body, JWR) {
-        console.log('Sails responded with put address: ', body);
-        console.log('and with status code: ', JWR.statusCode);
-        if(JWR.statusCode === 201){
-           console.log("Ok");
-        }
-      }); 
+    if(_.findIndex($scope.route.address,{ 'address_id': data.address_id}) === -1 ){
+      $scope.route.address.push(data);
+      console.log($scope.route.address);
     }else{
-      // $scope.showExistingAddressInRouteError(true,data.address_name);
+      $scope.showExistingAddressInRouteError(true,data.address_name);
     }
+  };
+
+  $scope.onDropEditComplete = function (data, evt, index){
+    // console.log("Dropped");
+    // console.log(data);
+    // var addresses = [];
+    // if(_.findIndex($scope.address,{ 'address_id': data.address_id}) === -1 ){
+    //   // $scope.route.address_id.push(data.address_id);
+    //   // console.log($scope.route.address_id);
+    //   // $scope.address.push(data);
+    //   //console.log(index);
+    //   addresses.push(data);
+    //     var x = {
+    //       "route": index,
+    //       "address": addresses
+    //     };
+
+    //     console.log(x);
+
+      // io.socket.request($scope.socketOptions('put','/address/assign_route',{"Authorization": "Bearer " + authService.getToken()},x), function (body, JWR) {
+      //   console.log('Sails responded with put address: ', body);
+      //   console.log('and with status code: ', JWR.statusCode);
+      //   if(JWR.statusCode === 201){
+      //      console.log("Ok");
+      //   }
+      // }); 
+    // }else{
+    //   // $scope.showExistingAddressInRouteError(true,data.address_name);
+    // }
   };
 
   $scope.showExistingAddressInRouteError = function (data,address) {
