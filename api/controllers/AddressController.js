@@ -12,10 +12,10 @@ module.exports = {
 		var updatedAddressList = [];
 
 		Routes.findOrCreate({route_name : routeName})
-			.then(function(route){
-				async.each(addressList, function(address, cb){
+			.then(function (route){
+				async.each(addressList, function (address, cb){
 					Address.update({id : address.id}, {route_id : route.id})
-						.then(function(updatedAddress){
+						.then(function (updatedAddress){
 							updatedAddressList.push(updatedAddress);
 							cb();
 						},
@@ -24,8 +24,7 @@ module.exports = {
 							cb(err);
 						});
 				}, function(err){
-					if(err)
-						return res.send(err);
+					if(err) return res.send(err);
 
 					return res.send(updatedAddressList);
 				});

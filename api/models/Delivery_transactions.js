@@ -47,6 +47,10 @@ module.exports = {
   		model : 'customer_orders',
   		required : true
   	},
+    loadout_id : {
+      model : 'load_out',
+      required : true
+    },
   	status : {
   		type : 'string',
   		required : true,
