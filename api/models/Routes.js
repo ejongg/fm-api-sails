@@ -19,9 +19,13 @@ module.exports = {
   		type : 'string',
   		required : true,
       unique : true
-  	}
+  	},
+    address : {
+      collection : 'address',
+      via : 'route_id'
+    }
   },
-  
+
   afterUpdate : function(route, next){
     sails.sockets.blast('routes', {verb : 'updated', data : route});
     next();

@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-  	address_id : {
+  	id : {
   		type: 'integer',
   		unique: true,
   		primaryKey: true,
