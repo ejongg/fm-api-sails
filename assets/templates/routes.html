@@ -197,10 +197,8 @@
        
       <div ng-repeat="routeInfo in routes">
         <p>{{routeInfo.route_name}}</p>
-         <div style="background-color:#202020;width:100%;height:200px;color:white;" >
-           <div>
-                
-           </div>
+         <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropComplete($data,$event,$index)">
+         
         </div>      
       </div>
 
