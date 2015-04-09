@@ -28,11 +28,7 @@ module.exports = {
 
 					Routes.findOne({route_name : routeName}).populate('address')
 						.then(function (createdRoute){
-							var obj = {
-								route : createdRoute 
-							};
-
-							sails.sockets.blast('routes', {verb : 'created', data : obj});
+							sails.sockets.blast('routes', {verb : 'created', data : createdRoute});
 							return res.send("Route created successfully");
 						});
 				});
