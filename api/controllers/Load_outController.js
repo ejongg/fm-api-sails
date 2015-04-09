@@ -21,57 +21,59 @@ module.exports = {
 		};
 
 		Load_out.create(loadout)
-			.exec(function createLoadout(err, createdLoadout){
-				if(err)
-					return res.send(err);
-			});
+			.then(function createLoadout(createdLoadout){
+				return createdLoadout.id;
+			})
 
-		async.each(orders, function(order, cb){
-			var delivery = {
-				total_amount : order.total_amount,				
-				customer_id : order.customer_id.id,
-				delivery_date : delivery_date,
-				truck_id : truck_id,
-				order_id : order.id,
-				user : user	
-			};
+			.then(function createDelivery(loadout_id){
+				async.each(orders, function(order, cb){
+					var delivery = {
+						total_amount : order.total_amount,				
+						customer_id : order.customer_id.id,
+						delivery_date : delivery_date,
+						truck_id : truck_id,
+						order_id : order.id,
+						loadout_number : loadoutNumber,
+						loadout_id : loadout_id,
+						user : user	
+					};
 
-			Delivery_transactions.create(delivery)
-				.then(function createDeliveryProducts(created_delivery){
+					Delivery_transactions.create(delivery)
+						.then(function createDeliveryProducts(created_delivery){
 
-					async.each(order.products, function(product, cb_inner){
-						var order_product = {
-							dtrans_id : created_delivery.id,
-							sku_id : product.sku_id,
-							cases : product.cases
-						};
+							async.each(order.products, function(product, cb_inner){
+								var order_product = {
+									dtrans_id : created_delivery.id,
+									sku_id : product.sku_id,
+									cases : product.cases
+								};
 
-						Delivery_products.create(order_product)
-							.exec(function(err, created_product){
+								Delivery_products.create(order_product)
+									.exec(function(err, created_product){
+										if(err)
+											return res.send(err);
+
+										cb_inner();
+									});
+
+							}, 
+
+							function(err){
 								if(err)
 									return res.send(err);
 
-								cb_inner();
+								cb();
 							});
-
-					}, 
-
-					function(err){
-						cb();
-					});
+						});
 				},
 
 				function(err){
-					return res.send(err);
+					if(err)
+						return res.send(err);
+
+					return res.send("Loadout successfully added");
 				});
-		},
-
-		function(err){
-			if(err)
-				return res.send(err);
-
-			return res.send("Loadout successfully added");
-		});
+			});
 	},
 
 	confirm : function(req, res){
@@ -103,6 +105,39 @@ module.exports = {
 			function(err){
 				return res.send(err);
 			});
+	},
+
+	list : function(req, res){
+		var loadoutList = [];
+
+		Load_out.find().then(function(loadouts){
+
+			if(loadouts.length > 0){
+				async.each(loadouts, function (loadout, cb){
+					Delivery_transactions.find({loadout_id : loadout.id})
+
+						.then(function (deliveries){
+							_(deliveries).forEach(function (delivery){
+								loadout.total_amount = loadout.total_amount + delivery.total_amount;
+							});
+
+							loadoutList.push(loadout);
+							cb();
+						})
+
+						.catch(function(err){
+							return res.send(err);
+						});
+
+				}, function(err){
+					if(err) return res.send(err);
+
+					return loadoutList;
+				});
+			}else{
+				return res.json("No loadouts found");
+			}
+		});
 	}
 };
 
