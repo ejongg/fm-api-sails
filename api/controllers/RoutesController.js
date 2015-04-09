@@ -29,7 +29,6 @@ module.exports = {
 					Routes.findOne({route_name : routeName}).populate('address')
 						.then(function (createdRoute){
 							var obj = {
-								address : updatedAddressList,
 								route : createdRoute 
 							};
 
