@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	add : {
+	add : function(req, res){
 		var routeName = req.body.route_name;
 		var addressList = req.body.address;
 		var updatedAddressList = [];
