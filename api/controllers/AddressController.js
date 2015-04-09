@@ -7,26 +7,33 @@
 
 module.exports = {
 	assign_route : function(req, res){
-		var route = req.body.route;
+		var routeName = req.body.route_name;
 		var addressList = req.body.address;
 		var updatedAddressList = [];
 
-		async.each(addressList, function(address, cb){
-			Address.update({id : address.id}, {route_id : route})
-				.then(function(updatedAddress){
-					updatedAddressList.push(updatedAddress);
-					cb();
-				},
+		Routes.findOrCreate({route_name : routeName})
+			.then(function(route){
+				async.each(addressList, function(address, cb){
+					Address.update({id : address.id}, {route_id : route.id})
+						.then(function(updatedAddress){
+							updatedAddressList.push(updatedAddress);
+							cb();
+						},
 
-				function(err){
-					cb(err);
+						function(err){
+							cb(err);
+						});
+				}, function(err){
+					if(err)
+						return res.send(err);
+
+					return res.send(updatedAddressList);
 				});
-		}, function(err){
-			if(err)
-				return res.send(err);
+			})
 
-			return res.send(updatedAddressList);
-		});
+			.catch(function(err){
+				return res.send(err);
+			});
 	}
 };
 

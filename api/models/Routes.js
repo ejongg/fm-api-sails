@@ -21,12 +21,7 @@ module.exports = {
       unique : true
   	}
   },
-
-  afterCreate : function(route, next){
-    sails.sockets.blast('routes', {verb : 'created', data : route});
-    next();
-  },
-
+  
   afterUpdate : function(route, next){
     sails.sockets.blast('routes', {verb : 'updated', data : route});
     next();
