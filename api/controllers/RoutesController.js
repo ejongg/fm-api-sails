@@ -37,6 +37,6 @@ module.exports = {
 			.catch(function(err){
 				return res.send(err);
 			});
-	}
+	} 
 };
 
