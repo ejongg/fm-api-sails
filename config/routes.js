@@ -21,29 +21,86 @@
  */
 
 module.exports.routes = {
+	/* 	USERS		
+		login - for user login
+		changepassword - for changing password of users
+	*/
+	'POST /users/login' : 'Users.login',
+	'POST /users/changepassword' : 'Users.changepassword',
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
-  /*
-   '/': {
-     view: 'homepage'
-   }
-  */
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  *  If a request to a URL doesn't match any of the custom routes above, it  *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+	/* 	BAD ORDERS
+		add - for creating bad orders
+	*/
+	'POST /bad-orders/add' : 'Bad_orders.add',
 
+	/* 	BAYS 
+		add - for creating bays
+		bayitems - for listing the bays with their total product count
+	*/
+	'POST /bays/add' : 'Bays.add',
+	'GET  /bays/bayitems' : 'Bays.bayitems',
+
+	/* 	CUSTOMER ORDERS 
+		add - for creating customer orders
+		list - for listing customer orders
+	*/
+	'POST /customer-orders/add' : 'Customer_orders.add',
+	'GET  /customer-orders/list' : 'Customer_orders.list',
+
+	/* 	EMPLOYEES 
+		add - for creating employees
+	*/
+	'POST /employees/add' : 'Employees.add',
+
+	/* 	INVENTORY 
+		list - for listing the contents of inventory
+	*/
+	'GET /inventory/list' : 'Inventory.getInventory',
+
+	/* 	LOAD IN 
+		add - for creating load ins
+	*/
+	'POST /load-in/add' : 'Load_in.add',
+
+	/* 	LOAD OUT 
+		add - for creating load outs
+		confirm - for confirming load outs
+		list - for listing load outs
+	*/
+	'POST /load-out/add' : 'Load_out.add',
+	'POST /load-out/confirm' : 'Load_out.confirm',
+	'GET  /load-out/list' : 'Load_out.list',
+
+	/* 	PURCHASES 
+		add - for creating purchases
+	*/
+	'POST /purchases/add' : 'Purchases.add',
+
+	/* 	ADDRESS 
+		remove - removes the address from its current route
+	*/
+	'POST /address/remove' : 'Address.remove',
+
+	/* 	ROUTES 
+		add - for creating routes
+	*/
+	'POST /routes/add' : 'Routes.add',
+
+	/* 	SKU 
+		available - for listing products in inventory that has total count > 0
+	*/
+	'GET /sku/available' : 'Sku.available',
+
+	/* 	TRUCKS 
+		add - for creating trucks
+	*/
+	'POST /trucks/add' : 'Trucks.add',
+
+	/* 	WAREHOUSE TRANSACTIONS 
+		add - for creating warehouse transactions
+	*/
+	'POST /warehouse-transactions/add' : 'Warehouse_transactions/add',	
+
+	/* REPORTS */
+  	'GET /reports/dssr' : 'Reports.dssr'
 };
