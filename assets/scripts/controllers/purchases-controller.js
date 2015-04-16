@@ -115,6 +115,10 @@ angular.module('fmApp')
   getSKU();
   getBays();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
   $scope.showAddPurchaseForm = function (data) {
     if($scope.viewProducts === true){
       $scope.showViewProducts(false);

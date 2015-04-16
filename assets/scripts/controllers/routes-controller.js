@@ -64,6 +64,10 @@ angular.module('fmApp')
   getAdresses();
   getRoutes();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
   $scope.showAddAdressForm = function (data) {
     $scope.addAdressForm = data;
     if(data === false){

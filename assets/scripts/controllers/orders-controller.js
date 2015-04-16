@@ -81,6 +81,10 @@ angular.module('fmApp')
   getOrders();
   getSKU();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
   $scope.showAddOrderForm = function (data) {
     if($scope.viewProducts === true){
       $scope.showViewProducts(false);

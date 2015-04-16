@@ -29,6 +29,10 @@ angular.module('fmApp')
 
   getInventory();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
   
 
 }]);

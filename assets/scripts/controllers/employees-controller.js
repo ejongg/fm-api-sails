@@ -32,6 +32,10 @@ angular.module('fmApp')
 
   getEmployees();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
 	$scope.showAddEmployeeForm = function (data) {
       $scope.addEmployeeForm = data;
       if($scope.editOrDeleteEmployeeForm === true) {

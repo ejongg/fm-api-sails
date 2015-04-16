@@ -50,6 +50,10 @@ angular.module('fmApp')
 
   getProducts();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
   $scope.showAddProductForm = function (data) {
     $scope.productForm.$setPristine();
     if($scope.editOrDeleteProductForm === true) {

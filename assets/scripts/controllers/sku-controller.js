@@ -115,7 +115,9 @@ angular.module('fmApp')
   //     console.log(err);
   //     });
   // };
-    
+  $scope.pagePrint = function () {
+    window.print();
+  };
   /*
   Show add sku form
   - If data is false clear the form.

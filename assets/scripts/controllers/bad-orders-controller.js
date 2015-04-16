@@ -93,6 +93,10 @@ angular.module('fmApp')
   getBadOrderList();
   getBays();
   getSKU();
+  
+  $scope.pagePrint = function () {
+    window.print();
+  };
 
   $scope.showAddBadOrderForm = function (data) {
     if($scope.viewBadOrderDetails === true){
