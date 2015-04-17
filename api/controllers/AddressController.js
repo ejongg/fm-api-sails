@@ -12,7 +12,7 @@ module.exports = {
 		var route = req.body.route;
 
 		Address.findOne({id : address})
-			.then(function (foundAddress){
+			.then(function removeRouteOfAddress(foundAddress){
 				return new Promise(function(resolve, reject){
 					foundAddress.route_id = '';
 					foundAddress.save(function(err, saved){
@@ -23,7 +23,7 @@ module.exports = {
 				});				
 			})
 
-			.then(function (updatedAddress){
+			.then(function emitEvent(updatedAddress){
 				var obj = {
 					address : updatedAddress,
 					route : route

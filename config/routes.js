@@ -102,5 +102,6 @@ module.exports.routes = {
 	'POST /warehouse-transactions/add' : 'Warehouse_transactions/add',	
 
 	/* REPORTS */
-  	'GET /reports/dssr' : 'Reports.dssr'
+  	'GET /reports/dssr' : 'Reports.getDssr',
+  	'GET /reports/transactions' : 'Reports.getTransactions'
 };

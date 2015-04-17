@@ -1,6 +1,4 @@
 
-var _ = require('lodash');
-var async = require('async');
 var moment = require('moment');
 
 module.exports = {
