@@ -3,64 +3,128 @@
 	are requested.
 */
 var moment = require('moment');
-
+var Promise = require('bluebird');
 module.exports = {
 	getDssr : function(req, res){
 		var dssr = {};
-		var date = moment().format("YYYY-MM-DD");
+		var date = req.query.date;
+
+		if(!date){
+			date = moment().format("YYYY-MM-DD");
+		}
 
 		async.parallel([
 			function getBeginningInventory(cb){
+				var totalCount = 0;
+
 				Inventory.find()
-					.then(function (inventory_items){
-						var totalCount = 0;
+					.then(function (items){
+						return items;					
+					})
 
-						_(inventory_items).forEach(function(item){
-							totalCount = totalCount + item.physical_count;
-						});
+					.each(function (item){
+						totalCount = totalCount + item.physical_count;
+					})
 
+					.then( function (){
 						dssr.beginning_inventory = totalCount;
 						cb();
-					},
-
-					function(err){
-						return res.send(err);
 					});
 			},
 
-			function getTotalPurchases(cb){
-				Purchases.find({date_received : date})
-					.then(function (purchases){
-						var totalPurchases = 0;
+			function getEndingInventory(cb){
+				var totalCount = 0;
+				Inventory.find()
+					.then(function (items){
+						return items;
+					})
 
-						(purchases).forEach(function(purchase){
-							totalPurchases = totalPurchases + purchase.total_cost;
-						});
+					.each(function (item){
+						totalCount = totalCount + item.physical_count;
+					})
 
-						dssr.total_purchases = totalPurchases;
+					.then(function (){
+						dssr.ending_inventory = totalCount;
 						cb();
-					}, 
+					})
+			},
 
-					function(err){
-						return res.send(err);
-					});				
+			function getTotalPurchases(cb){
+				var totalPurchases = 0;
+
+				Purchases.find()
+					.then(function (purchases){
+						return purchases;	
+					})
+
+					.each(function (purchase){
+						totalPurchases = totalPurchases + purchase.total_amount;
+					})
+
+					.then(function (){
+						dssr.purchases = totalPurchases;
+						cb();
+					})				
+			},
+
+			function getSTT(cb){
+				var totalAmount = 0;
+
+				Delivery_transactions.find()
+					.then(function (deliveries){
+						return deliveries;
+					})
+
+					.each(function (delivery){
+						totalAmount = totalAmount + delivery.total_amount;
+					})
+
+					.then(function (){
+						dssr.deliveries = totalAmount;
+						cb();
+					})
 			},
 
 			function getTotalExpenses(cb){
-				Bad_orders.find({date : date})
-					.then(function (bad_orders){
-						var totalExpense = 0;
+				var totalExpenses = 0;
 
-						(bad_orders).forEach(function(bad_order){
-							totalExpense = totalExpense + bad_order.expense;
-						});
+				Bad_orders.find()
+					.then(function (badOrders){
+						return badOrders;
+					})
 
-						dssr.total_expense = totalExpense;
+					.each(function (badOrder){
+						totalExpenses = totalExpenses + badOrder.expense;
+					})
+
+					.then(function (){
+						dssr.expenses = totalExpenses;
 						cb();
-					},
+					});
+			},
 
-					function(err){
-						return res.send(err);
+			function getEmpties(cb){
+				var totalAmount = 0;
+
+				Returns.find().populate("products")
+					.then(function (returns){
+						return returns;
+					})
+
+					.each(function computeAmount(returns){
+						return new Promise(function (resolve, reject){
+							ReturnsService.getTotalAmount(returns.products, function(err, result){
+								if(err) reject(err);
+								
+								totalAmount = totalAmount + result;
+								resolve();
+							});	
+						});
+					})
+
+					.then(function addToDssr(){
+						dssr.empties = totalAmount;
+						cb();
 					});
 			}
 		],
