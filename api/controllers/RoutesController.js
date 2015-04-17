@@ -9,6 +9,7 @@ module.exports = {
 	add : function(req, res){
 		var routeName = req.body.route_name;
 		var addressList = req.body.address;
+		var flag = req.body.flag;
 		var updatedAddressList = [];
 
 		Routes.findOrCreate({route_name : routeName}, {route_name : routeName})
@@ -28,7 +29,13 @@ module.exports = {
 
 					Routes.findOne({route_name : routeName}).populate('address')
 						.then(function (createdRoute){
-							sails.sockets.blast('routes', {verb : 'created', data : createdRoute});
+							
+							if(flag == "add"){
+								sails.sockets.blast('routes', {verb : 'created', data : createdRoute});	
+							}else if(flag == "edit"){
+								sails.sockets.blast('routes', {verb : 'updated', data : createdRoute});	
+							}
+							
 							return res.send("Route created successfully");
 						});
 				});

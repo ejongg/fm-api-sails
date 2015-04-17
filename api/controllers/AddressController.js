@@ -30,7 +30,7 @@ module.exports = {
 				};
 
 				sails.sockets.blast('address', {verb : 'created', data : obj});
-				return res.send("Address removed from route", 200);
+				return res.send("Address removed from route " + route, 200);
 			})
 
 			.catch(function(err){

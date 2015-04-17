@@ -22,6 +22,10 @@ module.exports = {
     deposit : {
       type : 'float',
       defaultsTo : 0.00
+    },
+    products : {
+      collection : "returns_products",
+      via : "return_id"
     }
   },
 
