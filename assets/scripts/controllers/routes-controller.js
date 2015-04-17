@@ -352,13 +352,19 @@ angular.module('fmApp')
 
   $scope.onDropEditComplete = function (data, evt, index, name){
     console.log("Dropped");
+    console.log(data);
     console.log(name);
-    console.log($scope.routes[index].address);
+ 
+    var currentAddress = $scope.routes[index].address;
+    console.log(currentAddress);
+    currentAddress.push(data)
+
     var newAddress = {
     "route_name": name,
-    "address": $scope.routes[index].address.push(data),
+    "address": currentAddress,
     "flag": "edit"
     };
+    console.log(newAddress);
     io.socket.request($scope.socketOptions('post','/routes/add',{"Authorization": "Bearer " + authService.getToken()},newAddress), function (body, JWR) {
       console.log('Sails responded with put address: ', body);
       console.log('and with status code: ', JWR.statusCode);
@@ -367,6 +373,26 @@ angular.module('fmApp')
          $scope.$digest();
       }
     }); 
+  };
+
+  $scope.deleteAddressInRoute = function (route,address) {
+    
+    var addressInfo = {
+    "route": route,
+    "address": address
+    };
+
+    console.log(addressInfo);
+
+    io.socket.request($scope.socketOptions('post','/address/remove',{"Authorization": "Bearer " + authService.getToken()},addressInfo), function (body, JWR) {
+      console.log('Sails responded with put address: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+         console.log("Deleted Address");
+         $scope.$digest();
+      }
+    }); 
+
   };
 
   $scope.showExistingAddressInRouteError = function (data,address) {
@@ -402,10 +428,10 @@ angular.module('fmApp')
       case "destroyed":
         console.log("Address Deleted");
         console.log(msg.data[0]);
-        var index = _.findIndex($scope.addresses,{'address_id': msg.data[0].address_id});
-        console.log(index);
-        $scope.addresses.splice(index,1);
-        $scope.$digest();
+        // var index = _.findIndex($scope.addresses,{'address_id': msg.data[0].address_id});
+        // console.log(index);
+        // $scope.addresses.splice(index,1);
+        // $scope.$digest();
     }
 
   });
@@ -424,9 +450,9 @@ angular.module('fmApp')
         break;
       case "updated": 
         console.log("Route Updated");
-        var index = _.findIndex($scope.addresses,{'address_id': msg.data.address_id});
+        var index = _.findIndex($scope.routes,{'id': msg.data.id});
         console.log(index);
-        $scope.addresses[index] = msg.data;   
+        $scope.routes[index] = msg.data;   
         console.log(msg.data);
         $scope.$digest();
         break;
