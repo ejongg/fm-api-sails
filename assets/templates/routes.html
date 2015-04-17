@@ -209,10 +209,10 @@
          <div ng-hide="editIndex === $index"style="background-color:red;width:100%;height:200px;color:white;">
            <div ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
         </div> 
-        <div ng-show="editIndex === $index" style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index)">
+        <div ng-show="editIndex === $index" style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,routeInfo.route_name)">
            <div ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
         </div>     
-        <button ng-show="editIndex === $index" ng-click="">SAVE</button> 
+        
         <button ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button> 
       </div>
 

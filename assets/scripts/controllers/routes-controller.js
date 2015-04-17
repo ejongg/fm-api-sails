@@ -25,6 +25,7 @@ angular.module('fmApp')
 
   $scope.route = {};
   $scope.route.address = [];
+  $scope.route.flag = "add";
 
   $scope.mondayButton = false;
   $scope.tuesdayButton = false;
@@ -349,17 +350,23 @@ angular.module('fmApp')
     }
   };
 
-  $scope.onDropEditComplete = function (data, evt, index){
+  $scope.onDropEditComplete = function (data, evt, index, name){
     console.log("Dropped");
+    console.log(name);
     console.log($scope.routes[index].address);
-    // io.socket.request($scope.socketOptions('put','/routes/add',{"Authorization": "Bearer " + authService.getToken()},route), function (body, JWR) {
-    //   console.log('Sails responded with put address: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //      $scope.showAddRouteBox(false);
-    //      $scope.$digest();
-    //   }
-    // }); 
+    var newAddress = {
+    "route_name": name,
+    "address": $scope.routes[index].address.push(data),
+    "flag": "edit"
+    };
+    io.socket.request($scope.socketOptions('post','/routes/add',{"Authorization": "Bearer " + authService.getToken()},newAddress), function (body, JWR) {
+      console.log('Sails responded with put address: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+         console.log("Added Address");
+         $scope.$digest();
+      }
+    }); 
   };
 
   $scope.showExistingAddressInRouteError = function (data,address) {
