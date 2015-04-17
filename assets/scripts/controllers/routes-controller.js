@@ -12,6 +12,9 @@ angular.module('fmApp')
   $scope.addAdressForm = false;
   $scope.editAdressForm = false;
   $scope.addRouteBox = false;
+  $scope.editRouteBox = false;
+
+  $scope.editIndex = -1;
 
 
   $scope.address = {};
@@ -88,9 +91,11 @@ angular.module('fmApp')
   };
 
   $scope.showAddRouteBox = function (data){
+    console.log(data);
     $scope.addRouteBox = data;
     if(data === false){
       $scope.route.route_name = '';
+      $scope.route.address= [];
     }
   };
 
@@ -174,14 +179,30 @@ angular.module('fmApp')
     //     $scope.$digest();
     //   }
     // });
-    io.socket.request($scope.socketOptions('put','/address/assign_route',{"Authorization": "Bearer " + authService.getToken()},route), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/routes/add',{"Authorization": "Bearer " + authService.getToken()},route), function (body, JWR) {
       console.log('Sails responded with put address: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
-        console.log("Ok");
+      if(JWR.statusCode === 200){
+         $scope.showAddRouteBox(false);
+         $scope.$digest();
       }
     }); 
   };
+
+  $scope.setEditRoute = function (index){
+     $scope.editIndex = index;
+  };
+
+  $scope.deleteRoute = function (route) {
+    io.socket.request($scope.socketOptions('delete','/routes/' + route.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
+      console.log('Sails responded with delete product: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        console.log("Delete LoadOut");
+        $scope.$digest();
+      }
+    });
+  }; 
 
 
   
@@ -329,32 +350,16 @@ angular.module('fmApp')
   };
 
   $scope.onDropEditComplete = function (data, evt, index){
-    // console.log("Dropped");
-    // console.log(data);
-    // var addresses = [];
-    // if(_.findIndex($scope.address,{ 'address_id': data.address_id}) === -1 ){
-    //   // $scope.route.address_id.push(data.address_id);
-    //   // console.log($scope.route.address_id);
-    //   // $scope.address.push(data);
-    //   //console.log(index);
-    //   addresses.push(data);
-    //     var x = {
-    //       "route": index,
-    //       "address": addresses
-    //     };
-
-    //     console.log(x);
-
-      // io.socket.request($scope.socketOptions('put','/address/assign_route',{"Authorization": "Bearer " + authService.getToken()},x), function (body, JWR) {
-      //   console.log('Sails responded with put address: ', body);
-      //   console.log('and with status code: ', JWR.statusCode);
-      //   if(JWR.statusCode === 201){
-      //      console.log("Ok");
-      //   }
-      // }); 
-    // }else{
-    //   // $scope.showExistingAddressInRouteError(true,data.address_name);
-    // }
+    console.log("Dropped");
+    console.log($scope.routes[index].address);
+    // io.socket.request($scope.socketOptions('put','/routes/add',{"Authorization": "Bearer " + authService.getToken()},route), function (body, JWR) {
+    //   console.log('Sails responded with put address: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //      $scope.showAddRouteBox(false);
+    //      $scope.$digest();
+    //   }
+    // }); 
   };
 
   $scope.showExistingAddressInRouteError = function (data,address) {
@@ -393,6 +398,37 @@ angular.module('fmApp')
         var index = _.findIndex($scope.addresses,{'address_id': msg.data[0].address_id});
         console.log(index);
         $scope.addresses.splice(index,1);
+        $scope.$digest();
+    }
+
+  });
+
+  io.socket.on('routes', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("Route Created");
+        $scope.routes.push(msg.data);
+        console.log($scope.routes);
+        $scope.$digest();
+        break;
+      case "updated": 
+        console.log("Route Updated");
+        var index = _.findIndex($scope.addresses,{'address_id': msg.data.address_id});
+        console.log(index);
+        $scope.addresses[index] = msg.data;   
+        console.log(msg.data);
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Route Deleted");
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.routes,{'id': msg.data[0].route_id});
+        console.log(index);
+        $scope.routes.splice(index,1);
         $scope.$digest();
     }
 
