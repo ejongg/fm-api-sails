@@ -129,7 +129,7 @@
               
               <tbody>
 
-                  <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" ng-drag-success="onDragComplete($data,$event)" style="cursor:button;">
+                  <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" style="cursor:button;">
                       <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.address_name}}</font></td>
                       <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.days}}</font></td>
                       <td style="color:red; cursor:button;">
@@ -193,7 +193,7 @@
                 </div>      
               </div>
 
-             <button type="submit" ng-disabled="routeAddForm.$invalid || route.addressesInRoute.length === 0" class="btn btn-flat btn-default">Add</button>
+             <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-flat btn-default">Add</button>
              <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-flat btn-default">Cancel</button>
 
 
@@ -204,9 +204,16 @@
        
       <div ng-repeat="routeInfo in routes">
         <p>{{routeInfo.route_name}}</p>
-         <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index)">
-         
-        </div>      
+        <button ng-click="setEditRoute($index)" ng-hide="editIndex === $index">EDIT</button>
+        <button ng-click="deleteRoute(routeInfo)" ng-hide="editIndex === $index">DELETE</button>
+         <div ng-hide="editIndex === $index"style="background-color:red;width:100%;height:200px;color:white;">
+           <div ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
+        </div> 
+        <div ng-show="editIndex === $index" style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index)">
+           <div ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
+        </div>     
+        <button ng-show="editIndex === $index" ng-click="">SAVE</button> 
+        <button ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button> 
       </div>
 
     </div>
