@@ -36,6 +36,13 @@ module.exports = {
 			.catch(function(err){
 				return res.send(err);
 			});
+	},
+
+	getList : function (req, res){
+		Address.find()
+			.then(function (addresses){
+				return res.send(addresses);
+			});
 	}
 };
 

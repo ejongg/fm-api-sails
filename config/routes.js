@@ -79,6 +79,7 @@ module.exports.routes = {
 	/* 	ADDRESS 
 		remove - removes the address from its current route
 	*/
+	'GET /address/list' : 'Address.getList',
 	'POST /address/remove' : 'Address.remove',
 
 	/* 	ROUTES 

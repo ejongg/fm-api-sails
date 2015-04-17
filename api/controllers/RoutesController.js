@@ -14,6 +14,7 @@ module.exports = {
 
 		Routes.findOrCreate({route_name : routeName}, {route_name : routeName})
 			.then(function (route){
+
 				async.each(addressList, function (address, cb){
 					Address.update({id : address.id}, {route_id : route.id})
 						.then(function (updatedAddress){
@@ -24,6 +25,7 @@ module.exports = {
 						function(err){
 							cb(err);
 						});
+
 				}, function(err){
 					if(err) return res.send(err);
 
