@@ -451,9 +451,9 @@ angular.module('fmApp')
         break;
       case "updated": 
         console.log("Address Updated");
-        var index = _.findIndex($scope.addresses,{'id': msg.data.address_id});
+        var index = _.findIndex($scope.addresses,{'id': msg.data[0].id});
         console.log(index);
-        $scope.addresses[index] = msg.data;   
+        $scope.addresses[index] = msg.data[0];   
         console.log(msg.data);
         $scope.$digest();
         break;
