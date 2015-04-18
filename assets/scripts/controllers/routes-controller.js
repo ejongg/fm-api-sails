@@ -84,6 +84,10 @@ angular.module('fmApp')
   };
 
   $scope.showAddAdressForm = function (data) {
+    if($scope.editAdressForm === true) {
+       $scope.showEditAdressForm(false);
+    }
+
     $scope.addAdressForm = data;
     if(data === false){
       $scope.address.address_name = '';
@@ -99,6 +103,9 @@ angular.module('fmApp')
   };
 
   $scope.showEditAdressForm = function (data) {
+    if($scope.addAdressForm === true){
+      $scope.showAddAdressForm(false);
+    }
     $scope.editAdressForm = data;
   };
 
@@ -161,7 +168,7 @@ angular.module('fmApp')
 
   $scope.editAddress = function (address) {
     console.log("EDIT BUTTON CLICKED!!");
-    io.socket.request($scope.socketOptions('put','/address/edit' + address.id,{"Authorization": "Bearer " + authService.getToken()},address), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/address/edit',{"Authorization": "Bearer " + authService.getToken()},address), function (body, JWR) {
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
