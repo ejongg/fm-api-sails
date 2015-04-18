@@ -16,6 +16,9 @@ angular.module('fmApp')
 
   $scope.editIndex = -1;
 
+  $scope.noAddresses = true;
+  $scope.noRoutes = true;
+
 
   $scope.address = {};
   $scope.address.days = [];
@@ -46,10 +49,14 @@ angular.module('fmApp')
 
 
   var getAdresses = function () {
-    $http.get(httpHost + '/address').success( function (data) {
-      $scope.addresses = data;
-      console.log("Addresses:");
-      console.log($scope.addresses);
+    $http.get(httpHost + '/address/list').success( function (data) {
+      if(data.length !== 0){
+        $scope.addresses = data;
+        $scope.noAddresses = false;
+        
+        console.log("Addresses:");
+        console.log($scope.addresses);
+      }
     }).error(function (err) {
       console.log(err);
     });
@@ -57,9 +64,13 @@ angular.module('fmApp')
 
   var getRoutes= function () {
     $http.get(httpHost + '/routes').success( function (data) {
-      $scope.routes = data;
-      console.log("Routes:");
-      console.log($scope.routes);
+       if(data.length !== 0){
+        $scope.routes = data;
+        $scope.noRoutes = false;
+        
+        console.log("Routes:");
+        console.log($scope.routes);
+      }
     }).error(function (err) {
       console.log(err);
     });
@@ -104,7 +115,7 @@ angular.module('fmApp')
     $scope.showEditAdressForm(true);
     $scope.copiedAddress = angular.copy(address);
     console.log($scope.copiedAddress);
-    $scope.addressEdit.address_id = $scope.copiedAddress.address_id;
+    $scope.addressEdit.id = $scope.copiedAddress.id;
     $scope.addressEdit.address_name = $scope.copiedAddress.address_name;
     $scope.addressEdit.days = $scope.copiedAddress.days.split(",");
     console.log($scope.addressEdit);
@@ -149,7 +160,8 @@ angular.module('fmApp')
   };
 
   $scope.editAddress = function (address) {
-    io.socket.request($scope.socketOptions('put','/address/' + address.address_id,{"Authorization": "Bearer " + authService.getToken()},address), function (body, JWR) {
+    console.log("EDIT BUTTON CLICKED!!");
+    io.socket.request($scope.socketOptions('put','/address/' + address.id,{"Authorization": "Bearer " + authService.getToken()},address), function (body, JWR) {
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -161,13 +173,13 @@ angular.module('fmApp')
   };
 
   $scope.deleteAddress = function (address){
-    io.socket.request($scope.socketOptions('delete','/address/' + address.address_id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
+    console.log(address.id);
+    io.socket.request($scope.socketOptions('delete','/address/' + address.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){ 
       }
     }); 
-    console.log(address);
   };
 
   $scope.addRoute = function (route) {
@@ -415,11 +427,14 @@ angular.module('fmApp')
       case "created": 
         console.log("Address Created");
         $scope.addresses.push(msg.data);
+         if($scope.noAddresses === true){
+          $scope.noAddresses = false;
+        }
         $scope.$digest();
         break;
       case "updated": 
         console.log("Address Updated");
-        var index = _.findIndex($scope.addresses,{'address_id': msg.data.address_id});
+        var index = _.findIndex($scope.addresses,{'id': msg.data.address_id});
         console.log(index);
         $scope.addresses[index] = msg.data;   
         console.log(msg.data);
@@ -428,10 +443,25 @@ angular.module('fmApp')
       case "destroyed":
         console.log("Address Deleted");
         console.log(msg.data[0]);
-        // var index = _.findIndex($scope.addresses,{'address_id': msg.data[0].address_id});
-        // console.log(index);
-        // $scope.addresses.splice(index,1);
-        // $scope.$digest();
+        var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
+        console.log(index);
+        $scope.addresses.splice(index,1);
+        if($scope.addresses.length === 0){
+          $scope.noAddresses = true;
+        }
+        $scope.$digest();
+        break;
+      case "removed":
+        console.log("Address Removed");
+       // console.log(msg.data.route);
+        //console.log(msg.data.address.id);
+        var routeIndex =  _.findIndex($scope.routes,{'id': msg.data.route});
+        console.log(routeIndex);
+        console.log($scope.routes[routeIndex]);
+        var addressIndex =  _.findIndex($scope.routes[routeIndex].address,{'id': msg.data.address.id});
+        console.log(addressIndex);
+        $scope.routes[routeIndex].address.splice(addressIndex,1);
+        $scope.$digest();
     }
 
   });
@@ -446,6 +476,9 @@ angular.module('fmApp')
         console.log("Route Created");
         $scope.routes.push(msg.data);
         console.log($scope.routes);
+        if($scope.noRoutes === true){
+          $scope.noRoutes = false;
+        }
         $scope.$digest();
         break;
       case "updated": 
@@ -462,6 +495,9 @@ angular.module('fmApp')
         var index = _.findIndex($scope.routes,{'id': msg.data[0].route_id});
         console.log(index);
         $scope.routes.splice(index,1);
+        if($scope.routes.length === 0){
+          $scope.noRoutes = true;
+        }
         $scope.$digest();
     }
 
