@@ -39,6 +39,15 @@ module.exports = {
 			});
 	},
 
+	edit : function (req, res){
+		var address = req.body.address;
+
+		Address.update({id : address.id}, address)
+			.then(function (updatedAddress){
+				sails.sockets.blast("address", {verb : "updated", data : updatedAddress});
+			});
+	},
+
 	getList : function (req, res){
 		Address.find()
 			.then(function (addresses){
