@@ -161,7 +161,7 @@ angular.module('fmApp')
 
   $scope.editAddress = function (address) {
     console.log("EDIT BUTTON CLICKED!!");
-    io.socket.request($scope.socketOptions('put','/address/' + address.id,{"Authorization": "Bearer " + authService.getToken()},address), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/address/edit' + address.id,{"Authorization": "Bearer " + authService.getToken()},address), function (body, JWR) {
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
