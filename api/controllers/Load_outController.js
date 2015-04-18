@@ -22,10 +22,10 @@ module.exports = {
 
 		Load_out.create(loadout)
 			.then(function createLoadout(createdLoadout){
-				return createdLoadout.id;
+				return createdLoadout;
 			})
 
-			.then(function createDelivery(loadout_id){
+			.then(function createDelivery(createdLoadout){
 				async.each(orders, function(order, cb){
 					var delivery = {
 						total_amount : order.total_amount,				
@@ -34,7 +34,7 @@ module.exports = {
 						truck_id : truck_id,
 						order_id : order.id,
 						loadout_number : loadoutNumber,
-						loadout_id : loadout_id,
+						loadout_id : createdLoadout.id,
 						user : user	
 					};
 
@@ -71,6 +71,7 @@ module.exports = {
 					if(err)
 						return res.send(err);
 
+					sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});
 					return res.send("Loadout successfully added");
 				});
 			});
