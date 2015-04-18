@@ -12,15 +12,16 @@ module.exports = {
 		var route = req.body.route;
 
 		Address.findOne({id : address})
-			.then(function removeRouteOfAddress(foundAddress){
-				return new Promise(function(resolve, reject){
-					foundAddress.route_id = '';
-					foundAddress.save(function(err, saved){
+			.then(function removeRoute(foundAddress){
+				return new Promise(function (resolve, reject){
+					foundAddress.route_id = null;
+
+					foundAddress.save(function (err, updatedAddress){
 						if(err) reject(err);
 
-						resolve(saved);
+						resolve(updatedAddress);
 					});
-				});				
+				});
 			})
 
 			.then(function emitEvent(updatedAddress){
@@ -34,7 +35,7 @@ module.exports = {
 			})
 
 			.catch(function(err){
-				return res.send(err);
+				return console.log(err);
 			});
 	},
 
