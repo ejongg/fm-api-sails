@@ -179,8 +179,8 @@
                       <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.address_name}}</font></td>
                       <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.days}}</font></td>
                       <td style="color:red; cursor:button;">
-<a ng-show="editState" ng-click="addressEditClicked(address)" class="btn btn-primary btn-xs">Edit</a>
-<a ng-show="deleteState" ng-click="deleteAddress(address)" class="btn btn-primary btn-xs">Delete</a>
+<a ng-show="editState" ng-hide="deleteState" ng-click="addressEditClicked(address)" class="btn btn-primary btn-xs">Edit</a>
+<a ng-show="deleteState" ng-hide="editState" ng-click="deleteAddress(address)" class="btn btn-primary btn-xs">Delete</a>
                       </td>
                   </tr>
 
