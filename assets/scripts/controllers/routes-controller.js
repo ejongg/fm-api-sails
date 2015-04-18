@@ -220,19 +220,25 @@ angular.module('fmApp')
 
   
   $scope.addDay = function (day) {
+    console.log(day);
+    console.log($scope.mondayButton);
     switch(day){
       case 'monday':
-        if($scope.mondayButton === false){
+        console.log("Monday");
+        if($scope.mondayButton === true){
           $scope.address.days.push(day);
           $scope.mondayButton = true;
+          console.log("scope True");
         }else{
           var index = _.indexOf($scope.address.days,day);
           $scope.address.days.splice(index,1);
           $scope.mondayButton = false;
+          console.log("scope false");
         }
         break;
       case 'tuesday':
-        if($scope.tuesdayButton === false){
+         console.log("Tuesday");
+        if($scope.tuesdayButton === true){
           $scope.address.days.push(day);
           $scope.tuesdayButton = true;
         }else{
@@ -242,7 +248,8 @@ angular.module('fmApp')
         }
         break;
       case 'wednesday':
-        if($scope.wednesdayButton === false){
+        console.log("Wednesday");
+        if($scope.wednesdayButton === true){
           $scope.address.days.push(day);
           $scope.wednesdayButton = true;
         }else{
@@ -252,7 +259,8 @@ angular.module('fmApp')
         }
         break;
       case 'thursday':
-        if($scope.thursdayButton === false){
+        console.log("Thursday");
+        if($scope.thursdayButton === true){
           $scope.address.days.push(day);
           $scope.thursdayButton = true;
         }else{
@@ -262,7 +270,8 @@ angular.module('fmApp')
         }
         break;
       case 'friday':
-        if($scope.fridayButton === false){
+        console.log("Friday");
+        if($scope.fridayButton === true){
           $scope.address.days.push(day);
           $scope.fridayButton = true;
         }else{
@@ -272,7 +281,8 @@ angular.module('fmApp')
         }
         break;
       case 'saturday':
-        if($scope.saturdayButton === false){
+        console.log("Saturday");
+        if($scope.saturdayButton === true){
           $scope.address.days.push(day);
           $scope.saturdayButton = true;
         }else{
@@ -288,7 +298,7 @@ angular.module('fmApp')
     // $scope.addressEdit.days.push(day);
     switch(day){
       case 'monday':
-        if($scope.mondayButtonEdit === false){
+        if($scope.mondayButtonEdit === true){
           $scope.addressEdit.days.push(day);
           $scope.mondayButtonEdit = true;
         }else{
@@ -298,7 +308,7 @@ angular.module('fmApp')
         }
         break;
       case 'tuesday':
-        if($scope.tuesdayButtonEdit === false){
+        if($scope.tuesdayButtonEdit === true){
           $scope.addressEdit.days.push(day);
           $scope.tuesdayButtonEdit = true;
         }else{
@@ -308,7 +318,7 @@ angular.module('fmApp')
         }
         break;
       case 'wednesday':
-        if($scope.wednesdayButtonEdit === false){
+        if($scope.wednesdayButtonEdit === true){
           $scope.addressEdit.days.push(day);
           $scope.wednesdayButtonEdit = true;
         }else{
@@ -318,7 +328,7 @@ angular.module('fmApp')
         }
         break;
       case 'thursday':
-        if($scope.thursdayButtonEdit === false){
+        if($scope.thursdayButtonEdit === true){
           $scope.addressEdit.days.push(day);
           $scope.thursdayButtonEdit = true;
         }else{
@@ -328,7 +338,7 @@ angular.module('fmApp')
         }
         break;
       case 'friday':
-        if($scope.fridayButtonEdit === false){
+        if($scope.fridayButtonEdit === true){
           $scope.addressEdit.days.push(day);
           $scope.fridayButtonEdit = true;
         }else{
@@ -338,7 +348,7 @@ angular.module('fmApp')
         }
         break;
       case 'saturday':
-        if($scope.saturdayButtonEdit === false){
+        if($scope.saturdayButtonEdit === true){
          $scope.addressEdit.days.push(day);
           $scope.saturdayButtonEdit = true;
         }else{

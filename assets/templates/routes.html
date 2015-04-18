@@ -83,11 +83,35 @@
         <form name="addressForm" ng-submit="addAddress(address)" novalidate>
             <label>Address: &nbsp; </label>
             <input type="text" ng-model="address.address_name" required><p>
-            <label>Days: {{address.days}}</label>
+            <label>Days: <div ng-repeat="day in address.days">{{day}}</div></label>
          
-            <div ng-repeat="day in days">
-                <a ng-click="addDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a>
-            </div>
+<!--             <div ng-repeat="day in days"> -->
+                <!-- <a ng-click="addDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a> -->
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="mondayButton" ng-change="addDay('monday')"> Monday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="tuesdayButton" ng-change="addDay('tuesday')"> Tuesday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="wednesdayButton" ng-change="addDay('wednesday')"> Wednesday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="thursdayButton" ng-change="addDay('thursday')"> Thursday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="fridayButton" ng-change="addDay('friday')"> Friday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="saturdayButton" ng-change="addDay('saturday')"> Saturday
+                </label>
+
+       <!--      </div> -->
             <br>
             <button type="submit" ng-disabled="addressForm.$invalid || address.days.length === 0" class="btn btn-flat btn-default">Add</button>
             <a type="button" ng-click="showAddAdressForm(false)" class="btn btn-flat btn-default">Cancel</a>
@@ -98,11 +122,37 @@
         <form name="addressEditForm" novalidate>
             <label>Address: &nbsp; </label>
             <input type="text" ng-model="addressEdit.address_name" required><p>
-            <label>Days: {{addressEdit.days}}</label>
+            <label>Days: <div ng-repeat="day in addressEdit.days">{{day}}</div></label>
+            <!-- <label>Days: {{addressEdit.days}}</label> -->
 
-            <div ng-repeat="day in days">
+            <!-- <div ng-repeat="day in days">
                 <a type="button" ng-click="editDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a>
-            </div>
+            </div> -->
+
+            <label class="checkbox-inline">
+                <input type="checkbox" ng-model="mondayButtonEdit" ng-change="editDay('monday')"> Monday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="tuesdayButtonEdit" ng-change="editDay('tuesday')"> Tuesday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="wednesdayButtonEdit" ng-change="editDay('wednesday')"> Wednesday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="thursdayButtonEdit" ng-change="editDay('thursday')"> Thursday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="fridayButtonEdit" ng-change="editDay('friday')"> Friday
+                </label>
+
+                <label class="checkbox-inline">
+                <input type="checkbox" ng-model="saturdayButtonEdit" ng-change="addDay('saturday')"> Saturday
+            </label>
+
             <br>
             <a type="button" ng-click="editAddress(addressEdit)" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0" class="btn btn-flat btn-default">Edit</a>
             <a type="button" ng-click="showEditAdressForm(false)" class="btn btn-flat btn-default">Cancel</a>
