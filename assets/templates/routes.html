@@ -95,7 +95,7 @@
         </div>
 
         <div ng-show="editAdressForm" class="form-group">
-        <form name="addressEditForm" ng-submit="editAddress(addressEdit)" novalidate>
+        <form name="addressEditForm" novalidate>
             <label>Address: &nbsp; </label>
             <input type="text" ng-model="addressEdit.address_name" required><p>
             <label>Days: {{addressEdit.days}}</label>
@@ -104,20 +104,16 @@
                 <a type="button" ng-click="editDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a>
             </div>
             <br>
-            <a type="submit" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0" class="btn btn-flat btn-default">Edit</a>
+            <a type="button" ng-click="editAddress(addressEdit)" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0" class="btn btn-flat btn-default">Edit</a>
             <a type="button" ng-click="showEditAdressForm(false)" class="btn btn-flat btn-default">Cancel</a>
-
-
-
-
-
-
-
         </form>
         </div>
 
+  <div ng-show="noAddresses" align="center">
+          <h3><strong>NO ADDRESS! </strong></h3>
+  </div>
 
-<table class="table table-condensed" style="border-collapse: collapse;">
+<table class="table table-condensed" style="border-collapse: collapse;" ng-hide="noAddresses">
         
               <thead>
                   <tr>
@@ -160,7 +156,7 @@
               <div class="panel panel-body">
 
                  <ul class="nav nav-tabs">
-                        <li>
+                        <li ng-hide="noAddresses">
                             <a ng-click="showAddRouteBox(true)"><i class="mdi-content-add-box"/>
                               &nbsp;ADD&nbsp;</a>
                         </li>
@@ -176,6 +172,14 @@
 
       
       <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
+       
+       <div ng-show="noAddresses" align="center">
+          <h3><strong>NO ADDRESS, ADD ADDRESS FIRST! </strong></h3>
+       </div>
+
+       <div ng-show="noRoutes" ng-hide="noAddresses" align="center">
+          <h3><strong>NO ROUTES! </strong></h3>
+       </div>
 
       <div ng-show="addRouteBox" class="form-group">
           
