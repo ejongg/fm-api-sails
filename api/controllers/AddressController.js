@@ -13,15 +13,7 @@ module.exports = {
 
 		Address.findOne({id : address})
 			.then(function removeRoute(foundAddress){
-				return new Promise(function (resolve, reject){
-					foundAddress.route_id = null;
-
-					foundAddress.save(function (err, updatedAddress){
-						if(err) reject(err);
-
-						resolve(updatedAddress);
-					});
-				});
+				return AddressService.removeRoute(foundAddress);
 			})
 
 			.then(function emitEvent(updatedAddress){
@@ -30,7 +22,7 @@ module.exports = {
 					route : route
 				};
 
-				sails.sockets.blast('address', {verb : 'removed', data : obj});
+				sails.sockets.blast("address", {verb : "removed", data : obj});
 				return res.send("Address removed from route " + route, 200);
 			})
 
