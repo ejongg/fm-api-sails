@@ -2,6 +2,18 @@
 var moment = require('moment');
 
 module.exports = {
+	removeLoadout : function(delivery){
+		return new Promise(function (resolve, reject){
+			delivery.loadout_id = null;
+
+			delivery.save(function(err, updatedDelivery){
+				if(err) reject(err);
+
+				resolve(updatedDelivery);
+			});
+		});
+	},
+	
 	/**
 	*	TODO assign the new order to a delivery
 	*	TODO add cost for the customer order products

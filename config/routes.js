@@ -47,6 +47,12 @@ module.exports.routes = {
 	'POST /customer-orders/add' : 'Customer_orders.add',
 	'GET  /customer-orders/list' : 'Customer_orders.list',
 
+	/* DELIVERY
+
+	*/
+
+	'POST /delivery/remove' : 'Delivery_transactions.remove',
+
 	/* 	EMPLOYEES 
 		add - for creating employees
 	*/
