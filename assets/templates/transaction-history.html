@@ -24,9 +24,13 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="transaction in transactions | transactionFilter" ng-click="userClicked(user)">
+                        <tr ng-repeat="transaction in transactions">
     
-                            {{transaction}}
+                            <td>{{transaction.customer_name}}</td>
+                            <td>{{transaction.date}}</td>
+                            <td>{{transaction.total_amount}}</td>
+                            <td>{{transaction.type}}</td>
+                            <td>{{transaction.user}}</td>
 
                         </tr>
 
