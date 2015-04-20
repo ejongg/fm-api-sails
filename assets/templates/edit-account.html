@@ -1,0 +1,71 @@
+<!-- START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Edit Account Info </h1>
+    </div>
+
+</div>
+
+
+
+<!-- BODY -->
+
+<!-- DO NOT REMOVE-->
+<div class="container">
+
+    <!-- RIGHT PANEL -->
+
+    <div class="panel col-md-8">
+
+    <div ng-hide="editForm === 1">
+        Username: {{user.username}}
+        <button ng-click="showUsernameForm(1)">Edit</button>
+    </div>
+    <div ng-show="editForm === 1">
+        Username: <input type="text" ng-model="userEdit.username" value="{{user.username}}">
+        <button ng-click="editUser(userEdit)">Save</button>
+        <button ng-click="showUsernameForm(0)">Cancel</button>
+    </div>
+
+
+
+    <div ng-hide="editForm === 2">
+        Password
+        <button ng-click="showUsernameForm(2)">Edit</button>
+    </div>
+    <div ng-show="editForm === 2">
+        Password
+        <button ng-click="showUsernameForm(0)">Cancel</button>
+    </div>
+
+    
+    <div ng-hide="editForm === 3">
+        First Name: {{user.firstname}}
+        <button ng-click="showUsernameForm(3)">Edit</button>
+    </div>
+    <div ng-show="editForm === 3">
+        First Name: <input type="text"  ng-model="userEdit.firstname" value="{{user.firstname}}">
+        <button ng-click="editUser(userEdit)">Save</button>
+        <button ng-click="showUsernameForm(0)">Cancel</button>
+    </div>
+
+    <div ng-hide="editForm === 4">
+         Last Name: {{user.lastname}}
+        <button ng-click="showUsernameForm(4)">Edit</button>
+    </div>
+    <div ng-show="editForm === 4">
+        Last Name: <input type="text" ng-model="userEdit.lastname" value="{{user.lastname}}">
+        <button ng-click="editUser(userEdit)">Save</button>
+        <button ng-click="showUsernameForm(0)">Cancel</button>
+    </div>
+
+
+  </div>
+</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+
+</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->

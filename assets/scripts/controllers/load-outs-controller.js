@@ -9,16 +9,17 @@ angular.module('fmApp')
   $scope.trucks = [];
   $scope.addLoadOutBox = false;
 
+  $scope.editIndex = -1;
+
   var todayDay = new Date();
   todayDay.setDate(todayDay.getDate() + 1);
-
-  
 
   $scope.loadOut = {};
   $scope.loadOut.orders = [];
   $scope.loadOut.user = userService.getUserName();
   $scope.loadOut.delivery_date = $filter('date')(todayDay,"yyyy-MM-dd");
   
+
   var getCustomerOrders = function () {
     $http.get(httpHost + '/customer_orders').success( function (data) {
       $scope.customerOrders = data;
@@ -53,6 +54,10 @@ angular.module('fmApp')
   getCustomerOrders();
   getLoadOuts();
   getTrucks();
+  
+  $scope.setEditLoadOut = function (index) {
+    $scope.editIndex = index;
+  };
 
   $scope.showAddLoadOutBox = function (data){
     $scope.addLoadOutBox = data;
@@ -85,11 +90,49 @@ angular.module('fmApp')
      io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},loadOut), function (body, JWR) {
       console.log('Sails responded with post loadout: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
+      if(JWR.statusCode === 200){
         $scope.showAddLoadOutBox(false);
         $scope.$digest();
       }
     });  
   };
+
+
+  io.socket.on('loadout', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("Route Created");
+        $scope.loadOuts.push(msg.data);
+        console.log($scope.loadOuts);
+        // if($scope.noRoutes === true){
+        //   $scope.noRoutes = false;
+        // }
+        $scope.$digest();
+        break;
+      case "updated": 
+        console.log("Route Updated");
+        var index = _.findIndex($scope.routes,{'id': msg.data.id});
+        console.log(index);
+        $scope.routes[index] = msg.data;   
+        console.log(msg.data);
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Route Deleted");
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.routes,{'id': msg.data[0].route_id});
+        console.log(index);
+        $scope.routes.splice(index,1);
+        if($scope.routes.length === 0){
+          $scope.noRoutes = true;
+        }
+        $scope.$digest();
+    }
+
+  });
 
 }]);

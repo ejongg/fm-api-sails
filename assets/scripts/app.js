@@ -35,7 +35,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
       }
     })
       .state('admin.accounts', {
-        url:'/accounts',
+        url:'/personnel/accounts',
         views: {
           'mainContent': {
             templateUrl: 'templates/accounts.html',
@@ -44,7 +44,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
         }  
       })
       .state('admin.dssr', {
-        url:'/sales/dssr',
+        url:'/dssr',
         views: {
           'mainContent': {
             templateUrl: 'templates/dssr.html'
@@ -70,7 +70,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
         }  
       })
       .state('admin.customers', {
-        url:'/customers',
+        url:'/delivery/customers',
         views: {
           'mainContent': {
             templateUrl: 'templates/customers.html',
@@ -79,7 +79,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
         }  
       })
       .state('admin.bays', {
-        url:'/bays',
+        url:'/inventory/bays',
         views: {
           'mainContent': {
             templateUrl: 'templates/bays.html',
@@ -88,7 +88,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
         }  
       })
       .state('admin.trucks', {
-        url:'/trucks',
+        url:'/delivery/trucks',
         views: {
           'mainContent': {
             templateUrl: 'templates/trucks.html',
@@ -97,7 +97,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
         }  
       })
       .state('admin.employees', {
-        url:'/employees',
+        url:'/personnel/employees',
         views: {
           'mainContent': {
             templateUrl: 'templates/employees.html',
@@ -106,7 +106,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
         }  
       })
       .state('admin.routes', {
-        url:'/routes',
+        url:'/delivery/routes',
         views: {
           'mainContent': {
             templateUrl: 'templates/routes.html',
@@ -123,12 +123,30 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable']
           }
         }  
       })
+      .state('admin.transaction-history', {
+        url:'/reports/transaction-history',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/transaction-history.html',
+            controller:'TransactionHistoryCtrl'
+          }
+        }  
+      })
       .state('admin.load-outs', {
         url:'/delivery/load-outs',
         views: {
           'mainContent': {
             templateUrl: 'templates/load-outs.html',
             controller:'LoadOutsCtrl'
+          }
+        }  
+      })
+      .state('admin.edit-account', {
+        url:'/edit-account',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/edit-account.html',
+            controller:'AccountsEditCtrl'
           }
         }  
       })
