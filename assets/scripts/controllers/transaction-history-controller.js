@@ -7,7 +7,7 @@ angular.module('fmApp')
 
   var getTransactions= function () {
     $http.get(httpHost + '/reports/transactions').success( function (data) {
-      $scope.transactions = data;
+      $scope.transactions = $filter('transactionFilter')(data);
       console.log("Transactions:");
       console.log($scope.transactions);
     }).error(function (err) {
