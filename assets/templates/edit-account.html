@@ -39,8 +39,13 @@
         <button ng-click="showUsernameForm(2)">Edit</button>
     </div>
     <div ng-show="editForm === 2">
-        Password
-        <button ng-click="showUsernameForm(0)">Cancel</button>
+        <form name="passwordForm" ng-submit="changePassword(password)" novalidate>
+            <div>Current Password: <input type="password" ng-model="password.old_password" required></div>
+            <div>New Password: <input type="password" ng-model="password.new_password" required></div>
+            <div>Retype New Password: <input type="password" ng-model="password.confNew_password" required></div>
+            <button type="submit" ng-disabled="passwordForm.$invalid || password.new_password !== password.confNew_password">Change Password</button>
+            <button type="button" ng-click="showUsernameForm(0)">Cancel</button>
+        </form>
     </div>
 
     
