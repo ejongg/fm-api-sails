@@ -35,8 +35,11 @@ module.exports = {
 		var user_id = req.body.user_id;
 
 		Users.findOne({id : user_id})
-			.then(function(err, user){
+			.then(function(user){
+				return user;
+			})
 
+			.then(function (user){
 				bcrypt.compare(old_password, user.password, function(err, match){
 					if(err)
 						return res.json({status : {code : 0, message : "An error has occured"}});
@@ -57,7 +60,7 @@ module.exports = {
 					}
 					
 				});
-			});
+			})
 	}
 };
 
