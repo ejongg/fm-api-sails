@@ -16,7 +16,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search" ng-hide="addProductForm || editOrDeleteProductForm || noProducts">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -200,18 +200,18 @@
                   <thead>
                       <tr class="labels">
                           <th>Brand&nbsp;
-                          <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down"></i></a>
-                          <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up"></i></a></th>
+                          <a href="" ng-click="sortCriteria = '-brand_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down"></i></a>
+                          <a href="" ng-click="sortCriteria = '+brand_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up"></i></a></th>
                           <th>Company&nbsp;
-                          <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down"></i></a>
-                          <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up"></i></a></th>
+                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down"></i></a>
+                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up"></i></a></th>
                       </tr>
                   </thead>
 
                   <tbody>
 
 
-                    <tr ng-repeat="product in products"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:search | orderBy:sortCriteria | itemsPerPage: 10"  ng-click="productClicked(product)">
 
                       <td>{{product.brand_name}}</td>
                       <td>{{product.company}}</td>
@@ -220,6 +220,12 @@
 
                   </tbody>
           </table>
+
+          <dir-pagination-controls
+                max-size="7"
+                directional-links="true"
+                boundary-links="true">
+          </dir-pagination-controls>
         </div>
 
     </div> 

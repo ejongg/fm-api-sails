@@ -19,6 +19,9 @@ angular.module('fmApp')
   $scope.editOrDeleteBayForm = false;
   $scope.editBayTab = true;
 
+  // forSorting
+  $scope.sortCriteria = '';
+
   var getBays = function () {
       // $sailsSocket.get('/bays').success(function (data) {
       // $scope.bays = data;
@@ -35,7 +38,7 @@ angular.module('fmApp')
     //   }
     // });
 
-    $http.get(httpHost + '/bays').success( function (data) {
+    $http.get(httpHost + '/bays/list').success( function (data) {
       if(data.length !== 0){
       $scope.bays = data;
       console.log("Bays:");

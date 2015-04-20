@@ -15,7 +15,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide="noBays || addBayForm || editOrDeleteBayForm"/>
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" ng-hide="noBays || addBayForm || editOrDeleteBayForm"/>
                                 </form>
                             </div>
                         </li>
@@ -204,28 +204,33 @@
                 <thead>
                     <tr>
                         <th width="20%">Bay name&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                          <a href="" ng-click="sortCriteria = '-bay_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+bay_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a>
+                        </th>
+
                         <th width="20%">Bay label&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                          <a href="" ng-click="sortCriteria = '-bay_label'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+bay_label'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+
                         <th width="20%">No. of cases in Bay&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                          <a href="" ng-click="sortCriteria = ''" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href="" ng-click="sortCriteria = ''" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+
                         <th width="20%">Bay limit&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                          <a href="" ng-click="sortCriteria = '-bay_limit'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+bay_limit'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+
                         <th width="20%">Pile status&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                          <a href="" ng-click="sortCriteria = '-pile_status'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+pile_status'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="bay in bays" ng-click="bayClicked(bay)">
+                    <tr dir-paginate="bay in bays | filter:search | orderBy:sortCriteria | itemsPerPage: 10" ng-click="bayClicked(bay)">
                         <td>Bay {{bay.bay_name}}</td>
                         <td>{{bay.bay_label}}</td> 
-                        <td>{{getBayCount(bay.id)}}</td>
+                        <td>{{bay.total_prodcuts}}</td>
                         <td>{{bay.bay_limit}}</td>
                         <td>{{bay.pile_status}}</td>
                     </tr>
@@ -234,6 +239,13 @@
 
                 </tbody>
             </table>
+
+            <dir-pagination-controls
+                max-size="7"
+                directional-links="true"
+                boundary-links="true"
+            >
+            </dir-pagination-controls>
         </div>
 
         </div>

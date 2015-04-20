@@ -16,7 +16,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide="noSKU || addSKUForm || editOrDeleteSKUForm"/>
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" ng-hide="noSKU || addSKUForm || editOrDeleteSKUForm"/>
                                 </form>
                             </div>
                         </li>
@@ -404,7 +404,7 @@
                 <thead>
                     <tr>
                         <th><font size="1px">Brand&nbsp;</font>
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '-prod_id'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th><font size="1px">Name&nbsp;</font>
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
