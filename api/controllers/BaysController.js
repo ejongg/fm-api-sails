@@ -30,38 +30,25 @@ module.exports = {
 			});
 	},
 
-	bayitems : function getBayProducts(req, res){
-		
-		Bays.find()
-			.then(function getBays(bays){
-				return bays;
-			},
+	list : function (req, res){
+		var baysWithProductCount = [];
 
-			function(err){
-				console.log(err);
+		Bays.find()
+			.then(function (bays){
+				return bays;
 			})
 
-			.then(function CountBayProducts(bays){
-				var baysWithProductCount = [];
+			.each(function (bay){
+				return BaysService.countBayItems(bay.id)
+				 .then(function (count){
+				 	bay.total_products = count;
+				 	baysWithProductCount.push(bay);
+				 })
+			})
 
-				async.each(bays, function fillArray(bay, cb){
-					BaysService.countBayItems(bay.id, function(err, count){
-						baysWithProductCount.push({bay_id : bay.id, total_products : count});
-						cb();
-					});
-				},
-				function (err){
-					if(err)
-						console.log(err);
-
-					return res.send(baysWithProductCount);
-				});
-
-			},
-
-			function(err){
-				console.log(err);
-			});
+			.then(function (){
+				res.send(baysWithProductCount);
+			})
 	},
 
 	changemovingpile : function changeMovingPile(req, res){

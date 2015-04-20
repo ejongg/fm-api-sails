@@ -1,4 +1,5 @@
-var async = require('async');
+
+var Promise = require("bluebird");
 
 module.exports = {
 	nextBay : function(company){
@@ -49,32 +50,23 @@ module.exports = {
 		
 	},
 
-	countBayItems : function(bay_id, callback){
+	countBayItems : function(bay_id){
+		return new Promise(function (resolve, reject){
+			var count = 0;
 
-		Inventory.find({bay_id : bay_id})
-			.then(function(products){
-				return products;	
-			},
+			Inventory.find({bay_id : bay_id})
+				.then(function(products){
+					return products;	
+				})
 
-			function(err){
-				console.log(err);
-				callback(err);
-			})
+				.each(function(product){
+					count = count + product.physical_count;	
+				})
 
-			.then(function(products){
-				var count = 0;
-
-				(products).forEach(function(product){	
-					count = count + product.physical_count;
-				});
-
-				callback(null, count);
-			},
-
-			function(err){
-				console.log(err);
-				callback(err);
-			});
+				.then(function (){
+					resolve(count);
+				})
+		});
 	},
 
 	findMovingPile : function(company, callback){

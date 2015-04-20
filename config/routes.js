@@ -38,7 +38,7 @@ module.exports.routes = {
 		bayitems - for listing the bays with their total product count
 	*/
 	'POST /bays/add' : 'Bays.add',
-	'GET  /bays/bayitems' : 'Bays.bayitems',
+	'GET  /bays/list' : 'Bays.list',
 
 	/* 	CUSTOMER ORDERS 
 		add - for creating customer orders
