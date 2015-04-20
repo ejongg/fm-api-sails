@@ -18,6 +18,9 @@ angular.module('fmApp')
 
   $scope.noProducts = true;
 
+  //forSorting
+  $scope.sortCriteria = '';
+
 
   var getProducts = function () {
     // io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {

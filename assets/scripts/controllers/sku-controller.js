@@ -19,6 +19,9 @@ angular.module('fmApp')
   
   $scope.noProducts = true;
   $scope.noSKU = true;
+
+  // forSorting
+  $scope.sortCriteria = '';
   
 
   var getProducts = function (){  

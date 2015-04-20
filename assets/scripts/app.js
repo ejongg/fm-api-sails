@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable'] )
+angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable','angularUtils.directives.dirPagination'] )
 
 .constant('httpHost','http://localhost:1337')
 .constant('_', window._)
