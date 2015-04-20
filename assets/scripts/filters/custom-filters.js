@@ -29,6 +29,26 @@ angular.module("fmApp")
         }
     }
 })
+.filter("transactionFilter", function ($filter) {
+    return function (data) {
+        if (angular.isArray(data)) {
+            console.log(data);
+            var result = [];
+            angular.forEach(data, function(value , key){
+              if(value.type = 'Delivery'){
+                console.log("Delivery");
+              }else {
+                console.log("Warehouse sales");
+              }
+            });
+            // result = $filter('filter')(data,searchText);
+            // console.log(result);
+            // return result;
+        } else {
+            return data;
+        }
+    }
+})
 .filter("searchFilter", function ($filter) {
     return function (data,searchText) {
         if (angular.isArray(data)) {

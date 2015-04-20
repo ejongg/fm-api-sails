@@ -1,2 +1,39 @@
-HELLO TRANSACTION
-{{sample}}
+<div class="panel-body">
+
+        <!-- START OF TABLE -->            
+
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th width="35%">Customer Name&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                            <th width="35%">Date&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                            <th width="30%">Total Amount&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <th width="30%">Type&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <th width="30%">User&nbsp;
+              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="transaction in transactions | transactionFilter" ng-click="userClicked(user)">
+    
+                            {{transaction}}
+
+                        </tr>
+
+                    
+
+                    </tbody>
+                </table> <!-- END OF TABLE -->
+
+
+            </div>
