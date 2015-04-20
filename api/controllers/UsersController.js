@@ -48,7 +48,7 @@ module.exports = {
 								user.password = hashed;
 								user.save(function(err, saved){});
 
-								res.json({status : {code : 1, message : "Password successfully changed "}});
+								return res.json({status : {code : 1, message : "Password successfully changed "}}, 200);
 							});
 						});
 
