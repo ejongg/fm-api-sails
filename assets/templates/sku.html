@@ -404,23 +404,23 @@
                 <thead>
                     <tr>
                         <th><font size="1px">Brand&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-prod_id'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-prod_id.brand_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+prod_id.brand_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th><font size="1px">Name&nbsp;</font>
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-sku_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+sku_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th><font size="1px">Size&nbsp;</font>
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-size'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+size'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th><font size="1px">Company&nbsp;</font>
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-prod_id.company'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+prod_id.company'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th><font size="1px">Price Per Bottle&nbsp;</font>
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-priceperbottle'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+priceperbottle'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th><font size="1px">Price Per Case&nbsp;</font>
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-pricepercase'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+pricepercase'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th><font size="1px">Bottles&nbsp;</font>
               <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
@@ -431,7 +431,7 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="sku in skuLists" ng-click="skuClicked(sku)">
+                    <tr dir-paginate="sku in skuLists | filter:search | orderBy:sortCriteria | itemsPerPage: 10" ng-click="skuClicked(sku)">
                       <td>{{sku.prod_id.brand_name}}</td>
                       <td>{{sku.sku_name}}</td>
                       <td>{{sku.size}}</td>
@@ -443,6 +443,13 @@
                     </tr>
                 </tbody>
             </table>
+
+            <dir-pagination-controls
+                max-size="7"
+                directional-links="true"
+                boundary-links="true"
+            >
+            </dir-pagination-controls>
       </div>
 
       <!-- END OF TABLE -->

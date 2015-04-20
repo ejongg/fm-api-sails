@@ -213,8 +213,8 @@
                           <a href="" ng-click="sortCriteria = '+bay_label'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
 
                         <th width="20%">No. of cases in Bay&nbsp;
-                          <a href="" ng-click="sortCriteria = ''" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-                          <a href="" ng-click="sortCriteria = ''" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                          <a href="" ng-click="sortCriteria = '-total_products'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+total_products'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
 
                         <th width="20%">Bay limit&nbsp;
                           <a href="" ng-click="sortCriteria = '-bay_limit'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
@@ -230,7 +230,7 @@
                     <tr dir-paginate="bay in bays | filter:search | orderBy:sortCriteria | itemsPerPage: 10" ng-click="bayClicked(bay)">
                         <td>Bay {{bay.bay_name}}</td>
                         <td>{{bay.bay_label}}</td> 
-                        <td>{{bay.total_prodcuts}}</td>
+                        <td>{{bay.total_products}}</td>
                         <td>{{bay.bay_limit}}</td>
                         <td>{{bay.pile_status}}</td>
                     </tr>

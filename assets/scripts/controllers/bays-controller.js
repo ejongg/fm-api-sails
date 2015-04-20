@@ -52,7 +52,7 @@ angular.module('fmApp')
   };
 
 
-  var getBayItems = function () {
+  /*var getBayItems = function () {
     // io.socket.request($scope.socketOptions('get','/bays/bayitems'), function (body, JWR) {
     //     console.log('Sails responded with get bay items: ', body);
     //     console.log('and with status code: ', JWR.statusCode);
@@ -73,10 +73,10 @@ angular.module('fmApp')
       console.log(err);
     });
 
-  };
+  };*/
 
   getBays();
-  getBayItems();
+  /*getBayItems();*/
 
   $scope.showAddBayForm = function (data) {
       $scope.addBayForm = data;
