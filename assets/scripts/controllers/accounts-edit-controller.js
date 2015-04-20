@@ -6,6 +6,9 @@ angular.module('fmApp')
   $scope.user = {};
   $scope.userEdit = {};
   $scope.password = {};
+  $scope.errorMessage = false;
+
+
 
   var getUser = function () {
     $http.get('http://localhost:1337/users/' + userService.getUser().id ).success(function(data){
@@ -19,6 +22,10 @@ angular.module('fmApp')
   };
 
   getUser();
+  
+  $scope.showErrorMessage = function(data){
+    $scope.errorMessage = data;
+  }
 
   $scope.showUsernameForm = function (data) {
     $scope.editForm = data;
@@ -43,6 +50,9 @@ angular.module('fmApp')
   };
 
   $scope.changePassword = function (password) {
+    if($scope.errorMessage === "true"){
+      $scope.showErrorMessage(false);
+    }
     var passwordInfo = {
       "old_password" : password.old_password,
       "new_password" : password.new_password,
@@ -55,6 +65,10 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showUsernameForm(0);
+        $scope.$digest();
+      }else if (JWR.statusCode === 304) {
+        $scope.showErrorMessage(true);
+        $scope.password.old_password = '';
         $scope.$digest();
       }
     }); 
