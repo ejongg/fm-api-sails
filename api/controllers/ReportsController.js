@@ -137,7 +137,7 @@ module.exports = {
 	},
 
 	getTransactions : function(req, res){
-		var transactions = {};
+		var transactions = [];
 		var date = req.query.date;
 
 		if(!date){
@@ -146,27 +146,35 @@ module.exports = {
 
 		async.parallel([
 			function getWarehouseTransactions (cb){
-				Warehouse_transactions.find({date : date})
+				Warehouse_transactions.find()
 					.then(function (warehouseTransactions){
-						transactions.warehouse = warehouseTransactions;
-						cb();
-					},
+						return warehouseTransactions;
+					})
 
-					function(err){
-						return res.send(err);
-					});
+					.each(function (transaction){
+						transaction.type = "Warehouse sales";
+						transactions.push(transaction);
+					})
+
+					.then(function (){
+						cb();
+					})
 			},
 
 			function getDeliveryTransactions (cb){
-				Delivery_transactions.find({delivery_date : date}).populateAll()
+				Delivery_transactions.find().populateAll()
 					.then(function (deliveryTransactions){
-						transactions.delivery = deliveryTransactions;
-						cb();
-					},
+						return deliveryTransactions;
+					})
 
-					function(err){
-						return res.send(err);
-					});
+					.each(function (transaction){
+						transaction.type = "Delivery";
+						transactions.push(transaction);
+					})
+
+					.then(function (){
+						cb();
+					})
 			}
 		],
 
