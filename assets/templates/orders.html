@@ -15,7 +15,7 @@
                         <li>
                             <div class="search" ng-hide="noOrders">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide="addOrderForm || editOrDeleteOrderForm" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" ng-hide="addOrderForm || editOrDeleteOrderForm" />
                                 </form>
                             </div>
                         </li>
@@ -191,22 +191,22 @@
                 <thead>
                     <tr>
                         <th width="25%">Establishment Name&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-customer_id.establishment_name'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+customer_id.establishment_name'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th width="25%">Date&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-date_received'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+date_received'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th width="25%">Coke Agent name&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-supplieragent_name'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+supplieragent_name'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th width="25%">Status&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-status'"  class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+status'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="order in ordersList" ng-click="getOrderProducts(order.id)" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
+                    <tr dir-paginate="order in ordersList | filter:search | orderBy:sortCriteria | itemsPerPage: 10" ng-click="getOrderProducts(order.id)" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
                         <td>{{order.customer_id.establishment_name}}</td>
                         <td>{{order.date_received}}</td>
                         <td>{{order.supplieragent_name}}</td>
@@ -215,6 +215,13 @@
 
                 </tbody>
             </table>
+
+             <dir-pagination-controls
+                max-size="7"
+                directional-links="true"
+                boundary-links="true"
+            >
+            </dir-pagination-controls>
         </div>
 
     <!-- END OF TABLE -->

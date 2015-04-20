@@ -19,6 +19,9 @@ angular.module('fmApp')
 
   $scope.noSKU = true;
   $scope.noOrders = true;
+
+  // forSorting
+  $scope.sortCriteria = '';
   
   var getSKU = function () {
     // $http.get('http://localhost:1337/sku').success(function(data){

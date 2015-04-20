@@ -18,6 +18,8 @@ angular.module('fmApp')
   $scope.loadOut.orders = [];
   $scope.loadOut.user = userService.getUserName();
   $scope.loadOut.delivery_date = $filter('date')(todayDay,"yyyy-MM-dd");
+
+  $scope.sortCriteria = '';
   
 
   var getCustomerOrders = function () {

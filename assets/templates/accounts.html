@@ -15,7 +15,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide="addUserForm || editOrDeleteUserForm"/>
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" ng-hide="addUserForm || editOrDeleteUserForm"/>
                                 </form>
                             </div>
                         </li>
@@ -168,19 +168,19 @@
                     <thead>
                         <tr>
                             <th width="35%">Username&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-username'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+username'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                             <th width="35%">Type&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-type'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+type'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                             <th width="30%">Full Name&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-firstname'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+firstname'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="user in users" ng-click="userClicked(user)">
+                        <tr dir-paginate="user in users | filter: search | orderBy: sortCriteria | itemsPerPage: 10" ng-click="userClicked(user)">
                             <td>{{user.username}}</td>
                             <td>{{user.type}}</td>
                             <td>{{user.firstname + " " + user.lastname}}</td>
@@ -191,7 +191,11 @@
                     </tbody>
                 </table> <!-- END OF TABLE -->
 
-
+                <dir-pagination-controls
+                    max-size="7"
+                    boundary-links="true"
+                    directional-link="true">
+                </dir-pagination-controls>    
             </div>
         </div>
     </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
