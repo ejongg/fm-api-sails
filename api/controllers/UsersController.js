@@ -56,7 +56,7 @@ module.exports = {
 						});
 
 					}else{
-						return res.json({status : {code : 0, message : "Wrong old password entered"}});
+						return res.json({status : {code : 0, message : "Wrong old password entered"}}, 304);
 					}
 					
 				});
