@@ -40,29 +40,12 @@ angular.module('fmApp')
       $scope.editOrDeleteUserForm = data;
 	};
 
-	// $scope.setEditUserTab = function (data) {
- //      $scope.editUserTab = data;
- //      if(data === true){
- //        $scope.userEdit.username = $scope.copiedUser.username;
- //        $scope.userEdit.password = $scope.copiedUser.password;
- //        $scope.userEdit.firstname = $scope.copiedUser.firstname;
- //        $scope.userEdit.lastname = $scope.copiedUser.lastname;
- //        $scope.userEdit.type = $scope.copiedUser.type;
- //      } 
-	// };
     
     $scope.userClicked = function (user) {
       if($scope.addUserForm === true){
         $scope.showAddUserForm(false);
       }
       $scope.copiedUser = angular.copy(user);
-      $scope.userEdit.id = $scope.copiedUser.id;
-      $scope.userEdit.username = $scope.copiedUser.username;
-      $scope.userEdit.password = $scope.copiedUser.password;
-      $scope.userEdit.firstname = $scope.copiedUser.firstname;
-      $scope.userEdit.lastname = $scope.copiedUser.lastname;
-      $scope.userEdit.type = $scope.copiedUser.type;
-      
       $scope.userDelete.id = $scope.copiedUser.id;
       $scope.userDelete.username = $scope.copiedUser.username;
       $scope.userDelete.password = $scope.copiedUser.password;
@@ -92,17 +75,6 @@ angular.module('fmApp')
       }
     });   
 	}; 
-
-	$scope.editUser = function (newInfo) {
-      console.log(newInfo);
-      $sailsSocket.put('/users/' + newInfo.id, newInfo).success(function (data) {
-        var index = _.findIndex($scope.users, function(user) { return user.id == data.id; });
-        $scope.users[index] = data;
-        $scope.showEditOrDeleteUserForm(false);
-      }).error(function (err) {
-        console.log(err);
-      });
-	};
 
 	$scope.deleteUser = function (user) {
     io.socket.request($scope.socketOptions('delete','/users/' + user.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
