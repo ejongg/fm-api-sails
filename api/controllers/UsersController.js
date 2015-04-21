@@ -19,7 +19,7 @@ module.exports = {
 							return res.json({status : {code : 0, message : "An error has occured"}});
 
 						if(match){
-							return res.json({status : {code : 1, message: "Login successful"} , token : Auth.issueToken(user)});
+							return res.json({status : {code : 1, message: "Login successful"} , token : Auth.issueToken(user.id)});
 						}else
 							return res.json({status : {code : 0, message : "Incorrect password"}});
 					});
