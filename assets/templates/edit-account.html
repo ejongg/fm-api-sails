@@ -59,7 +59,7 @@
     </div>
     <div ng-show="editForm === 3">
         First Name: <input type="text"  ng-model="userEdit.firstname" value="{{user.firstname}}">
-        <button ng-click="editUser(userEdit)">Save</button>
+        <button ng-click="editFirstname(userEdit)">Save</button>
         <button ng-click="showUsernameForm(0)">Cancel</button>
     </div>
 
@@ -69,7 +69,7 @@
     </div>
     <div ng-show="editForm === 4">
         Last Name: <input type="text" ng-model="userEdit.lastname" value="{{user.lastname}}">
-        <button ng-click="editUser(userEdit)">Save</button>
+        <button ng-click="editLastname(userEdit)">Save</button>
         <button ng-click="showUsernameForm(0)">Cancel</button>
     </div>
 

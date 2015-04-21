@@ -11,7 +11,7 @@ angular.module('fmApp')
 
 
   var getUser = function () {
-    $http.get('http://localhost:1337/users/' + userService.getUser().id ).success(function(data){
+    $http.get('http://localhost:1337/users/' + userService.getUserID ()).success(function(data){
       $scope.user = data;
       $scope.userEdit = angular.copy($scope.user);
         console.log("User:");
@@ -37,12 +37,40 @@ angular.module('fmApp')
     }
   };
 
-  $scope.editUser = function (user) {
+  $scope.editUsername = function (user) {
     console.log(user);
     io.socket.request($scope.socketOptions('put','/users/' + user.id,{"Authorization": "Bearer " + authService.getToken()} , user), function (body, JWR) {
-      console.log('Sails responded with edit user: ', body);
+      console.log('Sails responded with edit username: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
+        userService.setUsername(body.username);
+        $scope.showUsernameForm(0);
+        $scope.$digest();
+      }
+    }); 
+  };
+
+  $scope.editFirstname = function (user) {
+    console.log(user);
+    io.socket.request($scope.socketOptions('put','/users/' + user.id,{"Authorization": "Bearer " + authService.getToken()} , user), function (body, JWR) {
+      console.log('Sails responded with edit firstname: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        console.log(body);
+        userService.setFirstName(body.firstname);
+        $scope.showUsernameForm(0);
+        $scope.$digest();
+      }
+    }); 
+  };
+
+  $scope.editLastname = function (user) {
+    console.log(user);
+    io.socket.request($scope.socketOptions('put','/users/' + user.id,{"Authorization": "Bearer " + authService.getToken()} , user), function (body, JWR) {
+      console.log('Sails responded with edit lastname: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        userService.setLastName(body.lastname);
         $scope.showUsernameForm(0);
         $scope.$digest();
       }

@@ -334,10 +334,31 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
     };
 })
 
-.controller('MainCtrl',['$scope', 'authService', '$state', 'userService','$filter', function($scope, authService, $state, userService, $filter){
-  $scope.userType =  userService.getUserType();
-  $scope.userName = userService.getUserName();
+.controller('MainCtrl',['$scope', 'authService', '$state', 'userService','$filter','$rootScope', function($scope, authService, 
+  $state, userService, $filter,$rootScope){
+  // $scope.userType =  userService.getUserType();
+  // $scope.userFirstName = userService.getFirstName();
+  // $scope.userLastName = userService.getLastName();
   $scope.dateToday = new Date();
+  userService.getUser().success(function(data){
+    $scope.userType =  data.type;
+    $scope.userFirstName = data.firstname;
+    $scope.userLastName = data.lastname;
+  });
+
+  $rootScope.$on("firstName",function(){
+    console.log("Firstname");
+     $scope.userFirstName = userService.getFirstName();
+     console.log($scope.userFirstName);
+     $scope.$digest();
+  });
+  
+  $rootScope.$on("lastName",function(){
+    console.log("lastname");
+     $scope.userLastName = userService.getLastName();
+     console.log($scope.userLastName);
+     $scope.$digest();
+  });
 
   $scope.logout = function () {
     authService.logout();

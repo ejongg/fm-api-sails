@@ -18,14 +18,13 @@ angular.module('fmApp')
 
 	 authService.login('/users/login',loginData).success(function (data) {
         var status = data.status;
-         
+         var userInfo = {};
         if(status.code === 1) {
            
           authService.setToken(data.token);
           // userService.getUser();
-          var userInfo = userService.getUser();
-
-          switch(userInfo.type) {
+         userService.getUser().success(function (data) {
+           switch(data.type) {
             case 'admin':
               $state.go('admin.dssr');
               break;
@@ -38,6 +37,8 @@ angular.module('fmApp')
             case 'checker':
               $state.go('checker.tally');
           }
+         });
+         
         }else{
           $scope.error = status.message;
 	        $scope.showError = true;
