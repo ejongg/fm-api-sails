@@ -2,281 +2,303 @@
 
 
 <!-- PAGE HEADERS -->
-
 <div class="row">
 
-    <div class="pageheader-left">
-        <h1> Routes </h1>
-    </div>
-
-    <div class="pageheader-right">
-        <div class="form-group">
-            <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <div class="search" ng-hide="">
-                                <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
-                                </form>
-                            </div>
-                        </li>
- <!--                        <li>
-                            <a ng-click="" ng-hide="">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASE</h6></a>
-
-                        </li> -->
-                        <li>
-                            <a ng-hide="" ng-click="pagePrint()">
-                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
-                        </li>
-                    </ul>
-                </div>
-    </div>
-
-
-
-
-</div>
-
-
-
-<!-- BODY -->
-
-<!-- DO NOT REMOVE-->
-<div class="container">
-
-     <!-- LEFT PANEL -->
-    <div class="col-md-6">
-
-
-<h4><i class="mdi-content-add-circle"></i> ADDRESS </h4>
-
-        <div class="panel panel-body">
-              
-
-                 <ul class="nav nav-tabs">
-                        <li>
-                            <a ng-click="showAddAdressForm(true)"><i class="mdi-content-add-box"/>
-                              &nbsp;ADD&nbsp;</a>
-                        </li>
-                        <li>
-                            <a ng-click="editState = !editState"><i class="mdi-editor-mode-edit"/>
-                              &nbsp;EDIT&nbsp;</a>
-                        </li>
-                        <li>
-                            <a ng-click="deleteState = !deleteState"><i class="mdi-navigation-cancel"/>
-                              &nbsp;DELETE&nbsp;</a>
-                        </li>
-                    </ul>
-<br><br>
-
-<!-- <div class="addressList">
-        <p>ADDRESS</p> 
-        <button ng-click="showAddAdressForm(true)">+</button>
-        <button ng-click="editState = !editState">Edit</button>
-        <button ng-click="deleteState = !deleteState">Delete</button>
-
- -->
-
-
-
-        <div ng-show="addAdressForm" class="form-group">
-        <form name="addressForm" ng-submit="addAddress(address)" novalidate>
-            <label>Address: &nbsp; </label>
-            <input type="text" ng-model="address.address_name" required><p>
-            <label>Days: <div ng-repeat="day in address.days">{{day}}</div></label>
-         
-<!--             <div ng-repeat="day in days"> -->
-                <!-- <a ng-click="addDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a> -->
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="mondayButton" ng-change="addDay('monday')"> Monday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="tuesdayButton" ng-change="addDay('tuesday')"> Tuesday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="wednesdayButton" ng-change="addDay('wednesday')"> Wednesday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="thursdayButton" ng-change="addDay('thursday')"> Thursday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="fridayButton" ng-change="addDay('friday')"> Friday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="saturdayButton" ng-change="addDay('saturday')"> Saturday
-                </label>
-
-       <!--      </div> -->
-            <br>
-            <button type="submit" ng-disabled="addressForm.$invalid || address.days.length === 0" class="btn btn-flat btn-default">Add</button>
-            <a type="button" ng-click="showAddAdressForm(false)" class="btn btn-flat btn-default">Cancel</a>
-        </form>
-        </div>
-
-        <div ng-show="editAdressForm" class="form-group">
-        <form name="addressEditForm" novalidate>
-            <label>Address: &nbsp; </label>
-            <input type="text" ng-model="addressEdit.address_name" required><p>
-            <label>Days: <div ng-repeat="day in addressEdit.days">{{day}}</div></label>
-            <!-- <label>Days: {{addressEdit.days}}</label> -->
-
-            <!-- <div ng-repeat="day in days">
-                <a type="button" ng-click="editDay(day)" class="btn btn-flat btn-default">{{day | uppercase}}</a>
-            </div> -->
-
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-model="mondayButtonEdit" ng-change="editDay('monday')"> Monday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="tuesdayButtonEdit" ng-change="editDay('tuesday')"> Tuesday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="wednesdayButtonEdit" ng-change="editDay('wednesday')"> Wednesday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="thursdayButtonEdit" ng-change="editDay('thursday')"> Thursday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="fridayButtonEdit" ng-change="editDay('friday')"> Friday
-                </label>
-
-                <label class="checkbox-inline">
-                <input type="checkbox" ng-model="saturdayButtonEdit" ng-change="addDay('saturday')"> Saturday
-            </label>
-
-            <br>
-            <a type="button" ng-click="editAddress(addressEdit)" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0" class="btn btn-flat btn-default">Edit</a>
-            <a type="button" ng-click="showEditAdressForm(false)" class="btn btn-flat btn-default">Cancel</a>
-        </form>
-        </div>
-
-  <div ng-show="noAddresses" align="center">
-          <h3><strong>NO ADDRESS! </strong></h3>
+  <div class="pageheader-left">
+    <h1> Routes </h1>
   </div>
 
-<table class="table table-condensed" style="border-collapse: collapse;" ng-hide="noAddresses">
-        
-              <thead>
-                  <tr>
-                      <th colspan="2"><font size="1px">Address Name</font></th>
-                      <th><font size="1px">Days</font></th>
-                      <th><font size="1px">&nbsp;</font></tr>
-
-              </thead>
-              
-              <tbody>
-
-                  <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" style="cursor:button;">
-                      <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.address_name}}</font></td>
-                      <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.days}}</font></td>
-                      <td style="color:red; cursor:button;" ng-hide="editAdressForm">
-<a ng-show="editState" ng-click="addressEditClicked(address)" class="btn btn-primary btn-xs">Edit</a>
-<a ng-show="deleteState" ng-click="deleteAddress(address)" class="btn btn-primary btn-xs">Delete</a>
-                      </td>
-                  </tr>
-
-              </tbody>
-
-      </table>
-
-
-
-
+  <div class="pageheader-right">
+    <div class="form-group">
+      <ul class="nav nav-tabs col-md-12">
+        <li>
+          <div class="search" ng-hide="noAddresses || noRoutes">
+            <form method="get" action="/search" id="search">
+              <input name="q" type="text" size="50" placeholder="SEARCH" />
+            </form>
+            </div>
+        </li>
+        <li>
+          <a ng-hide="noAddresses || noRoutes" ng-click="pagePrint()">
+            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+        </li>
+      </ul>
     </div>
-
+  </div>
 </div>
 
 
+<div class="container">
+  <div class="col-md-6">
 
+  <h4><i class="mdi-content-add-circle"></i> ADDRESS </h4>
 
+    <div class="panel panel-body">
+      <ul class="nav nav-tabs">
+        <li>
+            <a ng-click="showAddAddressForm(true)"><i class="mdi-content-add-box"/>
+              &nbsp;ADD&nbsp;</a>
+        </li>
+        <li>
+            <a ng-hide="noAddresses" ng-click="editState = !editState"><i class="mdi-editor-mode-edit"/>
+              &nbsp;EDIT&nbsp;</a>
+        </li>
+        <li>
+            <a ng-hide="noAddresses"ng-click="deleteState = !deleteState"><i class="mdi-navigation-cancel"/>
+              &nbsp;DELETE&nbsp;</a>
+        </li>
+      </ul>
 
-    <div class="col-md-6">
+      <br>
 
-      <h4><i class="mdi-content-add-circle"></i> ROUTE </h4>
+      <div ng-show="addAddressForm">
+        <form name="addressForm" ng-submit="addAddress(address)" novalidate>
+          <div class="form-group">
+          <label class="col-md-2 control-label ">Address: &nbsp; </label>
+           
+          <div class="col-md-10">
+              <input type="text" class="form-control" ng-model="address.address_name" required>
+            </div>
+          </div>
 
-              <div class="panel panel-body">
+          <br>
+          <br>
 
-                 <ul class="nav nav-tabs">
-                        <li ng-hide="noAddresses">
-                            <a ng-click="showAddRouteBox(true)"><i class="mdi-content-add-box"/>
-                              &nbsp;ADD&nbsp;</a>
-                        </li>
-                    </ul>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Days: </label>
+              <div class="" ng-repeat="day in address.days" style="display:inline;">{{day}},  
+              </div>
+           
+            <div class="col-md-10 col-md-offset-2">
+              <div class="checkbox">
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="mondayButton" ng-change="addDay('monday')"> Monday
+                </label> &nbsp; &nbsp; &nbsp;
 
+                 <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="tuesdayButton" ng-change="addDay('tuesday')"> Tuesday
+                </label>  &nbsp; &nbsp;  &nbsp;
 
-
-<br>
-<br>
-
-
-
-
-      
-      <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
-       
-       <div ng-show="noAddresses" align="center">
-          <h3><strong>NO ADDRESS, ADD ADDRESS FIRST! </strong></h3>
-       </div>
-
-       <div ng-show="noRoutes" ng-hide="noAddresses" align="center">
-          <h3><strong>NO ROUTES! </strong></h3>
-       </div>
-
-      <div ng-show="addRouteBox" class="form-group">
-          
-
-          <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
-
-              <label>Route: &nbsp; </label>
-              <input type="text" ng-model="route.route_name" required><p>
-
-             <br>
-
-              <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropAddComplete($data,$event,$index)">
-                <div ng-repeat="address in route.address">
-                  <div>{{address.address_name}}</div>
-                </div>      
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="wednesdayButton" ng-change="addDay('wednesday')"> Wednesday
+                </label>
               </div>
 
-             <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-flat btn-default">Add</button>
-             <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-flat btn-default">Cancel</button>
+              <div class="checkbox">
+              <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="thursdayButton" ng-change="addDay('thursday')"> Thursday 
+                </label> &nbsp; &nbsp;
+
+    
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="fridayButton" ng-change="addDay('friday')"> Friday
+                </label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
 
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="saturdayButton" ng-change="addDay('saturday')"> Saturday
+                </label>           
+              </div>
+
+              </div>
+            </div>
+
+           
+
+            <div class="form-group pull-right">
+              <br>
+              <button type="submit" ng-disabled="addressForm.$invalid || address.days.length === 0" class="btn btn-xs btn-primary">Add</button>
+              <a type="button" ng-click="showAddAddressForm(false)" class="btn btn-xs btn-default">Cancel</a>
+            </div>
 
           </form>
+        </div>
+
+        <div ng-show="editAddressForm">
+          <form name="addressEditForm" novalidate>
+            <div class="form-group">     
+              <label class="col-md-2 control-label">Address: &nbsp; </label>
+
+              <div class="col-md-10">
+                <input type="text" class="form-control" ng-model="addressEdit.address_name" required>
+              </div>
+            </div>
+
+            <br>
+            <br>
+            
+            <div class="form-group">
+              <label class="col-md-2 control-label">Days: </label>
+                <div ng-repeat="day in addressEdit.days" style="display:inline;">{{day}}, </div>
+
+
+              <div class="col-md-10 col-md-offset-2">
+                <div class="checkbox">
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="mondayButtonEdit" ng-change="editDay('monday')"> Monday 
+                </label> &nbsp; &nbsp; &nbsp;
+
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="tuesdayButtonEdit" ng-change="editDay('tuesday')"> Tuesday
+                </label> &nbsp; &nbsp;  &nbsp;
+
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="wednesdayButtonEdit" ng-change="editDay('wednesday')"> Wednesday
+                </label>
+                </div>
+
+                <div class="checkbox">
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="thursdayButtonEdit" ng-change="editDay('thursday')"> Thursday 
+                </label> &nbsp;  &nbsp;
+
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="fridayButtonEdit" ng-change="editDay('friday')"> Friday 
+                </label> &nbsp;  &nbsp; &nbsp; &nbsp; 
+
+                <label class="checkbox-inline">
+                  <input type="checkbox" ng-model="saturdayButtonEdit" ng-change="editDay('saturday')"> Saturday
+                </label>
+                </div>
+              </div>
+              </div>
+
+              <div class="form-group pull-right">
+                <br>
+                <a type="button" ng-click="editAddress(addressEdit)" ng-disabled="addressEditForm.$invalid || addressEdit.days.length === 0" class="btn btn-xs btn-primary">Save</a>
+
+                <a type="button" ng-click="showEditAddressForm(false)" class="btn btn-xs btn-default">Cancel</a>
+              </div>
+          </form>
+        </div>
+
+        <div ng-show="noAddresses" ng-hide = "addAddressForm" align="center">
+          <h3><strong>NO ADDRESS! </strong></h3>
+        </div>
+
+
+        <div class="">
+          <table  class="table table-condensed" style="border-collapse: collapse;" ng-hide="noAddresses" class="rtable">
+                
+            <thead>
+              <tr>
+                <th colspan="2"><font size="1px">Address Name</font></th>
+                <th><font size="1px">Days</font></th>
+                <th><font size="1px"></font></th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" style="cursor:button;">
+
+                <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.address_name}}</font></td>
+
+                <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{address.days}}</font></td>
+
+                <td style="color:red; cursor:button;" ng-hide="editAddressForm">
+                  <a ng-show="editState"  class="btn btn-xs btn-default" ng-click="addressEditClicked(address)">Edit</a>
+
+                  <a ng-show="deleteState" class="btn btn-xs btn-default" ng-click="deleteAddress(address)">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+    </div> 
+  </div>
+
+
+  <div class="col-md-6">
+    <h4><i class="mdi-content-add-circle"></i> ROUTE </h4>
+
+      <div class="panel panel-body">
+        <ul class="nav nav-tabs">
+          <li ng-hide="noAddresses">
+              <a ng-click="showAddRouteBox(true)"><i class="mdi-content-add-box"/> &nbsp;ADD&nbsp;</a>
+          </li>
+        </ul>
+
+          <br>
+
+          <!-- notif msg -->
+          <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
+
+          <div ng-show="noAddresses" align="center">
+            <h3><strong>NO ADDRESS, ADD ADDRESS FIRST! </strong></h3>
+          </div>
+
+          <div ng-show="noRoutes" ng-hide="noAddresses || addRouteBox" align="center">
+            <h3><strong>NO ROUTES! </strong></h3>
+          </div>
+
+          <div ng-show="addRouteBox">
+            <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
+              <div class="form-group">
+                <label class="col-md-2 control-label ">Route:</label>
+
+                <div class="col-md-10">
+                  <input type="text" class="form-control" ng-model="route.route_name" required>
+                </div>
+              </div>
+
+              <br>
+              <br>
+              <br>
+      
+                <div class="routeBox" ng-drop="true" ng-drop-success="onDropAddComplete($data,$event,$index)">
+                  <div ng-repeat="address in route.address">
+                    <div style="padding:2px 6px;">{{address.address_name}}</div>
+                  </div>      
+                </div>
+
+              <div class="form-group pull-right">
+                <br>
+                 <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-xs btn-primary">Add</button>
+                 <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-xs btn-default">Cancel</button>
+              </div>
+
+            </form>
            
-      </div>
-       
-      <div ng-repeat="routeInfo in routes">
-        <p>{{routeInfo.route_name}}</p>
-        <button ng-click="setEditRoute($index)" ng-hide="editIndex === $index">EDIT</button>
-        <button ng-click="deleteRoute(routeInfo)" ng-hide="editIndex === $index">DELETE</button>
-         <div ng-hide="editIndex === $index"style="background-color:red;width:100%;height:200px;color:white;">
-           <div ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
-        </div> 
-        <div ng-show="editIndex === $index" style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,routeInfo.route_name)">
-           <div ng-repeat="address in routeInfo.address">{{address.address_name}}
-            <button ng-click="deleteAddressInRoute(routeInfo.id,address.id)">X</button></div>
-        </div>     
-        
-        <button ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button> 
+        </div>
       </div>
 
-    </div>
+      <!-- routesbox -->
+      <div class="panel-primary" ng-repeat="routeInfo in routes">
+          <div class="panel-heading">
+              <h3 class="panel-title">Route {{routeInfo.route_name}}</h3>
+          </div>
 
-</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+          <div class="panel-body" ng-hide="editIndex === $index">
+               <label class="control-label">Address:</label>
+               <div class=" col-md-offset-1 control-label" ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
 
-</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+                <div class="form-group pull-right">
+                <button class="btn btn-xs btn-primary" ng-click="setEditRoute($index)" ng-hide="editIndex === $index">EDIT</button>
+              <button class="btn btn-xs btn-default" ng-click="deleteRoute(routeInfo)" ng-hide="editIndex === $index">DELETE</button>
+              </div>
+          </div>
 
+          <!-- edit route -->
+          <div class="panel-body" ng-show="editIndex === $index" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,routeInfo.route_name)">
+            <div ng-repeat="address in routeInfo.address" style="padding:2px 6px;">{{address.address_name}}
+            <button ng-click="deleteAddressInRoute(routeInfo.id,address.id)">X</button>
+
+              <br>
+
+             <button class="btn btn-xs btn-default pull-right" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button>
+
+          </div>
+              
+        </div>
+
+
+      </div>
+         
+  </div>
+   
+</div>
 
 <!-- <div style="background-color:red;" ng-repeat="address in addresses" ng-drag="true" ng-drag-data="address" ng-drag-success="onDragComplete($data,$event)">
   Draggable div

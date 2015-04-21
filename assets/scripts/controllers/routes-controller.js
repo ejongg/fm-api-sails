@@ -9,8 +9,8 @@ angular.module('fmApp')
   $scope.editState = false;
   $scope.deleteState = false;
 
-  $scope.addAdressForm = false;
-  $scope.editAdressForm = false;
+  $scope.addAddressForm = false;
+  $scope.editAddressForm = false;
   $scope.addRouteBox = false;
   $scope.editRouteBox = false;
 
@@ -83,12 +83,12 @@ angular.module('fmApp')
     window.print();
   };
 
-  $scope.showAddAdressForm = function (data) {
-    if($scope.editAdressForm === true) {
-       $scope.showEditAdressForm(false);
+  $scope.showAddAddressForm = function (data) {
+    if($scope.editAddressForm === true) {
+       $scope.showEditAddressForm(false);
     }
 
-    $scope.addAdressForm = data;
+    $scope.addAddressForm = data;
     if(data === false){
       $scope.address.address_name = '';
       $scope.address.days = [];
@@ -102,11 +102,11 @@ angular.module('fmApp')
     }
   };
 
-  $scope.showEditAdressForm = function (data) {
-    if($scope.addAdressForm === true){
+  $scope.showEditAddressForm = function (data) {
+    if($scope.addAddressForm === true){
       $scope.showAddAdressForm(false);
     }
-    $scope.editAdressForm = data;
+    $scope.editAddressForm = data;
   };
 
   $scope.showAddRouteBox = function (data){
@@ -119,7 +119,7 @@ angular.module('fmApp')
   };
 
   $scope.addressEditClicked = function (address) {
-    $scope.showEditAdressForm(true);
+    $scope.showEditAddressForm(true);
     $scope.copiedAddress = angular.copy(address);
     console.log($scope.copiedAddress);
     $scope.addressEdit.id = $scope.copiedAddress.id;
