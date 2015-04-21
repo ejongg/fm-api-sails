@@ -5,9 +5,8 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-var _ = require('lodash');
 var moment = require('moment');
-var async = require('async');
+var Promise = require("bluebird");
 
 module.exports = {
 	add : function(req, res){
@@ -75,6 +74,28 @@ module.exports = {
 				sails.sockets.blast('purchases', {verb : 'created', data : purchase});
 				return res.send(201);
 			});
+	},
+
+	getPurchaseDetails : function (req, res){
+		var purchaseId = req.query.id;
+		var purchasesList = [];
+
+		Purchase_products.find({purchase_id : purchaseId}).populate("sku_id")
+			.then(function (products){
+				return products;
+			})
+
+			.each(function (product){
+				return SkuService.getCompany(product.sku_id.id)
+					.then(function (company){
+						product.sku_id.company = company;
+						purchasesList.push(product);
+					})
+			})
+
+			.then(function (){
+				return res.send(purchasesList);
+			})
 	}
 };
 

@@ -144,8 +144,8 @@ module.exports = {
 			date = moment().format("YYYY-MM-DD");
 		}
 
-		async.parallel([
-			function getWarehouseTransactions (cb){
+		function getWarehouseTransactions(){
+			return new Promise(function (resolve, reject){
 				Warehouse_transactions.find()
 					.then(function (warehouseTransactions){
 						return warehouseTransactions;
@@ -157,11 +157,13 @@ module.exports = {
 					})
 
 					.then(function (){
-						cb();
+						resolve();
 					})
-			},
-
-			function getDeliveryTransactions (cb){
+			});
+		}
+		
+		function getDeliveryTransactions(){
+			return new Promise(function (resolve, reject){
 				Delivery_transactions.find().populateAll()
 					.then(function (deliveryTransactions){
 						return deliveryTransactions;
@@ -173,16 +175,15 @@ module.exports = {
 					})
 
 					.then(function (){
-						cb();
+						resolve();
 					})
-			}
-		],
+			});
+		}
 
-		function(err){
-			if(err) 
-				return res.send(err);
-
-			return res.send(transactions);
-		});
+		getWarehouseTransactions()
+			.then( getDeliveryTransactions )
+			.then( function (){
+				return res.send(transactions);
+			});
 	}
 }

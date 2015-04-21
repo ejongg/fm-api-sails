@@ -35,8 +35,10 @@ module.exports = {
 
 					async.series([
 						function deductInInventory(cb){
-							InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase);
-							cb();	
+							InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase)
+								.then(function (){
+									cb();
+								});	
 						},
 
 						function emit(cb){
@@ -47,6 +49,44 @@ module.exports = {
 					]);
 
 				});
+			});
+	},
+
+	getBadOrderProducts : function(req, res){
+		var badOrderId = req.query.id;
+		var badOrdersList = [];
+
+		Bad_order_details.find({bad_order_id : badOrderId}).populate("sku_id")
+			.then(function (products){
+				return products;
+			})
+
+			.each(function (product){
+				return SkuService.getCompany(product.sku_id.id)
+					.then(function (company){
+						product.sku_id.company = company;
+						badOrdersList.push(product);
+					})
+			})
+
+			.then(function (){
+				return res.send(badOrdersList);
+			})
+	},
+
+	test : function(req, res){
+		var sku = 6,
+			bottles = 0,
+			cases = 100,
+			bottlespercase = 24;
+
+		InventoryService.experimentalDeduct(sku, bottles, cases, bottlespercase)
+			.then(function (result){
+				return res.send(result);
+			})
+
+			.catch(function (err){
+				console.log(err);
 			});
 	}
 };

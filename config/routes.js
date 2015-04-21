@@ -32,6 +32,7 @@ module.exports.routes = {
 		add - for creating bad orders
 	*/
 	'POST /bad-orders/add' : 'Bad_orders.add',
+	'GET  /bad-orders/details' : 'Bad_orders.getBadOrderProducts',
 
 	/* 	BAYS 
 		add - for creating bays
@@ -46,12 +47,14 @@ module.exports.routes = {
 	*/
 	'POST /customer-orders/add' : 'Customer_orders.add',
 	'GET  /customer-orders/list' : 'Customer_orders.list',
+	'GET  /customer-orders/details' : 'Customer_orders.getOrderDetails',
 
 	/* DELIVERY
 
 	*/
 
 	'POST /delivery/remove' : 'Delivery_transactions.remove',
+	'GET  /delivery/details' : 'Delivery_transactions.getTransactionDetails',
 
 	/* 	EMPLOYEES 
 		add - for creating employees
@@ -81,7 +84,7 @@ module.exports.routes = {
 		add - for creating purchases
 	*/
 	'POST /purchases/add' : 'Purchases.add',
-
+	'GET  /purchases/details' : 'Purchases.getPurchaseDetails',
 	/* 	ADDRESS 
 		remove - removes the address from its current route
 	*/
@@ -107,7 +110,8 @@ module.exports.routes = {
 	/* 	WAREHOUSE TRANSACTIONS 
 		add - for creating warehouse transactions
 	*/
-	'POST /warehouse-transactions/add' : 'Warehouse_transactions/add',	
+	'POST /warehouse-transactions/add' : 'Warehouse_transactions.add',
+	'GET  /warehouse-transactions/details' : 'Warehouse_transactions.getTransactionDetails',	
 
 	/* REPORTS */
   	'GET /reports/dssr' : 'Reports.getDssr',

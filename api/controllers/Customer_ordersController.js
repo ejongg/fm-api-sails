@@ -6,6 +6,7 @@
  */
 
 var moment = require('moment');
+var Promise = require("bluebird");
 
 module.exports = {
 	add : function(req, res){
@@ -96,6 +97,28 @@ module.exports = {
 			function(err){
 				console.log(err);
 			});
+	},
+
+	getOrderDetails : function(req, res){
+		var orderId = req.query.id;
+		var orderList = [];
+
+		Customer_order_products.find({order_id : orderId}).populate("sku_id")
+			.then(function (products){
+				return products;
+			})
+
+			.each(function (product){
+				return SkuService.getCompany(product.sku_id.id)
+					.then(function (company){
+						product.sku_id.company = company;
+						orderList.push(product);
+					})
+			})
+
+			.then(function (){
+				return res.send(orderList);
+			})
 	}
 };
 

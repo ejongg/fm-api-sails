@@ -32,6 +32,28 @@ module.exports = {
 			.catch(function (err){
 				return res.send(err);
 			});
+	},
+
+	getTransactionDetails : function(req, res){
+		var transactionId = req.query.id;
+		var transactionList = [];
+
+		Delivery_products.find({dtrans_id : transactionId}).populate("sku_id")
+			.then(function (products){
+				return products;
+			})
+
+			.each(function (product){
+				return SkuService.getCompany(product.sku_id.id)
+					.then(function (company){
+						product.sku_id.company = company;
+						transactionList.push(product);
+					})
+			})
+
+			.then(function (){
+				return res.send(transactionList);
+			})
 	}
 };
 
