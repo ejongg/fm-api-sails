@@ -40,6 +40,10 @@
     </div>
     <div ng-show="editForm === 2">
         <form name="passwordForm" ng-submit="changePassword(password)" novalidate>
+             <div class="alert alert-dismissable alert-danger" ng-show="errorMessage">
+              <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+              <strong>Incorrect Current Password</strong>
+             </div> 
             <div>Current Password: <input type="password" ng-model="password.old_password" required></div>
             <div>New Password: <input type="password" ng-model="password.new_password" required></div>
             <div>Retype New Password: <input type="password" ng-model="password.confNew_password" required></div>

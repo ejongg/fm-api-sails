@@ -15,7 +15,7 @@
                         <li>
                             <div class="search"  ng-hide="addEmployeeForm || editOrDeleteEmployeeForm || noEmployees">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -251,7 +251,7 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="employee in employees" ng-click="employeeClicked(employee)">
+                    <tr dir-paginate="employee in employees | filter: search | orderBy:sortCriteria | itemsPerPage: 10" ng-click="employeeClicked(employee)">
                         <td>{{employee.emp_fname}}</td>
                         <td>{{employee.emp_lname}}</td>
                         <td>{{employee.office}}</td>
@@ -260,6 +260,12 @@
 
                 </tbody>
             </table>
+
+            <dir-pagination-controls
+                max-size="7"
+                boundary-links="true"
+                directional-links="true">
+            </dir-pagination-controls>
 
             
         </div><!-- END OF TABLE -->

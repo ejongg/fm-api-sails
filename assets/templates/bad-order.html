@@ -17,7 +17,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search" ng-hide="addBadOrderForm">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -139,21 +139,21 @@
             <thead>
                 <tr>
                     <th>SKU&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-sku_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+sku_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     <th>Cases&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-cases'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+cases'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     <th>Expense&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-expense'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+expense'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     <th>Reason</th>
                     <th></th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr ng-repeat="product in products">
+                <tr ng-repeat="product in products | orderBy: sortCriteria">
                     <td>{{product.sku_name}}</td>
                     <td>{{product.cases}}</td>
                     <td>{{product.expense}}</td>
@@ -220,22 +220,22 @@
             <thead>
               <tr class="labels">
                 <th>Bad Order #&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-id'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+id'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                 <th>Expense&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-expense'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+expense'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                 <th>Accountable&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-accountable'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+accountable'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                 <th>Date&nbsp;
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-date'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+date'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
             </tr>
         </thead>
 
         <tbody>
-          <tr ng-repeat="badOrder in badOrdersList" ng-click="getBadOrderDetails(badOrder.id)"  data-toggle="modal" data-target="#myModal">
+          <tr dir-paginate="badOrder in badOrdersList | filter: search | orderBy: sortCriteria | itemsPerPage: 10" ng-click="getBadOrderDetails(badOrder.id)"  data-toggle="modal" data-target="#myModal">
             <td>{{badOrder.id}}</td>
             <td>{{badOrder.expense}}</td>
             <td>{{badOrder.accountable}}</td>
@@ -244,6 +244,12 @@
     </tbody>
 
 </table>
+
+<dir-pagination-controls
+  max-size="7"
+  boundary-links="true"
+  directional-links="true">
+  </dir-pagination-controls>
 
 
 </div>

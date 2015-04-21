@@ -15,6 +15,7 @@ angular.module('fmApp')
 	$scope.addEmployeeForm = false;
 	$scope.editOrDeleteEmployeeForm = false;
   $scope.editEmployeeTab = true;
+  $scope.sortCriteria = "";
 
 	var getEmployees = function () {
     $http.get(httpHost + '/employees').success( function (data) {

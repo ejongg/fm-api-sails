@@ -15,7 +15,7 @@
                         <li>
                             <div class="search" ng-hide="">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -62,7 +62,7 @@
               
               <tbody>
 
-                  <tr ng-repeat="order in customerOrders" ng-drag="true" ng-drag-data="order" style="cursor:button;">
+                  <tr dir-paginate="order in customerOrders | filter: search | orderBy: sortCriteria | itemsPerPage: 10 " ng-drag="true" ng-drag-data="order" style="cursor:button;">
                       <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.establishment_name}}</font></td>
                       <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.distance}}</font></td>
                   </tr>
@@ -71,8 +71,13 @@
 
       </table>
 
+      <dir-pagination-controls
+        max-size="7"
+        directional-links="true"
+        boundary-links="true"
+      >
 
-
+      </dir-pagination-controls>
 
     </div>
 
