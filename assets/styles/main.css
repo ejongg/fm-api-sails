@@ -1085,15 +1085,15 @@ td.text-right {
   border: 1px solid #202020;
   padding: 5px;
 }
-
-.routePanel{
+*/
+/*.routePanel{
   background-color:black;
   color:white;
   clear:both;
   padding:5px;  
   margin: 10px;
   width: 50%;
-}
+}*/
 
 .routeBox{
   background-color:#202020;
@@ -1101,4 +1101,4 @@ td.text-right {
   color:white;
    border:1px solid black;
    border-radius:10px;
-}*/
+}

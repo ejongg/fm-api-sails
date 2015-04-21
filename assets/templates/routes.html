@@ -283,12 +283,15 @@
           <!-- edit route -->
           <div class="panel-body" ng-show="editIndex === $index" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,routeInfo.route_name)">
             <div ng-repeat="address in routeInfo.address" style="padding:2px 6px;">{{address.address_name}}
-            <button ng-click="deleteAddressInRoute(routeInfo.id,address.id)">X</button>
+            <button class="btn btn-xs btn-danger" ng-click="deleteAddressInRoute(routeInfo.id,address.id)">X</button>
+            </div>
 
               <br>
 
-             <button class="btn btn-xs btn-default pull-right" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button>
-
+              <div class="form-group pull-right"> 
+                <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button>
+              </div>
+             
           </div>
               
         </div>
