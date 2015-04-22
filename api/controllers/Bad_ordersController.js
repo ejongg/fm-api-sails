@@ -72,22 +72,6 @@ module.exports = {
 			.then(function (){
 				return res.send(badOrdersList);
 			})
-	},
-
-	test : function(req, res){
-		var sku = 6,
-			bottles = 0,
-			cases = 100,
-			bottlespercase = 24;
-
-		InventoryService.experimentalDeduct(sku, bottles, cases, bottlespercase)
-			.then(function (result){
-				return res.send(result);
-			})
-
-			.catch(function (err){
-				console.log(err);
-			});
 	}
 };
 

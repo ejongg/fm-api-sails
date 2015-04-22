@@ -1,108 +1,103 @@
 var async = require('async');
 var moment = require('moment');
+var Promise = require("bluebird");
 
 module.exports = {
 	
-	deduct : function (sku_id, bottles, cases, bottlespercase, exp_date){
-		var company;
-		var bay_id;
+	deductCases : function (sku, cases, bottlespercase){
+		return new Promise(function (resolve, reject){
+			var caseCount = sku.physical_count;
+			
+			sku.bottles = Math.max(0, sku.bottles - (cases * bottlespercase));
+			sku.physical_count = Math.max(0, sku.physical_count - cases);
+			sku.logical_count = Math.max(0, sku.logical_count - cases);
 
-		async.series([
-			function getSkuCompany(cb_series){
-				Sku.findOne({sku_id : sku_id}).populate('prod_id')
-					.then(function(sku){
-						company = sku.prod_id.company;
-						cb_series();
-					});
-			},
+			sku.save(function(err, saved){
+				if(caseCount > cases){
+					resolve(0);
+				}else{
+					resolve(cases - caseCount);
+				}
+			});
+		});
+	},
 
-			function getMovingPile(cb_series){
-				Bays.findOne({pile_status : "Moving pile", bay_label : company})
-					.then(function(bay){
-						bay_id = bay.id;
-						cb_series();
-					});
-			},
+	deductFromInventory : function(sku, bottles, cases, bottlespercase){
+		return new Promise(function (resolve, reject){
+			var remainingBottles = 0;
 
-			function updateInventory(cb_series){
-				Inventory.find({sku_id : sku_id, bay_id : bay_id}).sort("exp_date ASC")
-					.then(function(skus){
-						var index = 0;
-
-						async.whilst(
-							function condition(){
-								return cases > 0 || bottles > 0;
-							},
-
-							function bottlesAndCasesHandler(cb_while){
-								var current_physical_count = skus[index].physical_count;
-
-								if(skus[index].physical_count > 0){
-
-									if(bottles > 0){
-										skus[index].bottles = Math.max(0, skus[index].bottles - bottlespercase);
-										skus[index].physical_count = Math.max(0, skus[index].physical_count - 1);
-										skus[index].logical_count = Math.max(0, skus[index].logical_count - 1);								
-										skus[index].save(function(err, saved){});
-
-										var inc_case = {
-											sku_id : sku_id,
-											exp_date : skus[index].exp_date,
-											bottles : bottlespercase - bottles
-										};
-
-										Incomplete_cases.findOne({sku_id : sku_id, exp_date : skus[index].exp_date})
-											.then(function(found){
-
-												if(found){
-													found.bottles = found.bottles + inc_case.bottles;
-													found.save(function(err, saved){});
-												}else{
-													Incomplete_cases.create(inc_case).exec(function(err, incompletes){});
-												}
-											},
-
-											function(err){
-												console.log(err);
-											});
-
-										bottles = 0;
-									}
-
-									if(cases > 0){
-										if(skus[index].physical_count > 0){
-											skus[index].bottles = Math.max(0, skus[index].bottles - (cases * bottlespercase));
-											skus[index].physical_count = Math.max(0, skus[index].physical_count - cases);
-											skus[index].logical_count = Math.max(0, skus[index].logical_count - cases);
-											skus[index].save(function(err, saved){});
-
-											if(skus[index].physical_count > cases){
-												cases = 0;
-											}else{
-												cases = cases - current_physical_count;
-												index++;
-											}
-										}
-									}							
-
-								}else{
-									index++;
-								}
-
-								cb_while();
-							},
-
-							function(err){
-								if(err)
-									console.log(err);
-
-								cb_series();
-							}
-						);
-						
-					});
+			if(bottles > 0){
+				remainingBottles = bottlespercase - bottles;
 			}
-		]);
+
+			IncompleteCasesService.add(sku.sku_id, sku.exp_date, remainingBottles)
+				.then(function deductCases (){
+					return InventoryService.deductCases(sku, cases, bottlespercase);
+				})
+
+				.then(function (remainingCases){
+					resolve(remainingCases);
+				})	
+		});
+	},
+
+	deduct : function(sku_id, bottles, cases, bottlespercase){
+		return new Promise(function (resolve, reject){
+
+			Sku.findOne({id : sku_id}).populate("prod_id")
+				.then(function findSku (sku){
+					return sku;
+				})
+
+				.then(function findMovingPile (sku){
+					return new Promise(function (resolve, reject){
+						Bays.findOne({pile_status : "Moving pile", bay_label : sku.prod_id.company})
+							.then(function (bay){
+								resolve(bay);
+							})
+					});
+				})
+
+				.then(function findSkusInInventory (bay){
+					return new Promise(function (resolve, reject){
+						Inventory.find({sku_id : sku_id, bay_id : bay.id})
+							.then(function (skus){
+								resolve(skus);
+							})
+					})	
+				})
+
+				.then(function (skus){
+					var index = 0;
+
+					async.whilst(
+						function (){
+							return cases > 0;
+						},
+
+						function (cb){
+
+							if(skus[index].physical_count > 0){
+								InventoryService.deductFromInventory(skus[index], bottles, cases, bottlespercase)
+									.then(function (remainingCases){
+										cases = remainingCases;
+										cb();
+									})
+							}else{
+								index++;
+								cb();
+							}
+							
+						},
+
+						function(err){
+							if(err) reject(err);
+
+							resolve();
+						}
+					);
+				})
+		});
 	},
 
 	put : function(sku_id, cases, bottlespercase, bay_id, prod_date, lifespan){

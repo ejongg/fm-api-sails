@@ -17,6 +17,11 @@ module.exports = {
 		var total_amount = req.body.total_amount;
 		var deposit = req.body.deposit;
 
+		if(!deposit){
+			deposit = 0;
+		}
+		
+
 		Returns.create({return_date : moment().format('YYYY-MM-DD'), deposit : deposit})
 			.then(function returnsHandler(created_returns){
 
@@ -73,7 +78,7 @@ module.exports = {
 								},
 
 								function updateInventory(cb){
-									InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.exp_date);
+									InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase);
 									cb();
 								}
 
