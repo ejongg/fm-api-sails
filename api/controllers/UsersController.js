@@ -49,7 +49,7 @@ module.exports = {
 					}
 					
 				}else{
-					return res.json({status : {code : 0, message: 'User not found'}});
+					return res.send({status : {code : 0, message: 'User not found'}});
 				}
 
 			})

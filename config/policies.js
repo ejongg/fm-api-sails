@@ -31,6 +31,8 @@ module.exports.policies = {
   UsersController : {
     login : 'alreadyLoggedIn', 
 
+    mobileLogin : 'alreadyLoggedIn',
+
     create : 'disableTokenAuth'
   },
 
