@@ -4,7 +4,7 @@ angular.module('fmApp')
 .controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost','authService', function($scope, $http, _,$filter, httpHost, authService){
 
   $scope.products = [];
-  $scope.existingCompany = [];
+  $scope.companies = ['Coca-Cola','SMB'];
 
   $scope.product = {};
   $scope.productExistingCompany = {};
@@ -65,7 +65,8 @@ angular.module('fmApp')
       
       $scope.addProductForm = data;
       if(data === false){
-          $scope.product = {};
+          $scope.product.brand_name = '';
+          $scope.product.company = $scope.companies[0];
       }
   };
 
@@ -96,6 +97,7 @@ angular.module('fmApp')
     $scope.productEdit.id = $scope.copiedProduct.id;
     $scope.productEdit.brand_name = $scope.copiedProduct.brand_name;
     $scope.productEdit.company= $scope.copiedProduct.company;
+    console.log($scope.productEdit.company);
 
     $scope.productDelete.id = $scope.copiedProduct.id;
     $scope.productDelete.brand_name = $scope.copiedProduct.brand_name;

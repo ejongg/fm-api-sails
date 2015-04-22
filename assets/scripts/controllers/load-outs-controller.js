@@ -78,13 +78,17 @@ angular.module('fmApp')
   };
 
   $scope.onDropComplete = function (data, evt){
-    console.log("Dropped");
+    console.log("Dropped Add");
     console.log(data);
     if(_.findIndex($scope.loadOut.orders,{ 'id': data.id}) === -1 ){
       $scope.loadOut.orders.push(data);
     }else{
       $scope.showExistingAddressInRouteError(true,data.address_name);
     }
+  };
+
+  $scope.onDropEditComplete = function (data, evt){
+    console.log("Dropped Edit");
   };
 
   $scope.addLoadOut = function (loadOut) {

@@ -74,8 +74,10 @@
                     <label for="inputCompanyName" class="col-md-12">Company Name</label>
 
                     <div class="col-md-12">
-                        <input type="text" name="addProductCompanyName" class="form-control empty" ng-model="product.company" placeholder="Enter company name" typeahead="product.company as product.company for product in existingCompany | filter:$viewValue | limitTo:8" required>
-                        <strong class= "fbackMsg" ng-show="productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty"> Company name required!</strong>
+                        <select class="form-control" id="selectType" ng-model="product.company" 
+                        ng-init="product.company = companies[0]">
+                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                        </select>
                     </div>                  
                   </div>
 
@@ -126,8 +128,9 @@
                   <div class="form-group">
                     <label for="inputProductName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
-                        <input type="text" name= "addProductCompanyName" class="form-control empty" placeholder="Enter company name." ng-model="productEdit.company" required>
-                        <strong class = "fbackMsg"  ng-show="editProductForm.addProductCompanyName.$invalid && editProductForm.addProductCompanyName.$dirty"> Company name required!  </strong>
+                        <select class="form-control" id="selectType" ng-model="productEdit.company">
+                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                        </select>
                     </div>                  
                   </div>
 
@@ -155,7 +158,9 @@
                   <div class="form-group">
                     <label for="inputProductName" class="col-md-12">Company Name</label>
                     <div class="col-md-12">
-                        <input type="text" class="form-control empty" id="inputProductname" placeholder="Enter company name." ng-model="productDelete.company" disabled>
+                        <select class="form-control" id="selectType" ng-model="productDelete.company" disabled>
+                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                        </select>
                     </div>                  
                   </div>
 
