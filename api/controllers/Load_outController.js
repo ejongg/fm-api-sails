@@ -15,6 +15,7 @@ module.exports = {
 		var user = req.body.user;
 		var delivery_date = req.body.delivery_date;
 		var loadoutNumber = req.body.loadout_no;
+		var flag = req.body.flag;
 
 		var loadout = {
 			loadout_number : loadoutNumber,
@@ -71,8 +72,18 @@ module.exports = {
 				function(err){
 					if(err) return res.send(err);
 
-					sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});
-					return res.send("Loadout successfully added");					
+
+					LoadOutService.getDetails(createdLoadout)
+						.then(function(detailedLoadout){
+							
+							if(flag == "add"){
+								sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});	
+							}else{
+								sails.sockets.blast("loadout", {verb : "updated", data : createdLoadout});
+							}
+							
+							return res.send("Loadout successfully added");
+						})					
 				});
 			});
 	},
@@ -118,24 +129,9 @@ module.exports = {
 
 			.each(function (loadout){
 				return new Promise(function (resolve, reject){
-					var total_amount = 0;
-
-					Delivery_transactions.find({loadout_id : loadout.id}).populate("customer_id")
-						.then(function (transactions){
-							loadout.transactions = transactions;
-							return transactions;
-						})
-
-						.each(function (transaction){
-							total_amount = total_amount + transaction.total_amount;		
-						})
-
-						.then(function (){
-							loadout.total_amount = total_amount;
-						})
-
-						.then(function (){
-							loadoutList.push(loadout);
+					LoadOutService.getDetails(loadout)
+						.then(function (detailedLoadout){
+							loadoutList.push(detailedLoadout);
 							resolve();
 						})
 				});
