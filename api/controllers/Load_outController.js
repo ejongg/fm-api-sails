@@ -72,11 +72,11 @@ module.exports = {
 
 					LoadOutService.getDeliveries(createdLoadout.id)
 						.then(function (deliveries){
-							console.log(deliveries);
 							createdLoadout.deliveries = deliveries;		
 						})
 						
 						.then(function (){
+							console.log(createdLoadout);
 							sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});
 							return res.send("Loadout successfully added");
 						})					
