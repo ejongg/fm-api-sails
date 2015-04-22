@@ -72,6 +72,7 @@ module.exports = {
 
 					LoadOutService.getDeliveries(createdLoadout.id)
 						.then(function (deliveries){
+							console.log(deliveries);
 							createdLoadout.deliveries = deliveries;		
 						})
 						
