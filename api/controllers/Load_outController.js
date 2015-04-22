@@ -11,81 +11,51 @@
 module.exports = {
 	add : function(req, res){
 		var orders = req.body.orders;
-		var truck_id = req.body.truck_id;
+		var truckId = req.body.truck_id;
 		var user = req.body.user;
-		var delivery_date = req.body.delivery_date;
+		var deliveryDate = moment(req.body.delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD');
 		var loadoutNumber = req.body.loadout_no;
+		var loadoutId = req.body.loadout_id;
 		var flag = req.body.flag;
 
 		var loadout = {
 			loadout_number : loadoutNumber,
-			date_created : moment(delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD')
+			date_created : deliveryDate
 		};
 
-		Load_out.create(loadout)
-			.then(function createLoadout(createdLoadout){
+		Load_out.findOrCreate({id : loadoutId, loadout_number : loadoutNumber, date_created : deliveryDate}, loadout)
+			.then(function (createdLoadout){
 				return createdLoadout;
 			})
 
-			.then(function createDelivery(createdLoadout){
-				async.each(orders, function(order, cb){
-					var delivery = {
-						total_amount : order.total_amount,				
-						customer_id : order.customer_id.id,
-						delivery_date : delivery_date,
-						truck_id : truck_id,
-						order_id : order.id,
-						loadout_number : loadoutNumber,
-						loadout_id : createdLoadout.id,
-						user : user	
-					};
-
-					Delivery_transactions.create(delivery)
-						.then(function createDeliveryProducts(created_delivery){
-
-							async.each(order.products, function(product, cb_inner){
-								var order_product = {
-									dtrans_id : created_delivery.id,
-									sku_id : product.sku_id,
-									cases : product.cases
-								};
-
-								Delivery_products.create(order_product)
-									.exec(function(err, created_product){
-										if(err)
-											return res.send(err);
-
-										cb_inner();
-									});
-
-							}, 
-
-							function(err){
-								if(err)
-									return res.send(err);
-
+			.then(function (createdLoadout){
+				return new Promise(function (resolve, reject){
+					async.each(orders, function(order, cb){
+						DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
+							.then(function (){
 								cb();
-							});
-						});
-				},
+							})
+					},
 
-				function(err){
-					if(err) return res.send(err);
-
-
-					LoadOutService.getDetails(createdLoadout)
-						.then(function(detailedLoadout){
-							
-							if(flag == "add"){
-								sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});	
-							}else{
-								sails.sockets.blast("loadout", {verb : "updated", data : createdLoadout});
-							}
-							
-							return res.send("Loadout successfully added");
-						})					
+					function (err){
+						resolve(createdLoadout);
+					});				
 				});
-			});
+			})
+
+			.then(function (createdLoadout){
+				LoadOutService.getDetails(createdLoadout)
+					.then(function(detailedLoadout){
+
+						if(flag == "add"){
+							sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});	
+						}else{
+							sails.sockets.blast("loadout", {verb : "updated", data : createdLoadout});
+						}
+						
+						return res.send("Loadout successfully added");
+					})	
+			})
 	},
 
 	confirm : function(req, res){

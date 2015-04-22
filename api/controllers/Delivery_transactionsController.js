@@ -16,7 +16,7 @@ module.exports = {
 			})
 
 			.then(function (foundDelivery){
-				return LoadoutService.removeLoadout(foundDelivery);
+				return DeliveryService.removeLoadout(foundDelivery);
 			})
 
 			.then(function (updatedDelivery){
