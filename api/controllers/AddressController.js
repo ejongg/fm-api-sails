@@ -42,7 +42,7 @@ module.exports = {
 	},
 
 	getList : function (req, res){
-		Address.find()
+		Address.find({route_id : null})
 			.then(function (addresses){
 				return res.send(addresses);
 			});
