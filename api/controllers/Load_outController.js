@@ -68,11 +68,17 @@ module.exports = {
 				},
 
 				function(err){
-					if(err)
-						return res.send(err);
+					if(err) return res.send(err);
 
-					sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});
-					return res.send("Loadout successfully added");
+					LoadOutService.getDeliveries(createdLoadout.id)
+						.then(function (deliveries){
+							createdLoadout.deliveries = deliveries;		
+						})
+						
+						.then(function (){
+							sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});
+							return res.send("Loadout successfully added");
+						})					
 				});
 			});
 	},
