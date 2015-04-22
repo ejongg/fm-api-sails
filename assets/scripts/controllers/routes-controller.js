@@ -370,11 +370,13 @@ angular.module('fmApp')
   $scope.onDropAddComplete = function (data, evt, index){
     console.log("Dropped");
     console.log(data);
-    var addresses = [];
-    if(_.findIndex($scope.route.address,{ 'address_id': data.address_id}) === -1 ){
+    console.log($scope.route.address);
+    if(_.findIndex($scope.route.address,{ 'id': data.id}) === -1 ){
       $scope.route.address.push(data);
       console.log($scope.route.address);
+      console.log("add address");
     }else{
+       console.log("address exist");
       $scope.showExistingAddressInRouteError(true,data.address_name);
     }
   };

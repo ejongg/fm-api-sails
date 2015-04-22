@@ -235,6 +235,11 @@
 
           <div ng-show="addRouteBox">
             <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
+              <div class="alert alert-dismissable alert-danger" ng-show="existingAddressInRouteError">
+                <button type="button" class="close" ng-click="showExistingAddressInRouteError(false)">×</button>
+                <strong>{{existingAddressInRoute}}</strong>
+             </div> 
+
               <div class="form-group">
                 <label class="col-md-2 control-label ">Route:</label>
 
