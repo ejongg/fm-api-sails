@@ -30,11 +30,18 @@ module.exports = {
 
 			.then(function (createdLoadout){
 				return new Promise(function (resolve, reject){
+
 					async.each(orders, function(order, cb){
+
 						DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
-							.then(function (){
-								cb();
+							.then(function (createdDelivery){
+								Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id})
+									.then(function (updatedOrder){
+										sails.sockets.blast("customer_orders", {verb : "created", data : "updatedOrder"});
+										cb();
+									})
 							})
+
 					},
 
 					function (err){

@@ -30,6 +30,9 @@ module.exports = {
     office : {
       type : "string",
       required : true
+    },
+    truck : {
+      model : "trucks"
     }
   },
 

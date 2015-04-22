@@ -59,13 +59,13 @@ module.exports = {
 						},
 
 						function (err){
-							resolve();
+							resolve(createdDelivery);
 						});
 					});
 				})
 
-				.then(function (){
-					resolve();
+				.then(function (createdDelivery){
+					resolve(createdDelivery);
 				})
 		});
 	}

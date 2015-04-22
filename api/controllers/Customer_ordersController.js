@@ -71,13 +71,10 @@ module.exports = {
 	list : function(req, res){
 		var ordersWithProducts = [];
 
-		Customer_orders.find().populate('customer_id')
+		Customer_orders.find({delivery_id : null}).populate('customer_id')
 			.then(function getOrders(orders){
 
 				async.each(orders, function(order, cb){
-					delete order.user;
-					delete order.createdAt;
-					delete order.updatedAt;
 
 					Customer_order_products.find({order_id : order.id}).populate('sku_id')
 						.then(function getProducts(products){

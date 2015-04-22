@@ -43,6 +43,9 @@ module.exports = {
       required : true,
       defaultsTo : 0
     },
+    delivery_id : {
+      model : "delivery_transactions"
+    },
     products : {
       collection : 'customer_order_products',
       via : 'order_id'
