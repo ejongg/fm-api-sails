@@ -49,6 +49,10 @@ angular.module('fmApp')
        return user.lastname;
      },
 
+     getUserName : function () {
+       return user.firstname + " " + user.lastname;
+     },
+
      setUserName : function (username) {
        user.username = username;
      },
