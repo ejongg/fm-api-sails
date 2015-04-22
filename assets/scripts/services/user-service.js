@@ -2,7 +2,7 @@
 
 angular.module('fmApp')
 
-.service('userService',['authService','$window', '$log', 'jwtHelper','$http','$rootScope', function (authService, $window, $log, jwtHelper,$http,$rootScope) {
+.service('userService',['authService','$window', '$log', 'jwtHelper','$http','$rootScope','httpHost', function (authService, $window, $log, jwtHelper,$http,$rootScope,httpHost) {
 	var userAccess = 0;
   var token = '';
   var user = {};
@@ -26,7 +26,7 @@ angular.module('fmApp')
       console.log(token);
       console.log(userID);
 
-      return $http.get('http://localhost:1337/users/' + userID).success(function (data) {
+      return $http.get(httpHost + '/users/' + userID).success(function (data) {
          user = data;
          console.log(user);
          return data;
