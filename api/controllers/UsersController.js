@@ -28,6 +28,32 @@ module.exports = {
 				}
 			});
 	},
+
+	mobileLogin : function(req, res){
+		Users.findOneByUsername(req.body.username)
+			.then(function (user){
+
+				if(user){
+					if(user.type == "checker"){
+						bcrypt.compare(req.body.password, user.password, function(err, match){
+							if(err)
+								return res.json({status : {code : 0, message : "An error has occured"}});
+
+							if(match){
+								return res.json({status : {code : 1, message: "Login successful"} , token : Auth.issueToken(user.id)});
+							}else
+								return res.json({status : {code : 0, message : "Incorrect password"}});
+						});
+					}else{
+						return res.send({status : {code : 0, message: 'Unable to login. Must be a checker account'}})
+					}
+					
+				}else{
+					return res.json({status : {code : 0, message: 'User not found'}});
+				}
+
+			})
+	},
 	
 	changepassword : function(req, res){
 		var new_password = req.body.new_password;

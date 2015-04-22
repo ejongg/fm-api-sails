@@ -115,5 +115,8 @@ module.exports.routes = {
 
 	/* REPORTS */
   	'GET /reports/dssr' : 'Reports.getDssr',
-  	'GET /reports/transactions' : 'Reports.getTransactions'
+  	'GET /reports/transactions' : 'Reports.getTransactions',
+
+  	/* MOBILE */
+  	'POST /mobile/login' : 'UsersController.mobileLogin'
 };
