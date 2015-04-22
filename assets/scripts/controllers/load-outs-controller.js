@@ -88,7 +88,7 @@ angular.module('fmApp')
     }
   };
 
-  $scope.onDropEditComplete = function (data, evt, index, loadout_no,truck_id){
+  $scope.onDropEditComplete = function (data, evt, index, loadout_no, loadout_id,truck_id){
     console.log("Dropped");
     console.log(data);
     console.log(index);
@@ -100,6 +100,7 @@ angular.module('fmApp')
     "delivery_date": $filter('date')(todayDay,"yyyy-MM-dd"),
     "user": $scope.userName,
     "loadout_no": loadout_no,
+    "loadout_id": loadout_id,
     "orders": currentOrder,
     "truck_id": truck_id,
     "flag": "edit"

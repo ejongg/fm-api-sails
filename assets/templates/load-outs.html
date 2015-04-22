@@ -148,7 +148,7 @@
          <div ng-hide="editIndex === $index"style="background-color:red;width:100%;height:200px;color:white;">
            <div ng-repeat="customerOrder in loadOut.transactions">{{customerOrder.customer_id.establishment_name}}</div>
         </div> 
-        <div ng-show="editIndex === $index" style="background-color:blue;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,loadOut.loadout_number,loadOut.transactions[0].truck_id)">
+        <div ng-show="editIndex === $index" style="background-color:blue;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">
            <div ng-repeat="customerOrder in loadOut.transactions">{{customerOrder.customer_id.establishment_name}}
             <button ng-click="deleteAddressInRoute(routeInfo.id,address.id)">X</button>
            </div>
