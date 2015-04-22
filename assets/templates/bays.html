@@ -62,8 +62,16 @@
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Label</label>  
-                          <div class="col-md-12"><input type="text" name = "inputBayLabel" class="form-control" placeholder="Enter bay label." ng-model="bay.bay_label" typeahead="bay.bay_label as bay.bay_label for bay in bays | limitTo:6" required>
-                          <strong class="fbackMsg" ng-show="bayForm.inputBayLabel.$invalid &&bayForm.inputBayLabel.$dirty"> Bay label required!  </strong>
+                          <div class="col-md-12">
+
+                          <!-- <input type="text" name = "inputBayLabel" class="form-control" placeholder="Enter bay label." ng-model="bay.bay_label" typeahead="bay.bay_label as bay.bay_label for bay in bays | limitTo:6" required>
+                          <strong class="fbackMsg" ng-show="bayForm.inputBayLabel.$invalid &&bayForm.inputBayLabel.$dirty"> Bay label required!  </strong> -->
+                            
+                            <select class="form-control" id="selectType" ng-init="bay.bay_label=companies[0]" ng-model="bay.bay_label">
+                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                            </select>
+
+
                         </div>
                     </div>
                     
@@ -122,8 +130,11 @@
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Label</label>  
-                          <div class="col-md-12"><input type="text" name="inputBayLabel" class="form-control" placeholder="Enter bay label." ng-model="bayEdit.bay_label" required>
-                          <strong class="fbackMsg" ng-show="editBayForm.inputBayLabel.$invalid &&editBayForm.inputBayLabel.$dirty"> Bay label required!  </strong>
+                          <div class="col-md-12">
+
+                         <select class="form-control" id="selectType" ng-model="bayEdit.bay_label">
+                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                            </select>
 
                         </div>
                     </div>

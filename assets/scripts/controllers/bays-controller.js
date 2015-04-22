@@ -6,7 +6,6 @@ angular.module('fmApp')
   $scope.bays = [];
   $scope.bayItems = [];
   $scope.products = [];
-  $scope.existingCompany = [];
 
   $scope.bay = {};
   $scope.bayEdit = {};
@@ -18,6 +17,8 @@ angular.module('fmApp')
   $scope.addBayForm = false;
   $scope.editOrDeleteBayForm = false;
   $scope.editBayTab = true;
+
+  $scope.companies = ['Coca-Cola','SMB', 'Coca-Cola and SMB'];
 
   // forSorting
   $scope.sortCriteria = '';
@@ -84,7 +85,9 @@ angular.module('fmApp')
         $scope.showEditOrDeleteBayForm(false);
       }
       if(data === false){
-        clearForm();
+        $scope.bay.bay_name = '';
+        $scope.bay.bay_label = $scope.companies[0];
+        $scope.bay.bay_limit = '';
       }
   };
 
@@ -153,7 +156,7 @@ angular.module('fmApp')
     io.socket.request($scope.socketOptions('post','/bays/add',{"Authorization": "Bearer " + authService.getToken()},bay), function (body, JWR) {
       console.log('Sails responded with post bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
+      if(JWR.statusCode === 200){
         // $scope.bays.push(body);
         $scope.showAddBayForm(false);
         clearForm();
