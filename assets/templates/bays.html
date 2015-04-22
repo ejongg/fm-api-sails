@@ -99,10 +99,10 @@
 
         <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <a ng-click="setEditBayTab(true)">Edit Bay</a>
+                            <a ng-click="setEditBayTab(true)"><i class="mdi-editor-mode-edit"/>&nbsp;Edit Bay</a>
                         </li>
                         <li>
-                            <a ng-click="setEditBayTab(false)">Delete Bay</a>
+                            <a ng-click="setEditBayTab(false)"><i class="mdi-action-delete"/>&nbsp;Delete Bay</a>
                         </li>
                     </ul>
 
@@ -148,9 +148,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Pile Status</label>  
                           <div class="col-md-12">
-                            <select ng-model="bayEdit.pile_status">
+                            <select class="form-control" ng-model="bayEdit.pile_status">
                                 <option ng-repeat="status in pileStatus" value="{{status}}">{{status}}</option>
                             </select>
                         </div>
@@ -172,7 +172,7 @@
                 <fieldset>
                    
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Pile Name</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Bay Name</label>  
                         <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="bayDelete.bay_name" disabled>
                         </div>
                     </div>
@@ -193,6 +193,7 @@
                         <button type="submit" class="btn btn-primary">Delete</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteBayForm(false)">Cancel</button> 
                     </div>
+
                 </fieldset>
             </form>   
         </div>
