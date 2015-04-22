@@ -6,6 +6,7 @@
  */
 
  var moment = require('moment');
+ var Promise = require("bluebird");
 
 module.exports = {
 	add : function(req, res){
@@ -70,16 +71,8 @@ module.exports = {
 				function(err){
 					if(err) return res.send(err);
 
-					LoadOutService.getDeliveries(createdLoadout.id)
-						.then(function (deliveries){
-							createdLoadout.deliveries = deliveries;		
-						})
-						
-						.then(function (){
-							console.log(createdLoadout);
-							sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});
-							return res.send("Loadout successfully added");
-						})					
+					sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});
+					return res.send("Loadout successfully added");					
 				});
 			});
 	},
@@ -118,27 +111,39 @@ module.exports = {
 	list : function(req, res){
 		var loadoutList = [];
 
-		Load_out.find().populate('deliveries')
+		Load_out.find()
 			.then(function(loadouts){
+				return loadouts;
+			})
 
-			async.each(loadouts, function(loadout, cb){
-				loadout.total_amount = 0;
+			.each(function (loadout){
+				return new Promise(function (resolve, reject){
+					var total_amount = 0;
 
-				_(loadout.deliveries).forEach(function(delivery){
-					loadout.total_amount = loadout.total_amount + delivery.total_amount;
+					Delivery_transactions.find({loadout_id : loadout.id}).populate("customer_id")
+						.then(function (transactions){
+							loadout.transactions = transactions;
+							return transactions;
+						})
+
+						.each(function (transaction){
+							total_amount = total_amount + transaction.total_amount;		
+						})
+
+						.then(function (){
+							loadout.total_amount = total_amount;
+						})
+
+						.then(function (){
+							loadoutList.push(loadout);
+							resolve();
+						})
 				});
-				
-				loadoutList.push(loadout);
-				cb();
-			},
+			})
 
-			function(err){
-				if(err) return res.send(err);
-
+			.then(function (){
 				return res.send(loadoutList);
-			});
-
-		});
+			})
 	}
 };
 
