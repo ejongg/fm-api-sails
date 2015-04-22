@@ -386,7 +386,7 @@ angular.module('fmApp')
  
     var currentAddress = $scope.routes[index].address;
     console.log(currentAddress);
-    currentAddress.push(data);
+    currentAddress.push(data)
 
     var newAddress = {
     "route_name": name,

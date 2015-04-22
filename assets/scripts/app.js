@@ -345,7 +345,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
     $scope.userFirstName = data.firstname;
     $scope.userLastName = data.lastname;
     $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
-    console.log($scope.userName);
   });
 
   $rootScope.$on("firstName",function(){
