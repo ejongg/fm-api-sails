@@ -188,17 +188,17 @@
             </thead>
     
             <tbody>
-              <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" draggable="false" style="cursor:button; z-index: 5">
+              <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" draggable="false" style="cursor:button;">
 
                 <td class="routesText">{{address.address_name}}</td>
 
                 <td class="routesText">{{address.days}}</td>
 
                 <td style="color:red; cursor:button;" ng-hide="editAddressForm">
-                  <a ng-show="editState" ng-click="addressEditClicked(address)"><i class="mdi-editor-mode-edit"/>
-              &nbsp;EDIT&nbsp;</a>
+                  <a ng-show="editState" class="btn btn-xs btn-default" ng-click="addressEditClicked(address)"><i class="mdi-editor-mode-edit"/>
+              &nbsp;Edit&nbsp;</a>
 
-                  <a ng-show="deleteState" class="btn btn-xs btn-default" ng-click="deleteAddress(address)">Delete</a>
+                  <a ng-show="deleteState" class="btn btn-xs btn-default" ng-click="deleteAddress(address)"><i class="mdi-action-delete"/>&nbsp;Delete</a>
                 </td>
               </tr>
             </tbody>
@@ -247,7 +247,7 @@
               <br>
               <br>
       
-                <div class="routeBox" ng-drop="true" ng-drop-success="onDropAddComplete($data,$event,$index)" style=" z-index: -10000;"> <br>
+                <div class="routeBox" ng-drop="true" ng-drop-success="onDropAddComplete($data,$event,$index)"> <br>
                   <div ng-repeat="address in route.address" style=" z-index: -10000;"> 
                     <div class="col-md-offset-1" style="padding-top:5px;">{{address.address_name}}</div>
                   </div>      
@@ -274,7 +274,7 @@
 
           <div class="rpanel panel-body" ng-hide="editIndex === $index">
                <label class="control-label">Address:</label>
-               <div class=" col-md-offset-1 control-label routes" ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
+               <div class=" col-md-offset-1" ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
 
                 <div class="form-group pull-right" style="margin-bottom: -5px;">
                   <button class="btn btn-xs btn-primary" ng-click="setEditRoute($index)" ng-hide="editIndex === $index">EDIT</button>
@@ -286,16 +286,21 @@
           <!-- edit route -->
           <div class="rpanel panel-body" ng-show="editIndex === $index" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,routeInfo.route_name)">
           <label class="control-label">Address:</label>
-            <div class=" col-md-offset-1 control-label routes"  ng-repeat="address in routeInfo.address" style="padding:2px 6px;">{{address.address_name}}
+
+                    
+            <div class=" col-md-offset-1 "  ng-repeat="address in routeInfo.address  | limitTo:4" style="padding:2px 6px;">{{address.address_name}}
             <button class="btn btn-xs btn-danger" ng-click="deleteAddressInRoute(routeInfo.id,address.id)">X</button>
             </div>
+          
+
+
 
               <br>
-              <br>
-
+    
               <div class="form-group pull-right" style="margin-bottom: -5px;"> 
                 <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button>
               </div>
+
              
           </div>
               
