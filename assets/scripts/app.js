@@ -47,7 +47,8 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
         url:'/dssr',
         views: {
           'mainContent': {
-            templateUrl: 'templates/dssr.html'
+            templateUrl: 'templates/dssr.html',
+            controller: 'DSSRCtrl'
           }
         }  
       })

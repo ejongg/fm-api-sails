@@ -107,6 +107,15 @@ angular.module('fmApp')
       $scope.showAddAdressForm(false);
     }
     $scope.editAddressForm = data;
+    
+    if(data === false){
+      $scope.mondayButtonEdit = false;
+      $scope.tuesdayButtonEdit = false;
+      $scope.wednesdayButtonEdit = false;
+      $scope.thursdayButtonEdit = false;
+      $scope.fridayButtonEdit = false;
+      $scope.saturdayButtonEdit = false;
+    }
   };
 
   $scope.showAddRouteBox = function (data){
@@ -172,7 +181,7 @@ angular.module('fmApp')
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        $scope.showEditAdressForm(false);
+        $scope.showEditAddressForm(false);
         $scope.$digest(); 
       }
     });
