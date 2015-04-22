@@ -16,8 +16,9 @@ angular.module('fmApp')
 
   $scope.loadOut = {};
   $scope.loadOut.orders = [];
-  $scope.loadOut.user = $scope.userName;
+  $scope.loadOut.user = '';
   $scope.loadOut.delivery_date = $filter('date')(todayDay,"yyyy-MM-dd");
+  $scope.loadOut.flag = "add";
 
   $scope.sortCriteria = '';
   
@@ -44,7 +45,7 @@ angular.module('fmApp')
   }
 
   var getLoadOuts = function () {
-    $http.get(httpHost + '/load_out').success( function (data) {
+    $http.get(httpHost + '/load_out/list').success( function (data) {
       $scope.loadOuts = data;
       console.log("Load Out:");
       console.log($scope.loadOuts);
@@ -78,7 +79,7 @@ angular.module('fmApp')
   };
 
   $scope.onDropComplete = function (data, evt){
-    console.log("Dropped Add");
+    console.log("Dropped");
     console.log(data);
     if(_.findIndex($scope.loadOut.orders,{ 'id': data.id}) === -1 ){
       $scope.loadOut.orders.push(data);
@@ -87,11 +88,37 @@ angular.module('fmApp')
     }
   };
 
-  $scope.onDropEditComplete = function (data, evt){
-    console.log("Dropped Edit");
+  $scope.onDropEditComplete = function (data, evt, index, loadout_no,truck_id){
+    console.log("Dropped");
+    console.log(data);
+    console.log(index);
+    var currentOrder = $scope.loadOuts[index].transactions;
+    currentOrder.push(data);
+    console.log(currentOrder);
+
+    var newOrder = {
+    "delivery_date": $filter('date')(todayDay,"yyyy-MM-dd"),
+    "user": $scope.userName,
+    "loadout_no": loadout_no,
+    "orders": currentOrder,
+    "truck_id": truck_id,
+    "flag": "edit"
+    };
+    
+    console.log(newOrder);
+    io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},newOrder), function (body, JWR) {
+      console.log('Sails responded with post loadout: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.setEditLoadOut(-1);
+        $scope.$digest();
+      }
+    });  
+
   };
 
   $scope.addLoadOut = function (loadOut) {
+    $scope.loadOut.user = $scope.userName;
     console.log(loadOut);
      io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},loadOut), function (body, JWR) {
       console.log('Sails responded with post loadout: ', body);

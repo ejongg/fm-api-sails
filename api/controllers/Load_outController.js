@@ -15,7 +15,7 @@ module.exports = {
 		var user = req.body.user;
 		var delivery_date = req.body.delivery_date;
 		var loadoutNumber = req.body.loadout_no;
-
+        console.log(req.body);
 		var loadout = {
 			loadout_number : loadoutNumber,
 			date_created : moment(delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD')
