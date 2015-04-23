@@ -2,7 +2,7 @@
 
 angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable','angularUtils.directives.dirPagination'] )
 
-.constant('httpHost','http://192.168.0.101:1337')
+.constant('httpHost','http://localhost:1337')
 .constant('_', window._)
 .constant('accessLevels', {
   'visitor': 0,
@@ -261,6 +261,8 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
   if (!authService.getToken()) {
     $state.go('login');
     console.log('login run');
+  }else {
+     userService.getUser();
   }
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {

@@ -28,7 +28,6 @@ angular.module('fmApp')
 
       return $http.get(httpHost + '/users/' + userID).success(function (data) {
          user = data;
-         console.log(user);
          switch(user.type){
           case 'admin':
             userAccess = 1;
@@ -44,6 +43,7 @@ angular.module('fmApp')
             break;  
          }
          console.log(userAccess);
+         console.log(user);
          return data;
       });
 	  },
