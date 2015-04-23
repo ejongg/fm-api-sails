@@ -156,6 +156,7 @@ angular.module('fmApp')
         console.log(index);
         $scope.employees[index] = msg.data;   
         console.log(msg.data);
+        break;
       case "destroyed":
         console.log("Employee Deleted");
         console.log(msg.data[0]);

@@ -48,42 +48,56 @@
                 <fieldset>
 
                     <div class="form-group">
+                        <div ng-show="noTruckDriver">No Truck Driver</div>
+                        <div ng-hide="noTruckDriver">
                         <label for="inputTruckname" class="col-md-6">Truck Driver</label>  
                         <div class="col-md-12">
                           <select class="form-control" id="selectType" ng-model="truck.driver" 
                           ng-options="driver as fullName(driver) for driver in employeeDrivers">
                           </select>
                         </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
+                        <div ng-show="noChecker">No Checker</div>
+                        <div ng-hide="noChecker">
                         <label for="inputCheckerName" class="col-md-6">Checker</label>
                         <div class="col-md-12">
                         <select class="form-control" id="selectType" ng-model="truck.dispatcher" 
                         ng-options="checker as fullName(checker) for checker in employeeCheckers">
                         </select>
                         </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
+                        <div ng-show="noDSP">No Delivery Sales Personnel</div>
+                        <div ng-hide="noDSP">
                         <label for="inpuDPName" class="col-md-9">Delivery Sales Personnel</label>
                         <div class="col-md-12">
                         <select class="form-control" id="selectType" ng-model="truck.agent" 
                         ng-options="agent as fullName(agent) for agent in employeeDeliverySalesPersonel">
                         </select>
                         </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
+                        <div ng-show="noDH">No Delivery Helper</div>
+                        <div ng-hide="noDH">
                         <label for="inputDHName" class="col-md-6">Delivery Helper</label> 
                         <div class="col-md-12">
                         <select class="form-control" id="selectType" ng-model="truck.helper" 
                         ng-options="helper as fullName(helper) for helper in employeeDeliveryHelper">
                         </select>
                         </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
+                        <div ng-show="noRoute">No Routes</div>
+                        <div ng-hide="noRoute">
                         <label for="inputRoute" class="col-md-6">Route</label> 
                         <div class="col-md-12">
                         <select class="form-control" id="selectType" ng-model="truck.route" 

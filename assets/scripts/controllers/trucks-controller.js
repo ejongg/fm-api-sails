@@ -13,7 +13,13 @@ angular.module('fmApp')
   $scope.employeeDeliveryHelper = [];
   $scope.routes = [];
 
-  $scope.noTrucks = true;
+  $scope.noTrucks = false;
+  $scope.noRoute = false;
+  $scope.noTruckDriver = false;
+  $scope.noChecker = false;
+  $scope.noDSP = false;
+  $scope.noDH = false;
+  $scope.noRoute = false;
 
   $scope.addTruckForm = false;
 
@@ -37,12 +43,14 @@ angular.module('fmApp')
     //   }
     // });
   $http.get(httpHost + '/trucks').success( function (data) {
+     console.log("Trucks");
       if(data.length !== 0){
         $scope.trucks = data; 
-        $scope.noTrucks = false;
  
         console.log("Trucks:");
         console.log($scope.trucks);
+      }else{
+        $scope.noTrucks = true;
       }
     }).error(function (err) {
       console.log(err);
@@ -51,46 +59,76 @@ angular.module('fmApp')
 
   var getRoutes = function () {
     $http.get(httpHost + '/routes').success(function(data){
-     $scope.routes = data;
-     $scope.truck.route = $scope.routes[0];
-     console.log("Routes");
-     console.log($scope.routes);
+
+     if (data.length !== 0){
+        $scope.routes = data;
+        $scope.truck.route = $scope.routes[0];
+        console.log("Routes");
+        console.log($scope.routes);
+     }else{
+        $scope.noRoute = true;
+     }
+
     });
   };
 
   var getDrivers = function () {
     $http.get(httpHost + '/employees?where={"position" : "Driver"}').success(function(data){
-     $scope.employeeDrivers = data;
-     $scope.truck.driver = $scope.employeeDrivers[0];
-     console.log("Drivers");
-     console.log($scope.employeeDrivers);
+    
+     if (data.length !== 0){
+        $scope.employeeDrivers = data;
+        $scope.truck.driver = $scope.employeeDrivers[0];
+        console.log("Drivers");
+        console.log($scope.employeeDrivers);
+     }else{
+       $scope.noTruckDriver = true;
+     }
+
     });
   };
 
   var getCheckers = function () {
     $http.get(httpHost + '/employees?where={"position" : "Checker"}').success(function(data){
-     $scope.employeeCheckers = data;
-     $scope.truck.dispatcher = $scope.employeeCheckers[0];
-     console.log("Checkers");
-     console.log($scope.employeeCheckers);
+
+     if (data.length !== 0){
+       $scope.employeeCheckers = data;
+       $scope.truck.dispatcher = $scope.employeeCheckers[0];
+       console.log("Checkers");
+       console.log($scope.employeeCheckers);
+     }else{
+       $scope.noChecker = true;
+     }
+
     });
   };
   
   var getDeliverySalesPersonel = function () {
     $http.get(httpHost + '/employees?where={"position" : "Delivery Sales Personel"}').success(function(data){
-     $scope.employeeDeliverySalesPersonel = data;
-     $scope.truck.agent = $scope.employeeDeliverySalesPersonel[0];
-     console.log("Delivery Sales Personel");
-     console.log($scope.employeeDeliverySalesPersonel);
+     
+     if (data.length !== 0){
+       $scope.employeeDeliverySalesPersonel = data;
+       $scope.truck.agent = $scope.employeeDeliverySalesPersonel[0];
+       console.log("Delivery Sales Personel");
+       console.log($scope.employeeDeliverySalesPersonel);
+     }else{
+       $scope.noDSP = true;
+     }
+
     });
   };
 
   var getDeliveryHelper = function () {
     $http.get(httpHost + '/employees?where={"position" : "Delivery Helper"}').success(function(data){
-     $scope.employeeDeliveryHelper = data;
-     $scope.truck.helper = $scope.employeeDeliveryHelper[0];
-     console.log("Delivery Helper");
-     console.log($scope.employeeDeliveryHelper);
+     
+     if (data.length !== 0){
+       $scope.employeeDeliveryHelper = data;
+       $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+       console.log("Delivery Helper");
+       console.log($scope.employeeDeliveryHelper);
+     }else{
+       $scope.noDH = true;
+     }
+
     });
   };
   
