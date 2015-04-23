@@ -34,7 +34,9 @@ angular.module('fmApp')
 	  },
 
      getUserID : function () {
-       return user.id;
+       console.log("Get ID");
+      console.log(userID);
+       return userID;
      },
 
      getUserType : function () {

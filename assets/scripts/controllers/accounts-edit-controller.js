@@ -11,7 +11,7 @@ angular.module('fmApp')
 
 
   var getUser = function () {
-    $http.get('http://localhost:1337/users/' + userService.getUserID ()).success(function(data){
+    $http.get(httpHost + '/users/' + userService.getUserID()).success(function(data){
       $scope.user = data;
       $scope.userEdit = angular.copy($scope.user);
         console.log("User:");
