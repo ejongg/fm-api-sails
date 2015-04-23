@@ -29,9 +29,31 @@ angular.module('fmApp')
       return $http.get(httpHost + '/users/' + userID).success(function (data) {
          user = data;
          console.log(user);
+         switch(user.type){
+          case 'admin':
+            userAccess = 1;
+            break;
+          case 'encoder':
+            userAccess = 2;
+            break;
+          case 'cashier':
+            userAccess = 3;
+            break;
+          case 'checker':
+            userAccess = 4;
+            break;  
+         }
+         console.log(userAccess);
          return data;
       });
 	  },
+
+    getAccessLevel: function () {
+      return userAccess;
+    },
+    removeAccessLevel: function () {
+      userAccess = 0;
+    },
 
      getUserID : function () {
        console.log("Get ID");

@@ -1,8 +1,14 @@
 <div class="panel-body">
 
-        <!-- START OF TABLE -->            
+        <!-- START OF TABLE -->         
+               <div ng-show="noTransactionHistory" align="center">
+               <h3><strong>NO TRANSACTION YET!
+            <small> <br/></small>
+              </strong></h3>
+             </div>
+   
 
-                <table class="table table-striped table-hover ">
+                <table ng-hide="noTransactionHistory" class="table table-striped table-hover ">
                     <thead>
                         <tr>
                             <th width="20%">Customer Name&nbsp;
@@ -22,7 +28,7 @@
               <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         </tr>
                     </thead>
-
+     
                     <tbody>
                         <tr ng-repeat="transaction in transactions">
     
