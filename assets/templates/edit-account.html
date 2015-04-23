@@ -16,65 +16,170 @@
 <!-- BODY -->
 
 <!-- DO NOT REMOVE-->
-<div class="container">
+<div class="container" >
 
     <!-- RIGHT PANEL -->
+    <div class="col-md-8" >
 
-    <div class="panel col-md-8">
+    <div class="panel panel-left" >
+        <div class="panel-body">
 
-    <div ng-hide="editForm === 1">
-        Username: {{user.username}}
-        <button ng-click="showUsernameForm(1)">Edit</button>
-    </div>
-    <div ng-show="editForm === 1">
-        Username: <input type="text" ng-model="userEdit.username" value="{{user.username}}">
-        <button ng-click="editUser(userEdit)">Save</button>
-        <button ng-click="showUsernameForm(0)">Cancel</button>
-    </div>
+         <h4><i class="mdi-editor-mode-edit"></i> EDIT ACCOUNT </h4>
+
+        <!--  <table class="table-condensed table-hover actable" >
+             <tbody>
+                 <tr>
+                     <td><label class="col-md-3 control-label">Username: </label> </td>
+                     <td>  <div class="col-md-7">
+                {{user.username}}
+             </div></td>
+                     <td> <button class="btn btn-xs" ng-click="showUsernameForm(1)"><i class="mdi-editor-mode-edit"></i>&nbsp;Edit</button></td>
+                 </tr>
+             </tbody>
+         </table> -->
+         <br>
+
+        
+
+        <!-- first name -->
+        <div  class="form-group"  ng-hide="editForm === 3">
+            <label class="col-md-3 control-label">First Name: </label>
+
+             <div class="col-md-7">
+              {{user.firstname}}
+              </div>
+
+            <button class="btn btn-xs btn default" ng-click="showUsernameForm(3)"><i class="mdi-editor-mode-edit"></i>&nbsp;Edit</button>
+        </div>
+
+        <div  class="form-group"  ng-show="editForm === 3">
+            <label class="col-md-3 control-label">First Name: </label>
+
+            <div class="col-md-5">
+                <input type="text"  class="form-control" ng-model="userEdit.firstname" value="{{user.firstname}}">
+
+            </div>
+            
+            <button class="btn btn-xs btn default" ng-click="editFirstname(userEdit)">Save</button>
+            <button class="btn btn-xs btn default" ng-click="showUsernameForm(0)">Cancel</button>
+        </div>
+
+           <hr>
+        <!-- last name -->
+        <div  class="form-group"  ng-hide="editForm === 4">
+             <label class="col-md-3 control-label">Last Name: </label>
+              <div class="col-md-7">
+                {{user.lastname}}
+            </div>
+
+            <button class="btn btn-xs btn default" ng-click="showUsernameForm(4)"><i class="mdi-editor-mode-edit"></i>&nbsp;Edit</button>
+        </div>
+
+        <div  class="form-group"  ng-show="editForm === 4">
+            <label class="col-md-3 control-label">Last Name: </label>
+
+            <div class="col-md-5">
+                 <input type="text" class="form-control" ng-model="userEdit.lastname" value="{{user.lastname}}">
+            </div>
+           
+            <button class="btn btn-xs btn default" ng-click="editLastname(userEdit)">Save</button>
+            <button class="btn btn-xs btn default" ng-click="showUsernameForm(0)">Cancel</button>
+        </div>
+
+        <hr>
+
+        <!-- username -->
+        <div class="form-group" ng-hide="editForm === 1">
+            <label class="col-md-3 control-label">Username: </label> 
+            <div class="col-md-7">
+                {{user.username}}
+             </div>
 
 
+             <button class="btn btn-xs" ng-click="showUsernameForm(1)"><i class="mdi-editor-mode-edit"></i>&nbsp;Edit</button>
+         
+        </div>
 
-    <div ng-hide="editForm === 2">
-        Password
-        <button ng-click="showUsernameForm(2)">Edit</button>
-    </div>
-    <div ng-show="editForm === 2">
-        <form name="passwordForm" ng-submit="changePassword(password)" novalidate>
-             <div class="alert alert-dismissable alert-danger" ng-show="errorMessage">
-              <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
-              <strong>Incorrect Current Password</strong>
-             </div> 
-            <div>Current Password: <input type="password" ng-model="password.old_password" required></div>
-            <div>New Password: <input type="password" ng-model="password.new_password" required></div>
-            <div>Retype New Password: <input type="password" ng-model="password.confNew_password" required></div>
-            <button type="submit" ng-disabled="passwordForm.$invalid || password.new_password !== password.confNew_password">Change Password</button>
-            <button type="button" ng-click="showUsernameForm(0)">Cancel</button>
-        </form>
-    </div>
+         
+        <div class="form-group" ng-show="editForm === 1">
+            <label class="col-md-3 control-label">Username: </label>
 
-    
-    <div ng-hide="editForm === 3">
-        First Name: {{user.firstname}}
-        <button ng-click="showUsernameForm(3)">Edit</button>
-    </div>
-    <div ng-show="editForm === 3">
-        First Name: <input type="text"  ng-model="userEdit.firstname" value="{{user.firstname}}">
-        <button ng-click="editFirstname(userEdit)">Save</button>
-        <button ng-click="showUsernameForm(0)">Cancel</button>
-    </div>
+            <div class="col-md-5"> 
+                <input class="form-control" type="text" ng-model="userEdit.username" value="{{user.username}}">
 
-    <div ng-hide="editForm === 4">
-         Last Name: {{user.lastname}}
-        <button ng-click="showUsernameForm(4)">Edit</button>
-    </div>
-    <div ng-show="editForm === 4">
-        Last Name: <input type="text" ng-model="userEdit.lastname" value="{{user.lastname}}">
-        <button ng-click="editLastname(userEdit)">Save</button>
-        <button ng-click="showUsernameForm(0)">Cancel</button>
-    </div>
+            </div>
+
+             <button class="btn btn-xs btn-default" ng-click="editUser(userEdit)">Save</button>
+
+             <button class="btn btn-xs btn-default" ng-click="showUsernameForm(0)">Cancel</button>
+
+        </div>
+
+         
+
+        <hr>
+
+        <!-- password -->
+        <div  class="form-group"  ng-hide="editForm === 2">
+            <label class="col-md-3 control-label">Password: </label>
+            
+            <div class="col-md-12 col-md-offset-10">
+                <button class="btn btn-xs btn default" ng-click="showUsernameForm(2)"><i class="mdi-editor-mode-edit"></i>&nbsp;Edit</button>
+            </div>
+        </div>
+
+        <div  class="form-group"  ng-show="editForm === 2">
+        <label class="col-md-3 control-label">Password: </label>
+            <form name="passwordForm" ng-submit="changePassword(password)" novalidate>
+                 
+
+              <div class=" col-md-8  alert alert-dismissable alert-warning" ng-show="errorMessage">
+                  <button type="button" class="close btn btn-xs btn default" ng-click="showErrorMessage(false)">×</button>
+                  <strong>Incorrect Current Password</strong>
+                 </div> 
+
+                <div class="col-md-9 col-md-offset-2">
+                     <label class="col-md-3">Current: </label>
+
+                     <div class="col-md-6">
+                        <input type="password" class="form-control" ng-model="password.old_password" required>
+                    </div>
+                </div>
+               
+
+                <div class="col-md-9 col-md-offset-2">
+                    <label class="col-md-3 ">New: </label>
+
+                    <div class="col-md-6">
+                        <input type="password" class="form-control" ng-model="password.new_password" required>
+                    </div>
+                </div>
+
+                <div class="col-md-9 col-md-offset-2">
+                    <label class="col-md-3 ">Retype New: </label>
+
+                    <div class="col-md-6">
+                         <input type="password" class="form-control" ng-model="password.confNew_password" required>
+                    </div>
+                </div>
 
 
-  </div>
-</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+                <div class="col-md-9 pull-right">
+                <br>
+                <br>
+                     <button type="submit" class="btn btn-xs btn default" ng-disabled="passwordForm.$invalid || password.new_password !== password.confNew_password">Change Password</button>
+                    
+                    <button type="button" class="btn btn-xs btn default" ng-click="showUsernameForm(0)">Cancel</button>
+                </div>
+              
+            </form>
+        </div>
+        
+
+
+      </div> 
+       
+    </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+</div>
