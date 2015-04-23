@@ -31,7 +31,7 @@ module.exports = {
       type : "string",
       required : true
     },
-    truck : {
+    truck_id : {
       model : "trucks"
     }
   },
