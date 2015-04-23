@@ -370,23 +370,20 @@
       </div>
     </div>
 
-
-
-
-
-
     <!-- START OF TABLE -->
     <div ng-class="addSKUForm || editOrDeleteSKUForm ? 'col-xs-12 col-md-9' : ''">
       <div class="panel panel-right">
           <div class="panel-body">
 
           <div class="form-group" ng-hide="noProducts || noSKU">
-            <label for="select" class="col-md-2">Company Name</label>
-              <div class="col-md-3">
-                  <select class="form-control" ng-model="companyFilter" ng-options="product.company as product.company for product in existingCompany">
-                    <option value="">All</option>
-                  </select>
-              </div>
+            <label for="select" class="col-md-2">Number of rows:</label>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="noOfRowDD" ng-show="!noExistingProduct">
+                <option value="10" ng-click="noOfRows='10'">10</option>
+                <option value="25" ng-click="noOfRows='25'">25</option>
+                <option value="50" ng-click="noOfRows='50'">50</option>
+                </select>
+            </div>
           </div>
 
         <div ng-show="noProducts" align="center">
@@ -432,7 +429,7 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="sku in skuLists | filter:search | orderBy:sortCriteria | itemsPerPage: 10" ng-click="skuClicked(sku)">
+                    <tr dir-paginate="sku in skuLists | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="skuClicked(sku)">
                       <td>{{sku.prod_id.brand_name}}</td>
                       <td>{{sku.sku_name}}</td>
                       <td>{{sku.size}}</td>

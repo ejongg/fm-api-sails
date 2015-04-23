@@ -22,6 +22,7 @@ angular.module('fmApp')
 
   // forSorting
   $scope.sortCriteria = '';
+  $scope.noOfRows = '';
   
 
   var getProducts = function (){  
