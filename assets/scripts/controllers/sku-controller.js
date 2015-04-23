@@ -11,7 +11,7 @@ angular.module('fmApp')
   $scope.skuDelete = {};
   $scope.copiedSku = {};
 
-  $scope.units = ["L","mL","oz"];
+  $scope.units = ["L","mL","oz", "Gallon"];
   
   $scope.addSKUForm = false;
   $scope.editOrDeleteSKUForm = false;
@@ -165,6 +165,7 @@ angular.module('fmApp')
   Clear form inputs
   */
   var clearForm = function () {
+    $scope.skuForm.$setPristine();
     $scope.sku.brand_name = $scope.products[0].brand_name;
     $scope.sku.sku_name = '';
     $scope.sku.size = null;

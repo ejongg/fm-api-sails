@@ -2,7 +2,7 @@
 
 angular.module('fmApp')
 
-.service('userService',['authService','$window', '$log', 'jwtHelper','$http','$rootScope', function (authService, $window, $log, jwtHelper,$http,$rootScope) {
+.service('userService',['authService','$window', '$log', 'jwtHelper','$http','$rootScope','httpHost', function (authService, $window, $log, jwtHelper,$http,$rootScope,httpHost) {
 	var userAccess = 0;
   var token = '';
   var user = {};
@@ -26,15 +26,39 @@ angular.module('fmApp')
       console.log(token);
       console.log(userID);
 
-      return $http.get('http://localhost:1337/users/' + userID).success(function (data) {
+      return $http.get(httpHost + '/users/' + userID).success(function (data) {
          user = data;
          console.log(user);
+         switch(user.type){
+          case 'admin':
+            userAccess = 1;
+            break;
+          case 'encoder':
+            userAccess = 2;
+            break;
+          case 'cashier':
+            userAccess = 3;
+            break;
+          case 'checker':
+            userAccess = 4;
+            break;  
+         }
+         console.log(userAccess);
          return data;
       });
 	  },
 
+    getAccessLevel: function () {
+      return userAccess;
+    },
+    removeAccessLevel: function () {
+      userAccess = 0;
+    },
+
      getUserID : function () {
-       return user.id;
+       console.log("Get ID");
+      console.log(userID);
+       return userID;
      },
 
      getUserType : function () {

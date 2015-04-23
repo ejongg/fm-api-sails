@@ -120,8 +120,8 @@ angular.module('fmApp')
   }
 
   $scope.combined = function (sku) {
-    return sku.sku_name + ' ' + sku.size;
-  }
+    return sku.prod_id.brand_name + ' ' + sku.sku_name + ' ' + sku.size  ;
+}
 
   var clearForm = function () {
     $scope.orderForm.$setPristine();
@@ -150,6 +150,7 @@ angular.module('fmApp')
       console.log(data[0].order_id);
       $scope.totalAmountView = data[0].order_id.total_amount;
       $scope.showViewProducts(true);
+      $scope.orderProducts.order_id = order_id;
     }).error(function (err) {
       console.log(err);
     });

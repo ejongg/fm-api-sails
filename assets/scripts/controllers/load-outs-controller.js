@@ -92,16 +92,14 @@ angular.module('fmApp')
     console.log("Dropped");
     console.log(data);
     console.log(index);
-    var currentOrder = $scope.loadOuts[index].transactions;
-    currentOrder.push(data);
-    console.log(currentOrder);
+
 
     var newOrder = {
     "delivery_date": $filter('date')(todayDay,"yyyy-MM-dd"),
     "user": $scope.userName,
     "loadout_no": loadout_no,
     "loadout_id": loadout_id,
-    "orders": currentOrder,
+    "orders": data,
     "truck_id": truck_id,
     "flag": "edit"
     };

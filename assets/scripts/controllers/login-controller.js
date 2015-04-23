@@ -4,6 +4,10 @@ angular.module('fmApp')
 .controller('LoginCtrl',['$scope', 'authService', '$state', 'userService', function($scope, authService, $state, userService){
 	$scope.error = "";
 	$scope.showError = false;
+
+  if(userService.getAccessLevel() === 1){
+    $state.go('admin.dssr');
+  }
     
     $scope.closeError = function (option) {
 
