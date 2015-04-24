@@ -67,7 +67,10 @@
         
             <div class="form-group">
                     <label for="select" class="col-md-3">SKU name</label>
-                    <div class="col-md-9">
+                    <div ng-show="noSKU">
+                      NO SKU AVAILABLE
+                    </div>
+                    <div ng-hide="noSKU" class="col-md-9">
                         <select  class="form-control" ng-model="transaction.sku" ng-options="sku as combined(sku) for sku in skuList">
                         </select>
                     </div>
@@ -157,7 +160,10 @@
         
         <div class="form-group">
             <label for="select" class="col-md-4">SKU name</label>
-            <div class="col-md-8">
+            <div ng-show="noSKU">
+              NO SKU AVAILABLE
+            </div>
+            <div ng-hide="noSKU" class="col-md-8">
                       <select  class="form-control" ng-model="returns.sku" ng-options="sku as combined(sku) for sku in skuList"> </select>
             </div>
         </div>
