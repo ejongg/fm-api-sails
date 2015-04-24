@@ -29,10 +29,17 @@ module.exports = {
 					};
 
 					Loadin_products.create(loadInProduct)
-						.exec(function(err, createdLoadInProduct){
-							if(err)
-								return res.send(err);
-						});
+						.then(function(createdLoadInProduct){
+							if(product.prod_id.brand_name === "Coca-cola"){
+								return InventoryService.put(product.id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan);
+							}else{
+								return InventoryService.SMB_put(product.id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan);
+							}
+						})
+
+						.then(function (){
+							return res.send(200);
+						})
 				});
 			});
 	}
