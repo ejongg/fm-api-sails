@@ -159,7 +159,7 @@ angular.module('fmApp')
         break;
       case "destroyed":
         console.log("Employee Deleted");
-        console.log(msg.data[0]);
+        console.log(msg.data[0].emp_id);
         var index = _.findIndex($scope.employees,{'id': msg.data[0].emp_id});
         console.log(index);
         $scope.employees.splice(index,1);
