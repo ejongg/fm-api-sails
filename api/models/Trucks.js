@@ -52,11 +52,6 @@ module.exports = {
     }
   },
 
-  afterUpdate : function(truck, next){
-    sails.sockets.blast('trucks', {verb : 'updated', data : truck});
-    next();
-  },
-
   afterDestroy : function(truck, next){
     sails.sockets.blast('trucks', {verb : 'destroyed', data : truck});
     next();

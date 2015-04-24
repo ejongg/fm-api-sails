@@ -39,9 +39,7 @@ module.exports = {
 				return new Promise(function (resolve, reject){
 					EmployeeService.assign([truck.driver, truck.dispatcher, truck.agent, truck.helper], createdTruck.id)
 						.then(function (){
-
 							resolve(createdTruck);
-							
 						})
 				}); 
 			})
@@ -58,6 +56,39 @@ module.exports = {
 			.catch(function(err){
 				return res.send(err);
 			});
+	},
+
+	edit : function(req ,res){
+		var truckId = req.body.truck;
+		var prevEmp = req.body.prev_emp;
+		var newEmp = req.body.new_emp;
+		var position = req.body.position;
+
+		Trucks.update({id : truckId}, {position : newEmp})
+			.then(function (updatedTruck){
+				Trucks.findOne({id : updatedTruck.id}).populateAll()
+					.then(function (foundTruck){
+						sails.sockets.blast("trucks", {verb : "created", data : foundTruck});
+					})
+			})
+
+			.then(function (){
+				return new Promise(function (resolve, reject){
+					Employees.findOne({id : prevEmp})
+						.then(function (foundEmp){
+							resolve(foundEmp);	
+						})
+				})				
+			})
+
+			.then(function (foundEmp){
+				foundEmp.truck_id = null;
+
+				foundEmp.save(function (err, saved){
+					sails.sockets.blast("employees", {verb : "created", data : saved});
+					return res.send(200);		
+				});
+			})
 	}
 };
 
