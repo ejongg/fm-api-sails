@@ -27,6 +27,9 @@ module.exports = {
   		type : "integer",
   		required : true
   	},
+    truck_id : {
+      model : "trucks"
+    },
     deliveries : {
       collection : "delivery_transactions",
       via : "loadout_id"

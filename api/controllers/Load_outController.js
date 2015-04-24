@@ -20,10 +20,11 @@ module.exports = {
 
 		var loadout = {
 			loadout_number : loadoutNumber,
-			date_created : deliveryDate
+			date_created : deliveryDate,
+			truck_id : truckId
 		};
 
-		Load_out.findOrCreate({id : loadoutId, loadout_number : loadoutNumber, date_created : deliveryDate}, loadout)
+		Load_out.findOrCreate(loadout, loadout)
 			.then(function (createdLoadout){
 				return createdLoadout;
 			})
