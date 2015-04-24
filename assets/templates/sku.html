@@ -182,7 +182,7 @@
                         </li>
                     </ul>
 
-        <div class="panel-body col-md3" ng-show="editSKUTab">
+        <div class="panel-body col-md-3" ng-show="editSKUTab">
 
             <h4><i class="mdi-image-edit"></i> EDIT SAFE KEEPING UNIT</h4>
             <form class="form-horizontal" name="editskuForm" ng-submit="editSKU(skuEdit)" novalidate>
@@ -389,7 +389,7 @@
 
          <div class="form-group">
             <label for="select" class="col-md-2">Number of rows:</label>
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -397,6 +397,8 @@
                 </select>
             </div>
           </div>
+
+          <br><br><br>
 
         <table class="table variantTable table-striped table-hover">
 
