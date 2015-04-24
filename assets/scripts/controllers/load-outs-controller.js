@@ -23,7 +23,7 @@ angular.module('fmApp')
   $scope.loadOut = {};
   $scope.loadOut.orders = [];
   $scope.loadOut.user = '';
-  $scope.loadOut.delivery_date = $filter('date')(todayDay,"yyyy-MM-dd");
+  $scope.loadOut.delivery_date = todayDayFormatted;
   $scope.loadOut.flag = "add";
 
   $scope.sortCriteria = '';
@@ -137,7 +137,7 @@ angular.module('fmApp')
 
 
     var newOrder = {
-    "delivery_date": $filter('date')(todayDayFormatted,"yyyy-MM-dd"),
+    "delivery_date": todayDayFormatted,
     "user": $scope.userName,
     "loadout_no": loadout_no,
     "loadout_id": loadout_id,
@@ -146,15 +146,15 @@ angular.module('fmApp')
     "flag": "edit"
     };
     
-    console.log(newOrder);
-    io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},newOrder), function (body, JWR) {
-      console.log('Sails responded with post loadout: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.setEditLoadOut(-1);
-        $scope.$digest();
-      }
-    });  
+    // console.log(newOrder);
+    // io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},newOrder), function (body, JWR) {
+    //   console.log('Sails responded with post loadout: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.setEditLoadOut(-1);
+    //     $scope.$digest();
+    //   }
+    // });  
 
   };
 
@@ -183,7 +183,7 @@ angular.module('fmApp')
     console.log(loadout.id);
     console.log(todayDayFormatted);
     $scope.loadOutNumbers = [1,2,3,4,5];
-    $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
+    // $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
     $http.get(httpHost + '/load_out?where={"truck_id":'+loadout.id+',"date_created":"'+todayDayFormatted+'"}').success( function (data) {
       // if(data.length !== 0){
         console.log(data);
@@ -192,6 +192,7 @@ angular.module('fmApp')
             console.log(loadout.loadout_number);
            var indexOfNumber = _.indexOf($scope.loadOutNumbers, loadout.loadout_number);
            $scope.loadOutNumbers.splice(indexOfNumber,1);
+           $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
           });
            console.log($scope.loadOutNumbers);
         }
