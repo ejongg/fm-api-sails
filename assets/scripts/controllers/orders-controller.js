@@ -181,7 +181,7 @@ angular.module('fmApp')
     //   }
     // });
 
-    $http.get(httpHost + '/customer_order_products?where={"order_id" :' + order_id +'}').success( function (data) {  
+    $http.get(httpHost + '/customer-orders/details?id=' + order_id).success( function (data) {  
       $scope.orderProducts = data;
       console.log("Order Products");
       console.log(data);
