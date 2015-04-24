@@ -13,6 +13,8 @@ angular.module('fmApp')
   $scope.employeeDeliveryHelper = [];
   $scope.routes = [];
 
+
+
   $scope.noTrucks = false;
   $scope.noRoute = false;
   $scope.noTruckDriver = false;
@@ -167,7 +169,8 @@ angular.module('fmApp')
 
   $scope.truckEditClicked = function (index,truck) {
     if(index !== -1){
-      $scope.truckEdit = angular.copy(truck);
+      $scope.truckEdit.carry_weight = angular.copy(truck.carry_weight);
+      $scope.truckEdit.id = angular.copy(truck.id);
       $scope.editIndex = index;
     }else{
       $scope.editIndex = -1;
@@ -211,12 +214,23 @@ angular.module('fmApp')
 
   }; 
 
-  $scope.editTruck = function (newInfo) {
-      // console.log("Edit Truck");
-      // console.log(newInfo);
+  $scope.editTruck = function (truck) {
+      console.log("Edit Truck");
+      console.log(truck);
+      var editInfo = {
+        "agent": truck.agent,
+        "dispatcher": truck.dispatcher,
+        "driver": truck.driver,
+        "helper": truck.helper,
+        "route": truck.route.route_name,
+        "carry_weight": truck.carry_weight
+      };
+
+      console.log(editInfo);
+      console.log(truck.id);
       // io.socket.put('/trucks/' + newInfo.id, newInfo);
       // $scope.truckEditClicked(-1);
-    io.socket.request($scope.socketOptions('put','/trucks/' + newInfo.id,{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/trucks/' + truck.id,{"Authorization": "Bearer " + authService.getToken()},editInfo), function (body, JWR) {
       console.log('Sails responded with edit truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
