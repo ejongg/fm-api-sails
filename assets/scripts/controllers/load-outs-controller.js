@@ -5,9 +5,14 @@ angular.module('fmApp')
 	
   $scope.loadOutNumbers = [1,2,3,4,5];
   $scope.customerOrders = [];
+  $scope.customerOrdersAvailable = [];
   $scope.loadOuts = [];
   $scope.trucks = [];
   $scope.addLoadOutBox = false;
+
+  $scope.noTrucks = false;
+  $scope.noCustomerOrders = false;
+  $scope.noCustomerOrdersAvailable = false;
 
   $scope.editIndex = -1;
 
@@ -25,9 +30,32 @@ angular.module('fmApp')
 
   var getCustomerOrders = function () {
     $http.get(httpHost + '/customer_orders').success( function (data) {
-      $scope.customerOrders = data;
-      console.log("Customer Orders:");
-      console.log($scope.customerOrders);
+     
+      if(data.length !== 0){
+        $scope.customerOrders = data;
+        console.log("Customer Orders:");
+        console.log($scope.customerOrders);
+      }else{
+        $scope.noCustomerOrders = true;
+      }
+
+    }).error(function (err) {
+      console.log(err);
+    });
+  };
+
+  var getCustomerOrdersAvailable = function () {
+    $http.get(httpHost + '/customer_orders/list').success( function (data) {
+
+      if(data.length !== 0){
+        $scope.customerOrdersAvailable = data;
+        $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+        console.log("Customer Orders Available:");
+        console.log($scope.customerOrdersAvailable);
+      }else{
+        $scope.noCustomerOrdersAvailable = true;
+      }
+
     }).error(function (err) {
       console.log(err);
     });
@@ -35,10 +63,16 @@ angular.module('fmApp')
 
   var getTrucks = function () {
     $http.get(httpHost + '/trucks').success( function (data) {
-      $scope.trucks = data;
-      $scope.loadOut.truck_id = $scope.trucks[0].id;
-      console.log("Trucks:");
-      console.log($scope.trucks);
+      
+      if(data.length !== 0){
+        $scope.trucks = data;
+        $scope.loadOut.truck_id = $scope.trucks[0].id;
+        console.log("Trucks:");
+        console.log($scope.trucks);
+      }else{
+        $scope.noTrucks = true;
+      }
+      
     }).error(function (err) {
       console.log(err);
     });
@@ -55,6 +89,7 @@ angular.module('fmApp')
   };
 
   getCustomerOrders();
+  getCustomerOrdersAvailable();
   getLoadOuts();
   getTrucks();
   
@@ -67,8 +102,10 @@ angular.module('fmApp')
 
     if(data === false){
       $scope.loadOut.orders = [];
-      $scope.loadOut.truck_id = $scope.trucks[0].id;
       $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
+      if($scope.noTrucks === false){
+        $scope.loadOut.truck_id = $scope.trucks[0].id;
+      }
     }
   };
 
@@ -78,7 +115,7 @@ angular.module('fmApp')
     return "Truck " + index;
   };
 
-  $scope.onDropComplete = function (data, evt){
+  $scope.addAvaiableCustomer = function (data, evt){
     console.log("Dropped");
     console.log(data);
     if(_.findIndex($scope.loadOut.orders,{ 'id': data.id}) === -1 ){

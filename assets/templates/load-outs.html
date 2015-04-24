@@ -47,7 +47,10 @@
      <!-- LEFT PANEL -->
     <div class="col-md-6">
 
-
+<div ng-show="noCustomerOrders"  align="center">
+          <h3><strong>NO CUSTOMER ORDERS! </strong></h3>
+</div>
+<div ng-hide="noCustomerOrders">
 <h4><i class="mdi-content-add-circle"></i> CUSTOMERS ORDERS </h4>
 
         <div class="panel panel-body">
@@ -82,6 +85,7 @@
     </div>
 
 </div>
+</div>
 
 
 
@@ -115,26 +119,39 @@
           
 
           <form name="loadOutAddForm" ng-submit="addLoadOut(loadOut)" novalidate>
-
+              <div ng-show="noCustomerOrdersAvailable">
+                  NO CUSTOMER ORDER AVAILABLE
+              </div>
+              <div ng-hide="noCustomerOrdersAvailable">
+                  <select ng-model="ordersAvailableList" ng-options="order as orderAvailable.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
+                  </select>
+                  <button type="button" ng-click="addAvaiableCustomer(ordersAvailableList)">ADD</button>
+              </div>
+              
+              <div ng-hide="noTrucks">
               <label>Truck: &nbsp; </label>
               <select ng-model="loadOut.truck_id" ng-options=" truck.id as truckName(truck) for truck in trucks"></select>
+              </div>
+              
+              <div ng-show="noTrucks">
+                  NO TRUCKS
+              </div>
               <label>Load Out #: &nbsp; </label>
               <select ng-model="loadOut.loadout_no" ng-init="loadOut.loadout_no = loadOutNumbers[0]">
                 <option ng-repeat="number in loadOutNumbers" value="{{number}}">{{number}}</option>
               </select>
 
-              <div style="background-color:#202020;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" >
+              <div style="background-color:#202020;width:100%;height:200px;color:white;" >
 
              <div ng-repeat="order in loadOut.orders">
 
                  {{order}}
 
-
              </div>
              </div>
 
              <br>
-             <button type="submit" ng-disabled="routeAddForm.$invalid || addressesInRoute.length === 0" class="btn btn-flat btn-default">Add</button>
+             <button type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-default">Add</button>
              <button type="button" ng-click="showAddLoadOutBox(false)">Cancel</button>
 
 
