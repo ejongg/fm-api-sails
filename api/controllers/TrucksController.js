@@ -47,7 +47,6 @@ module.exports = {
 			.then(function (createdTruck){
 				Trucks.findOne({id : createdTruck.id}).populateAll()
 					.then(function (newTruck){
-						console.log(newTruck);
 						sails.sockets.blast('trucks', {verb : 'created', data : newTruck});
 						return res.send(201);
 					})
