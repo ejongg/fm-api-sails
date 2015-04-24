@@ -73,11 +73,12 @@ angular.module('fmApp')
   };
 
   var getDrivers = function () {
-    $http.get(httpHost + '/employees?where={"position" : "Driver"}').success(function(data){
+    $http.get(httpHost + '/employees/list?position=Driver').success(function(data){
     
      if (data.length !== 0){
         $scope.employeeDrivers = data;
         $scope.truck.driver = $scope.employeeDrivers[0];
+        $scope.truckEdit.driver = $scope.employeeDrivers[0];
         console.log("Drivers");
         console.log($scope.employeeDrivers);
      }else{
@@ -88,11 +89,12 @@ angular.module('fmApp')
   };
 
   var getCheckers = function () {
-    $http.get(httpHost + '/employees?where={"position" : "Checker"}').success(function(data){
+    $http.get(httpHost + '/employees/list?position=Checker').success(function(data){
 
      if (data.length !== 0){
        $scope.employeeCheckers = data;
        $scope.truck.dispatcher = $scope.employeeCheckers[0];
+       $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
        console.log("Checkers");
        console.log($scope.employeeCheckers);
      }else{
@@ -103,11 +105,12 @@ angular.module('fmApp')
   };
   
   var getDeliverySalesPersonel = function () {
-    $http.get(httpHost + '/employees?where={"position" : "Delivery Sales Personel"}').success(function(data){
+    $http.get(httpHost + '/employees/list?position=Delivery Sales Personnel').success(function(data){
      
      if (data.length !== 0){
        $scope.employeeDeliverySalesPersonel = data;
        $scope.truck.agent = $scope.employeeDeliverySalesPersonel[0];
+       $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonel[0];
        console.log("Delivery Sales Personel");
        console.log($scope.employeeDeliverySalesPersonel);
      }else{
@@ -118,11 +121,12 @@ angular.module('fmApp')
   };
 
   var getDeliveryHelper = function () {
-    $http.get(httpHost + '/employees?where={"position" : "Delivery Helper"}').success(function(data){
+    $http.get(httpHost + '/employees/list?position=Delivery Helper').success(function(data){
      
      if (data.length !== 0){
        $scope.employeeDeliveryHelper = data;
        $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+       $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
        console.log("Delivery Helper");
        console.log($scope.employeeDeliveryHelper);
      }else{

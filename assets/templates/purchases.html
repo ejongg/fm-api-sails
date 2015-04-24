@@ -195,7 +195,7 @@
 
         <div class="form-group" ng-hide="noPurchase || addPurchaseForm">
           <label for="select" class="col-md-2">Number of rows:</label>
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
                   <option value="10">10</option>
                   <option value="25">25</option>
@@ -203,6 +203,8 @@
                 </select>
             </div>
           </div>
+
+          <br><br>
         
         <div ng-show="noBays">
          <h3><strong> NO BAYS! <small></br>Please add bays first.</small></strong></h3>

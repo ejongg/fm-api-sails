@@ -43,7 +43,7 @@ body {
   overflow-x: hidden; }
 
 b {
-  color: #000000; }
+  color: #ffffff; }
 
 .rightalign {
   float: right !important; }
@@ -194,7 +194,7 @@ h3.panel-heading {
 }
 
 .nav-tabs > li > a:hover {
-  background: #508213 !important;
+  background: #aab919 !important;
   border: 0;
   margin-right: 10px;
       -webkit-transition: all 0.7s ease 0s;
@@ -224,7 +224,7 @@ h3.panel-heading {
   margin-top: 46px;
   margin-bottom: 0px;
   background-position: center center;
-  background-color: #000000 !important;
+  background-color: #0c5970 !important;
   border-bottom: 0px solid #000000;}
 
 .big-margin {
@@ -539,6 +539,7 @@ a.nav:hover: ul {
 a:.nav:active: ul {
     text-decoration: underline;
     background-color: #0c5970;
+        background-color: #0c5970;
 }
 /*  style="text-transform: uppercase; font-size:80%; */
 
@@ -583,7 +584,7 @@ background-color: #0c5970 !important;
 }
 .navbar .navbar-nav > li > a:hover,
 .navbar .navbar-nav > li > a:focus {
-  background-color: #508213;
+  background-color: #ce7f02;
   transition: 2s;
 }
 .navbar .navbar-nav > .active > a,
@@ -1010,8 +1011,6 @@ td {
   font-weight:300;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);*/
   border-right: 1px solid #C1C3D1;
-  border-left: 1px solid #C1C3D1;
-  border-bottom: 1px solid #C1C3D1;
 }
 
 tr:hover td {
@@ -1019,10 +1018,8 @@ tr:hover td {
 }
 
 td:last-child {
-  border-right: 1px solid #C1C3D1;
-  border-bottom: 1px solid #C1C3D1; 
+  border-right: 0px;
 }
-
 
 /*
 
@@ -1128,15 +1125,3 @@ td.text-right {
   border-right: none;
   border-left: none;
 }
-
-.table-routes {
-  background: transparent !important;
-  border: 0px !important;
-  border-right: 0px solid #ffffff !important;
-  border-left: 0px solid #ffffff !important;
-  border-bottom: 0px solid #ffffff !important;
-  border-top: 0px solid #ffffff !important;
-  border-collapse: collapse !important;
-  margin-right: 10px !important;
-  padding-right: 10px !important;
-  }
