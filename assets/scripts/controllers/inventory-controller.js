@@ -6,6 +6,8 @@ angular.module('fmApp')
   $scope.sku = [];
   $scope.bays = [];
 
+  $scope.sortCriteria='id';
+
   var getInventory = function () {
     // io.socket.request($scope.socketOptions('get','/inventory'), function (body, JWR) {
     //   console.log('Sails responded with get inventory: ', body);

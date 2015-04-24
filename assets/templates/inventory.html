@@ -142,6 +142,16 @@
         <div class="panel-body">
          <!-- SEARCH BAR -->
 
+        <div class="form-group">
+          <label for="select" class="col-md-2">Number of rows:</label>
+            <div class="col-md-3">
+                <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+            </div>
+          </div>
 
     <!-- START OF TABLE -->            
 
@@ -184,10 +194,17 @@
                 </tbody>
             </table>
 
+
+            <div align="center">
+                <dir-pagination-controls
+                    max-size="7"
+                    directional-links="true"
+                    boundary-links="true"
+                >
+                </dir-pagination-controls>    
+            </div>
+
     <!-- END OF TABLE -->
-
-
-
 
 </div>
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->

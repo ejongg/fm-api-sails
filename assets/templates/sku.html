@@ -375,17 +375,6 @@
       <div class="panel panel-right">
           <div class="panel-body">
 
-          <div class="form-group" ng-hide="noProducts || noSKU">
-            <label for="select" class="col-md-2">Number of rows:</label>
-            <div class="col-md-3">
-                <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                </select>
-            </div>
-          </div>
-
         <div ng-show="noProducts" align="center">
           <h3><strong>NO PRODUCTS!
             <small> <br/>Please add product first.</small>
@@ -397,6 +386,18 @@
         </div>
 
         <div ng-hide="noProducts || noSKU"> 
+
+         <div class="form-group">
+            <label for="select" class="col-md-2">Number of rows:</label>
+            <div class="col-md-3">
+                <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                </select>
+            </div>
+          </div>
+
         <table class="table variantTable table-striped table-hover">
 
                 <thead>
