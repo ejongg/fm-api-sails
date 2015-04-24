@@ -189,7 +189,7 @@
         </div>
 
     <!-- START OF TABLE --> 
-            <div class="form-group">
+            <div class="form-group" ng-hide="noSKU || noOrders">
               <label for="select" class="col-md-2">Number of rows:</label>
                 <div class="col-md-3">
                     <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">

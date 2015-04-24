@@ -24,7 +24,7 @@ angular.module('fmApp')
   $scope.noAddresses = false;
 
   // forSorting
-  $scope.sortCriteria = '';
+  $scope.sortCriteria = 'id';
   
   var getSKU = function () {
     // $http.get('http://localhost:1337/sku').success(function(data){
@@ -199,7 +199,7 @@ angular.module('fmApp')
     if($scope.itemExistingError === true){
       $scope.showItemExistingError(false);
     }
-
+    $scope.orderForm.$setPristine();
     var orderInfo = {
       "sku_id" : order.sku.id,
       "sku" : order.sku.sku_name + " " + order.sku.size,
