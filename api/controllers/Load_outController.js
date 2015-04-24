@@ -131,6 +131,15 @@ module.exports = {
 			.then(function (){
 				return res.send(loadoutList);
 			})
+	},
+
+	getLoadOutProducts : function(req, res){
+		var loadoutId = req.query.id;
+
+		Delivery_transactions.find({loadout_id : loadoutId}).populateAll()
+			.then(function (transactions){
+				return res.send(transactions);
+			})
 	}
 };
 
