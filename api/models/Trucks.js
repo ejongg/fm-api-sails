@@ -16,24 +16,24 @@ module.exports = {
       columnName: 'truck_id'
     },
   	driver : {
-  		type : 'string',
+  		model : "employees",
   		required : true
   	},
   	dispatcher : {
-  		type : 'string',
+  		model : "employees",
   		required : true
   	},
   	agent : {
-  		type : 'string',
+  		model : "employees",
   		required : true
   	},
   	helper : {
-  		type : 'string',
+  		model : "employees",
   		required : true
   	},
   	route : {
-  		type : 'string',
-  		required : true
+  		type : "string",
+      required : true
   	},
     carry_weight : {
       type : 'float',
