@@ -52,6 +52,8 @@ angular.module('fmApp')
   $scope.existingAddressInRouteError = false; 
   $scope.existingAddressInRoute = ''; 
 
+  $scope.sortCriteria = 'id';
+
 
   var getAdresses = function () {
     $http.get(httpHost + '/address').success( function (data) {

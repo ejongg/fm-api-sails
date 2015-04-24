@@ -15,7 +15,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -40,6 +40,19 @@
 
 
     <!-- START OF TABLE -->  
+
+            <div class="form-group">
+              <label for="select" class="col-md-2">Number of rows:</label>
+                <div class="col-md-3">
+                    <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                </div>
+            </div>  
+
+
         <div ng-show="noCustomers" align="center">
           <h3><strong>NO ORDERS!
             <small> <br/>Please add orders first.</small>
@@ -50,25 +63,25 @@
                 <thead>
                     <tr>
                         <th>Establishment Name&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-establishment_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+establishment_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th>Owner Name&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-owner_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+owner_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th>Address&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-address'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+address'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th>Distance/Priority&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-distance'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+distance'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                         <th>Total Order Count&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria = '-orders.length'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+orders.length'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="customer in customers" ng-click="getCustomerOrders(customer.id)"  data-toggle="modal" data-target="#myModal">
+                    <tr dir-paginate="customer in customers | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="getCustomerOrders(customer.id)"  data-toggle="modal" data-target="#myModal">
                         <td>{{customer.establishment_name}}</td>
                         <td>{{customer.owner_name}}</td>
                         <td>{{customer.address}}</td>
@@ -80,6 +93,13 @@
 
                 </tbody>
             </table>
+
+            <dir-pagination-controls
+                max-size="7"
+                directional-links="true"
+                boundary-links="true"
+            >
+            </dir-pagination-controls>
 
         </div>
 
