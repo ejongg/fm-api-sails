@@ -15,21 +15,54 @@ module.exports = {
 
 		async.parallel([
 			function getBeginningInventory(cb){
-				var totalCount = 0;
 
-				Inventory.find()
-					.then(function (items){
-						return items;					
-					})
+				if(moment().format("DD") === 1){
+					InventoryService.countInventory()
+						.then(function (totalCount){
+							var beginningInventory = {
+								month : moment().format("MMMM") ,
+								year : moment().format("YYYY") ,
+								count : totalCount 
+							};
 
-					.each(function (item){
-						totalCount = totalCount + item.physical_count;
-					})
+							Beginning_inventory.create(beginningInventory)
+								.then(function (newBeginningInventory){
+									dssr.beginning_inventory = totalCount;
+									cb();
+								})
+						})
 
-					.then( function (){
-						dssr.beginning_inventory = totalCount;
-						cb();
-					});
+				}else{
+					var inventoryDate = {
+						month : moment(date).format("MMMM"),
+						year : moment(date).format("YYYY")
+					}
+
+					Beginning_inventory.findOne(inventoryDate)
+					 .then(function (result){
+
+					 	if(result){
+					 		dssr.beginning_inventory = result.count;	
+					 		cb();
+					 	}else{
+					 		InventoryService.countInventory()
+					 			.then(function (totalCount){
+					 				var beginningInventory = {
+					 					month : moment().format("MMMM") ,
+					 					year : moment().format("YYYY") ,
+					 					count : totalCount 
+					 				};
+
+					 				Beginning_inventory.create(beginningInventory)
+					 					.then(function (newBeginningInventory){
+					 						dssr.beginning_inventory = totalCount;
+					 						cb();
+					 					})
+					 			})
+					 	}					 	
+					 })
+				}
+
 			},
 
 			function getEndingInventory(cb){
@@ -126,6 +159,12 @@ module.exports = {
 						dssr.empties = totalAmount;
 						cb();
 					});
+			},
+
+			function getIncome(cb){
+				
+
+				cb();
 			}
 		],
 
