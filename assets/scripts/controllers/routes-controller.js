@@ -4,6 +4,9 @@ angular.module('fmApp')
 .controller('RoutesCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
 	$scope.days = ['monday','tuesday','wednesday','thursday','friday','saturday'];
   $scope.addresses = [];
+  $scope.addressAvailableList = [];
+  $scope.addressesAvailable = [];
+  $scope.addressAvailableListEdit = [];
   $scope.routes = [];
 
   $scope.editState = false;
@@ -14,10 +17,12 @@ angular.module('fmApp')
   $scope.addRouteBox = false;
   $scope.editRouteBox = false;
 
+
   $scope.editIndex = -1;
 
   $scope.noAddresses = true;
   $scope.noRoutes = true;
+  $scope.noAddressesAvailable = false;
 
 
   $scope.address = {};
@@ -62,6 +67,23 @@ angular.module('fmApp')
     });
   };
 
+  var getAdressesAvailable = function () {
+    $http.get(httpHost + '/address/list').success( function (data) {
+      if(data.length !== 0){
+        $scope.addressesAvailable = data;
+        $scope.addressAvailableList = data[0];
+        $scope.addressAvailableListEdit = data[0];
+        
+        console.log("Addresses Available:");
+        console.log($scope.addressesAvailable);
+      }else{
+          $scope.noAddressesAvailable = true;
+      }
+    }).error(function (err) {
+      console.log(err);
+    });
+  };
+
   var getRoutes= function () {
     $http.get(httpHost + '/routes').success( function (data) {
        if(data.length !== 0){
@@ -77,6 +99,7 @@ angular.module('fmApp')
   };
 
   getAdresses();
+  getAdressesAvailable();
   getRoutes();
 
   $scope.pagePrint = function () {
@@ -169,7 +192,7 @@ angular.module('fmApp')
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-        $scope.showAddAdressForm(false);
+        $scope.showAddAddressForm(false);
         $scope.$digest();
       }
     });  
@@ -376,7 +399,7 @@ angular.module('fmApp')
 
   };
 
-  $scope.onDropAddComplete = function (data, evt, index){
+  $scope.addAvaiableAddress = function (data, evt, index){
     console.log("Dropped");
     console.log(data);
     console.log($scope.route.address);
@@ -390,7 +413,7 @@ angular.module('fmApp')
     }
   };
 
-  $scope.onDropEditComplete = function (data, evt, index, name){
+  $scope.addAvaiableAddressEdit = function (data, index, name){
     console.log("Dropped");
     console.log(data);
     console.log(name);
@@ -410,6 +433,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Added Address");
+         $scope.showAddRouteBox(false);
          $scope.$digest();
       }
     }); 

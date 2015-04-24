@@ -62,7 +62,7 @@
               
               <tbody>
 
-                  <tr dir-paginate="order in customerOrders | filter: search | orderBy: sortCriteria | itemsPerPage: 10 " ng-drag="true" ng-drag-data="order" style="cursor:button;">
+                  <tr dir-paginate="order in customerOrders | filter: search | orderBy: sortCriteria | itemsPerPage: 10 " style="cursor:button;">
                       <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.establishment_name}}</font></td>
                       <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.distance}}</font></td>
                   </tr>
