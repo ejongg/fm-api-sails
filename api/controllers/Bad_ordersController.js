@@ -62,9 +62,9 @@ module.exports = {
 			})
 
 			.each(function (product){
-				return SkuService.getCompany(product.sku_id.id)
-					.then(function (company){
-						product.sku_id.company = company;
+				return SkuService.getProductName(product.sku_id.id)
+					.then(function (brand_name){
+						product.sku_id.brand_name = brand_name;
 						badOrdersList.push(product);
 					})
 			})

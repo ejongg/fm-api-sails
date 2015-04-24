@@ -1,7 +1,7 @@
 var Promise = require("bluebird");
 
 module.exports = {
-	getCompany : function(skuId){
+	getProductName : function(skuId){
 		return new Promise(function (resolve, reject){
 			Sku.findOne({id : skuId})
 				.then(function (sku){
@@ -13,7 +13,7 @@ module.exports = {
 				})
 
 				.then(function (product){
-					resolve(product.company);
+					resolve(product.brand_name);
 				})
 		});
 	}

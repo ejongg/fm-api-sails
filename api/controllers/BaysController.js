@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	add : function createBay(req, res){
+	add : function createBay (req, res){
 		
 		var bay = {
 			bay_name : req.body.bay_name,
@@ -19,7 +19,7 @@ module.exports = {
 				return created_bay;
 			})
 
-			.then(function(bay){
+			.then(function (bay){
 				BaysService.countBayItems(bay.id, function(err, count){
 					sails.sockets.blast('bays', {verb : 'created', data : bay, bayitem : {bay_id : bay.id, total_products : count}});
 				});
