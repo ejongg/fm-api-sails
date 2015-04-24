@@ -22,6 +22,13 @@ module.exports = {
 					Employees.create(employee).exec(function(err, created_employee){});
 				}
 			})
+	},
+
+	list : function(req, res){
+		Employees.find({truck_id : null})
+			.then(function (employees){
+				return res.send(employees);
+			})	
 	}
 };
 
