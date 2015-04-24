@@ -175,7 +175,7 @@ angular.module('fmApp')
 
   $scope.getPurchaseProducts = function (id) {
    //  console.log(id);
-   $http.get('http://localhost:1337/purchase_products?where={"purchase_id" :'+ id +'}').success(function(data){
+   $http.get('http://localhost:1337/purchases/details?id='+ id).success(function(data){
      $scope.purchaseProducts = data;
      $scope.purchaseProducts.id = id;
      console.log($scope.purchaseProducts);
