@@ -69,8 +69,17 @@ module.exports = {
 	},
 
 	confirm : function(req, res){
+		var loadoutId = req.body.loadout_id;
 		var truck = req.body.truck_id;
 		var delivery_date = req.body.delivery_date;
+
+		LoadOut.findOne({id : loadoutId})
+			.then(function (loadout){
+				loadout.status = "In progress";
+				loadout.save(function (err, saved){
+					sails.sockets.blast("loadout", {verb : "updated", data : saved});
+				});
+			})
 
 		Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date})
 			.then(function getDeliveries(delivery_transactions){
@@ -81,7 +90,9 @@ module.exports = {
 						.then(function getDeliveryProducts(products){
 
 							(products).forEach(function(product){
-								InventoryService.LO_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase);								
+								if(product.prod_id.company == "SMB"){
+									InventoryService.SMB_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase);
+								}								
 							});
 
 						});
