@@ -34,9 +34,9 @@ module.exports = {
 		return new Promise(function (resolve, reject){
 
 			var delivery = {
-				total_amount : order.total_amount,				
-				customer_id : order.customer_id.id,
-				order_id : order.id,
+				total_amount : order.order.total_amount,				
+				customer_id : order.order.customer_id.id,
+				order_id : order.order.id,
 				loadout_id : loadoutId,
 				loadout_number : loadoutNumber,
 				delivery_date : deliveryDate,

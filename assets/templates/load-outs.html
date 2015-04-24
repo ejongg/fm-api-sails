@@ -130,7 +130,8 @@
               
               <div ng-hide="noTrucks">
               <label>Truck: &nbsp; </label>
-              <select ng-model="loadOut.truck_id" ng-options=" truck.id as truckName(truck) for truck in trucks"></select>
+              <select ng-model="loadOut.truck" ng-options=" truck as truckName(truck) for truck in trucks" 
+              ng-change="dropdownChange(loadOut.truck)"></select>
               </div>
               
               <div ng-show="noTrucks">
@@ -143,9 +144,9 @@
 
               <div style="background-color:#202020;width:100%;height:200px;color:white;" >
 
-             <div ng-repeat="order in loadOut.orders">
+             <div ng-repeat="orderInAddLoudOut in loadOut.orders">
 
-                 {{order}}
+                 {{orderInAddLoudOut.order.customer_id.establishment_name}}
 
              </div>
              </div>
