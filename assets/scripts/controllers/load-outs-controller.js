@@ -165,7 +165,7 @@ angular.module('fmApp')
       "flag": loadOut.flag,
       "loadout_no": loadOut.loadout_no,
       "orders": loadOut.orders,
-      "truck": loadOut.truck.id,
+      "truck_id": loadOut.truck.id,
       "user": loadOut.user
     };
     console.log(addLoadOut);
