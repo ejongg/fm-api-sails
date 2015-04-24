@@ -2,7 +2,7 @@
 
 angular.module('fmApp')
 .controller('EmployeesCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
-	$scope.positions = ['Driver','Checker','Delivery Sales Personel','Delivery Helper'];
+	$scope.positions = ['Driver','Checker','Delivery Sales Personnel','Delivery Helper'];
 	$scope.employees = [];
 
   $scope.noEmployees = true;
