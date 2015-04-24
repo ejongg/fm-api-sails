@@ -16,7 +16,11 @@ module.exports = {
 				return inventoryItems;
 			})
 
-			.then(function(inventoryItems){				
+			.each(function (item){
+				item.age = moment().from(item.createdAt, true);
+			})
+
+			.then(function (inventoryItems){				
 				async.each(inventoryItems, function(item, cb){
 
 					Sku.findOne({id : item.sku_id}).populate('prod_id')
