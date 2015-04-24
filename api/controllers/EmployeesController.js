@@ -25,7 +25,22 @@ module.exports = {
 	},
 
 	list : function(req, res){
-		Employees.find({truck_id : null})
+		var position = req.query.position;
+
+		var query;
+
+		if(position){
+			query = {
+				truck_id : null, 
+				position : position
+			}
+		}else{
+			query = {
+				truck_id : null
+			}
+		}
+
+		Employees.find(query)
 			.then(function (employees){
 				return res.send(employees);
 			})	
