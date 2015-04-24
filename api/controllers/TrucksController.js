@@ -88,6 +88,27 @@ module.exports = {
 					return res.send(200);		
 				});
 			})
+	},
+
+	list : function (req, res){
+		Trucks.find().populateAll()
+			.then(function (trucks){
+				return trucks;
+			})
+
+			.each(function (truck){
+				return new Promise(function (resolve, reject){
+					Routes.findOne({id : truck.route})
+						.then(function (route){
+							truck.route = route;
+							resolve();
+						})
+				});
+			})
+
+			.then(function (trucks){
+				return res.send(trucks);
+			});
 	}
 };
 
