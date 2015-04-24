@@ -5,9 +5,11 @@ angular.module('fmApp')
   $scope.distanceRatings = [1,2,3,4,5];
   $scope.skuList = [];
   $scope.ordersList = [];
+  $scope.addresses = [];
   $scope.orders = [];
   $scope.orderProducts = [];
   $scope.order = {};
+  $scope.order.address = '';
   $scope.totalAmount = 0;
 
   $scope.itemExistingError = false;
@@ -17,8 +19,9 @@ angular.module('fmApp')
   
   $scope.totalAmountView = 0;
 
-  $scope.noSKU = true;
-  $scope.noOrders = true;
+  $scope.noSKU = false;
+  $scope.noOrders = false;
+  $scope.noAddresses = false;
 
   // forSorting
   $scope.sortCriteria = '';
@@ -42,10 +45,11 @@ angular.module('fmApp')
     $http.get(httpHost + '/sku').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = data;
-        $scope.noSKU = false;
         $scope.order.sku = $scope.skuList[0];
         console.log("SKU:");
         console.log($scope.skuList);
+      }else{
+        $scope.noSKU = true;
       }
     }).error(function (err) {
       console.log(err);
@@ -70,10 +74,39 @@ angular.module('fmApp')
     $http.get(httpHost + '/customer_orders').success( function (data) {
       if(data.length !== 0){
          $scope.ordersList = data;
-        $scope.noOrders = false;
-
         console.log("Orders:");
         console.log($scope.ordersList);
+      }else{
+        $scope.noOrders = true;
+      }
+    }).error(function (err) {
+      console.log(err);
+    });
+
+  };
+
+  var getAddresses = function (){
+    // $http.get('http://localhost:1337/customer_orders').success(function(data){
+    //   $scope.ordersList = data;
+    // });
+
+    // io.socket.request($scope.socketOptions('get','/customer_orders'), function (body, JWR) {
+    //   console.log('Sails responded with get customers orders: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //     $scope.ordersList = body;
+    //     $scope.$digest();
+    //   }
+    // });
+
+    $http.get(httpHost + '/address').success( function (data) {
+      if(data.length !== 0){
+        $scope.addresses = data;
+        console.log("Addresses:");
+        console.log($scope.addresses);
+        $scope.order.address = $scope.addresses[0].address_name;
+      }else{
+        $scope.noAddresses = true;
       }
     }).error(function (err) {
       console.log(err);
@@ -83,6 +116,7 @@ angular.module('fmApp')
   
   getOrders();
   getSKU();
+  getAddresses();
 
   $scope.pagePrint = function () {
     window.print();
@@ -127,7 +161,7 @@ angular.module('fmApp')
     $scope.orderForm.$setPristine();
     $scope.order.distance_rating = $scope.distanceRatings[0];
     $scope.order.sku = $scope.skuList[0];
-    $scope.order.address = '';
+    $scope.order.address = $scope.addresses[0].address_name;
     $scope.order.cases = null;
     $scope.order.establishment = '';
     $scope.order.owner = '';

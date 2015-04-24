@@ -77,9 +77,12 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Address</label>
-                        <div class="col-md-12"><input type="text" class="form-control" name="orderAddressName" placeholder="Enter address." ng-model="order.address" required>
+                        <div class="col-md-12">
+                            <select class="form-control"  name="orderAddressName" id="selectType" ng-model="order.address" ng-options
+                            ="address.address_name as address.address_name for address in addresses">
+                            
+                            </select>
 
-                        <strong class="fbackMsg" ng-show="orderForm.orderAddressName.$dirty && orderForm.orderAddressName.$invalid"> Please input address </strong>
                         </div>
                     </div>
 

@@ -275,7 +275,7 @@
 
             <tbody>
                 <tr ng-repeat="product in purchaseProducts">
-                    <td>{{product.sku_id.sku_name + " " + product.sku_id.size}}</td>
+                    <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name + " " + product.sku_id.size}}</td>
                     <td>{{product.cases}}</td>
                     <td>{{product.purchase_id.date_received}}</td>
                     <td>{{product.costpercase}}</td>
