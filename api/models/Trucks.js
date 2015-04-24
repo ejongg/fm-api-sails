@@ -25,7 +25,7 @@ module.exports = {
   	},
   	agent : {
   		model : "employees",
-  		required : true
+      required : true
   	},
   	helper : {
   		model : "employees",

@@ -59,7 +59,11 @@ module.exports = {
   	user : {
   		type : 'string',
       required : true
-  	}
+  	},
+    products : {
+      collection : "delivery_products",
+      via : "dtrans_id"
+    }
   },
 
   afterUpdate : function(delivery_transaction, next){

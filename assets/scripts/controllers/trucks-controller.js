@@ -9,9 +9,11 @@ angular.module('fmApp')
 
   $scope.employeeDrivers = [];
   $scope.employeeCheckers = [];
-  $scope.employeeDeliverySalesPersonel = [];
+  $scope.employeeDeliverySalesPersonnel = [];
   $scope.employeeDeliveryHelper = [];
   $scope.routes = [];
+
+
 
   $scope.noTrucks = false;
   $scope.noRoute = false;
@@ -63,6 +65,7 @@ angular.module('fmApp')
      if (data.length !== 0){
         $scope.routes = data;
         $scope.truck.route = $scope.routes[0];
+        $scope.truckEdit.route = $scope.routes[0];
         console.log("Routes");
         console.log($scope.routes);
      }else{
@@ -79,6 +82,7 @@ angular.module('fmApp')
         $scope.employeeDrivers = data;
         $scope.truck.driver = $scope.employeeDrivers[0];
         $scope.truckEdit.driver = $scope.employeeDrivers[0];
+        console.log($scope.truckEdit.driver);
         console.log("Drivers");
         console.log($scope.employeeDrivers);
      }else{
@@ -108,11 +112,11 @@ angular.module('fmApp')
     $http.get(httpHost + '/employees/list?position=Delivery Sales Personnel').success(function(data){
      
      if (data.length !== 0){
-       $scope.employeeDeliverySalesPersonel = data;
-       $scope.truck.agent = $scope.employeeDeliverySalesPersonel[0];
-       $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonel[0];
+       $scope.employeeDeliverySalesPersonnel = data;
+       $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+       $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
        console.log("Delivery Sales Personel");
-       console.log($scope.employeeDeliverySalesPersonel);
+       console.log($scope.employeeDeliverySalesPersonnel);
      }else{
        $scope.noDSP = true;
      }
@@ -165,7 +169,8 @@ angular.module('fmApp')
 
   $scope.truckEditClicked = function (index,truck) {
     if(index !== -1){
-      $scope.truckEdit = angular.copy(truck);
+      $scope.truckEdit.carry_weight = angular.copy(truck.carry_weight);
+      $scope.truckEdit.id = angular.copy(truck.id);
       $scope.editIndex = index;
     }else{
       $scope.editIndex = -1;
@@ -209,12 +214,23 @@ angular.module('fmApp')
 
   }; 
 
-  $scope.editTruck = function (newInfo) {
-      // console.log("Edit Truck");
-      // console.log(newInfo);
+  $scope.editTruck = function (truck) {
+      console.log("Edit Truck");
+      console.log(truck);
+      var editInfo = {
+        "agent": truck.agent,
+        "dispatcher": truck.dispatcher,
+        "driver": truck.driver,
+        "helper": truck.helper,
+        "route": truck.route.route_name,
+        "carry_weight": truck.carry_weight
+      };
+
+      console.log(editInfo);
+      console.log(truck.id);
       // io.socket.put('/trucks/' + newInfo.id, newInfo);
       // $scope.truckEditClicked(-1);
-    io.socket.request($scope.socketOptions('put','/trucks/' + newInfo.id,{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/trucks/' + truck.id,{"Authorization": "Bearer " + authService.getToken()},editInfo), function (body, JWR) {
       console.log('Sails responded with edit truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
