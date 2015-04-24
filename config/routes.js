@@ -60,6 +60,7 @@ module.exports.routes = {
 		add - for creating employees
 	*/
 	'POST /employees/add' : 'Employees.add',
+	'GET  /employees/list' : 'Employees.list',
 
 	/* 	INVENTORY 
 		list - for listing the contents of inventory
@@ -106,6 +107,7 @@ module.exports.routes = {
 		add - for creating trucks
 	*/
 	'POST /trucks/add' : 'Trucks.add',
+	'POST /trucks/edit' : 'Trucks.edit',
 
 	/* 	WAREHOUSE TRANSACTIONS 
 		add - for creating warehouse transactions

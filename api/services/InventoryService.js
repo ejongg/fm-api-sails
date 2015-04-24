@@ -171,5 +171,25 @@ module.exports = {
 				);
 				
 			})
+	},
+
+	countInventory : function (){
+		return new Promise(function (resolve, reject){
+			var totalCount = 0;
+
+			Inventory.find()
+				.then(function (items){
+					return items;					
+				})
+
+				.each(function (item){
+					totalCount = totalCount + item.physical_count;
+				})
+
+				.then( function (){
+					resolve(totalCount);		
+				});
+		});
+			
 	}
 };
