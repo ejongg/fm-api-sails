@@ -1,4 +1,41 @@
-<div class="panel-body">
+<!-- START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Transaction History </h1>
+    </div>
+
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <div class="search">
+                                <form method="get" action="/search" id="search">
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <a ng-click="pagePrint()" ng-hide="addPurchaseForm || noSKU || noBays || noPurchase">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
+    </div>
+
+</div>
+
+
+
+<!-- BODY -->
+
+    <!-- RIGHT PANEL -->
+
+      <div class="panel-body">
 
         <!-- START OF TABLE -->         
                <div ng-show="noTransactionHistory" align="center">
