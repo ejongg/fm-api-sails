@@ -172,14 +172,24 @@ angular.module('fmApp')
   $scope.addTruck = function (truck) {
       console.log("Add Truck");
       console.log(truck);
+      // var truckInfo = {
+      //   "agent": truck.agent.emp_fname + " " + truck.agent.emp_lname,
+      //   "dispatcher": truck.dispatcher.emp_fname + " " + truck.dispatcher.emp_lname,
+      //   "driver": truck.driver.emp_fname + " " + truck.driver.emp_lname,
+      //   "helper": truck.helper.emp_fname + " " + truck.helper.emp_lname,
+      //   "route": truck.route.route_name,
+      //   "carry_weight": truck.carry_weight
+      // };
+
       var truckInfo = {
-        "agent": truck.agent.emp_fname + " " + truck.agent.emp_lname,
-        "dispatcher": truck.dispatcher.emp_fname + " " + truck.dispatcher.emp_lname,
-        "driver": truck.driver.emp_fname + " " + truck.driver.emp_lname,
-        "helper": truck.helper.emp_fname + " " + truck.helper.emp_lname,
+        "agent": truck.agent,
+        "dispatcher": truck.dispatcher.,
+        "driver": truck.driver,
+        "helper": truck.helper,
         "route": truck.route.route_name,
         "carry_weight": truck.carry_weight
       };
+
 
       console.log(truckInfo);
       // io.socket.post('http://localhost:1337/trucks', truck);
