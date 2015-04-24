@@ -15,7 +15,7 @@
                         <li>
                             <div class="search" ng-hide="noBays || noSKU|| addPurchaseForm || noPurchase">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -192,6 +192,17 @@
 
 <div class="panel col-md-12">
     <div class="panel-body" align="center">
+
+        <div class="form-group" ng-hide="noPurchase || addPurchaseForm">
+          <label for="select" class="col-md-2">Number of rows:</label>
+            <div class="col-md-3">
+                <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+            </div>
+          </div>
         
         <div ng-show="noBays">
          <h3><strong> NO BAYS! <small></br>Please add bays first.</small></strong></h3>
@@ -216,7 +227,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="purchaseInfo in purchasesList" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
+                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
                     <td>{{purchaseInfo.id}}</td>
                     <td>{{purchaseInfo.date_received}}</td>
                     <td>{{purchaseInfo.total_amount}}</td>
@@ -226,6 +237,12 @@
 
             </tbody>
         </table>
+        <dir-pagination-controls
+            max-size="7"
+            directional-links="true"
+            boundary-links="true"
+            >
+        </dir-pagination-controls>
     </div>
 
     <!-- END OF TABLE -->

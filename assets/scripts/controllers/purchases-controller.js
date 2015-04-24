@@ -22,6 +22,9 @@ angular.module('fmApp')
   $scope.itemExisting = '';
   $scope.addPurchaseForm = false;
   $scope.viewProducts = false;
+
+  // forSorting
+  $scope.sortCriteria = 'id';
   
   
   var getSKU = function () {
@@ -122,10 +125,9 @@ angular.module('fmApp')
   $scope.showAddPurchaseForm = function (data) {
     if($scope.viewProducts === true){
       $scope.showViewProducts(false);
+      
     }
-
     $scope.addPurchaseForm = data;
-    
     if(data === false){
       clearForm();
       $scope.purchases = [];
@@ -137,6 +139,7 @@ angular.module('fmApp')
   $scope.showViewProducts = function (data) {
     if($scope.addPurchaseForm === true){
       $scope.showAddPurchaseForm(false);
+      
     }
     $scope.viewProducts = data;
   };

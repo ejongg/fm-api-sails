@@ -18,8 +18,8 @@ angular.module('fmApp')
 
   $scope.noProducts = true;
 
-  //forSorting
-  $scope.sortCriteria = '';
+  //forSorting. Default is set to id
+  $scope.sortCriteria = 'id';
 
 
   var getProducts = function () {
