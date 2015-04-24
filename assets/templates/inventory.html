@@ -16,7 +16,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -159,28 +159,28 @@
                 <thead>
                     <tr>
                       <th>Bay&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-bay_label'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+bay_label'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>SKU&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-sku_name'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+sku_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>Exp. date&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-exp_date'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+exp_date'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>Age&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-age'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+age'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>Physical Count&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-physical_count'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+physical_count'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                       <th>Logical Count&nbsp;
-              <a href="" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+              <a href="" ng-click="sortCriteria='-logical_count'" class="arrowlink1"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
+              <a href="" ng-click="sortCriteria='+logical_count'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="item in inventory" ng-click="itemClicked(item)">
+                    <tr dir-paginate="item in inventory | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
                         <td>{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
                         <td>{{item.sku_name + " " + item.size}}</td>
                         <td>{{item.exp_date}}</td>
@@ -193,7 +193,6 @@
 
                 </tbody>
             </table>
-
 
             <div align="center">
                 <dir-pagination-controls
