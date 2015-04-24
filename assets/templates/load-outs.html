@@ -47,55 +47,54 @@
      <!-- LEFT PANEL -->
     <div class="col-md-6">
 
-    <div ng-show="noCustomerOrders"  align="center">
-              <h3><strong>NO CUSTOMER ORDERS! </strong></h3>
-    </div>
+<div ng-show="noCustomerOrders"  align="center">
+          <h3><strong>NO CUSTOMER ORDERS! </strong></h3>
+</div>
+<div ng-hide="noCustomerOrders">
+<h4><i class="mdi-content-add-circle"></i> CUSTOMERS ORDERS </h4>
 
-    <div ng-hide="noCustomerOrders">
-      <h4> CUSTOMERS ORDERS </h4>
-      <div class="panel panel-body">
-        <br>
-        <br>
+        <div class="panel panel-body">
+              
+<table class="table table-condensed" style="border-collapse: collapse;">
         
-                  
-    <table class="table table-condensed" style="border-collapse: collapse;">
-            
-                  <thead>
-                      <tr>
-                          <th>Customer Establishment</th>
-                          <th>Distance</th>
-                  </thead>
-                  
-                  <tbody>
+              <thead>
+                  <tr>
+                      <th colspan="2"><font size="1px">Customer Name</font></th>
+                      <th><font size="1px">Distance</font></th>
+              </thead>
+              
+              <tbody>
 
-                      <tr dir-paginate="order in customerOrders | filter: search | orderBy: sortCriteria | itemsPerPage: 10 " style="cursor:button;">
-                          <td class="routesText">{{order.customer_id.establishment_name}}</td>
-                          <td class="routesText">{{order.customer_id.distance}}</td>
-                      </tr>
+                  <tr dir-paginate="order in customerOrders | filter: search | orderBy: sortCriteria | itemsPerPage: 10 " style="cursor:button;">
+                      <td colspan="2" style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.establishment_name}}</font></td>
+                      <td style="color:red; cursor:button;"><font size="1px" style="text-transform:uppercase;">{{order.customer_id.distance}}</font></td>
+                  </tr>
 
-                  </tbody>
+              </tbody>
 
-          </table>
+      </table>
 
-          <dir-pagination-controls
-            max-size="7"
-            directional-links="true"
-            boundary-links="true"
-          >
+      <dir-pagination-controls
+        max-size="7"
+        directional-links="true"
+        boundary-links="true"
+      >
 
-          </dir-pagination-controls>
-
-        </div>
+      </dir-pagination-controls>
 
     </div>
-    </div>
+
+</div>
+</div>
 
 
 
 
 
     <div class="col-md-6">
-      <h4>LOAD OUT </h4>
+
+      <h4><i class="mdi-content-add-circle"></i> LOAD OUT </h4>
+
               <div class="panel panel-body">
 
                  <ul class="nav nav-tabs">
@@ -104,125 +103,77 @@
                               &nbsp;ADD&nbsp;</a>
                         </li>
                     </ul>
-                    <br>
 
+
+
+<br>
+<br>
+
+
+
+
+      
       <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
 
       <div ng-show="addLoadOutBox" class="form-group">
-         <h4><i class="mdi-content-add-circle"></i> ADD LOAD OUT </h4>
+          
 
           <form name="loadOutAddForm" ng-submit="addLoadOut(loadOut)" novalidate>
               <div ng-show="noCustomerOrdersAvailable">
                   NO CUSTOMER ORDER AVAILABLE
               </div>
-
-              <div class="form-group" ng-hide="noCustomerOrdersAvailable">
-                <label class="col-md-4">Establishment Name</label>
-
-                <div class="col-md-6">
-                  <select class="form-control" ng-model="ordersAvailableList" ng-options="orderAvailable as orderAvailable.order.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
+              <div ng-hide="noCustomerOrdersAvailable">
+                  <select ng-model="ordersAvailableList" ng-options="orderAvailable as orderAvailable.order.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
                   </select>
-                </div>
-                  
-                  <div class = "col-md-2">
-                     <button class="btn btn-xs btn-default pull-right" type="button" ng-click="addAvaiableCustomer(ordersAvailableList)">ADD</button>
-                  </div>
-                 
+                  <button type="button" ng-click="addAvaiableCustomer(ordersAvailableList)">ADD</button>
               </div>
               
-              <div ng-hide="noTrucks" class = "form-group">
-                <label class="col-md-2  control-label">Truck: &nbsp; </label>
-
-                <div class = "col-md-8">
-                   <select class="form-control" ng-model="loadOut.truck" ng-options=" truck as truckName(truck) for truck in trucks" 
-                ng-change="dropdownChange(loadOut.truck)">
-                  </select>
-                </div>
-
+              <div ng-hide="noTrucks">
+              <label>Truck: &nbsp; </label>
+              <select ng-model="loadOut.truck" ng-options=" truck as truckName(truck) for truck in trucks" 
+              ng-change="dropdownChange(loadOut.truck)"></select>
               </div>
               
               <div ng-show="noTrucks">
                   NO TRUCKS
               </div>
+              <label>Load Out #: &nbsp; </label>
+              <select ng-model="loadOut.loadout_no" ng-init="loadOut.loadout_no = loadOutNumbers[0]">
+                <option ng-repeat="number in loadOutNumbers" value="{{number}}">{{number}}</option>
+              </select>
 
-<br>
-              <div class="form-group ">
+              <div style="background-color:#202020;width:100%;height:200px;color:white;" >
 
-               <div class="col-md-6 pull-right">
-                  <select class="form-control " ng-model="loadOut.loadout_no" ng-init="loadOut.loadout_no = loadOutNumbers[0]">
-                    <option ng-repeat="number in loadOutNumbers" value="{{number}}">{{number}}
-                    </option>
-                 </select>
-                </div>
-              <label class="col-md-3 control-label pull-right">Load Out #: &nbsp; </label>
-              
+             <div ng-repeat="orderInAddLoudOut in loadOut.orders">
 
-              </div>
-                
-              
-             
-              
-              <br><br><br>
-              <div class="routeBox" > <br>
+                 {{orderInAddLoudOut.order.customer_id.establishment_name}}
 
-               <div ng-repeat="orderInAddLoudOut in loadOut.orders">
-
-                   {{orderInAddLoudOut.order.customer_id.establishment_name}}
-
-               </div>
+             </div>
              </div>
 
-             <div class="form-group pull-right">
-                <br>
-               <button type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-primary">Add</button>
+             <br>
+             <button type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-default">Add</button>
+             <button type="button" ng-click="showAddLoadOutBox(false)">Cancel</button>
 
-               <button type="button" ng-click="showAddLoadOutBox(false)" class="btn btn-xs btn-default">Cancel</button>
-             </div>
-          </form> 
-        </div>
-      </div>
 
-      <br><br>
-
-      <!-- loadoutbox -->
-       
-       <div ng-repeat="loadOut in loadOuts">
-          <div class="panel-primary" >
-              <div class="panel-heading" >
-                <h3 class="panel-title">Loud out #{{loadOut.loadout_number}}</h3>
-              </div>
-
-            <div class="rpanel panel-body" ng-hide="editIndex === $index">
-
-              <label class="control-label">Establishment Name:</label>
-                <div class = "col-md-offset-1" ng-repeat="customerOrder in loadOut.transactions"> {{customerOrder.customer_id.establishment_name}}
-                </div>
-
-                <div class="form-group pull-right" style="margin-bottom: -5px;">
-                  <button ng-click="setEditLoadOut($index)" ng-hide="editIndex === $index" class=" btn btn-xs btn-primary" >EDIT</button>
-                </div>
-                
-            </div>
-
-            <div class="rpanel panel-body" ng-show="editIndex === $index" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">
-
-              <label class="col-md-12 control-label">Establishment Name:</label>
-                <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="customerOrder in loadOut.transactions" class="btn btn-xs btn-danger"  ng-click="deleteAddressInRoute(routeInfo.id,address.id)"> {{customerOrder.customer_id.establishment_name}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
-
-                 <br>
-              <div class="form-group pull-right" style="margin-bottom: -5px;"> 
-
-              <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditLoadOut(-1)">CANCEL</button> 
-            </div>
-            </div>
-
+          </form>
            
       </div>
-
-       <br>
-        <br>
-
-    </div>
+       
+       <div ng-repeat="loadOut in loadOuts">
+        <p>{{loadOut.loadout_number}}</p>
+        <button ng-click="setEditLoadOut($index)" ng-hide="editIndex === $index">EDIT</button>
+         <div ng-hide="editIndex === $index"style="background-color:red;width:100%;height:200px;color:white;">
+           <div ng-repeat="customerOrder in loadOut.transactions">{{customerOrder.customer_id.establishment_name}}</div>
+        </div> 
+        <div ng-show="editIndex === $index" style="background-color:blue;width:100%;height:200px;color:white;" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">
+           <div ng-repeat="customerOrder in loadOut.transactions">{{customerOrder.customer_id.establishment_name}}
+            <button ng-click="deleteAddressInRoute(routeInfo.id,address.id)">X</button>
+           </div>
+        </div>     
+        
+        <button ng-show="editIndex === $index" ng-click="setEditLoadOut(-1)">CANCEL</button> 
+      </div>
 
 
      </div>
