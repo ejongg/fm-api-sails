@@ -80,7 +80,7 @@ module.exports = {
 		var purchaseId = req.query.id;
 		var purchasesList = [];
 
-		Purchase_products.find({purchase_id : purchaseId}).populate("sku_id")
+		Purchase_products.find({purchase_id : purchaseId}).populate("sku_id").populate("purchase_id")
 			.then(function (products){
 				return products;
 			})
