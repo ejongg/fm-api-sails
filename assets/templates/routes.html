@@ -188,7 +188,7 @@
             </thead>
     
             <tbody>
-              <tr ng-repeat="address in addresses" ng-drag="editState || deleteState ? false : true" ng-drag-data="address" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" draggable="false" style="cursor:button;">
+              <tr ng-repeat="address in addresses" style="cursor:button;">
 
                 <td class="routesText">{{address.address_name}}</td>
 
@@ -247,13 +247,25 @@
                 <div class="col-md-10">
                   <input type="text" class="form-control" ng-model="route.route_name" required>
                 </div>
+                <label class="col-md-2 control-label ">Available Route:</label>
+                <div class="col-md-10" ng-show="noAddressesAvailable">
+                  NO ADDRESS AVAILABLE
+                </div>
+                <div class="col-md-10" ng-hide="noAddressesAvailable">
+                  <select ng-model="addressAvailableList" ng-options="address as address.address_name for address in addressesAvailable">
+                  </select>
+                  <button type="button" ng-click="addAvaiableAddress(addressAvailableList)">ADD</button>
+                </div>
               </div>
 
               <br>
               <br>
               <br>
+              <br>
+              <br>
+              <br>
       
-                <div class="routeBox" ng-drop="true" ng-drop-success="onDropAddComplete($data,$event,$index)"> <br>
+                <div class="routeBox"> <br>
                   <div ng-repeat="address in route.address" style=" z-index: -10000;"> 
                     <div class="col-md-offset-1" style="padding-top:5px;">{{address.address_name}}</div>
                   </div>      
@@ -266,6 +278,8 @@
               </div>
 
             </form>
+
+            
 
            
         </div>
@@ -290,7 +304,15 @@
       
 
           <!-- edit route -->
-          <div class="rpanel panel-body" ng-show="editIndex === $index" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,routeInfo.route_name)">
+          <div class="rpanel panel-body" ng-show="editIndex === $index">
+            <div>
+              <div class="col-md-10" ng-show="noAddressesAvailable">
+                  NO ADDRESS AVAILABLE
+              </div>
+              <select ng-model="addressAvailableListEdit" ng-options="address as address.address_name for address in addressesAvailable">
+              </select>
+                  <button type="button" ng-click="addAvaiableAddressEdit(addressAvailableListEdit,$index,routeInfo.route_name)">ADD</button>
+            </div>
           <label class="control-label">Address:</label>
 
                     
