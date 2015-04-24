@@ -36,11 +36,13 @@ module.exports = {
 
 						DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
 							.then(function (createdDelivery){
-								Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id})
+
+								Customer_orders.update({id : order.order.id}, {delivery_id : createdDelivery.id})
 									.then(function (updatedOrder){
 										sails.sockets.blast("customer_orders", {verb : "created", data : "updatedOrder"});
 										cb();
 									})
+
 							})
 
 					},
