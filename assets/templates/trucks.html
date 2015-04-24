@@ -77,7 +77,7 @@
                         <label for="inpuDPName" class="col-md-9">Delivery Sales Personnel</label>
                         <div class="col-md-12">
                         <select class="form-control" id="selectType" ng-model="truck.agent" 
-                        ng-options="agent as fullName(agent) for agent in employeeDeliverySalesPersonel">
+                        ng-options="agent as fullName(agent) for agent in employeeDeliverySalesPersonnel">
                         </select>
                         </div>
                         </div>
@@ -193,7 +193,11 @@
 
                             <tr>
                                 <td>Route:</td>
-                                <td><input type="text" ng-model="truckEdit.route"></td>
+                                <td>
+                                   <select class="form-control" id="selectType" ng-model="truckEdit.route" 
+                                   ng-options="route as route.route_name for route in routes">
+                                    </select>
+                                </td>
                             </tr>
 
                             <!--
