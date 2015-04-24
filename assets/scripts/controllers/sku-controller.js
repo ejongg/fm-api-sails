@@ -21,8 +21,7 @@ angular.module('fmApp')
   $scope.noSKU = true;
 
   // forSorting
-  $scope.sortCriteria = '';
-  $scope.noOfRows = '';
+  $scope.sortCriteria = 'id';
   
 
   var getProducts = function (){  
