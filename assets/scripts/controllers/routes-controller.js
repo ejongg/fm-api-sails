@@ -49,7 +49,7 @@ angular.module('fmApp')
 
 
   var getAdresses = function () {
-    $http.get(httpHost + '/address/list').success( function (data) {
+    $http.get(httpHost + '/address').success( function (data) {
       if(data.length !== 0){
         $scope.addresses = data;
         $scope.noAddresses = false;

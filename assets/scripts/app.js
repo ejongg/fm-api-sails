@@ -12,7 +12,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
   'checker': 4
 })
 .config(['$urlRouterProvider', '$stateProvider','accessLevels', function ($urlRouterProvider, $stateProvider, accessLevels) {
-
+  console.log("Config");
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
@@ -257,7 +257,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
 }])	
 
 .run(['$rootScope','$state','userService','authService', function ($rootScope, $state, userService,authService) {
-  
+  console.log("Run");
   if (!authService.getToken()) {
     $state.go('login');
     console.log('login run');
@@ -265,38 +265,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
      userService.getUser();
   }
 
-  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-     console.log("state change");
-     console.log(userService.getAccessLevel());
-     console.log(toState.data.access);
-    
-
-
-      if (!(userService.getAccessLevel() === toState.data.access) ) {
-        if(userService.getAccessLevel() !== 1){
-          event.preventDefault();
-
-          switch (userService.getAccessLevel()) {
-            case 1:
-              $state.go('admin.dssr');
-              break;
-            case 2:
-              $state.go('encoder.add-delivery');
-              break;
-            case 3:
-              $state.go('cashier.pos');
-              break;
-            case 4:
-              $state.go('checker.tally');
-              break;
-            default:
-              userService.removeAccessLevel();
-              $state.go('login');
-          }
-        }
-
-      }
-    });
 
 }])
 
@@ -336,17 +304,44 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
 
 .controller('MainCtrl',['$scope', 'authService', '$state', 'userService','$filter','$rootScope', function($scope, authService, 
   $state, userService, $filter,$rootScope){
-  // $scope.userType =  userService.getUserType();
-  // $scope.userFirstName = userService.getFirstName();
-  // $scope.userLastName = userService.getLastName();
+
   $scope.dateToday = new Date();
-  userService.getUser().success(function(data){
-    $scope.userType =  data.type;
-    $scope.userFirstName = data.firstname;
-    $scope.userLastName = data.lastname;
-    $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
-    console.log($scope.userName);
-  });
+  $scope.userType =  userService.getUserType();
+  $scope.userFirstName = userService.getFirstName();
+  $scope.userLastName = userService.getLastName();
+  $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
+  console.log($scope.userName);
+
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+     console.log("state change");
+     console.log(userService.getAccessLevel());
+     console.log(toState.data.access);
+    
+      if (!(userService.getAccessLevel() === toState.data.access) ) {
+        if(userService.getAccessLevel() !== 1){
+          event.preventDefault();
+
+          switch (userService.getAccessLevel()) {
+            case 1:
+              $state.go('admin.dssr');
+              break;
+            case 2:
+              $state.go('encoder.sku');
+              break;
+            case 3:
+              $state.go('cashier.pos');
+              break;
+            case 4:
+              $state.go('checker.tally');
+              break;
+            default:
+              userService.removeAccessLevel();
+              $state.go('login');
+          }
+        }
+
+      }
+    });
 
   $rootScope.$on("firstName",function(){
     console.log("Firstname");
