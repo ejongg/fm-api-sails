@@ -183,7 +183,7 @@ angular.module('fmApp')
 
       var truckInfo = {
         "agent": truck.agent,
-        "dispatcher": truck.dispatcher.,
+        "dispatcher": truck.dispatcher,
         "driver": truck.driver,
         "helper": truck.helper,
         "route": truck.route.route_name,
