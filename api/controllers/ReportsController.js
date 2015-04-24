@@ -66,26 +66,41 @@ module.exports = {
 			},
 
 			function getEndingInventory(cb){
-				var totalCount = 0;
-				Inventory.find()
-					.then(function (items){
-						return items;
-					})
+				var query = {
+					month : moment(date).format("MMMM"),
+					day : moment(date).format("DD"),
+					year : moment(date).format("YYYY")
+				};
 
-					.each(function (item){
-						totalCount = totalCount + item.physical_count;
-					})
+				Ending_inventory.findOne(query)
+					.then(function (foundRecord){
+						if(foundRecord){
+							dssr.ending_inventory = foundRecord.count;
+							cb();
+						}else{
+							InventoryService.countInventory()
+								.then(function (count){
+									var endingInventory = {
+										month : moment(date).format("MMMM"),
+										day : moment(date).format("DD"),
+										year : moment(date).format("YYYY"),
+										count : count
+									}
 
-					.then(function (){
-						dssr.ending_inventory = totalCount;
-						cb();
+									Ending_inventory.create(endingInventory)
+										.then(function (createdEndingInventory){
+											dssr.ending_inventory = createdEndingInventory.count;
+											cb();
+										})
+								})
+						}
 					})
 			},
 
 			function getTotalPurchases(cb){
 				var totalPurchases = 0;
 
-				Purchases.find()
+				Purchases.find({date_received : date})
 					.then(function (purchases){
 						return purchases;	
 					})
@@ -103,7 +118,7 @@ module.exports = {
 			function getSTT(cb){
 				var totalAmount = 0;
 
-				Delivery_transactions.find()
+				Delivery_transactions.find({delivery_date : date})
 					.then(function (deliveries){
 						return deliveries;
 					})
@@ -121,7 +136,7 @@ module.exports = {
 			function getTotalExpenses(cb){
 				var totalExpenses = 0;
 
-				Bad_orders.find()
+				Bad_orders.find({date : date})
 					.then(function (badOrders){
 						return badOrders;
 					})
@@ -139,7 +154,7 @@ module.exports = {
 			function getEmpties(cb){
 				var totalAmount = 0;
 
-				Returns.find().populate("products")
+				Returns.find({return_date : date}).populate("products")
 					.then(function (returns){
 						return returns;
 					})
@@ -159,17 +174,13 @@ module.exports = {
 						dssr.empties = totalAmount;
 						cb();
 					});
-			},
-
-			function getIncome(cb){
-				
-
-				cb();
 			}
 		],
 
 		function(err){
 			if(err) return res.send(err);
+
+			dssr.income = (dssr.deliveries + dssr.empties) - (dssr.purchases + dssr.expenses);
 
 			return res.send(dssr);
 		});	
