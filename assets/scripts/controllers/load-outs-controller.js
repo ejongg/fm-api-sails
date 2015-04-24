@@ -17,8 +17,8 @@ angular.module('fmApp')
   $scope.editIndex = -1;
 
   var todayDay = new Date();
-  var todayDayFormatted = $scope.formatDate(todayDay);
   todayDay.setDate(todayDay.getDate() + 1);
+  var todayDayFormatted = $scope.formatDate(todayDay);
 
   $scope.loadOut = {};
   $scope.loadOut.orders = [];
@@ -46,7 +46,7 @@ angular.module('fmApp')
   };
 
   var getCustomerOrdersAvailable = function () {
-    $http.get(httpHost + '/customer_orders/list').success( function (data) {
+    $http.get(httpHost + '/customer-orders/list').success( function (data) {
 
       if(data.length !== 0){
         $scope.customerOrdersAvailable = data;
@@ -137,7 +137,7 @@ angular.module('fmApp')
 
 
     var newOrder = {
-    "delivery_date": $filter('date')(todayDay,"yyyy-MM-dd"),
+    "delivery_date": $filter('date')(todayDayFormatted,"yyyy-MM-dd"),
     "user": $scope.userName,
     "loadout_no": loadout_no,
     "loadout_id": loadout_id,
