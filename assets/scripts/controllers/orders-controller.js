@@ -127,7 +127,11 @@ angular.module('fmApp')
     $scope.orderForm.$setPristine();
     $scope.order.distance_rating = $scope.distanceRatings[0];
     $scope.order.sku = $scope.skuList[0];
+    $scope.order.address = '';
     $scope.order.cases = null;
+    $scope.order.establishment = '';
+    $scope.order.owner = '';
+    $scope.cokeagent_name = '';        
   };
 
   $scope.getOrderProducts = function (order_id) {
@@ -175,12 +179,13 @@ angular.module('fmApp')
     if(_.findIndex($scope.orders, function(order) { return order.sku_id === orderInfo.sku_id; }) === -1){
            $scope.orders.push(orderInfo);
            $scope.totalAmount += orderInfo.price;
-          
+           $scope.order.sku = $scope.skuList[0];
+           $scope.order.cases = null; 
     }else{
       $scope.showItemExistingError(true,orderInfo.sku);
+      $scope.order.cases = null; 
     }
 
-    clearForm();
   };
 
   $scope.deleteOrder = function (index) {
@@ -206,7 +211,7 @@ angular.module('fmApp')
 
     console.log(final_order);
 
-    // io.socket.post('/customer_orders/add', {order : final_order});
+    io.socket.post('/customer_orders/add', {order : final_order});
     io.socket.request($scope.socketOptions('post','/customer_orders/add',{"Authorization": "Bearer " + authService.getToken()},final_order), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
