@@ -123,7 +123,7 @@
                   NO CUSTOMER ORDER AVAILABLE
               </div>
               <div ng-hide="noCustomerOrdersAvailable">
-                  <select ng-model="ordersAvailableList" ng-options="order as orderAvailable.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
+                  <select ng-model="ordersAvailableList" ng-options="orderAvailable as orderAvailable.order.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
                   </select>
                   <button type="button" ng-click="addAvaiableCustomer(ordersAvailableList)">ADD</button>
               </div>
