@@ -135,10 +135,38 @@ module.exports = {
 
 	getLoadOutProducts : function(req, res){
 		var loadoutId = req.query.id;
+		var productList = [];
 
 		Delivery_transactions.find({loadout_id : loadoutId}).populateAll()
 			.then(function (transactions){
-				return res.send(transactions);
+				return transactions;
+			})
+
+			.each(function (transaction){
+				return new Promise(function (resolve, reject){
+					_(transaction.products).forEach(function (product){
+
+						Sku.findOne({id : product.sku_id})
+							.then(function (foundProduct){
+
+								return SkuService.getProductName(foundProduct.id)
+									.then(function (brandName){
+										foundProduct.brand_name = brandName;
+										product.sku_id = foundProduct;
+									})
+							})
+
+							.then(function (){
+								productList.push(product);
+								resolve();
+							})
+						
+					});
+				})
+			})
+
+			.then(function (){
+				return res.send(productList); 
 			})
 	}
 };
