@@ -207,14 +207,14 @@
           <br><br>
         
         <div ng-show="noBays">
-         <h3><strong> NO BAYS! <small></br>Please add bays first.</small></strong></h3>
+         <h3><strong><center>NO BAYS! <small></br>Please add bays first.</small></center></strong></h3>
         </div>
         <div ng-show="noSKU">
-         <h3><strong>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</small></strong></h3>
+         <h3><strong><center>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</center></small></strong></h3>
         </div>
         <div ng-show="noPurchase" ng-hide="noSKU || noBays || !noPurchase">
-         <h3><strong>NO PURCHASE</strong></h3>
-        </div>
+         <h3><strong><center>NO PURCHASE</center></strong></h3>
+        </div></center>
 
         <!-- START OF TABLE -->             
         <table  class="table table-striped table-hover " ng-hide="noPurchase || addPurchaseForm">
