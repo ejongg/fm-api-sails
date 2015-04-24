@@ -229,7 +229,7 @@
             </thead>
 
             <tbody>
-                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
+                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" pagination-id="purchasess" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
                     <td>{{purchaseInfo.id}}</td>
                     <td>{{purchaseInfo.date_received}}</td>
                     <td>{{purchaseInfo.total_amount}}</td>
@@ -240,6 +240,7 @@
             </tbody>
         </table>
         <dir-pagination-controls
+            pagination-id="purchasess"
             max-size="7"
             directional-links="true"
             boundary-links="true"
@@ -276,7 +277,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="product in purchaseProducts">
+                <tr dir-paginate="product in purchaseProducts | itemsPerPage: 4" pagination-id="purchaseModal">
                     <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name + " " + product.sku_id.size}}</td>
                     <td>{{product.cases}}</td>
                     <td>{{product.purchase_id.date_received}}</td>
@@ -288,6 +289,16 @@
 
             </tbody>
         </table>
+
+        <dir-pagination-controls
+            pagination-id="purchaseModal"
+            max-size="7"
+            directional-links="true"
+            boundary-links="true"
+            >
+        </dir-pagination-controls>
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="showViewProducts(false)">Close</button>
