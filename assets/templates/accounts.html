@@ -80,7 +80,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                      <!--   <div class="form-group">
                             <label for="inputFirstName" class="col-md-4">First Name</label>
                             <div class="col-md-12">
                                 <input type="text" class="form-control" name="inputFirstName" placeholder="Enter first name." ng-model="user.firstname" ng-pattern="/^[A-Za-z *]+$/" required>
@@ -97,7 +97,26 @@
                                 <strong class="fbackMsg" ng-show="userForm.inputLastName.$invalid && !userForm.inputLastName.$pristine">Last Name Required!</strong>
 
                             </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="inputFullName" class="col-md-4">Name</label> 
+                            <div class="col-md-12">
+                                <!-- <input type="select" class="form-control" name="" placeholder="" ng-model="user.fullname" required> -->
+
+                                <select ng-model="user.fullname" ng-options="employee as fullName(employee) for employee in employees">
+                                    
+                                </select>
+
+
+                               
+                               <!--  <strong class="fbackMsg" ng-show="userForm.inputLastName.$invalid && !userForm.inputLastName.$pristine">Last Name Required!</strong> -->
+
+                            </div>
                         </div>
+
+
+
 
                         <div class="form-group rightalign">
                             <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Add</button>

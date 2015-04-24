@@ -10,6 +10,9 @@ angular.module('fmApp')
   $scope.userDelete = {};
   $scope.copiedUser = {};
 
+  $scope.employees = [];
+  $scope.noEmployees = false;
+
 	$scope.addUserForm = false;
 	$scope.editOrDeleteUserForm = false;
 	// $scope.editUserTab = true;
@@ -27,6 +30,22 @@ angular.module('fmApp')
     });
 	};
 
+    var getEmployees = function () {
+    $http.get(httpHost + '/employees').success( function (data) {
+      if(data.length !== 0){
+        $scope.employees = data;
+        $scope.noEmployees = false;
+        $scope.user.fullname = $scope.employees[0];
+
+        console.log("Employees:");
+        console.log($scope.employees);
+      }
+    }).error(function (err) {
+      console.log(err);
+    });
+  };
+
+  getEmployees();
   getUsers();
 
 	$scope.showAddUserForm = function (data) {
@@ -68,8 +87,21 @@ angular.module('fmApp')
       $scope.user.type= $scope.types[0];
     }; 
 
+  $scope.fullName = function (emp) {
+    return emp.emp_fname + ' ' + emp.emp_lname;
+  };
+
 	$scope.addUser = function (user) {
-    io.socket.request($scope.socketOptions('post','/users',{"Authorization": "Bearer " + authService.getToken()},user), function (body, JWR) {
+    
+    var newUser = {
+      "username" : user.username,
+      "password" : user.password,
+      "type" : user.type,
+      "firstname" : user.fullname.emp_fname,
+      "lastname" : user.fullname.emp_lname
+    }
+
+    io.socket.request($scope.socketOptions('post','/users',{"Authorization": "Bearer " + authService.getToken()},newUser), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
