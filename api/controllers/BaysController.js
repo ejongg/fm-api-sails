@@ -22,7 +22,36 @@ module.exports = {
 			.then(function (bay){
 				BaysService.countBayItems(bay.id)
 					.then(function (count){
-						sails.sockets.blast('bays', {verb : 'created', data : bay, bayitem : {bay_id : bay.id, total_products : count}});
+						bay.total_products = count;
+						sails.sockets.blast('bays', {verb : 'created', data : bay});
+						return res.send(201);
+					})
+			})
+
+			.catch(function (err){
+				return res.send(err);
+			})
+	},
+
+	edit : function(req, res){
+		var bayId = req.body.id;
+
+		var bay = {
+			bay_name : req.body.bay_name,
+			bay_label : req.body.bay_label,
+			bay_limit : req.body.bay_limit
+		}
+
+		Bays.update({id : bayId}, bay)
+			.then(function(createBay){
+				return createBay;
+			})
+
+			.then(function (bay){
+				BaysService.countBayItems(bay.id)
+					.then(function (count){
+						bay.total_products = count;
+						sails.sockets.blast('bays', {verb : 'created', data : bay});
 						return res.send(201);
 					})
 			})
