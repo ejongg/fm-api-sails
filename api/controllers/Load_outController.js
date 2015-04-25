@@ -98,7 +98,9 @@ module.exports = {
 						});
 
 					transaction.status = "On delivery";
-					transaction.save(function(err, saved){});
+					transaction.save(function(err, saved){
+						sails.sockets.blast("loadout", {verb : "confirmed", data : transaction});
+					});
 
 					return res.json({code : 1, message : "Load out confirmed"});
 				});
