@@ -20,15 +20,16 @@ module.exports = {
 			})
 
 			.then(function (bay){
-				BaysService.countBayItems(bay.id, function(err, count){
-					sails.sockets.blast('bays', {verb : 'created', data : bay, bayitem : {bay_id : bay.id, total_products : count}});
-					return res.send(201);
-				});
+				BaysService.countBayItems(bay.id)
+					.then(function (count){
+						sails.sockets.blast('bays', {verb : 'created', data : bay, bayitem : {bay_id : bay.id, total_products : count}});
+						return res.send(201);
+					})
 			})
 
-			.catch(function(err){
+			.catch(function (err){
 				return res.send(err);
-			});
+			})
 	},
 
 	list : function (req, res){
