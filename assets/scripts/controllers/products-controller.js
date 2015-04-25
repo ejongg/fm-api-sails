@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost','authService', function($scope, $http, _,$filter, httpHost, authService){
+.controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost','authService',
+  function($scope, $http, _,$filter, httpHost, authService){
 
   $scope.products = [];
   $scope.companies = ['Coca-Cola','SMB'];
@@ -16,38 +17,24 @@ angular.module('fmApp')
   $scope.editOrDeleteProductForm = false;
   $scope.editProductTab = true;
 
-  $scope.noProducts = true;
+  $scope.noProducts = false;
 
   //forSorting. Default is set to id
   $scope.sortCriteria = 'id';
 
-
   var getProducts = function () {
-    // io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {
-    //   console.log('Sails responded with get user: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.products = body;
-    //     $scope.existingCompany = _.uniq($scope.products, 'company');
-    //     $scope.productExistingCompany.company = $scope.existingCompany[0].company;
-    //     $scope.$digest();
-    //   }
-    // });
     $http.get(httpHost + '/products').success( function (data) {
       
       if(data.length !== 0){
         $scope.products = data;
-        console.log($scope.products);
-        $scope.existingCompany = _.uniq($scope.products, 'company');
-        $scope.productExistingCompany.company = $scope.existingCompany[0].company;
-        $scope.noProducts = false;
- 
         console.log("Products:");
         console.log($scope.products);
+      }else{
+        $scope.noProducts = true;
       }
 
     }).error(function (err) {
-      console.log(err);
+        $scope.checkError(err);
     });
   };
 
@@ -71,7 +58,7 @@ angular.module('fmApp')
   };
 
   $scope.showEditOrDeleteProductForm = function (data) {
-      $scope.editOrDeleteProductForm = data;
+    $scope.editOrDeleteProductForm = data;
   };
 
   $scope.setEditProductTab = function (data) {
@@ -97,7 +84,6 @@ angular.module('fmApp')
     $scope.productEdit.id = $scope.copiedProduct.id;
     $scope.productEdit.brand_name = $scope.copiedProduct.brand_name;
     $scope.productEdit.company= $scope.copiedProduct.company;
-    console.log($scope.productEdit.company);
 
     $scope.productDelete.id = $scope.copiedProduct.id;
     $scope.productDelete.brand_name = $scope.copiedProduct.brand_name;
@@ -107,14 +93,13 @@ angular.module('fmApp')
   };
 
   $scope.addProduct = function (product) {
-    console.log("clicked add");
-    console.log(product);
     io.socket.request($scope.socketOptions('post','/products',{"Authorization": "Bearer " + authService.getToken()},product), function (body, JWR) {
       console.log('Sails responded with post product: ', body);
       console.log('and with status code: ', JWR.statusCode);
 
       if(JWR.statusCode === 201){
         $scope.showAddProductForm(false);
+        $scope.snackbarShow('Product Created');
       }else if (JWR.statusCode === 400){
         console.log("Product already exist");
       }else{
@@ -131,18 +116,19 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteProductForm(false);
+        $scope.snackbarShow('Product Edited');
         $scope.$digest();
       }
     });
   };
 
   $scope.deleteProduct = function (product) {
-    console.log(product);
     io.socket.request($scope.socketOptions('delete','/products/' + product.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteProductForm(false);
+        $scope.snackbarShow('Product Deleted');
         $scope.$digest();
       }
     });
@@ -159,21 +145,17 @@ angular.module('fmApp')
         if($scope.noProducts === true){
           $scope.noProducts = false;
         }
-
         $scope.products.push(msg.data);
-        $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.$digest();
         break;
       case "updated":
         console.log("Product Updated");
         var index = _.findIndex($scope.products,{'id': msg.data.id});
         $scope.products[index] = msg.data;
-        $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Product Deleted");
-        console.log(msg.data[0].prod_id);
         var index = _.findIndex($scope.products,{'id': msg.data[0].prod_id});
         console.log(index);
         $scope.products.splice(index,1);

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable','angularUtils.directives.dirPagination'] )
+angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirPagination','angular.snackbar'] )
 
 .constant('httpHost','http://localhost:1337')
 .constant('_', window._)
@@ -258,14 +258,9 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
 
 .run(['$rootScope','$state','userService','authService', function ($rootScope, $state, userService,authService) {
   console.log("Run");
-  if (!authService.getToken()) {
-    $state.go('login');
-    console.log('login run');
-  }else {
+  if (authService.getToken()) {
      userService.getUser();
   }
-
-
 }])
 
 // function isEmpty(value) {
@@ -302,8 +297,8 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
     };
 })
 
-.controller('MainCtrl',['$scope', 'authService', '$state', 'userService','$filter','$rootScope', function($scope, authService, 
-  $state, userService, $filter,$rootScope){
+.controller('MainCtrl',['$scope', 'authService', '$state', 'userService','$filter','$rootScope','snackbar', 
+  function($scope,authService,$state,userService,$filter,$rootScope,snackbar){
 
   $scope.dateToday = new Date();
   $scope.userType =  userService.getUserType();
@@ -356,6 +351,16 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
      console.log($scope.userLastName);
      $scope.$digest();
   });
+
+  $scope.snackbarShow = function (msg) {
+    snackbar.create(msg, 3000);
+  };
+
+  $scope.checkError = function (err) {
+    if(err.error === 'Unauthorized'){
+        $scope.logout();
+      }
+  };
 
   $scope.logout = function () {
     console.log("LogOut");
