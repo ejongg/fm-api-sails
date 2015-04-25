@@ -72,38 +72,47 @@ module.exports = {
 		var loadoutId = req.body.loadout_id;
 		var truck = req.body.truck_id;
 		var delivery_date = req.body.delivery_date;
-		console.log(loadoutId);
+
+		console.log(req.body);
+
 		Load_out.findOne({id : loadoutId})
 			.then(function (loadout){
-				loadout.status = "In progress";
-				loadout.save(function (err, saved){
-					sails.sockets.blast("loadout", {verb : "confirmed", data : saved});
+				
+				return new Promise(function (resolve, reject){
+					loadout.status = "In progress";
+
+					loadout.save(function (err, saved){
+						sails.sockets.blast("loadout", {verb : "confirmed", data : saved});
+						resolve();
+					});
 				});
 			})
 
-		Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date})
-			.then(function getDeliveries(delivery_transactions){
+			.then(function (){
+				Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date})
+					.then(function getDeliveries(delivery_transactions){
 
-				(delivery_transactions).forEach(function(transaction){
+						(delivery_transactions).forEach(function(transaction){
 
-					Delivery_products.find({dtrans_id : transaction.id}).populate('sku_id')
-						.then(function getDeliveryProducts(products){
+							Delivery_products.find({dtrans_id : transaction.id}).populate('sku_id')
+								.then(function getDeliveryProducts(products){
 
-							(products).forEach(function(product){
-								if(product.sku_id.company == "SMB"){
-									InventoryService.SMB_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase);
-								}								
+									(products).forEach(function(product){
+										if(product.sku_id.company == "SMB"){
+											InventoryService.SMB_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase);
+										}								
+									});
+
+								});
+
+							transaction.status = "On delivery";
+							transaction.save(function(err, saved){
+								return res.json({code : 1, message : "Load out confirmed"});
 							});
-
 						});
 
-					transaction.status = "On delivery";
-					transaction.save(function(err, saved){
-						return res.json({code : 1, message : "Load out confirmed"});
 					});
-				});
-
-			});
+			})
 	},
 
 	list : function(req, res){
