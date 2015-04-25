@@ -353,6 +353,8 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
   });
 
   $scope.snackbarShow = function (msg) {
+    console.log("Snackbar");
+    console.log(msg);
     snackbar.create(msg, 3000);
   };
 

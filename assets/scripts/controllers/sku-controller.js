@@ -17,43 +17,27 @@ angular.module('fmApp')
   $scope.editOrDeleteSKUForm = false;
   $scope.editSKUTab = true;
   
-  $scope.noProducts = true;
-  $scope.noSKU = true;
+  $scope.noProducts = false;
+  $scope.noSKU = false;
 
   // forSorting
   $scope.sortCriteria = 'id';
   
 
   var getProducts = function (){  
-    // io.socket.request($scope.socketOptions('get','/products'), function (body, JWR) {
-    //   console.log('Sails responded with get products: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.products = body;
-
-    //     if($scope.products.length === 0){
-    //       $scope.noExistingProduct = true;
-    //     }else{
-    //       $scope.existingCompany = _.uniq($scope.products,'company');
-    //       $scope.sku.brand_name = $scope.products[0].brand_name;
-    //     }
-    //     $scope.$digest();
-    //   }
-    // });
     $http.get(httpHost + '/products').success( function (data) {
       
       if(data.length !== 0){
         $scope.products = data;
-        $scope.existingCompany = _.uniq($scope.products,'company');
         $scope.sku.brand_name = $scope.products[0].brand_name;
-        $scope.noProducts = false;
-
         console.log("Products:");
         console.log($scope.products);
+      }else{
+        $scope.noProducts = true;
       }
 
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
   
@@ -61,63 +45,24 @@ angular.module('fmApp')
   Get sku in the server
   */
   var getSKULists = function (){  
-    // io.socket.request($scope.socketOptions('get','/sku'), function (body, JWR) {
-    //   console.log('Sails responded with get sku: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.skuLists = body;
-    //     $scope.$digest();
-    //   }
-    // });
     $http.get(httpHost + '/sku').success( function (data) {
       
       if(data.length !== 0){
         $scope.skuLists = data;
-        $scope.noSKU = false;
-
         console.log("SKU List:");
         console.log($scope.skuLists);
+      }else{
+        $scope.noSKU = true;
       }
 
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
     
   getProducts(); 
   getSKULists();
 
-    /*
-  Get products in the server
-   - if there are no products in the server set noExistingProduct to true.
-   - if there are already products in the server get the company and set the first option in the dropdown.
-  */
-  // var getProducts = function (){  
-  //     $sailsSocket.get('/products').success(function (data) {
-  //     $scope.products = data;
-
-      // if($scope.products.length === 0){
-      //   $scope.noExistingProduct = true;
-      // }else{
-      //   $scope.existingCompany = _.uniq($scope.products,'company');
-      //   $scope.sku.prod_name = $scope.products[0].prod_name;
-      // }
-  //     }).error(function (err) {
-  //     console.log(err);
-  //     });
-  // };
-  
-  /*
-  Get sku in the server
-  */
-  // var getSKULists = function (){  
-  //     $sailsSocket.get('/sku').success(function (data) {
-  //     $scope.skuLists = data;
-  //     console.log(data);
-  //     }).error(function (err) {
-  //     console.log(err);
-  //     });
-  // };
   $scope.pagePrint = function () {
     window.print();
   };
@@ -236,20 +181,12 @@ angular.module('fmApp')
     }
     console.log(skuInfo);
 
-    // $sailsSocket.post('/sku', skuInfo).success(function (data) {
-    //   console.log(data);
-    //   $scope.skuLists.push(data);
-    //   $scope.showAddSkuForm(false);
-    //   clearForm();
-    // }).error(function (err) {
-    //   console.log(err);
-    // });
-
     io.socket.request($scope.socketOptions('post','/sku',{"Authorization": "Bearer " + authService.getToken()},skuInfo), function (body, JWR) {
       console.log('Sails responded with post sku: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if (JWR.statusCode === 201) {
         $scope.showAddSkuForm(false);
+        $scope.snackbarShow('SKU Added');
         $scope.$digest();
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
@@ -263,31 +200,28 @@ angular.module('fmApp')
     - If success close the form.
   */
   $scope.editSKU = function (sku) {
-    console.log(sku);
-    // var size = sku.size + ' ' +sku.unit;
-    // var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
+    console.log(sku.brand_name);
+    var size = sku.size + ' ' +sku.unit;
+    var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
+ 
+    var newInfo = {
+      "sku_name":sku.sku_name,
+      "size":size,
+      "priceperbottle":sku.priceperbottle,
+      "pricepercase":sku.pricepercase,
+      "bottlespercase": sku.bottlespercase,
+      "weightpercase": sku.weightpercase,
+      "lifespan": sku.lifespan,
+      "prod_id": prod_id
+    }
+    console.log(newInfo);
 
-    // var newInfo = {
-    //   "sku_name":sku.sku_name,
-    //   "size":size,
-    //   "price":sku.price,
-    //   "bottlespercase": sku.bottlespercase,
-    //   "prod_id": prod_id
-    // }
-    // console.log(newInfo);
-
-    // $sailsSocket.put('/sku/' + sku.id, newInfo).success(function (data) {
-    //   var index = _.findIndex($scope.skuLists, function(sku) { return sku.id == data.id; });
-    //   $scope.skuLists[index] = data;
-    //   $scope.showEditOrDeleteSkuForm(false);
-    // }).error(function (err) {
-    //   console.log(err);
-    // });
     io.socket.request($scope.socketOptions('put','/sku/' + sku.id,{"Authorization": "Bearer " + authService.getToken()},sku), function (body, JWR) {
       console.log('Sails responded with edit sku: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteSkuForm(false);
+        $scope.snackbarShow('SKU Edited');
         $scope.$digest();
       }
     });
@@ -308,6 +242,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteSkuForm(false);
+        $scope.snackbarShow('SKU Deleted');
         $scope.$digest();
       }
     });
@@ -329,7 +264,7 @@ angular.module('fmApp')
           $scope.noSKU = true;
         }
         $scope.products.push(msg.data);
-        $scope.existingCompany = _.uniq($scope.products, 'company');
+        // $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.sku.brand_name = $scope.products[0].brand_name;
         $scope.$digest();
         break;
@@ -337,7 +272,7 @@ angular.module('fmApp')
         console.log("Product Updated");
         var index = _.findIndex($scope.products,{'id': msg.data.id});
         $scope.products[index] = msg.data;
-        $scope.existingCompany = _.uniq($scope.products, 'company');
+        // $scope.existingCompany = _.uniq($scope.products, 'company');
         $scope.sku.brand_name = $scope.products[0].brand_name;
         $scope.$digest();
         break;
@@ -356,8 +291,8 @@ angular.module('fmApp')
           }
         }else{
           console.log("change filter");
-          $scope.existingCompany = _.uniq($scope.products, 'company');
-          console.log($scope.existingCompany);
+          // $scope.existingCompany = _.uniq($scope.products, 'company');
+          // console.log($scope.existingCompany);
           $scope.sku.brand_name = $scope.products[0].brand_name;
         }
         

@@ -12,7 +12,7 @@ angular.module('fmApp')
   $scope.bayDelete = {};
   $scope.copiedBay = {};
 
-  $scope.noBays = true;
+  $scope.noBays = false;
 
   $scope.addBayForm = false;
   $scope.editOrDeleteBayForm = false;
@@ -44,10 +44,11 @@ angular.module('fmApp')
       $scope.bays = data;
       console.log("Bays:");
       console.log($scope.bays);
-      $scope.noBays = false;
+      }else{
+        $scope.noBays = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
 
   };
@@ -156,9 +157,10 @@ angular.module('fmApp')
     io.socket.request($scope.socketOptions('post','/bays/add',{"Authorization": "Bearer " + authService.getToken()},bay), function (body, JWR) {
       console.log('Sails responded with post bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
+      if(JWR.statusCode === 201){
         // $scope.bays.push(body);
         $scope.showAddBayForm(false);
+        $scope.snackbarShow('Bay Added');
         $scope.$digest();
       }
     }); 
@@ -178,6 +180,8 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          $scope.showEditOrDeleteBayForm(false);
+         $scope.snackbarShow('Bay Edited');
+         $scope.$digest();
       }
     });
   };
@@ -195,6 +199,8 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteBayForm(false);
+        $scope.snackbarShow('Bay Deleted');
+        $scope.$digest();
       }
     });
   };
