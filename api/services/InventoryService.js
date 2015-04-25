@@ -183,7 +183,7 @@ module.exports = {
 					if(found_sku){
 						found_sku.bottles = found_sku.bottles + (bottlespercase * cases);
 						found_sku.physical_count = found_sku.physical_count + cases;
-						found_sku.logical_count = found_sku.logical_count - cases;
+						found_sku.logical_count = (found_sku.logical_count - found_sku.physical_count) - cases;
 
 						found_sku.save(function(err, saved){
 							resolve();
