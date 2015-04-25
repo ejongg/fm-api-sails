@@ -43,15 +43,15 @@ module.exports = {
 		}
 
 		Bays.update({id : bayId}, bay)
-			.then(function(createBay){
-				return createBay;
+			.then(function(updatedBay){
+				return updatedBay;
 			})
 
 			.then(function (bay){
 				BaysService.countBayItems(bay.id)
 					.then(function (count){
 						bay.total_products = count;
-						sails.sockets.blast('bays', {verb : 'created', data : bay});
+						sails.sockets.blast('bays', {verb : 'updated', data : bay});
 						return res.send(201);
 					})
 			})
