@@ -21,7 +21,7 @@ module.exports = {
   	},
   	status : {
   		type : "string",
-  		defaultsTo : "Not verified"
+  		defaultsTo : "Pending"
   	},
   	loadout_number : {
   		type : "integer",
