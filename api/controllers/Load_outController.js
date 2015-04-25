@@ -77,7 +77,7 @@ module.exports = {
 			.then(function (loadout){
 				loadout.status = "In progress";
 				loadout.save(function (err, saved){
-					sails.sockets.blast("loadout", {verb : "updated", data : saved});
+					sails.sockets.blast("loadout", {verb : "confirmed", data : saved});
 				});
 			})
 
@@ -98,9 +98,7 @@ module.exports = {
 						});
 
 					transaction.status = "On delivery";
-					transaction.save(function(err, saved){
-						sails.sockets.blast("loadout", {verb : "confirmed", data : transaction});
-					});
+					transaction.save(function(err, saved){});
 
 					return res.json({code : 1, message : "Load out confirmed"});
 				});
