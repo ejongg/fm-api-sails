@@ -40,6 +40,7 @@ module.exports.routes = {
 	*/
 	'POST /bays/add' : 'Bays.add',
 	'GET  /bays/list' : 'Bays.list',
+	'GET  /bays/unempty' : 'Bays.listNotEmpty',
 
 	/* 	CUSTOMER ORDERS 
 		add - for creating customer orders

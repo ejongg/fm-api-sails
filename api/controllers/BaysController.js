@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	add : function createBay (req, res){
+	add : function(req, res){
 		
 		var bay = {
 			bay_name : req.body.bay_name,
@@ -31,7 +31,7 @@ module.exports = {
 	},
 
 	list : function (req, res){
-		var baysWithProductCount = [];
+		var baysList = []; 
 
 		Bays.find()
 			.then(function (bays){
@@ -42,16 +42,42 @@ module.exports = {
 				return BaysService.countBayItems(bay.id)
 				 .then(function (count){
 				 	bay.total_products = count;
-				 	baysWithProductCount.push(bay);
+				 	baysList.push(bay);
 				 })
 			})
 
 			.then(function (){
-				res.send(baysWithProductCount);
+				res.send(baysList);
 			})
 	},
 
-	changemovingpile : function changeMovingPile(req, res){
+	listNotEmpty : function(req, res){
+		var baysList = [];
+		var company = req.query.company;
+
+		console.log(company);
+
+		Bays.find({bay_label : company})
+			.then(function (bays){
+				return bays;
+			})
+
+			.each(function (bay){
+				return BaysService.countBayItems(bay.id)
+				 .then(function (count){
+				 	if(count > 0){
+				 		bay.total_products = count;
+				 		baysList.push(bay);
+				 	}
+				 })
+			})
+
+			.then(function (){
+				res.send(baysList);
+			})
+	},
+
+	changemovingpile : function (req, res){
 		var currentMovingPile = req.body.current_bay;
 		var newMovingPile = req.body.next_bay;
 
