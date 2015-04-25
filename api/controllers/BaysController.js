@@ -22,6 +22,7 @@ module.exports = {
 			.then(function (bay){
 				BaysService.countBayItems(bay.id, function(err, count){
 					sails.sockets.blast('bays', {verb : 'created', data : bay, bayitem : {bay_id : bay.id, total_products : count}});
+					return res.send(201);
 				});
 			})
 
@@ -75,38 +76,6 @@ module.exports = {
 			.then(function (){
 				res.send(baysList);
 			})
-	},
-
-	changemovingpile : function (req, res){
-		var currentMovingPile = req.body.current_bay;
-		var newMovingPile = req.body.next_bay;
-
-		async.parallel([
-			function updateCurrentMovingPile(){
-				Bays.findOne({bay_id : currentMovingPile})
-					.then(function(current){
-						current.pile_status = "Full goods";
-						current.save(function(err, saved){});
-					},
-					function(err){
-						console.log(err);
-					});
-			},
-
-			function updateNewMovingPile(){
-				Bays.findOne({bay_id : newMovingPile})
-					.then(function(next){
-						next.pile_status = "Moving pile";
-						next.save(function(err, saved){});
-					},
-
-					function(err){
-						console.log(err);
-					});
-			}
-		], function emitEvent(err, cb){
-			sails.sockets.blast('bays', {verb : 'change_pile'});
-		});
 	}
 };
 
