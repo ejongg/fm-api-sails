@@ -52,15 +52,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
           }
         }  
       })
-      .state('admin.inventory', {
-        url:'/inventory',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/inventory.html',
-            controller:'InventoryCtrl'
-          }
-        }  
-      })
       .state('admin.products', {
         url:'/inventory/products',
         views: {
@@ -203,6 +194,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
           'mainContent': {
             templateUrl: 'templates/load-outs.html',
             controller:'LoadOutsCtrl'
+          }
+        }  
+      })
+      .state('encoder.inventory', {
+        url:'/inventory',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/inventory.html',
+            controller:'InventoryCtrl'
           }
         }  
       })
