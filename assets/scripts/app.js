@@ -70,15 +70,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
           }
         }  
       })
-      .state('admin.customers', {
-        url:'/delivery/customers',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/customers.html',
-            controller:'CustomersCtrl'
-          }
-        }  
-      })
       .state('admin.bays', {
         url:'/inventory/bays',
         views: {
@@ -130,15 +121,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
           'mainContent': {
             templateUrl: 'templates/transaction-history.html',
             controller:'TransactionHistoryCtrl'
-          }
-        }  
-      })
-      .state('admin.load-outs', {
-        url:'/delivery/load-outs',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/load-outs.html',
-            controller:'LoadOutsCtrl'
           }
         }  
       })
@@ -203,6 +185,24 @@ angular.module('fmApp', ['ui.router','angular-jwt','ui.bootstrap','ngDraggable',
           'mainContent': {
             templateUrl: 'templates/accounts.html',
             controller: 'AccountsCtrl'
+          }
+        }  
+      })
+      .state('encoder.customers', {
+        url:'/delivery/customers',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/customers.html',
+            controller:'CustomersCtrl'
+          }
+        }  
+      })
+      .state('encoder.load-outs', {
+        url:'/delivery/load-outs',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/load-outs.html',
+            controller:'LoadOutsCtrl'
           }
         }  
       })
