@@ -30,7 +30,7 @@ module.exports = {
 
 					Loadin_products.create(loadInProduct)
 						.then(function(createdLoadInProduct){
-							if(product.prod_id.brand_name === "Coca-cola"){
+							if(product.sku_id.brand_name === "Coca-cola"){
 								return InventoryService.put(product.id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan);
 							}else{
 								return InventoryService.SMB_put(product.id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan);

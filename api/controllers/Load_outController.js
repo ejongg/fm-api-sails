@@ -90,7 +90,7 @@ module.exports = {
 						.then(function getDeliveryProducts(products){
 
 							(products).forEach(function(product){
-								if(product.prod_id.company == "SMB"){
+								if(product.sku_id.company == "SMB"){
 									InventoryService.SMB_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase);
 								}								
 							});
@@ -153,6 +153,14 @@ module.exports = {
 									.then(function (brandName){
 										foundProduct.brand_name = brandName;
 										product.sku_id = foundProduct;
+									})
+
+									.then(function (){
+										return SkuService.getCompanyName(foundProduct.id);
+									})
+
+									.then(function (company){
+										product.sku_id.company = company;
 									})
 							})
 
