@@ -159,7 +159,6 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
         // $scope.bays.push(body);
         $scope.showAddBayForm(false);
-        clearForm();
         $scope.$digest();
       }
     }); 
