@@ -73,7 +73,7 @@ module.exports = {
 		var truck = req.body.truck_id;
 		var delivery_date = req.body.delivery_date;
 
-		LoadOut.findOne({id : loadoutId})
+		Load_Out.findOne({id : loadoutId})
 			.then(function (loadout){
 				loadout.status = "In progress";
 				loadout.save(function (err, saved){
