@@ -72,7 +72,7 @@ module.exports = {
 		var loadoutId = req.body.loadout_id;
 		var truck = req.body.truck_id;
 		var delivery_date = req.body.delivery_date;
-
+		console.log(loadoutId);
 		Load_out.findOne({id : loadoutId})
 			.then(function (loadout){
 				loadout.status = "In progress";
@@ -98,15 +98,11 @@ module.exports = {
 						});
 
 					transaction.status = "On delivery";
-					transaction.save(function(err, saved){});
-
-					return res.json({code : 1, message : "Load out confirmed"});
+					transaction.save(function(err, saved){
+						return res.json({code : 1, message : "Load out confirmed"});
+					});
 				});
 
-			},
-
-			function(err){
-				return res.send(err);
 			});
 	},
 
