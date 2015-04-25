@@ -311,7 +311,7 @@
                 <div class="col-md-8" ng-show="noAddressesAvailable">
                   NO ADDRESS AVAILABLE
                 </div>
-                <div class="col-md-9" ng-hide="noAddressesAvailable">
+                <div class="col-md-8" ng-hide="noAddressesAvailable">
                   <select class="form-control" ng-model="addressAvailableList" ng-options="address as address.address_name for address in addressesAvailable">
                   </select> <br>
                   <button type="button" class="btn btn-xs btn-default pull-right" ng-click="addAvaiableAddress(addressAvailableList)">ADD</button>
@@ -333,7 +333,7 @@
               <div class="form-group pull-right">
                 <br>
                  <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-xs btn-primary">Add</button>
-                 <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-xs btn-default">Ok</button>
+                 <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-xs btn-default">Cancel</button>
               </div>
 
             </form>
@@ -387,7 +387,7 @@
               <br>
     
               <div class="form-group pull-right" style="margin-bottom: -5px;"> 
-                <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">CANCEL</button>
+                <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">OKAY</button>
               </div>
 
              
