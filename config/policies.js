@@ -37,7 +37,7 @@ module.exports.policies = {
   },
 
   Warehouse_transactionsController : {
-    add : 'WarehouseSalesPolicy'
+    add : 'InventoryPolicy'
   },
 
   Bad_ordersController : {
