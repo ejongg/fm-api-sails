@@ -62,9 +62,50 @@ module.exports = {
 					return new Promise(function (resolve, reject){
 						Inventory.find({sku_id : sku_id, bay_id : bay.id})
 							.then(function (skus){
-								resolve(skus);
+								resolve(skus);						
 							})
 					})	
+				})
+
+				.then(function (skus){
+					var index = 0;
+
+					async.whilst(
+						function (){
+							return cases > 0;
+						},
+
+						function (cb){
+
+							if(skus[index].physical_count > 0){
+								InventoryService.deductFromInventory(skus[index], bottles, cases, bottlespercase)
+									.then(function (remainingCases){
+										cases = remainingCases;
+										cb();
+									})
+							}else{
+								index++;
+								cb();
+							}
+							
+						},
+
+						function(err){
+							if(err) reject(err);
+
+							resolve();
+						}
+					);
+				})
+		});
+	},
+
+	badOrdersDeduct : function(sku_id, bottles, cases, bottlespercase, bayId){
+		return new Promise(function (resolve, reject){
+
+			Inventory.find({sku_id : sku_id, bay_id : bayId})
+				.then(function (skus){
+					return skus;
 				})
 
 				.then(function (skus){

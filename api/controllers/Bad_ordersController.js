@@ -5,6 +5,7 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 var moment = require('moment');
+var Promise = require("bluebird");
 
 module.exports = {
 	add : function(req, res){
@@ -17,39 +18,19 @@ module.exports = {
 		};
 
 		Bad_orders.create(bad_order)
-			.exec(function(err, created_bad_order){
-				(products).forEach(function(product){
+			.then(function (createdBadOrder){
+				return new Promise(function (resolve, reject){
+					BadOrdersService.createBadOrderProducts(products, createdBadOrder.id)
+						.then(function (){
+							resolve(createdBadOrder);
+						})
+				});			
+			})
 
-					var item = {
-						bad_order_id : 	created_bad_order.id,
-						sku_id : product.sku_id,
-						cases : product.cases,
-						reason : product.reason
-					};
-
-					Bad_order_details.create(item)
-						.exec(function(err, created_item){
-							if(err) 
-								console.log(err);
-						});
-
-					async.series([
-						function deductInInventory(cb){
-							InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase)
-								.then(function (){
-									cb();
-								});	
-						},
-
-						function emit(cb){
-							sails.sockets.blast('bad_orders', {verb : "created", data :created_bad_order});
-							return res.send(201);
-							cb();
-						}
-					]);
-
-				});
-			});
+			.then(function (createdBadOrder){
+				sails.sockets.blast('bad_orders', {verb : "created", data : createdBadOrder});
+				return res.send(201);
+			})
 	},
 
 	getBadOrderProducts : function(req, res){
