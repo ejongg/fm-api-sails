@@ -197,6 +197,11 @@ angular.module('fmApp')
     });  
     console.log(addLoadOut);
   };
+
+  $scope.deleteOrderInLoadout = function (loadout_id,customerOrders_id) {
+    console.log(loadout_id);
+    console.log(customerOrders_id);
+  };
   
   $scope.dropdownChange = function (loadout) {
     console.log(loadout.id);
@@ -240,7 +245,7 @@ angular.module('fmApp')
         break;
       case "updated": 
         console.log("Route Updated");
-        var index = _.findIndex($scope.loadOuts,{'id': msg.data.id});
+        var index = _.findIndex($scope.loadOuts,{'id': msg.data[0].id});
         console.log(index);
         $scope.loadOuts[index] = msg.data;   
         // console.log(msg.data);
