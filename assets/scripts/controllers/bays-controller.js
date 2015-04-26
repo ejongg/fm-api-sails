@@ -175,7 +175,8 @@ angular.module('fmApp')
       // }).error(function (err) {
       //   console.log(err);
       // });
-    io.socket.request($scope.socketOptions('put','/bays/' + newInfo.id,{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
+    console.log(newInfo);
+    io.socket.request($scope.socketOptions('put','/bays/edit',{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
       console.log('Sails responded with edit bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -216,7 +217,6 @@ angular.module('fmApp')
         if($scope.noBays === true){
           $scope.noBays = false;
         }
-        console.log(msg);
         $scope.bays.push(msg.data);
         $scope.bayItems.push(msg.bayitem);
         $scope.showAddBayForm(false);
@@ -225,7 +225,8 @@ angular.module('fmApp')
         break;
       case "updated":
         console.log("Bay Updated");
-        var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        console.log(msg.data[0].id);
+        var index = _.findIndex($scope.bays,{'id': msg.data[0].id});
         console.log(index);
         $scope.bays[index] = msg.data;
         $scope.$digest();
