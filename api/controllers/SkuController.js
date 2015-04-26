@@ -18,6 +18,7 @@ module.exports = {
 			.each(function (item){
 				return new Promise(function (resolve, reject){
 					if(item.physical_count > 0 && _.findIndex(available, {id : item.sku_id.id}) == -1){
+						
 						Sku.findOne({id : item.sku_id.id}).populate('prod_id')
 							.then(function (sku){
 								available.push(sku);
@@ -31,6 +32,36 @@ module.exports = {
 
 			.then(function (){
 				return res.send(available);
+			})
+	},
+
+	edit : function (req, res){
+		var sku = req.body;
+
+		Sku.findOne({id : sku.id})
+			.then(function (oldSku){
+				return oldSku;
+			})
+
+			.then(function (oldSku){
+				return new Promise(function (resolve, reject){
+					Sku.update({id : sku.id}, sku)
+						.then(function (updatedSku){
+							return InventoryService.updateExpirationDate(sku.id, updatedSku[0].lifespan, oldSku.lifespan);
+						})
+
+						.then(function (){
+							resolve();
+						})
+				});
+			})
+
+			.then(function (){
+				Sku.findOne({id : sku.id}).populate("prod_id")
+					.then(function (foundSku){
+						sails.sockets.blast("sku", {verb : "updated", data : foundSku});
+						return res.send(200);
+					})
 			})
 	}
 };
