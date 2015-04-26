@@ -269,7 +269,6 @@
                 <tr>
                     <th>SKU</th>
                     <th>Cases</th>
-                    <th>Production Date</th>
                     <th>Cost Per Case</th>
                     <th>Discount Per Case</th>
                 </tr>
@@ -279,7 +278,6 @@
                 <tr ng-repeat="product in purchaseProducts">
                     <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name + " " + product.sku_id.size}}</td>
                     <td>{{product.cases}}</td>
-                    <td>{{product.purchase_id.date_received}}</td>
                     <td>{{product.costpercase}}</td>
                     <td>{{product.discountpercase}}</td>
                 </tr>
@@ -295,7 +293,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+ <div class="snackbar-container" data-snackbar="true"></div>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 
 
