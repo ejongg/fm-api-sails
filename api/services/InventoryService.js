@@ -259,7 +259,7 @@ module.exports = {
 
 	updateExpirationDate : function (id, newLifeSpan, oldLifeSpan){
 		return new Promise(function (resolve, reject){
-			console.log(newLifeSpan + " " + oldLifeSpan);
+
 			Inventory.find({sku_id : id})
 				.then(function (items){
 					return items;
