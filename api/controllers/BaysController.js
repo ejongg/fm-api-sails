@@ -42,18 +42,18 @@ module.exports = {
 			bay_label : req.body.bay_label,
 			bay_limit : req.body.bay_limit,
 			pile_status : req.body.pile_status
-		}
+		};
 
 		Bays.update({id : bayId}, bay)
-			.then(function(updatedBay){
-				return updatedBay;
+			.then(function (updatedBay){
+				return updatedBay;				
 			})
 
-			.then(function (bay){
+			.then(function (updatedBay){
 				BaysService.countBayItems(bay.id)
 					.then(function (count){
-						bay.total_products = count;
-						sails.sockets.blast('bays', {verb : 'updated', data : bay});
+						updatedBay.total_products = count;
+						sails.sockets.blast('bays', {verb : 'updated', data : updatedBay[0]});
 						return res.send(200);
 					})
 			})
