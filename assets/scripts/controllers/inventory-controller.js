@@ -6,6 +6,8 @@ angular.module('fmApp')
   $scope.sku = [];
   $scope.bays = [];
 
+  $scope.noInventory = false;
+
   $scope.sortCriteria='id';
 
   var getInventory = function () {
@@ -23,9 +25,11 @@ angular.module('fmApp')
 
         console.log("Inventory:");
         console.log($scope.inventory);
+      }else{
+        $scope.noInventory = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 

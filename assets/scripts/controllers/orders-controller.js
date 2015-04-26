@@ -27,21 +27,6 @@ angular.module('fmApp')
   $scope.sortCriteria = 'id';
   
   var getSKU = function () {
-    // $http.get('http://localhost:1337/sku').success(function(data){
-    //   $scope.skuList = data;
-    //   $scope.order.sku = $scope.skuList[0];
-    // });
-
-    // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
-    //   console.log('Sails responded with get sku available: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.skuList = body;
-    //     $scope.order.sku = $scope.skuList[0];
-    //     $scope.$digest();
-    //   }
-    // });
-
     $http.get(httpHost + '/sku').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = data;
@@ -52,25 +37,12 @@ angular.module('fmApp')
         $scope.noSKU = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
 
   };
 
   var getOrders = function (){
-    // $http.get('http://localhost:1337/customer_orders').success(function(data){
-    //   $scope.ordersList = data;
-    // });
-
-    // io.socket.request($scope.socketOptions('get','/customer_orders'), function (body, JWR) {
-    //   console.log('Sails responded with get customers orders: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.ordersList = body;
-    //     $scope.$digest();
-    //   }
-    // });
-
     $http.get(httpHost + '/customer_orders').success( function (data) {
       if(data.length !== 0){
          $scope.ordersList = data;
@@ -86,19 +58,6 @@ angular.module('fmApp')
   };
 
   var getAddresses = function (){
-    // $http.get('http://localhost:1337/customer_orders').success(function(data){
-    //   $scope.ordersList = data;
-    // });
-
-    // io.socket.request($scope.socketOptions('get','/customer_orders'), function (body, JWR) {
-    //   console.log('Sails responded with get customers orders: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.ordersList = body;
-    //     $scope.$digest();
-    //   }
-    // });
-
     $http.get(httpHost + '/address').success( function (data) {
       if(data.length !== 0){
         $scope.addresses = data;
@@ -169,17 +128,6 @@ angular.module('fmApp')
   };
 
   $scope.getOrderProducts = function (order_id) {
-   // $http.get('http://localhost:1337/customer_order_products?where={"order_id" :' + order_id +'}').success(function(data){
-   //   $scope.orderProducts = data;
-   // });
-    // io.socket.request($scope.socketOptions('get','/customer_order_products?where={"order_id" :' + order_id +'}'), function (body, JWR) {
-    //   console.log('Sails responded with get customer orders: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.orderProducts =  body;
-    //     $scope.$digest();
-    //   }
-    // });
 
     $http.get(httpHost + '/customer-orders/details?id=' + order_id).success( function (data) {  
       $scope.orderProducts = data;
@@ -214,12 +162,15 @@ angular.module('fmApp')
            $scope.orders.push(orderInfo);
            $scope.totalAmount += orderInfo.price;
            $scope.order.sku = $scope.skuList[0];
-           $scope.order.cases = null; 
     }else{
+      var index = _.findIndex($scope.orders, function(order) { return order.sku_id === orderInfo.sku_id; });
+      $scope.orders[index].cases += orderInfo.cases;
+      $scope.totalAmount += orderInfo.price;
       $scope.showItemExistingError(true,orderInfo.sku);
-      $scope.order.cases = null; 
     }
 
+    $scope.order.cases = null;
+    $scope.order.sku = $scope.skuList[0];
   };
 
   $scope.deleteOrder = function (index) {
@@ -252,22 +203,12 @@ angular.module('fmApp')
       if(JWR.statusCode === 201){
        console.log("close form");
        $scope.showAddOrderForm(false);
+       $scope.snackbarShow('Order Added');
        $scope.$digest();
       }
     });  
 
   };
-
-  // io.socket.on('customer_orders', function(msg){
-  //   console.log('customer order created');
-  //   console.log(msg.verb);
-  //   if (msg.verb === 'created') {
-  //     console.log(msg.data);
-  //     $scope.ordersList.push(msg.data);
-  //     console.log($scope.ordersList);
-  //     $scope.$digest();
-  //   }
-  // });
 
   io.socket.on('sku', function(msg){
     console.log("Message Verb: " + msg.verb);
