@@ -223,8 +223,8 @@ h3.panel-heading {
   margin-top: 46px;
   margin-bottom: 0px;
   background-position: center center;
-  background-color: #000000 !important;
-  border-bottom: 0px solid #000000;}
+  background-color: #508213 !important;
+  border-bottom: 0px solid #202020;}
 
 .big-margin {
   margin-top: 0px;
@@ -300,7 +300,7 @@ h1 {
 h2 {
   font-size: 180%;
   text-transform: uppercase;
-  color: #508213!important;
+  color: #508213 !important;
   /*padding-left: 82px !important;*/
 
   text-align: center;
