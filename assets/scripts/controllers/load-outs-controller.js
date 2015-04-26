@@ -155,7 +155,7 @@ angular.module('fmApp')
     "user": $scope.userName,
     "loadout_no": loadout_no,
     "loadout_id": loadout_id,
-    "orders": [data],
+    "orders": data,
     "truck_id": truck_id,
     "flag": "edit"
     };
