@@ -88,9 +88,7 @@ module.exports = {
 		var baysList = [];
 		var company = req.query.company;
 
-		console.log(company);
-
-		Bays.find({bay_label : company})
+		Bays.find({bay_label : { 'contains': company }})
 			.then(function (bays){
 				return bays;
 			})
