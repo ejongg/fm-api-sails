@@ -254,7 +254,33 @@ module.exports = {
 				.then( function (){
 					resolve(totalCount);		
 				});
-		});
+		});		
+	},
+
+	updateExpirationDate : function (id, newLifeSpan, oldLifeSpan){
+		return new Promise(function (resolve, reject){
+			console.log(newLifeSpan + " " + oldLifeSpan);
+			Inventory.find({sku_id : id})
+				.then(function (items){
+					return items;
+				})
+
+				.each(function (item){
+					return new Promise(function (resolve, reject){
+						var productionDate = moment(item.exp_date, "YYYY-MM-DD").subtract(oldLifeSpan, 'M').format('YYYY-MM-DD');
+						var newExpirationDate = moment(productionDate, "YYYY-MM-DD").add(newLifeSpan, 'M').format('YYYY-MM-DD');
+
+						item.exp_date = newExpirationDate;
 			
+						item.save(function (err, saved){
+							resolve();
+						});
+					});
+				})
+
+				.then(function (){
+					resolve();
+				})
+		});
 	}
 };
