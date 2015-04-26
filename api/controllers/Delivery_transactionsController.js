@@ -47,6 +47,26 @@ module.exports = {
 			.then(function (){
 				return res.send(transactionList);
 			})
+	},
+
+	payment : function (req, res){
+		var deliveryId = req.body.delivery_id;
+		var paidAmount = req.body.paid_amount;
+		var paymentDate = req.body.payment_date;
+
+		Delivery_transactions.findOne({id : deliveryId})
+			.then(function (transaction){
+				return new Promise(function (resolve, reject){
+					transaction.paid_amount = paidAmount;
+					transaction.payment_date = paymentDate;
+
+					transaction.save(function (err, result){
+						sails.sockets.blast("delivery_transactions", {verb : "paid", data : result});
+						return res.send(200);
+					});	
+				});
+				
+			})
 	}
 };
 
