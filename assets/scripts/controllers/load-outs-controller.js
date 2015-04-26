@@ -101,7 +101,9 @@ angular.module('fmApp')
   $scope.showAddLoadOutBox = function (data){
     $scope.addLoadOutBox = data;
     if(data === true){
-      $scope.dropdownChange($scope.loadOut.truck);
+      if($scope.loadOut.truck){
+        $scope.dropdownChange($scope.loadOut.truck);
+      }
     }
 
     if(data === false){
@@ -112,6 +114,12 @@ angular.module('fmApp')
         $scope.loadOut.truck_id = $scope.trucks[0].id;
       }
     }
+  };
+
+  $scope.getTruckNumber = function (truck_id) {
+    var index = _.findIndex($scope.trucks, {'id': truck_id});
+    index += 1;
+    return "Truck " + index;
   };
 
   $scope.truckName = function (truck) {
@@ -145,16 +153,6 @@ angular.module('fmApp')
     "truck_id": truck_id,
     "flag": "edit"
     };
-    
-    // console.log(newOrder);
-    // io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},newOrder), function (body, JWR) {
-    //   console.log('Sails responded with post loadout: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.setEditLoadOut(-1);
-    //     $scope.$digest();
-    //   }
-    // });  
 
   };
 
