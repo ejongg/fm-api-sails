@@ -22,7 +22,7 @@ module.exports = {
 					loadout : loadout
 				};
 
-				sails.sockets.blast("loadout", {verb : "removed", data : obj});
+				sails.sockets.blast("loadout", {verb : "destroyed", data : obj});
 				return res.send("Delivery removed from " + loadout, 200);
 			})
 	},
