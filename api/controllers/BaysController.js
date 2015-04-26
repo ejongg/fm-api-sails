@@ -86,9 +86,8 @@ module.exports = {
 
 	listNotEmpty : function(req, res){
 		var baysList = [];
-		var company = req.query.company;
 
-		Bays.find({bay_label : { 'contains': company }})
+		Bays.find()
 			.then(function (bays){
 				return bays;
 			})

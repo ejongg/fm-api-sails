@@ -20,8 +20,8 @@ angular.module('fmApp')
 
   $scope.editIndex = -1;
 
-  $scope.noAddresses = true;
-  $scope.noRoutes = true;
+  $scope.noAddresses = false;
+  $scope.noRoutes = false;
   $scope.noAddressesAvailable = false;
 
 
@@ -58,14 +58,14 @@ angular.module('fmApp')
   var getAdresses = function () {
     $http.get(httpHost + '/address').success( function (data) {
       if(data.length !== 0){
-        $scope.addresses = data;
-        $scope.noAddresses = false;
-        
+        $scope.addresses = data;    
         console.log("Addresses:");
         console.log($scope.addresses);
+      }else{
+        $scope.noAddresses = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 
@@ -75,14 +75,13 @@ angular.module('fmApp')
         $scope.addressesAvailable = data;
         $scope.addressAvailableList = data[0];
         $scope.addressAvailableListEdit = data[0];
-        
         console.log("Addresses Available:");
         console.log($scope.addressesAvailable);
       }else{
-          $scope.noAddressesAvailable = true;
+        $scope.noAddressesAvailable = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 
@@ -90,13 +89,13 @@ angular.module('fmApp')
     $http.get(httpHost + '/routes').success( function (data) {
        if(data.length !== 0){
         $scope.routes = data;
-        $scope.noRoutes = false;
-        
         console.log("Routes:");
         console.log($scope.routes);
+      }else{
+        $scope.noRoutes = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 
@@ -144,7 +143,6 @@ angular.module('fmApp')
   };
 
   $scope.showAddRouteBox = function (data){
-    console.log(data);
     $scope.addRouteBox = data;
     if(data === false){
       $scope.route.route_name = '';

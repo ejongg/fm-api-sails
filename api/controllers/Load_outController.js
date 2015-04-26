@@ -24,43 +24,47 @@ module.exports = {
 			truck_id : truckId
 		};
 
+		var createdLoadout;
+
 		Load_out.findOrCreate(loadout, loadout)
-			.then(function (createdLoadout){
-				return createdLoadout;
+			.then(function (resultLoadout){
+				createdLoadout = resultLoadout;
 			})
 
-			.then(function (createdLoadout){
+			.then(function (){
 				return new Promise(function (resolve, reject){
-
-					async.each(orders, function(order, cb){
-
-						DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
-							.then(function (createdDelivery){
-
-								Customer_orders.update({id : order.order.id}, {delivery_id : createdDelivery.id})
-									.then(function (updatedOrder){
-										sails.sockets.blast("customer_orders", {verb : "created", data : "updatedOrder"});
-										cb();
-									})
-
-							})
-
-					},
-
-					function (err){
-						resolve(createdLoadout);
-					});				
+					if(flag == "add"){
+						resolve(orders);
+					}else{
+						resolve([orders]);
+					}
 				});
 			})
 
-			.then(function (createdLoadout){
+			.each(function (order){
+				return new Promise(function (resolve, reject){
+
+					DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
+						.then(function (createdDelivery){
+
+							Customer_orders.update({id : order.order.id}, {delivery_id : createdDelivery.id})
+								.then(function (updatedOrder){
+									
+									resolve();	
+								})
+						})
+				});
+			})
+
+			.then(function (){
 				LoadOutService.getDetails(createdLoadout)
+
 					.then(function(detailedLoadout){
 
 						if(flag == "add"){
-							sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});	
+							sails.sockets.blast("loadout", {verb : "created", data : detailedLoadout});	
 						}else{
-							sails.sockets.blast("loadout", {verb : "updated", data : createdLoadout});
+							sails.sockets.blast("loadout", {verb : "updated", data : detailedLoadout});
 						}
 						
 						return res.send("Loadout successfully added");

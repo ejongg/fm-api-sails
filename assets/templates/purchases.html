@@ -190,7 +190,7 @@
 
 <!-- RIGHT PANEL -->
 
-<div class="panel col-md-12">
+<div class="panel col-md-12" ng-hide="addPurchaseForm">
     <div class="panel-body">
 
         <div class="form-group" ng-hide="noPurchase || addPurchaseForm">
@@ -241,7 +241,7 @@
         </table>
 
 
-        <div align="center">
+        <div align="center" >
         <dir-pagination-controls
             max-size="7"
             directional-links="true"

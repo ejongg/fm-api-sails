@@ -52,6 +52,7 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.customerOrdersAvailable = data;
         $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+         $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
         console.log($scope.customerOrdersAvailable);
       }else{
@@ -147,10 +148,10 @@ angular.module('fmApp')
     }
   };
 
-  $scope.onDropEditComplete = function (data, evt, index, loadout_no, loadout_id,truck_id){
+  $scope.editAvailableCustomer = function (data,loadout_no, loadout_id,truck_id){
     console.log("Dropped");
-    console.log(data);
-    console.log(index);
+    // console.log(data);
+    // console.log(index);
 
 
     var newOrder = {
@@ -162,6 +163,18 @@ angular.module('fmApp')
     "truck_id": truck_id,
     "flag": "edit"
     };
+
+    console.log(newOrder);
+
+    io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},newOrder), function (body, JWR) {
+      console.log('Sails responded with post loadout: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.setEditLoadOut(-1);
+        $scope.snackbarShow('Load Out Edited');
+        $scope.$digest();
+      }
+    });  
 
   };
 
@@ -176,14 +189,35 @@ angular.module('fmApp')
       "user": loadOut.user
     };
     console.log(addLoadOut);
+
      io.socket.request($scope.socketOptions('post','/load_out/add',{"Authorization": "Bearer " + authService.getToken()},addLoadOut), function (body, JWR) {
       console.log('Sails responded with post loadout: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showAddLoadOutBox(false);
+        $scope.snackbarShow('Load Out Added');
         $scope.$digest();
       }
     });  
+    console.log(addLoadOut);
+  };
+
+  $scope.deleteOrderInLoadout = function (loadout_id,customerOrders_id) {
+    console.log(loadout_id);
+    console.log(customerOrders_id);
+    var deliverInfo = {
+      "delivery": customerOrders_id,
+      "loadout": loadout_id
+    };
+
+    io.socket.request($scope.socketOptions('post','/delivery/remove',{"Authorization": "Bearer " + authService.getToken()},deliverInfo), function (body, JWR) {
+      console.log('Sails responded with put address: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+         console.log("Deleted Address");
+         $scope.$digest();
+      }
+    }); 
   };
   
   $scope.dropdownChange = function (loadout) {
@@ -227,11 +261,20 @@ angular.module('fmApp')
         $scope.$digest();
         break;
       case "updated": 
-        console.log("Route Updated");
-        var index = _.findIndex($scope.routes,{'id': msg.data.id});
+        console.log("Load Updated");
+        var index = _.findIndex($scope.loadOuts,{'id': msg.data.id});
         console.log(index);
-        $scope.routes[index] = msg.data;   
-        console.log(msg.data);
+        $scope.loadOuts[index] = msg.data;   
+        $scope.$digest();
+        break;
+      case "destroyed": 
+        console.log("Load Updated");
+        var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout});
+        console.log(index);
+        console.log($scope.loadOuts[index].transactions);
+        var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery[0].delivery_id});
+        console.log(transIndex);
+        $scope.loadOuts[index].transactions.splice(transIndex,1);
         $scope.$digest();
     }
 

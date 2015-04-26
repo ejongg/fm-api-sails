@@ -48,8 +48,7 @@ module.exports = {
   		required : true
   	},
     loadout_id : {
-      model : 'load_out',
-      required : true
+      model : 'load_out'
     },
   	status : {
   		type : 'string',

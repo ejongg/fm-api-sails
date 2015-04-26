@@ -26,9 +26,6 @@ module.exports = {
 		Customers.findOrCreate({establishment_name : customer.establishment}, customerDetails)
 			.exec(function(err, createdCustomer){
 
-				if(err)
-					return res.send(err);
-
 				var customerOrder = {
 					customer_id : createdCustomer.id,
 					supplieragent_name : supplierAgentName,

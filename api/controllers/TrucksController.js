@@ -58,13 +58,11 @@ module.exports = {
 	},
 
 	edit : function(req ,res){
-		var truckId = req.body.truck;
-		var prevEmp = req.body.prev_emp;
-		var newEmp = req.body.new_emp;
-		var position = req.body.position;
+		var truck;
 
-		Trucks.update({id : truckId}, {position : newEmp})
+		Trucks.update({id : truck.id}, truck)
 			.then(function (updatedTruck){
+				
 				Trucks.findOne({id : updatedTruck.id}).populateAll()
 					.then(function (foundTruck){
 						sails.sockets.blast("trucks", {verb : "created", data : foundTruck});

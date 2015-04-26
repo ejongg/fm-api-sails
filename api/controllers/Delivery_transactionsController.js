@@ -10,28 +10,21 @@ module.exports = {
 		var delivery = req.body.delivery;
 		var loadout = req.body.loadout;
 
-		Delivery_transactions.findOne({id : delivery})
-			.then(function (foundDelivery){
-				return foundDelivery;
+
+		Delivery_transactions.destroy({id : delivery})
+			.then(function (destroyedDelivery){
+				return destroyedDelivery;
 			})
 
-			.then(function (foundDelivery){
-				return DeliveryService.removeLoadout(foundDelivery);
-			})
-
-			.then(function (updatedDelivery){
+			.then(function (destroyedDelivery){
 				var obj = {
-					delivery : updatedDelivery,
+					delivery : destroyedDelivery,
 					loadout : loadout
 				};
 
-				sails.sockets.blast("loadout", {verb : "removed", data : obj});
-				return res.send("Delivery removed from " + loadout,200);
+				sails.sockets.blast("loadout", {verb : "destroyed", data : obj});
+				return res.send("Delivery removed from " + loadout, 200);
 			})
-
-			.catch(function (err){
-				return res.send(err);
-			});
 	},
 
 	getTransactionDetails : function(req, res){
