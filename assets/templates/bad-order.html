@@ -86,8 +86,18 @@
                     <label for="inputOwnerName" class="col-md-2 control-label">Cases</label>
 
                     <div class="col-md-12">
-                        <input type="number" name="inputCases" min="1" class="form-control" placeholder="Enter the number of cases."
+                        <input type="number" name="inputCases" min="0" class="form-control" placeholder="Enter the number of cases."
                         ng-model="product.cases" required>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputOwnerName" class="col-md-2 control-label">Bottles</label>
+
+                    <div class="col-md-12">
+                        <input type="number" name="inputCases" min="0" class="form-control" placeholder="Enter the number of cases."
+                        ng-model="product.bottles" required>
 
                     </div>
                 </div>
@@ -144,6 +154,10 @@
                     <th>Cases&nbsp;
               <a href="" ng-click="sortCriteria = '-cases'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
               <a href="" ng-click="sortCriteria = '+cases'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+
+              <th>Bottles&nbsp;
+              <a href="" ng-click="sortCriteria = '-cases'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+              <a href="" ng-click="sortCriteria = '+cases'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
                     <th>Expense&nbsp;
               <a href="" ng-click="sortCriteria = '-expense'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
               <a href="" ng-click="sortCriteria = '+expense'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
@@ -156,6 +170,7 @@
                 <tr ng-repeat="product in products | orderBy: sortCriteria">
                     <td>{{product.sku_name}}</td>
                     <td>{{product.cases}}</td>
+                    <td>{{product.bottles}}</td>
                     <td>{{product.expense}}</td>
                     <td>{{product.reason}}</td>
                     <td><button ng-click="deleteProduct($index)" class="btn btn-primary btn-xs ">Delete</button></td>
@@ -269,6 +284,7 @@
                 <tr>
                     <th>SKU</th>
                     <th>Cases</th>
+                    <th>Bottles</th>
                     <th>Reason</th>
                 </tr>
             </thead>
@@ -277,6 +293,7 @@
                 <tr ng-repeat="badOrder in badOrderDetails">
                     <td>{{badOrder.sku_id.sku_name + " " + badOrder.sku_id.size}}</td>
                     <td>{{badOrder.cases}}</td>
+                    <td>{{badOrder.bottles}}</td>
                     <td>{{badOrder.reason}}</td>
                 </tr>
 

@@ -108,7 +108,7 @@ angular.module('fmApp')
   };
 
   $scope.combined = function (sku) {
-    return sku.sku_name + ' ' + sku.size;
+    return sku.prod_id.brand_name + ' '+ sku.sku_name + ' ' + sku.size;
   }
 
   $scope.combineBay = function (bay){
@@ -119,6 +119,7 @@ angular.module('fmApp')
     $scope.badOrderForm.$setPristine();
     $scope.product.sku = $scope.skuList[0];
     $scope.product.cases = null;
+    $scope.product.bottles = null;
     $scope.product.reason = '';
   };
 
@@ -143,8 +144,9 @@ angular.module('fmApp')
       "bay_id" : product.bay.id,
       "sku_name" : product.sku.sku_name + " " + product.sku.size,
       "bottlespercase" : product.sku.bottlespercase,
-      "expense" : product.cases * product.sku.pricepercase,
+      "expense" : (product.cases * product.sku.pricepercase) + (product.bottles * product.sku.priceperbottle),
       "cases" : product.cases,
+      "bottles" : product.bottles,
       "reason" : product.reason
     };
     console.log(product);
