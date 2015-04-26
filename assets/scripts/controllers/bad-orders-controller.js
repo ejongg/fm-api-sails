@@ -31,7 +31,7 @@ angular.module('fmApp')
     //     $scope.$digest();
     //   }
     // });
-    $http.get(httpHost + '/bad_orders').success( function (data) {
+    $http.get(httpHost + '/bad_orders/unempty').success( function (data) {
       if(data.length !== 0){
         $scope.badOrdersList = data;
         $scope.noBadOrders = false;
