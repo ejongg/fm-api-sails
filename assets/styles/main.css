@@ -1165,6 +1165,99 @@ border-color: #ddd;
 
 
 
+@media print {
+
+  .pagination {
+    display: none !important;
+  }
+
+  .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
+.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover,
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    background-color: #ffffff!important;
+    color: #ffffff!important;
+    border: 0px solid #ffffff!important;
+  }
+
+  .pageheader-right {
+    display: none !important;
+  }
+    .search {
+    display: none !important;
+  }
+
+  h1 {
+  text-align: center !important;
+  font-size: 18pt;
+  text-transform: uppercase !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+  margin: 0px !important;
+  margin-left: 0px !important;
+  padding-left: -0px !important;
+}
+
+.numofrows {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
+a.arrowlink:link, a.arrowlink:visited, a.arrowlink:active {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
+a.arrowlink:hover {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
+a.arrowlink1:link, a.arrowlink1:visited, a.arrowlink2:active {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
+a.arrowlink1:hover {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
+
+a.arrowlink2:link, a.arrowlink2:visited, a.arrowlink2:active {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
+a.arrowlink2:hover {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+.form-group {
+  display: none;
+}
+
+.container {
+  margin-top: 0px !important;
+  border-top: 2px #000000 solid !important;
+  padding: 0px !important;
+}
+
+.panel {
+  background-color: green !important;
+  border-top: 0px solid #202020 !important;
+  padding: 0px !important;
+
+}
+
+}
+
 
 
 
