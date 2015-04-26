@@ -201,6 +201,19 @@ angular.module('fmApp')
   $scope.deleteOrderInLoadout = function (loadout_id,customerOrders_id) {
     console.log(loadout_id);
     console.log(customerOrders_id);
+    var deliverInfo = {
+      "delivery": customerOrders_id,
+      "loadout": loadout_id
+    };
+
+    io.socket.request($scope.socketOptions('post','/delivery/remove',{"Authorization": "Bearer " + authService.getToken()},deliverInfo), function (body, JWR) {
+      console.log('Sails responded with put address: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+         console.log("Deleted Address");
+         $scope.$digest();
+      }
+    }); 
   };
   
   $scope.dropdownChange = function (loadout) {
