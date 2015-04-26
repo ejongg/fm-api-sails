@@ -26,6 +26,7 @@ module.exports = {
 			var badOrderItem = {
 				bad_order_id : 	badOrderId,
 				sku_id : product.sku_id,
+				bottles : product.bottles,
 				cases : product.cases,
 				reason : product.reason
 			};

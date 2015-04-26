@@ -21,6 +21,10 @@ module.exports = {
   		required : true,
       defaultsTo : 0
   	},
+    bottles : {
+      type : "integer",
+      defaultsTo : 0
+    },
   	reason : {
   		type : 'string',
   		required : true
