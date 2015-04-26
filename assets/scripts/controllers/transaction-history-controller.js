@@ -21,4 +21,8 @@ angular.module('fmApp')
 
   getTransactions();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
 }]);

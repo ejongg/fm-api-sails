@@ -98,6 +98,10 @@ angular.module('fmApp')
   getCustomerOrdersAvailable();
   getLoadOuts();
   getTrucks();
+
+  $scope.pagePrint = function () {
+    window.print();
+  };
   
   $scope.setEditLoadOut = function (index) {
     $scope.editIndex = index;
