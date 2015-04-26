@@ -20,6 +20,7 @@ module.exports = {
 			})
 
 			.then(function (bay){
+				
 				BaysService.countBayItems(bay.id)
 					.then(function (count){
 						bay.total_products = count;
@@ -39,7 +40,8 @@ module.exports = {
 		var bay = {
 			bay_name : req.body.bay_name,
 			bay_label : req.body.bay_label,
-			bay_limit : req.body.bay_limit
+			bay_limit : req.body.bay_limit,
+			pile_status : req.body.pile_status
 		}
 
 		Bays.update({id : bayId}, bay)
@@ -52,7 +54,7 @@ module.exports = {
 					.then(function (count){
 						bay.total_products = count;
 						sails.sockets.blast('bays', {verb : 'updated', data : bay});
-						return res.send(201);
+						return res.send(200);
 					})
 			})
 
