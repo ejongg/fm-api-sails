@@ -19,7 +19,10 @@ module.exports = {
 				if(found_employee){
 					return res.send("You are entering a duplicate entry");
 				}else{
-					Employees.create(employee).exec(function(err, created_employee){});
+					Employees.create(employee).exec(function(err, createdEmployee){
+						sails.sockets.blast("employees", {verb : "created", data : createdEmployee});
+						return res.send(201);
+					});
 				}
 			})
 	},
