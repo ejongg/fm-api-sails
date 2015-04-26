@@ -47,15 +47,15 @@
      <!-- LEFT PANEL -->
     <div class="col-md-6">
 
-    <div ng-show="noCustomerOrders"  align="center">
-              <h3><strong>NO CUSTOMER ORDERS! </strong></h3>
-    </div>
-
     <div ng-hide="noCustomerOrders">
       <h4> CUSTOMERS ORDERS </h4>
       <div class="panel panel-body">
         <br>
         <br>
+
+      <div ng-show="noCustomerOrders"  align="center">
+              <h3><strong>NO CUSTOMER ORDERS! </strong></h3>
+    </div>    
         
                   
     <table class="table table-condensed" style="border-collapse: collapse;">
@@ -209,7 +209,26 @@
                 
             </div>
 
-            <div class="rpanel panel-body" ng-show="editIndex === $index" ng-drop="true" ng-drop-success="onDropEditComplete($data,$event,$index,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">
+            <div class="rpanel panel-body" ng-show="editIndex === $index">
+              <div ng-show="noCustomerOrdersAvailable">
+                  NO CUSTOMER ORDER AVAILABLE
+              </div>
+
+              <div class="form-group" ng-hide="noCustomerOrdersAvailable">
+                <label class="col-md-4">Available Establishment</label>
+
+                <div class="col-md-6">
+                  <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as orderAvailable.order.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
+                  </select>
+                </div>
+                  
+                  <div class = "col-md-2">
+                     <button class="btn btn-xs btn-default pull-right" type="button" 
+                     ng-click="editAvailableCustomer(ordersAvailableListEdit,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">ADD</button>
+                  </div>
+                 
+              </div>
+              
 
               <label class="col-md-12 control-label">Establishment Name:</label>
                 <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="customerOrder in loadOut.transactions" class="btn btn-xs btn-danger"  ng-click="deleteAddressInRoute(routeInfo.id,address.id)"> {{customerOrder.customer_id.establishment_name}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
