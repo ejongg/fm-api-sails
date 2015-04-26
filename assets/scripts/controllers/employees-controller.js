@@ -5,7 +5,7 @@ angular.module('fmApp')
 	$scope.positions = ['Driver','Checker','Delivery Sales Personnel','Delivery Helper', 'Encoder', 'Cashier'];
 	$scope.employees = [];
 
-  $scope.noEmployees = true;
+  $scope.noEmployees = false;
 
 	$scope.employee = {};
   $scope.employeeEdit = {};
@@ -21,10 +21,10 @@ angular.module('fmApp')
     $http.get(httpHost + '/employees').success( function (data) {
       if(data.length !== 0){
         $scope.employees = data;
-        $scope.noEmployees = false;
-
         console.log("Employees:");
         console.log($scope.employees);
+      }else{
+        $scope.noEmployees = true;
       }
     }).error(function (err) {
       console.log(err);
