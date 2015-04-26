@@ -13,9 +13,9 @@ angular.module('fmApp')
 
   $scope.totalAmount= 0;
 
-  $scope.noBays = true;
-  $scope.noSKU = true;
-  $scope.noPurchase = true;
+  $scope.noBays = false;
+  $scope.noSKU = false;
+  $scope.noPurchase = false;
 
 
   $scope.itemExistingError = false;
@@ -28,89 +28,49 @@ angular.module('fmApp')
   
   
   var getSKU = function () {
-    // $http.get('http://localhost:1337/sku').success(function(data){
-    //   $scope.skuList = data;
-    //   $scope.purchase.sku = $scope.skuList[0];
-    // });
-    // io.socket.request($scope.socketOptions('get','/sku'), function (body, JWR) {
-    //   console.log('Sails responded with get sku: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.skuList = body;
-    //     console.log("SKU LIST");
-    //     console.log($scope.skuList);
-    //     $scope.purchase.sku = $scope.skuList[0];
-    //     $scope.$digest();
-    //   }
-    // });
-
     $http.get(httpHost + '/sku').success( function (data) {
       
       if(data.length !== 0){
         $scope.skuList = data;
         $scope.purchase.sku = $scope.skuList[0];
-        $scope.noSKU = false;
-
         console.log("SKU List:");
         console.log($scope.skuList);
+      }else{
+        $scope.noSKU = true;
       }
 
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
 
   };
 
   var getBays = function (){
-    // $http.get('http://localhost:1337/bays').success(function(data){
-    // $scope.bays = data;
-    // $scope.purchase.bay = $scope.bays[0];
-    // });
-    // io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
-    //   console.log('Sails responded with get bays: ', body);                    
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.bays = body;
-    //     $scope.purchase.bay = $scope.bays[0];
-    //     $scope.$digest();
-    //   }
-    // });
      $http.get(httpHost + '/bays').success( function (data) {
       if(data.length !== 0){
       $scope.bays = data;
-      $scope.purchase.bay = $scope.bays[0];
-                         
+      $scope.purchase.bay = $scope.bays[0];          
       console.log("Bays:");
       console.log($scope.bays);
-      $scope.noBays = false;
+      }else{
+        $scope.noBays = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   }
 
   var getPurchases = function (){
-    // $http.get('http://localhost:1337/purchases').success(function(data){
-    //   $scope.purchasesList = data;
-    // });
-    // io.socket.request($scope.socketOptions('get','/purchases'), function (body, JWR) {
-    //   console.log('Sails responded with get purchases: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.purchasesList = body;
-    //     $scope.$digest();
-    //   }
-    // });
     $http.get(httpHost + '/purchases').success( function (data) {
       if(data.length !== 0){
       $scope.purchasesList = data;
-      $scope.noPurchase = false;
-
       console.log("Purchases:");
       console.log($scope.purchasesList);
+      }else{
+        $scope.noPurchase = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   }
   
@@ -212,6 +172,8 @@ angular.module('fmApp')
       "lifespan" : purchase.sku.lifespan
     };
     
+    console.log(purchaseInfo);
+
     if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date, 
       'cases': purchaseInfo.cases, 'costpercase': purchaseInfo.costpercase, 'discountpercase': purchaseInfo.discountpercase }) === -1 ){
            $scope.purchases.push(purchaseInfo);
@@ -219,7 +181,7 @@ angular.module('fmApp')
     }else{
       var index = _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date, 
       'cases': purchaseInfo.cases, 'costpercase': purchaseInfo.costpercase, 'discountpercase': purchaseInfo.discountpercase });
-
+      console.log(index);
       $scope.purchases[index].cases += purchaseInfo.cases;
       $scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }

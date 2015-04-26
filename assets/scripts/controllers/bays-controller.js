@@ -24,21 +24,7 @@ angular.module('fmApp')
   $scope.sortCriteria = '';
 
   var getBays = function () {
-      // $sailsSocket.get('/bays').success(function (data) {
-      // $scope.bays = data;
-      // console.log($scope.bays);
-      // }).error(function (err) {
-      // console.log(err);
-      // });
-    // io.socket.request($scope.socketOptions('get','/bays'), function (body, JWR) {
-    //   console.log('Sails responded with get bay: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.bays = body;
-    //     $scope.$digest();
-    //   }
-    // });
-
+    
     $http.get(httpHost + '/bays/list').success( function (data) {
       if(data.length !== 0){
       $scope.bays = data;
@@ -225,8 +211,8 @@ angular.module('fmApp')
         break;
       case "updated":
         console.log("Bay Updated");
-        console.log(msg.data[0].id);
-        var index = _.findIndex($scope.bays,{'id': msg.data[0].id});
+        console.log(msg.data.id);
+        var index = _.findIndex($scope.bays,{'id': msg.data.id});
         console.log(index);
         $scope.bays[index] = msg.data;
         $scope.$digest();
