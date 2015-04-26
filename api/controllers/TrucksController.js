@@ -88,6 +88,10 @@ module.exports = {
 					return res.send(200);		
 				});
 			})
+
+			.catch(function(err){
+				return res.send(err);
+			});
 	},
 
 	list : function (req, res){

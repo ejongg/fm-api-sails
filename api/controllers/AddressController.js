@@ -38,7 +38,11 @@ module.exports = {
 			.then(function (updatedAddress){
 				sails.sockets.blast("address", {verb : "updated", data : updatedAddress});
 				return res.send(200);
-			});
+			})
+
+			.catch(function(err){
+				return res.send(err);
+			});;
 	},
 
 	getList : function (req, res){
