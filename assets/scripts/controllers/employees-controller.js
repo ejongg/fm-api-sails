@@ -57,11 +57,10 @@ angular.module('fmApp')
 	$scope.setEditEmployeeTab = function (data) {
       $scope.editEmployeeTab = data;
       if(data === true){
-        // $scope.userEdit.username = $scope.copiedUser.username;
-        // $scope.userEdit.password = $scope.copiedUser.password;
-        // $scope.userEdit.firstname = $scope.copiedUser.firstname;
-        // $scope.userEdit.lastname = $scope.copiedUser.lastname;
-        // $scope.userEdit.type = $scope.copiedUser.type;
+        $scope.employeeEdit.emp_fname = $scope.copiedEmployee.emp_fname;
+        $scope.employeeEdit.emp_lname = $scope.copiedEmployee.emp_lname;
+        $scope.employeeEdit.office = $scope.copiedEmployee.office;
+        $scope.employeeEdit.position = $scope.copiedEmployee.position;
       } 
 	};
     
@@ -105,16 +104,6 @@ angular.module('fmApp')
 	}; 
 
 	$scope.editEmployee = function (employee) {
-      // console.log(newInfo);
-      // $sailsSocket.put('/users/' + newInfo.id, newInfo).success(function (data) {
-      //   var index = _.findIndex($scope.users, function(user) { return user.id == data.id; });
-      //   $scope.users[index] = data;
-      //   $scope.showEditOrDeleteUserForm(false);
-      // }).error(function (err) {
-      //   console.log(err);
-      // });
-
-
     io.socket.request($scope.socketOptions('put','/employees/' + employee.id,{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
