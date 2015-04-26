@@ -177,6 +177,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showAddLoadOutBox(false);
+        $scope.snackbarShow('Load Out Added');
         $scope.$digest();
       }
     });  
