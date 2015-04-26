@@ -54,7 +54,7 @@ angular.module('fmApp')
     };
     
     console.log(paymentInfo);
-    io.socket.request($scope.socketOptions('post','/delivery_transactions',{"Authorization": "Bearer " + authService.getToken()},paymentInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('post','/delivery_transactions/payments',{"Authorization": "Bearer " + authService.getToken()},paymentInfo), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
