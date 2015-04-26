@@ -134,22 +134,13 @@ angular.module('fmApp')
   };
 
   $scope.getPurchaseProducts = function (id) {
-   //  console.log(id);
+
    $http.get('http://localhost:1337/purchases/details?id='+ id).success(function(data){
      $scope.purchaseProducts = data;
      $scope.purchaseProducts.id = id;
      console.log($scope.purchaseProducts);
      $scope.showViewProducts(true);
    });
-   // io.socket.request($scope.socketOptions('get','/purchase_products?where={"purchase_id" :'+ id +'}'), function (body, JWR) {
-   //    console.log('Sails responded with get purchases: ', body);
-   //    console.log('and with status code: ', JWR.statusCode);
-   //    if(JWR.statusCode === 200){
-   //      $scope.purchaseProducts = body;
-   //      $scope.showViewProducts(true);
-   //      $scope.$digest();
-   //    }
-   // });
     
   };
 
@@ -174,15 +165,20 @@ angular.module('fmApp')
     
     console.log(purchaseInfo);
 
-    if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date, 
-      'cases': purchaseInfo.cases, 'costpercase': purchaseInfo.costpercase, 'discountpercase': purchaseInfo.discountpercase }) === -1 ){
+    if( _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 
+    'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date}) === -1 ){
            $scope.purchases.push(purchaseInfo);
            $scope.totalAmount += purchaseInfo.amount;
     }else{
-      var index = _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date, 
-      'cases': purchaseInfo.cases, 'costpercase': purchaseInfo.costpercase, 'discountpercase': purchaseInfo.discountpercase });
+      var index = _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 
+      'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date});
       console.log(index);
+      console.log(purchaseInfo.cases);
       $scope.purchases[index].cases += purchaseInfo.cases;
+      $scope.purchases[index].costpercase += purchaseInfo.costpercase;
+      $scope.purchases[index].discountpercase += purchaseInfo.discountpercase;
+      $scope.purchases[index].amount += purchaseInfo.amount;
+      $scope.totalAmount += purchaseInfo.amount;
       $scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
     
@@ -205,16 +201,13 @@ angular.module('fmApp')
     };
 
     console.log(purchase);
-            
-    // io.socket.post('/purchases/add', {purchases : purchase});
-    // $scope.totalAmount = 0;
-    // $scope.showAddPurchaseForm(false);
-
+      
     io.socket.request($scope.socketOptions('post','/purchases/add',{"Authorization": "Bearer " + authService.getToken()},purchase), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showAddPurchaseForm(false);
+        $scope.snackbarShow('Purchase Added');
         $scope.totalAmount = 0;
         $scope.$digest();
       }
@@ -222,38 +215,10 @@ angular.module('fmApp')
 
   };
 
-  // io.socket.on('purchases', function(msg){
-  // 	console.log("purchase created");
-  //   console.log(msg);
-  //   if (msg.verb === 'created') {
-  //     console.log(msg.data);
-  //     $scope.purchasesList.push(msg.data);
-  //     console.log($scope.purchasesList);
-  //     $scope.$digest();
-  //   }
-  // });
-
   io.socket.on('purchases', function(msg){
     console.log("Message Verb: " + msg.verb);
     console.log("Message Data :");
     console.log(msg.data);
-
-    // switch (msg.verb) {
-    //   case "created": 
-    //     console.log("Purchase Created");
-    //     $scope.users.push(msg.data);
-    //     $scope.showAddUserForm(false);
-    //     clearForm()
-    //     $scope.$digest();
-    //     break;
-    //   case "destroyed":
-    //     console.log("User Deleted");
-    //     console.log($scope.users);
-    //     var index = _.findIndex($scope.users,{'id': msg.data.id});
-    //     $scope.users.splice(index,1);
-    //     $scope.showEditOrDeleteUserForm(false);
-    //     $scope.$digest();
-    // }
 
     if(msg.verb === 'created'){
       console.log("Purchase Created");
