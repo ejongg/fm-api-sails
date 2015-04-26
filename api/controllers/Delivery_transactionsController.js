@@ -10,6 +10,7 @@ module.exports = {
 		var delivery = req.body.delivery;
 		var loadout = req.body.loadout;
 
+
 		Delivery_transactions.findOne({id : delivery})
 			.then(function (foundDelivery){
 				return foundDelivery;
@@ -30,7 +31,7 @@ module.exports = {
 			})
 
 			.catch(function (err){
-				return res.send(err);
+				return console.log(err);
 			});
 	},
 

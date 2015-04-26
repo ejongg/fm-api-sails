@@ -18,7 +18,6 @@ module.exports = {
 		var loadoutId = req.body.loadout_id;
 		var flag = req.body.flag;
 
-
 		var loadout = {
 			loadout_number : loadoutNumber,
 			date_created : deliveryDate,
@@ -34,7 +33,11 @@ module.exports = {
 
 			.then(function (){
 				return new Promise(function (resolve, reject){
-					resolve([orders]);
+					if(flag == "add"){
+						resolve(orders);
+					}else{
+						resolve([orders]);
+					}
 				});
 			})
 
