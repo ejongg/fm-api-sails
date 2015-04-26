@@ -244,7 +244,7 @@
             </thead>
     
             <tbody>
-              <tr dir-paginate="address in addresses | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" style="cursor:button;">
+              <tr dir-paginate="address in addresses | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" pagination-id="paginationAddress">
 
                 <td class="routesText">{{address.address_name}}</td>
 
@@ -261,16 +261,16 @@
 
           </table>
 
-          <div align="center">
-                <dir-pagination-controls
-                    pagination-id="addressesPagination"
-                    max-size="7"
-                    directional-links="true"
-                    boundary-links="true"
-                >
-                </dir-pagination-controls>    
-            </div>
-
+           <div align="center">
+            <dir-pagination-controls
+                pagination-id="paginationAddress"
+                max-size="7"
+                directional-links="true"
+                boundary-links="true"
+                class="ng-isolate-scope"
+            >
+            </dir-pagination-controls>    
+          </div>
         </div>
 
     </div> 
@@ -423,14 +423,14 @@
 
 
  <div align="center">
-                <dir-pagination-controls
-                    pagination-id="routesPagination"
-                    max-size="7"
-                    directional-links="true"
-                    boundary-links="true"
-                >
-                </dir-pagination-controls>    
-            </div>
+    <dir-pagination-controls
+        pagination-id="routesPagination"
+        max-size="7"
+        directional-links="true"
+        boundary-links="true"
+    >
+    </dir-pagination-controls>    
+  </div>
 
 
 
