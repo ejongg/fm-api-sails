@@ -20,6 +20,7 @@ angular.module('fmApp')
       $scope.deliveries = data.deliveries;
       $scope.expenses = data.expenses;
       $scope.empties = data.empties;
+      console.log(data);
     }).error(function (err) {
       console.log(err);
     });

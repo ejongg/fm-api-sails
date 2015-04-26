@@ -257,11 +257,20 @@ angular.module('fmApp')
         $scope.$digest();
         break;
       case "updated": 
-        console.log("Route Updated");
-        var index = _.findIndex($scope.loadOuts,{'id': msg.data[0].id});
+        console.log("Load Updated");
+        var index = _.findIndex($scope.loadOuts,{'id': msg.data.id});
         console.log(index);
         $scope.loadOuts[index] = msg.data;   
-        // console.log(msg.data);
+        $scope.$digest();
+        break;
+      case "destroyed": 
+        console.log("Load Updated");
+        var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout});
+        console.log(index);
+        console.log($scope.loadOuts[index].transactions);
+        var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery[0].delivery_id});
+        console.log(transIndex);
+        $scope.loadOuts[index].transactions.splice(transIndex,1);
         $scope.$digest();
     }
 
