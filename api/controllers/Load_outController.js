@@ -56,8 +56,9 @@ module.exports = {
 				});
 			})
 
-			.then(function (createdLoadout){
+			.then(function (){
 				LoadOutService.getDetails(createdLoadout)
+
 					.then(function(detailedLoadout){
 
 						if(flag == "add"){
