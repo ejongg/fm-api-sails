@@ -97,15 +97,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
           }
         }  
       })
-      .state('admin.products2', {
-        url:'/inventory/products2',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/products2.html',
-            controller:'ProductsCtrl2'
-          }
-        }  
-      })
       .state('admin.transaction-history', {
         url:'/reports/transaction-history',
         views: {
