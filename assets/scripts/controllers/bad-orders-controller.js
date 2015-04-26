@@ -38,7 +38,7 @@ angular.module('fmApp')
   };
 
   var getBays = function (){
-    $http.get(httpHost + '/bays').success( function (data) {
+    $http.get(httpHost + '/bays/unempty').success( function (data) {
       if(data.length !== 0){
         $scope.bays = data;
         $scope.product.bay = $scope.bays[0];
