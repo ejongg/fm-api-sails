@@ -40,6 +40,7 @@ module.exports.routes = {
 	*/
 	'POST /bays/add' : 'Bays.add',
 	'GET  /bays/list' : 'Bays.list',
+	'PUT  /bays/edit' : 'Bays.edit',
 	'GET  /bays/unempty' : 'Bays.listNotEmpty',
 
 	/* 	CUSTOMER ORDERS 
@@ -120,6 +121,9 @@ module.exports.routes = {
 	/* REPORTS */
   	'GET /reports/dssr' : 'Reports.getDssr',
   	'GET /reports/transactions' : 'Reports.getTransactions',
+
+  	/* INCOMPLETE CASES */
+  	'POST /incompletes/assemble' : 'Incomplete_cases.assembleCase',
 
   	/* MOBILE */
   	'POST /mobile/login' : 'UsersController.mobileLogin'
