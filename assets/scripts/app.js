@@ -197,6 +197,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
           }
         }  
       })
+      .state('encoder.payments', {
+        url:'/sales/payments',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/payments.html',
+            controller:'PaymentsCtrl'
+          }
+        }  
+      })
 
     .state('cashier', {
       url:'/cashier',
