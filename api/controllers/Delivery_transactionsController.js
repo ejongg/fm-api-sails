@@ -26,7 +26,7 @@ module.exports = {
 				};
 
 				sails.sockets.blast("loadout", {verb : "removed", data : obj});
-				return res.send("Delivery removed from " + loadout,200);
+				return res.send("Delivery removed from " + loadout, 200);
 			})
 
 			.catch(function (err){

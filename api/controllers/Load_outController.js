@@ -18,38 +18,38 @@ module.exports = {
 		var loadoutId = req.body.loadout_id;
 		var flag = req.body.flag;
 
+
 		var loadout = {
 			loadout_number : loadoutNumber,
 			date_created : deliveryDate,
 			truck_id : truckId
 		};
 
+		var createdLoadout;
+
 		Load_out.findOrCreate(loadout, loadout)
-			.then(function (createdLoadout){
-				return createdLoadout;
+			.then(function (resultLoadout){
+				createdLoadout = resultLoadout;
 			})
 
-			.then(function (createdLoadout){
+			.then(function (){
+				return new Promise(function (resolve, reject){
+					resolve([orders]);
+				});
+			})
+
+			.each(function (order){
 				return new Promise(function (resolve, reject){
 
-					async.each(orders, function(order, cb){
+					DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
+						.then(function (createdDelivery){
 
-						DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
-							.then(function (createdDelivery){
-
-								Customer_orders.update({id : order.order.id}, {delivery_id : createdDelivery.id})
-									.then(function (updatedOrder){
-										sails.sockets.blast("customer_orders", {verb : "created", data : "updatedOrder"});
-										cb();
-									})
-
-							})
-
-					},
-
-					function (err){
-						resolve(createdLoadout);
-					});				
+							Customer_orders.update({id : order.order.id}, {delivery_id : createdDelivery.id})
+								.then(function (updatedOrder){
+									
+									resolve();	
+								})
+						})
 				});
 			})
 
