@@ -792,7 +792,7 @@ li.divider {
 height: 2px;
 background-color: red;
 }
-
+h3 class="panel-title">Route {{routeInfo.route_name}}</h3>
 a.user-account:hover {
   background: none !important;
     color: #0c5970;
@@ -1107,16 +1107,9 @@ td.text-right {
   color:white;
   border:1px solid black;
   border-radius:10px;
-  z-index: -10000;
+  padding-left: 5%;
 }
 
-.routesText{
-  color:black; 
-  cursor:button;
-  font-size: 12px;
-  text-transform:uppercase;
-  z-index: 10000;"
-}
 
 .rpanel{
   border-left: 2px solid black; 
@@ -1199,6 +1192,18 @@ border-color: #ddd;
   padding-left: -0px !important;
 }
 
+
+  h3 {
+  text-align: center !important;
+  font-size: 18pt;
+  text-transform: uppercase !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+  margin: 0px !important;
+  margin-left: 0px !important;
+  padding-left: -0px !important;
+}
+
 .numofrows {
   color: #ffffff !important;
   display: none !important;
@@ -1264,7 +1269,16 @@ a.arrowlink2:hover {
   background-color: green !important;
   border-top: 0px solid #202020 !important;
   padding: 0px !important;
+}
 
+.routeshide {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
+.routeBox {
+  border: 0px solid #000000 !important;
 }
 
 @page {

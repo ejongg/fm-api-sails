@@ -1,0 +1,218 @@
+
+<!-- START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Payments </h1>
+    </div>
+
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <div class="search">
+                                <form method="get" action="/search" id="search" ng-hide="addProductForm || editOrDeleteProductForm || noProducts">
+                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
+                                </form>
+                            </div>
+                        </li>
+            
+                        <li>
+                            <a ng-click="pagePrint()" ng-hide="addProductForm || editOrDeleteProductForm || noProducts">
+                            <h6><i class="mdi-action-print center" ng-hide="noProducts"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- BODY -->
+
+<!-- DO NOT REMOVE-->
+<div class="container">
+
+
+<!-- PANEL LEFT-->
+<div ng-class="payForm ? 'col-xs-12 col-md-4' : ''">
+    <div class="panel" ng-show="payForm">
+
+        <div class="panel-body">
+
+          <h4><i class="mdi-content-add-circle"></i> PAYMENT </h4>
+
+          <form class="form-horizontal" name="paymentForm" ng-submit="addPayment(payment)" novalidate>
+                <fieldset>
+
+                   <!-- <div class="alert alert-warning" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
+
+                     <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
+                    </div>
+ -->
+
+                  <div class="form-group">
+                    <label for="inputBrandName" class="col-md-12">Payment Date</label>
+                    <div class="col-md-12">
+                      <input type="date" class="form-control empty" name="" ng-model="payment.payment_date" required>
+                      <!-- <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong> -->
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group">
+                    <label for="inputCompanyName" class="col-md-12">Paid Amount</label>
+
+                    <div class="col-md-12">
+                        <input type="number" class="form-control empty" name="" min="0" ng-model="payment.paid_amount" required>
+                    </div>                  
+                  </div>
+
+                    <div class="form-group rightalign">
+                        <button type="submit" class="btn btn-primary" ng-disabled="paymentForm.$invalid">Add</button>
+                        <button type="button" class="btn btn-default" ng-click="showPayForm(false)">Cancel</button> 
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- PANEL LEFT-->
+<div ng-class="summaryForm ? 'col-xs-12 col-md-4' : ''">
+    <div class="panel" ng-show="summaryForm">
+
+        <div class="panel-body">
+
+          <h4><i class="mdi-content-add-circle"></i> SUMMARY </h4>
+
+          <form class="form-horizontal" name="productForm" ng-submit="addProduct(product)" novalidate>
+                <fieldset>
+
+                   <div class="alert alert-warning" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
+
+                     <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
+                    </div>
+
+
+                  <div class="form-group">
+                    <label for="inputBrandName" class="col-md-12">Brand Name</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control empty" name="addProductBrandName" placeholder="Enter brand name." ng-model="product.brand_name" required>
+                      <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong>
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group">
+                    <label for="inputCompanyName" class="col-md-12">Company Name</label>
+
+                    <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="product.company" 
+                        ng-init="product.company = companies[0]">
+                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                        </select>
+                    </div>                  
+                  </div>
+
+
+
+                    <div class="form-group rightalign">
+                        <button type="submit" class="btn btn-primary" ng-disabled="productForm.$invalid">Add</button>
+                        <button type="button" class="btn btn-default" ng-click="showSummaryForm(false)">Cancel</button> 
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- PANEL RIGHT-->
+
+<div ng-class = "payForm || summaryForm ? 'col-xs-12 col-md-8' : ''">
+    <div class="panel">
+        <div class="panel-body">
+
+
+        <!-- IF NO PRODUCTS -->
+       <div ng-show="noDeliveryTransactions" align="center">
+          <h3><strong>NO DELIVERY TRANSACTIONS YET! </strong></h3>
+        </div>
+
+        <!-- START OF TABLE -->
+        <div ng-hide="noDeliveryTransactions">
+
+        <div class="form-group">
+          <label for="select" class="col-md-2">Number of rows:</label>
+            <div class="col-md-2">
+                <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <table class="table table-striped table-hover ">
+
+                  <thead>
+                      <tr class="labels">
+                          <th>Customer&nbsp;
+                          <a href="" ng-click="sortCriteria = '-brand_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+brand_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                          <th>Delivery Date&nbsp;
+                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                          <th>Payment Date&nbsp;
+                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+
+
+                    <tr dir-paginate="transaction in deliveryTransactions | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows"  ng-click="transactionClicked(transaction)">
+
+                      <td>{{transaction.customer_id.establishment_name}}</td>
+                      <td>{{transaction.delivery_date}}</td>
+                      <td>{{transaction.payment_date}}</td>
+
+                    </tr>
+
+                  </tbody>
+          </table>
+
+          <div align="center">
+          <dir-pagination-controls
+                max-size="7"
+                directional-links="true"
+                boundary-links="true"
+                >
+          </dir-pagination-controls>
+          </div>
+        </div>
+
+    </div> 
+</div>
+
+<!-- END OF LEFT PANEL -->
+
+<div class="snackbar-container" data-snackbar="true"></div>
+
+
+</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+
+
+
