@@ -26,24 +26,6 @@ angular.module('fmApp')
   $scope.addTruckForm = false;
 
   var getTrucks = function () {
-      // io.socket.get('/trucks');
-      // $http.get('http://localhost:1337/trucks').success(function (data) {
-      // $scope.trucks = data;
-      // console.log("Trucks");
-      // console.log($scope.trucks);
-      // }).error(function (err) {
-      // console.log("Trucks Error");
-      // console.log(err);
-      // });
-
-    // io.socket.request($scope.socketOptions('get','/trucks'), function (body, JWR) {
-    //   console.log('Sails responded with get trucks: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //     $scope.trucks = body;
-    //     $scope.$digest();
-    //   }
-    // });
   $http.get(httpHost + '/trucks').success( function (data) {
      console.log("Trucks");
       if(data.length !== 0){
@@ -55,7 +37,7 @@ angular.module('fmApp')
         $scope.noTrucks = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 
@@ -72,6 +54,8 @@ angular.module('fmApp')
         $scope.noRoute = true;
      }
 
+    }).error(function (err) {
+      $scope.checkError(err);
     });
   };
 
@@ -89,6 +73,8 @@ angular.module('fmApp')
        $scope.noTruckDriver = true;
      }
 
+    }).error(function (err) {
+      $scope.checkError(err);
     });
   };
 
@@ -105,6 +91,8 @@ angular.module('fmApp')
        $scope.noChecker = true;
      }
 
+    }).error(function (err) {
+      $scope.checkError(err);
     });
   };
   
@@ -121,6 +109,8 @@ angular.module('fmApp')
        $scope.noDSP = true;
      }
 
+    }).error(function (err) {
+      $scope.checkError(err);
     });
   };
 
@@ -137,6 +127,8 @@ angular.module('fmApp')
        $scope.noDH = true;
      }
 
+    }).error(function (err) {
+      $scope.checkError(err);
     });
   };
   
@@ -149,7 +141,10 @@ angular.module('fmApp')
   
 
   $scope.showAddTruckForm = function (data) {
-      $scope.addTruckForm = data;
+    if(data === true){
+      $scope.editIndex = -1;
+    }
+    $scope.addTruckForm = data;
       if(data === false){
         clearForm();
       }
@@ -159,7 +154,7 @@ angular.module('fmApp')
     $scope.truck.route = $scope.routes[0];
     $scope.truck.driver = $scope.employeeDrivers[0];
     $scope.truck.dispatcher = $scope.employeeCheckers[0];
-    $scope.truck.agent = $scope.employeeDeliverySalesPersonel[0];
+    $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
     $scope.truck.helper = $scope.employeeDeliveryHelper[0];
   }; 
 
@@ -168,6 +163,10 @@ angular.module('fmApp')
   };
 
   $scope.truckEditClicked = function (index,truck) {
+    if($scope.addTruckForm === true){
+      $scope.showAddTruckForm(false);
+    }
+
     if(index !== -1){
       $scope.truckEdit.carry_weight = angular.copy(truck.carry_weight);
       $scope.truckEdit.id = angular.copy(truck.id);
@@ -181,14 +180,6 @@ angular.module('fmApp')
   $scope.addTruck = function (truck) {
       console.log("Add Truck");
       console.log(truck);
-      // var truckInfo = {
-      //   "agent": truck.agent.emp_fname + " " + truck.agent.emp_lname,
-      //   "dispatcher": truck.dispatcher.emp_fname + " " + truck.dispatcher.emp_lname,
-      //   "driver": truck.driver.emp_fname + " " + truck.driver.emp_lname,
-      //   "helper": truck.helper.emp_fname + " " + truck.helper.emp_lname,
-      //   "route": truck.route.route_name,
-      //   "carry_weight": truck.carry_weight
-      // };
 
       var truckInfo = {
         "agent": truck.agent,
@@ -199,9 +190,7 @@ angular.module('fmApp')
         "carry_weight": truck.carry_weight
       };
 
-
       console.log(truckInfo);
-      // io.socket.post('http://localhost:1337/trucks', truck);
       
       io.socket.request($scope.socketOptions('post','/trucks/add',{"Authorization": "Bearer " + authService.getToken()},truckInfo), function (body, JWR) {
       console.log('Sails responded with post truck: ', body);
@@ -228,8 +217,7 @@ angular.module('fmApp')
 
       console.log(editInfo);
       console.log(truck.id);
-      // io.socket.put('/trucks/' + newInfo.id, newInfo);
-      // $scope.truckEditClicked(-1);
+
     io.socket.request($scope.socketOptions('put','/trucks/' + truck.id,{"Authorization": "Bearer " + authService.getToken()},editInfo), function (body, JWR) {
       console.log('Sails responded with edit truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
@@ -241,7 +229,7 @@ angular.module('fmApp')
   };
 
   $scope.deleteTruck = function (truckId) {
-      // io.socket.delete('/trucks/' + truckId);
+  
     io.socket.request($scope.socketOptions('delete','/trucks/' + truckId,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete user: ', body);
       console.log('and with status code: ', JWR.statusCode);
@@ -252,30 +240,6 @@ angular.module('fmApp')
     }); 
   };
 
-   // io.socket.on('trucks', function(msg){
-   //          switch (msg.verb){
-   //              case 'created' :
-   //                   console.log("Truck Created");
-   //                  $scope.trucks.push(msg.data);
-   //                  $scope.$digest();
-   //                  break;
-                    
-   //              case 'updated' :
-   //                  console.log("Truck Updated");
-   //                  var updated = msg.data;
-   //                  var index = _.findIndex($scope.trucks, {id : msg.data.id});
-   //                  $scope.trucks[index] = msg.data; 
-   //                  $scope.$digest();
-   //                  break;
-   //              case 'destroyed' : 
-   //                  console.log("Truck Destroyed");
-   //                  console.log(msg);
-   //                  var deleted = msg.data;
-   //                  var index = _.findIndex($scope.trucks, {id : deleted.id});
-   //                  $scope.trucks.splice(index,1);
-   //                  $scope.$digest();
-   //          }
-   //      });
 
   io.socket.on('trucks', function(msg){
     console.log("Message Verb: " + msg.verb);
@@ -302,9 +266,126 @@ angular.module('fmApp')
         console.log("Truck Deleted");
         console.log(msg.data);
         var index = _.findIndex($scope.trucks, {id : msg.data[0].truck_id});
+        console.log(index);
         $scope.trucks.splice(index,1);   
         if($scope.trucks.length === 0){
           $scope.noTrucks = true;
+        }
+        $scope.$digest();
+    }
+
+  });
+
+  io.socket.on('employees', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("Employee Created");
+        switch (msg.data.position){
+          case "Driver":
+            $scope.employeeDrivers.push(msg.data);
+          break;
+          case "Checker":
+            $scope.employeeCheckers.push(msg.data);
+          break;
+          case "Delivery Sales Personnel":
+            $scope.employeeDeliverySalesPersonnel.push(msg.data);
+          break;
+          case "Delivery Helper":
+            $scope.employeeDeliveryHelper.push(msg.data);
+        }
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("Employee Updated");
+        var index = 0;
+        switch (msg.data.position){
+          case "Driver":
+            index = _.findIndex($scope.employeeDrivers,{'id': msg.data.id});
+            $scope.employeeDrivers[index] = msg.data;
+            $scope.truck.driver = $scope.employeeDrivers[0];
+            $scope.truckEdit.driver = $scope.employeeDrivers[0];
+          break;
+          case "Checker":
+            index = _.findIndex($scope.employeeCheckers,{'id': msg.data.id});
+            $scope.employeeCheckers[index] = msg.data;
+            $scope.truck.dispatcher = $scope.employeeCheckers[0];
+            $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+          break;
+          case "Delivery Sales Personnel":
+            index = _.findIndex($scope.employeeDeliverySalesPersonnel,{'id': msg.data.id});
+            $scope.employeeDeliverySalesPersonnel[index] = msg.data;
+            $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+            $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+          break;
+          case "Delivery Helper":
+            index = _.findIndex($scope.employeeDeliveryHelper,{'id': msg.data.id});
+            $scope.employeeDeliveryHelper[index] = msg.data;
+            $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+            $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+        }
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Employee Deleted");
+        var index = 0;
+        switch (msg.data[0].position){
+          case "Driver":
+            index = _.findIndex($scope.employeeDrivers,{'id': msg.data[0].emp_id});
+            console.log(index);
+            $scope.employeeDrivers.splice(index,1);
+          break;
+          case "Checker":
+            index = _.findIndex($scope.employeeCheckers,{'id': msg.data[0].emp_id});
+            console.log(index);
+            $scope.employeeCheckers.splice(index,1);
+          break;
+          case "Delivery Sales Personnel":
+            index = _.findIndex($scope.employeeDeliverySalesPersonnel,{'id': msg.data[0].emp_id});
+            console.log(index);
+            $scope.employeeDeliverySalesPersonnel.splice(index,1);
+          break;
+          case "Delivery Helper":
+            index = _.findIndex($scope.employeeDeliveryHelper,{'id': msg.data[0].emp_id});
+            console.log(index);
+            $scope.employeeDeliveryHelper.splice(index,1);
+        }
+        $scope.$digest();
+    }
+  });
+
+  io.socket.on('routes', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("Route Created");
+        $scope.routes.push(msg.data);
+        if($scope.noRoute === true){
+          $scope.noRoute = false;
+        }
+        $scope.$digest();
+        break;
+      case "updated": 
+        console.log("Route Updated");
+        var index = _.findIndex($scope.routes,{'id': msg.data.id});
+        console.log(index);
+        $scope.routes[index] = msg.data;   
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Route Deleted");
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.routes,{'id': msg.data[0].route_id});
+        console.log(index);
+        $scope.routes.splice(index,1);
+        if($scope.routes.length === 0){
+          $scope.noRoutes = true;
         }
         $scope.$digest();
     }

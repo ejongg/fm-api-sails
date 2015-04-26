@@ -27,7 +27,7 @@ angular.module('fmApp')
         $scope.noEmployees = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
 	};
 
@@ -98,6 +98,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showAddEmployeeForm(false);
+        $scope.snackbarShow('Employee Added');
         $scope.$digest(); 
       }
     });   
@@ -108,7 +109,8 @@ angular.module('fmApp')
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        $scope.showEditOrDeleteEmployeeForm(false); 
+        $scope.showEditOrDeleteEmployeeForm(false);
+        $scope.snackbarShow('Employee Edited'); 
         $scope.$digest(); 
       }
     });
@@ -120,6 +122,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteEmployeeForm(false); 
+        $scope.snackbarShow('Employee Deleted'); 
         $scope.$digest(); 
       }
     }); 
@@ -145,6 +148,7 @@ angular.module('fmApp')
         console.log(index);
         $scope.employees[index] = msg.data;   
         console.log(msg.data);
+        $scope.$digest();
         break;
       case "destroyed":
         console.log("Employee Deleted");
