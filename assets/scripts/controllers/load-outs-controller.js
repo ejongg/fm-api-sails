@@ -13,6 +13,7 @@ angular.module('fmApp')
   $scope.noTrucks = false;
   $scope.noCustomerOrders = false;
   $scope.noCustomerOrdersAvailable = false;
+  $scope.noLoadOut = false;
 
   $scope.editIndex = -1;
 
@@ -41,7 +42,7 @@ angular.module('fmApp')
       }
 
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 
@@ -58,7 +59,7 @@ angular.module('fmApp')
       }
 
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 
@@ -75,17 +76,21 @@ angular.module('fmApp')
       }
       
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   }
 
   var getLoadOuts = function () {
     $http.get(httpHost + '/load_out/list').success( function (data) {
-      $scope.loadOuts = data;
-      console.log("Load Out:");
-      console.log($scope.loadOuts);
+      if(data.length !== 0){
+        $scope.loadOuts = data;
+        console.log("Load Out:");
+        console.log($scope.loadOuts);
+      }else{
+        $scope.noLoadOut = true;
+      }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 
@@ -209,12 +214,12 @@ angular.module('fmApp')
 
     switch (msg.verb) {
       case "created": 
-        console.log("Route Created");
+        console.log("Load Created");
         $scope.loadOuts.push(msg.data);
         console.log($scope.loadOuts);
-        // if($scope.noRoutes === true){
-        //   $scope.noRoutes = false;
-        // }
+        if($scope.noLoadOut === true){
+          $scope.noLoadOut = false;
+        }
         $scope.$digest();
         break;
       case "updated": 
@@ -223,17 +228,6 @@ angular.module('fmApp')
         console.log(index);
         $scope.routes[index] = msg.data;   
         console.log(msg.data);
-        $scope.$digest();
-        break;
-      case "destroyed":
-        console.log("Route Deleted");
-        console.log(msg.data[0]);
-        var index = _.findIndex($scope.routes,{'id': msg.data[0].route_id});
-        console.log(index);
-        $scope.routes.splice(index,1);
-        if($scope.routes.length === 0){
-          $scope.noRoutes = true;
-        }
         $scope.$digest();
     }
 

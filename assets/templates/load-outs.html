@@ -186,8 +186,12 @@
       <br><br>
 
       <!-- loadoutbox -->
+
+      <div ng-show="noLoadOut" align="center">
+          <h3><strong>NO LOADOUTS!</strong></h3>
+      </div>   
        
-       <div ng-repeat="loadOut in loadOuts">
+       <div ng-hide="noLoadOut" ng-repeat="loadOut in loadOuts">
           <div class="panel-primary" >
               <div class="panel-heading" >
                 <h3 class="panel-title">{{getTruckNumber(loadOut.truck_id)}} Loud out #{{loadOut.loadout_number}}</h3>
