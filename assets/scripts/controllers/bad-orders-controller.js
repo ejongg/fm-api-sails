@@ -5,6 +5,7 @@ angular.module('fmApp')
   $scope.skuList = [];
   $scope.bays = [];
   $scope.badOrdersList = [];
+  $scope.employees = [];
   $scope.badOrderDetails = {};
   $scope.products = [];
   $scope.product = {};
@@ -20,6 +21,7 @@ angular.module('fmApp')
   $scope.noBadOrders = false;
   $scope.noBays = false;
   $scope.noSKU = false;
+  $scope.noEmployees = false;
 
   var getBadOrderList = function () {
     $http.get(httpHost + '/bad_orders').success( function (data) {
@@ -66,12 +68,33 @@ angular.module('fmApp')
     });
   };
 
+  var getEmployee = function () {
+    console.log("EMPLOYEE GET");
+    $http.get(httpHost + '/employees').success( function (data) {
+      if(data.length !== 0){
+        $scope.employees = data;
+        $scope.accountable = $scope.employees[0];
+        console.log("Employees:");
+        console.log($scope.employees);
+      }else{
+        $scope.noEmployees = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
+
   getBadOrderList();
   getBays();
   getSKU();
+  getEmployee();
   
   $scope.pagePrint = function () {
     window.print();
+  };
+
+  $scope.fullName = function (employee) {
+    return employee.emp_fname + ' ' + employee.emp_lname;
   };
 
   $scope.showAddBadOrderForm = function (data) {
@@ -83,7 +106,6 @@ angular.module('fmApp')
     if(data === false){
       clearForm();
       $scope.totalExpense = 0;
-      $scope.accountable = '';
       $scope.products = [];
     }
   };
@@ -120,7 +142,6 @@ angular.module('fmApp')
     $scope.product.sku = $scope.skuList[0];
     $scope.product.cases = null;
     $scope.product.bottles = null;
-    $scope.product.reason = '';
   };
 
   $scope.getBadOrderDetails = function (id) {
@@ -173,7 +194,7 @@ angular.module('fmApp')
     var badOrder = {
       "products" : $scope.products,
       "total_expense" : $scope.totalExpense,
-      "accountable" : $scope.accountable
+      "accountable" : $scope.accountable.emp_fname + ' ' + $scope.accountable.emp_lname
     };
     console.log("Bad Order");
     console.log(badOrder);

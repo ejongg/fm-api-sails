@@ -108,9 +108,8 @@
                     <div class="col-md-12">
 
                     <!-- Error Message -->
-                        <input type="text" name="inputEmployeeName" class="form-control" placeholder="Enter the employee name."
-                        ng-model="accountable" required>
-
+                        <select class="form-control" ng-model="accountable" ng-options="emp as fullName(emp) for emp in employees">
+                        </select>
                     </div>
                 </div>
 
