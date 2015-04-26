@@ -109,62 +109,59 @@
       <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
 
       <div ng-show="addLoadOutBox" class="form-group">
-         <h4><i class="mdi-content-add-circle"></i> ADD LOAD OUT </h4>
+         <h4 ng-hide="noCustomerOrdersAvailable"><i class="mdi-content-add-circle"></i> ADD LOAD OUT </h4>
 
           <form name="loadOutAddForm" ng-submit="addLoadOut(loadOut)" novalidate>
-              <div ng-show="noCustomerOrdersAvailable">
-                  NO CUSTOMER ORDER AVAILABLE
+              <div  ng-show="noCustomerOrdersAvailable" align="center">
+            <h3><strong>NO CUSTOMER ORDERS! </strong></h3>
               </div>
 
               <div class="form-group" ng-hide="noCustomerOrdersAvailable">
-                <label class="col-md-4">Establishment Name</label>
+                <label class="col-md-4">Establishment Name:</label>
 
-                <div class="col-md-6">
+                <div class="col-md-6" >
                   <select class="form-control" ng-model="ordersAvailableList" ng-options="orderAvailable as orderAvailable.order.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
                   </select>
                 </div>
                   
-                  <div class = "col-md-2">
                      <button class="btn btn-xs btn-default pull-right" type="button" ng-click="addAvaiableCustomer(ordersAvailableList)">ADD</button>
-                  </div>
-                 
               </div>
-              
-              <div ng-hide="noTrucks" class = "form-group">
-                <label class="col-md-2  control-label">Truck: &nbsp; </label>
 
-                <div class = "col-md-8">
+              <br>
+              <br>
+              
+              <div class = "form-group" ng-hide="noCustomerOrdersAvailable">
+                <label class="col-md-2  control-label">Truck:</label>
+
+                <div class = "col-md-8" ng-show="noTrucks">
+                  NO TRUCKS, ADD TRUCK FIRST
+                </div>
+
+                <div class = "col-md-8"  ng-hide="noTrucks">
                    <select class="form-control" ng-model="loadOut.truck" ng-options=" truck as truckName(truck) for truck in trucks" 
                 ng-change="dropdownChange(loadOut.truck)" required>
                   </select>
                 </div>
 
               </div>
-              
-              <div ng-show="noTrucks">
-                  NO TRUCKS, ADD TRUCK FIRST
-              </div>
+            
+          <br>
+              <div class="form-group " ng-hide="noCustomerOrdersAvailable || noTrucks">
+                     <label class="col-md-3 control-label">Load Out #: &nbsp; </label>
 
-<br>
-              <div class="form-group ">
-
-               <div class="col-md-6 pull-right" ng-hide="noTrucks">
-                     <label class="col-md-3 control-label pull-right">Load Out #: &nbsp; </label>
-                  <select class="form-control " ng-model="loadOut.loadout_no" ng-init="loadOut.loadout_no = loadOutNumbers[0]">
-                    <option ng-repeat="number in loadOutNumbers" value="{{number}}">{{number}}
-                    </option>
-                 </select>
+                  <div class="col-md-7">
+                    <select class="form-control " ng-model="loadOut.loadout_no" ng-init="loadOut.loadout_no = loadOutNumbers[0]">
+                      <option ng-repeat="number in loadOutNumbers" value="{{number}}">{{number}}
+                      </option>
+                   </select>
                 </div>
-         
-              
-
               </div>
                 
               
              
               
               <br><br><br>
-              <div class="routeBox" > <br>
+              <div class="routeBox" ng-hide="noCustomerOrdersAvailable" > <br>
 
                <div ng-repeat="orderInAddLoudOut in loadOut.orders">
 
@@ -173,9 +170,9 @@
                </div>
              </div>
 
-             <div class="form-group pull-right">
+             <div class="form-group pull-right" >
                 <br>
-               <button type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-primary">Add</button>
+               <button ng-hide="noCustomerOrdersAvailable" type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-primary">Add</button>
 
                <button type="button" ng-click="showAddLoadOutBox(false)" class="btn btn-xs btn-default">Cancel</button>
              </div>
@@ -210,7 +207,7 @@
             </div>
 
             <div class="rpanel panel-body" ng-show="editIndex === $index">
-              <div ng-show="noCustomerOrdersAvailable">
+              <div ng-show="noCustomerOrdersAvailable" align="center">
                   NO CUSTOMER ORDER AVAILABLE
               </div>
 

@@ -1107,16 +1107,9 @@ td.text-right {
   color:white;
   border:1px solid black;
   border-radius:10px;
-  z-index: -10000;
+  padding-left: 5%;
 }
 
-.routesText{
-  color:black; 
-  cursor:button;
-  font-size: 12px;
-  text-transform:uppercase;
-  z-index: 10000;"
-}
 
 .rpanel{
   border-left: 2px solid black; 
