@@ -58,9 +58,9 @@ module.exports = {
 					.then(function(detailedLoadout){
 
 						if(flag == "add"){
-							sails.sockets.blast("loadout", {verb : "created", data : createdLoadout});	
+							sails.sockets.blast("loadout", {verb : "created", data : detailedLoadout});	
 						}else{
-							sails.sockets.blast("loadout", {verb : "updated", data : createdLoadout});
+							sails.sockets.blast("loadout", {verb : "updated", data : detailedLoadout});
 						}
 						
 						return res.send("Loadout successfully added");
