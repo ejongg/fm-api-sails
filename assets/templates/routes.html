@@ -366,9 +366,13 @@
 
           <div class="rpanel panel-body" ng-hide="editIndex === $index">
                <label class="control-label">Address:</label>
-               <div class=" col-md-offset-1" ng-repeat="address in routeInfo.address">{{address.address_name}}</div>
+               <br>
+
+               <div class="col-md-of" style="display:inline;"    ng-repeat="address in routeInfo.address" >{{address.address_name}}, &nbsp; </div>
+
 
                 <div class="form-group pull-right" style="margin-bottom: -5px;">
+                     <br>
                   <button class="btn btn-xs btn-primary" ng-click="setEditRoute($index)" ng-hide="editIndex === $index">EDIT</button>
                 <button class="btn btn-xs btn-default" ng-click="deleteRoute(routeInfo)" ng-hide="editIndex === $index">DELETE</button>
                 </div>
@@ -404,7 +408,7 @@
               <br>
     
               <div class="form-group pull-right" style="margin-bottom: -5px;"> 
-                <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">OKAY</button>
+                <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditRoute(-1)">DONE</button>
               </div>
 
              
