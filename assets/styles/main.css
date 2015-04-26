@@ -1140,3 +1140,40 @@ td.text-right {
   margin-right: 10px !important;
   padding-right: 10px !important;
   }
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
+.pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #202020;
+    color: white;
+    border: 0px solid #202020;
+  }
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+color: #202020;
+background-color: #eee;
+border-color: #ddd;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
