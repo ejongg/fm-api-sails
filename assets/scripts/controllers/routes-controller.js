@@ -92,7 +92,7 @@ angular.module('fmApp')
         console.log("Routes:");
         console.log($scope.routes);
       }else{
-        $scope.noRoutes = false;
+        $scope.noRoutes = true;
       }
     }).error(function (err) {
       $scope.checkError(err);

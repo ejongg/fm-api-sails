@@ -285,11 +285,11 @@
       <h4>ROUTES </h4>
       <div class="panel panel-body">
         <ul class="nav nav-tabs">
-          <li ng-hide="noAddresses">
+          <li ng-hide="noAddresses && noRoutes">
               <a ng-click="showAddRouteBox(true)"><i class="mdi-content-add-box"/> &nbsp;ADD&nbsp;</a>
           </li>
           <li class="pull-right">
-          <div class="search" ng-hide="noAddresses || noRoutes">
+          <div class="search" ng-hide="noRoutes">
             <form method="get" action="/search" id="search">
               <input name="q" ng-model="searchRoute.$" type="text" size="50" placeholder="SEARCH" />
             </form>
@@ -303,11 +303,11 @@
        <!--    <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div> -->
           <!-- <div ng-show="noAddresses" align="center">
             <h3><strong>NO ADDRESS, ADD ADDRESS FIRST! </strong></h3>
-          </div>
+          </div>-->
 
-          <div ng-show="noRoutes" ng-hide="noAddresses || addRouteBox" align="center">
+          <div ng-show="noRoutes" align="center">
             <h3><strong>NO ROUTES! </strong></h3>
-          </div> -->
+          </div>
 
           <div ng-show="addRouteBox">
               <h4><i class="mdi-content-add-circle"></i> ADD ROUTE</h4>
