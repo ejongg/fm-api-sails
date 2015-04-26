@@ -263,6 +263,7 @@
 
           <div align="center">
                 <dir-pagination-controls
+                    pagination-id="addressesPagination"
                     max-size="7"
                     directional-links="true"
                     boundary-links="true"
@@ -357,7 +358,7 @@
 
     <br><br>
       <!-- routesbox -->
-    <div ng-repeat="routeInfo in routes">
+    <div dir-paginate="routeInfo in routes | itemsPerPage:1" pagination-id="routesPagination">
       <div class="panel-primary" >
           <div class="panel-heading">
               <h3 class="panel-title">Route {{routeInfo.route_name}}</h3>
@@ -372,6 +373,16 @@
                 <button class="btn btn-xs btn-default" ng-click="deleteRoute(routeInfo)" ng-hide="editIndex === $index">DELETE</button>
                 </div>
           </div>
+
+          <div align="center">
+                <dir-pagination-controls
+                    pagination-id="routesPagination"
+                    max-size="7"
+                    directional-links="true"
+                    boundary-links="true"
+                >
+                </dir-pagination-controls>    
+            </div>
       
 
           <!-- edit route -->
