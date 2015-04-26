@@ -17,12 +17,12 @@ module.exports = {
 
 			.each(function (item){
 				return new Promise(function (resolve, reject){
-					if(item.physical_count > 0 ){
+					if(item.physical_count > 0 && _.findIndex(available, {id : item.sku_id.id}) == -1){
 						Sku.findOne({id : item.sku_id.id}).populate('prod_id')
 							.then(function (sku){
 								available.push(sku);
 								resolve();
-							});												
+							})
 					}else{
 						resolve();
 					}

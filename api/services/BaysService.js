@@ -76,7 +76,7 @@ module.exports = {
 				if(bay){
 					callback(null, bay.id);
 				}else{
-					callback(null, "There is no moving pile for company " + company);
+					callback(null, "There is no moving pile for company " + company + ". Please go to bays.");
 				}
 			},
 

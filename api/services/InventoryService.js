@@ -60,7 +60,7 @@ module.exports = {
 
 				.then(function findSkusInInventory (bay){
 					return new Promise(function (resolve, reject){
-						Inventory.find({sku_id : sku_id, bay_id : bay.id})
+						Inventory.find({sku_id : sku_id, bay_id : bay.id}).sort("exp_date ASC")
 							.then(function (skus){
 								resolve(skus);						
 							})
