@@ -42,6 +42,10 @@ module.exports.policies = {
 
   Bad_ordersController : {
     add : 'BadOrdersPolicy'
+  },
+
+  Incomplete_casesController : {
+    assembleCase : 'IncompletesPolicy'
   }
 
   /***************************************************************************

@@ -33,5 +33,20 @@ module.exports = {
 					resolve(product.company);
 				})
 		});
+	},
+
+	addDetails : function(item){
+		return new Promise(function (resolve, reject){
+			Sku.findOne({id : item.sku_id}).populate('prod_id')
+				.then(function (foundSku){
+
+					item.company = foundSku.prod_id.company;
+					item.brand_name = foundSku.prod_id.brand_name;
+					item.sku_name = foundSku.sku_name;
+					item.size = foundSku.size;
+
+					resolve(item);
+				});
+		})
 	}
 }

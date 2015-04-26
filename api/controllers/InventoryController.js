@@ -6,42 +6,34 @@
  */
 
 var moment = require('moment');
+var Promise = require("bluebird");
 
 module.exports = {
 	getInventory : function(req, res){
 		var inventory = [];
 
 		Inventory.find().populate('bay_id')
-			.then(function(inventoryItems){
+			.then(function searchInventory(inventoryItems){
 				return inventoryItems;
 			})
 
-			.each(function (item){
+			.each(function insertAgeToEachObject(item){
 				item.age = moment().from(item.createdAt, true);
 			})
 
-			.then(function (inventoryItems){				
-				async.each(inventoryItems, function(item, cb){
+			.each(function (item){				
+				return new Promise(function (resolve, reject){
+					SkuService.addDetails(item)
+						.then(function (result){
+							inventory.push(result);
+							resolve();
+						})
+				})		
+			})
 
-					Sku.findOne({id : item.sku_id}).populate('prod_id')
-						.then(function(foundSku){
-							item.company = foundSku.prod_id.company;
-							item.brand_name = foundSku.prod_id.brand_name;
-							item.sku_name = foundSku.sku_name;
-							item.size = foundSku.size;
-
-							inventory.push(item);
-							cb();
-						});
-				},
-
-				function(err){
-					if(err)
-						return res.send(err);
-
-					return res.send(inventory);
-				});
-			});
+			.then(function (){
+				return res.send(inventory);
+			})
 	}
 };
 
