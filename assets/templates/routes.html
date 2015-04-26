@@ -68,10 +68,12 @@
 
       <div ng-show="addAddressForm">
       <h4><i class="mdi-content-add-circle"></i> ADD ADDRESS </h4>
+      </div>
 
+    </div>
       <!--  HIDE FOR PRINTER   -->
-</div>
 
+<div ng-show="addAddressForm">
 <table class="table table-striped table-hover">
 
           <form name="addressForm" novalidate>
@@ -230,13 +232,10 @@
         </div> -->
 
 
-        <div class="">
-
-              
-
+        <div ng-hide="noAddresses">
              <br><br>
 
-          <table ng-hide="noAddresses" class="table table-striped table-hover" ng-hide="noAddresses">
+          <table class="table table-striped table-hover" ng-hide="noAddresses">
             <div class="form-group">
               <label for="select" class="col-md-3">Number of rows:</label>
                 <div class="col-md-2">
@@ -323,40 +322,50 @@
           </div>
 
           <div ng-show="addRouteBox">
-              <h4><i class="mdi-content-add-circle"></i> ADD ROUTE</h4>
+              <h4 ng-hide="noAddressesAvailable"><i class="mdi-content-add-circle"></i> ADD ROUTE</h4>
+
+              <div ng-show="noAddressesAvailable" align="center">
+                  <h3><strong>NO ADDRESS AVAILABLE!</strong></h3>
+             </div>
 
             <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
+
               <div class="alert alert-dismissable alert-danger" ng-show="existingAddressInRouteError">
                 <button type="button" class="close" ng-click="showExistingAddressInRouteError(false)">×</button>
                 <strong>{{existingAddressInRoute}}</strong>
              </div> 
 
              <br>
-              <div class="form-group">
+              <div class="form-group" ng-hide="noAddressesAvailable">
                 <label class="col-md-3">Route:</label>
-                <div class="col-md-8">
+                <div class="col-md-7">
                   <input type="text" class="form-control" ng-model="route.route_name" required>
                 </div>
+              </div>
                 <br>
                 <br>
-                <label class="col-md-3">Available Route:</label>
-                <div class="col-md-8" ng-show="noAddressesAvailable">
-                  NO ADDRESS AVAILABLE
-                </div>
-                <div class="col-md-8" ng-hide="noAddressesAvailable">
-                  <select class="form-control" ng-model="addressAvailableList" ng-options="address as address.address_name for address in addressesAvailable">
-                  </select> <br>
-                  <button type="button" class="btn btn-xs btn-default pull-right" ng-click="addAvaiableAddress(addressAvailableList)">ADD</button>
-                </div>
+
+                <div ng-hide="noAddressesAvailable">
+                  <label class="col-md-3">Available Route:</label>
+
+                  <!-- <div class="col-md-8" ng-show="noAddressesAvailable">
+                    NO ADDRESS AVAILABLE
+                
+                  <div class="col-md-8"> -->
+                  <div class="col-md-7">
+                    <select class="form-control" ng-model="addressAvailableList" ng-options="address as address.address_name for address in addressesAvailable">
+                    </select> 
+                  </div>
+
+                    <button type="button" class="btn btn-xs btn-default  pull-right" align="right" ng-click="addAvaiableAddress(addressAvailableList)">ADD</button>
               </div>
 
               <br>
               <br>
               <br>
-              <br>
-              <br>
+        
 
-                <div class="routeBox"> <br>
+                <div class="routeBox" ng-hide="noAddressesAvailable"> <br>
                   <div ng-repeat="address in route.address" style=" z-index: -10000;"> 
                     <div class="col-md-offset-1" style="padding-top:5px;">{{address.address_name}}</div>
                   </div>      
@@ -364,7 +373,7 @@
 
               <div class="form-group pull-right">
                 <br>
-                 <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-xs btn-primary">Add</button>
+                 <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-xs btn-primary" ng-hide="noAddressesAvailable">Add</button>
                  <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-xs btn-default">Cancel</button>
               </div>
 
