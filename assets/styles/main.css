@@ -298,15 +298,28 @@ h1 {
   margin: 0px;}
 
 h2 {
-  color: #0c5970 !important;
+  font-size: 180%;
+  text-transform: uppercase;
+  color: #508213!important;
+  /*padding-left: 82px !important;*/
+
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 5px;
+  /* background-image: url("../../images/headerbg.png"); */ */
+  background-repeat: no-repeat;
+  background-position: center left;
+  margin: 0px;}
+  /*olor: #0c5970 !important;
   margin: 0px;
   padding-left: 95px !important;
   padding: 4px;
   margin-top: 10px;
   margin-bottom: 15px;
-  /* background-image: url("../../images/header2bg.png"); */
+  background-image: url("../../images/header2bg.png");
   background-repeat: no-repeat;
   background-position: top left; }
+  */
 
 h3 {
   color: #ffa311 !important;
