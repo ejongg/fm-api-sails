@@ -11,13 +11,13 @@
   <div class="pageheader-right">
     <div class="form-group">
       <ul class="nav nav-tabs col-md-12">
-        <li>
+        <!-- <li>
           <div class="search" ng-hide="noAddresses || noRoutes">
             <form method="get" action="/search" id="search">
               <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
             </form>
             </div>
-        </li>
+        </li> -->
         <li>
           <a ng-hide="noAddresses || noRoutes" ng-click="pagePrint()">
             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
@@ -45,6 +45,13 @@
             <a ng-hide="noAddresses"ng-click="deleteState = !deleteState"><i class="mdi-navigation-cancel"/>
               &nbsp;DELETE&nbsp;</a>
         </li>
+        <li class="pull-right">
+          <div class="search" ng-hide="noAddresses || noRoutes">
+            <form method="get" action="/search" id="search">
+              <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
+            </form>
+            </div>
+         </li>
       </ul>
 
       <br>
@@ -276,6 +283,13 @@
           <li ng-hide="noAddresses">
               <a ng-click="showAddRouteBox(true)"><i class="mdi-content-add-box"/> &nbsp;ADD&nbsp;</a>
           </li>
+          <li class="pull-right">
+          <div class="search" ng-hide="noAddresses || noRoutes">
+            <form method="get" action="/search" id="search">
+              <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
+            </form>
+            </div>
+        </li>
         </ul>
 
           <br>
