@@ -29,6 +29,7 @@ module.exports = {
 
 	list : function(req, res){
 		var position = req.query.position;
+		var current = req.body.current;
 
 		var query;
 
