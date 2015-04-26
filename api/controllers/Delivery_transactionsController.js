@@ -5,6 +5,8 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var Promise = require("bluebird");
+
 module.exports = {
 	remove : function (req, res){
 		var delivery = req.body.delivery;
@@ -49,7 +51,7 @@ module.exports = {
 			})
 	},
 
-	payment : function (req, res){
+	payments : function (req, res){
 		var deliveryId = req.body.delivery_id;
 		var paidAmount = req.body.paid_amount;
 		var paymentDate = req.body.payment_date;
