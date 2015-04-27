@@ -33,7 +33,7 @@ module.exports = {
 
 			.then(function (){
 				return new Promise(function (resolve, reject){
-					if(flag == "add"){
+					if(Array.isArray(orders)){
 						resolve(orders);
 					}else{
 						resolve([orders]);
