@@ -45,6 +45,10 @@
 <div class="container">
 
      <!-- LEFT PANEL -->
+
+
+     <div class="loadouthide">
+
     <div class="col-md-6">
 
     <div ng-hide="noCustomerOrders">
@@ -77,6 +81,9 @@
 
           </table>
 
+        </div>
+
+          <div align="center">
           <dir-pagination-controls
             max-size="7"
             directional-links="true"
@@ -84,6 +91,7 @@
           >
 
           </dir-pagination-controls>
+        </div>
 
         </div>
 
@@ -94,9 +102,11 @@
 
 
 
-    <div class="col-md-6">
+    <div class="col-md-6"><div class="loadouthide">
       <h4>LOAD OUT </h4>
               <div class="panel panel-body">
+
+                
 
                  <ul class="nav nav-tabs">
                         <li>
@@ -105,6 +115,8 @@
                         </li>
                     </ul>
                     <br>
+
+                </div>
 
       <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
 
