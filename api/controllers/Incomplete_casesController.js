@@ -31,6 +31,13 @@ module.exports = {
 					return res.send(200);
 				});
 			})
-	}	
+	},
+
+	list : function (req, res){
+		Incomplete_cases.find({bottles : {'>' : 0}}).populateAll()
+			.then(function (result){
+				return res.send(result);
+			})
+	}
 };
 
