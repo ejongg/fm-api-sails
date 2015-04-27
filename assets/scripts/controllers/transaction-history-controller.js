@@ -4,7 +4,7 @@ angular.module('fmApp')
 .controller('TransactionHistoryCtrl',['$scope', '_', '$http', 'httpHost','authService','userService','$filter', function($scope, _, $http, httpHost, authService,userService,$filter){
 	
   $scope.transactions = [];
-  $scope.noTransactionHistory = true;
+  $scope.noTransactionHistory = false;
 
   var getTransactions= function () {
     $http.get(httpHost + '/reports/transactions').success( function (data) {
@@ -12,10 +12,11 @@ angular.module('fmApp')
         $scope.transactions = $filter('transactionFilter')(data);
         console.log("Transactions:");
         console.log($scope.transactions);
-        $scope.noTransactionHistory = false;
+      }else{
+        $scope.noTransactionHistory = true;
       }
     }).error(function (err) {
-      console.log(err);
+      $scope.checkError(err);
     });
   };
 

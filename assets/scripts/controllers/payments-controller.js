@@ -9,6 +9,9 @@ angular.module('fmApp')
   $scope.summaryForm = false;
   $scope.payment = {};
   $scope.payment.payment_date = new Date();
+  $scope.summary = {};
+
+
 
   $scope.noDeliveryTransactions = false;
 
@@ -41,6 +44,7 @@ angular.module('fmApp')
       $scope.payment.delivery_id = data.id;
       $scope.showPayForm(true);
     }else {
+      $scope.summary = data;
       $scope.showSummaryForm(true);
     }
   };
@@ -57,12 +61,25 @@ angular.module('fmApp')
     io.socket.request($scope.socketOptions('post','/delivery_transactions/payments',{"Authorization": "Bearer " + authService.getToken()},paymentInfo), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
+      if(JWR.statusCode === 200){
         $scope.showPayForm(false);
         $scope.$digest();
       }
     });  
   }
 
+  io.socket.on('delivery_transactions', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "paid": 
+        console.log(msg.data);
+        var index = _.findIndex($scope.deliveryTransactions,{'id': msg.data.id});
+        $scope.deliveryTransactions[index] = msg.data;
+        $scope.$digest();
+    }
+  });
  
 }]);
