@@ -59,9 +59,13 @@ angular.module('fmApp')
     $scope.incVal = inc;
   };
 
+  var clearForm = function () {
+    $scope.incVal = {};
+  };
+
    $scope.submit = function (inc){
     console.log(inc);
-    var info = {
+    var product = {
     "sku_id":  inc.sku_id.id,
     "cases": inc.cases,
     "bottlespercase": inc.sku_id.bottlespercase,
@@ -72,7 +76,7 @@ angular.module('fmApp')
 
     console.log(info);
 
-     io.socket.request($scope.socketOptions('post','/incompletes/assemble',{"Authorization": "Bearer " + authService.getToken()},info), function (body, JWR) {
+     io.socket.request($scope.socketOptions('post','/incompletes/assemble',{"Authorization": "Bearer " + authService.getToken()},product), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
