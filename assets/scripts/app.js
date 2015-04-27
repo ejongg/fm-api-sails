@@ -97,15 +97,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
           }
         }  
       })
-      .state('admin.transaction-history', {
-        url:'/reports/transaction-history',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/transaction-history.html',
-            controller:'TransactionHistoryCtrl'
-          }
-        }  
-      })
       .state('admin.edit-account', {
         url:'/edit-account',
         views: {
@@ -203,6 +194,24 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
           'mainContent': {
             templateUrl: 'templates/payments.html',
             controller:'PaymentsCtrl'
+          }
+        }  
+      })
+       .state('encoder.transaction-history', {
+        url:'/reports/transaction-history',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/transaction-history.html',
+            controller:'TransactionHistoryCtrl'
+          }
+        }  
+      })
+       .state('encoder.incomplete', {
+        url:'/inventory/incomplete-cases',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/incomplete.html',
+            controller:'IncompleteCtrl'
           }
         }  
       })

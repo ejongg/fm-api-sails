@@ -7,7 +7,7 @@
 <div class="row">
 
     <div class="pageheader-left">
-        <h1> Payments </h1>
+        <h1> Incomplete Cases </h1>
     </div>
 
     <div class="pageheader-right">
@@ -130,12 +130,12 @@
 
 
         <!-- IF NO PRODUCTS -->
-       <div ng-show="noDeliveryTransactions" align="center">
-          <h3><strong>NO DELIVERY TRANSACTIONS YET! </strong></h3>
+       <div ng-show="noIncomplete" align="center">
+          <h3><strong>NO INCOMPLETE CASES YET! </strong></h3>
         </div>
 
         <!-- START OF TABLE -->
-        <div ng-hide="noDeliveryTransactions">
+        <div ng-hide="noIncomplete">
 
         <div class="form-group">
           <label for="select" class="col-md-2">Number of rows:</label>
