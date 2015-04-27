@@ -1190,6 +1190,7 @@ border-color: #ddd;
   margin: 0px !important;
   margin-left: 0px !important;
   padding-left: -0px !important;
+  padding-bottom: -10px !important;
 }
 
 
@@ -1202,6 +1203,7 @@ border-color: #ddd;
   margin: 0px !important;
   margin-left: 0px !important;
   padding-left: -0px !important;
+  padding-bottom: -10px !important;
 }
 
 .numofrows {
