@@ -3,12 +3,16 @@
 angular.module('fmApp')
 .controller('IncompleteCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
   $scope.incompleteCases = [];
+  $scope.bays = [];
+  $scope.incForm = false;
+  $scope.incVal = {};
 
   $scope.noIncomplete = false;
+  $scope.noBays = false;
 
   var getIncompleteCases = function () {
 
-    $http.get(httpHost + '/incomplete_cases').success( function (data) {      
+    $http.get(httpHost + '/incomplete_cases/list').success( function (data) {      
       if(data.length !== 0){
         $scope.incompleteCases = data;
         console.log('Incomplete Cases');
@@ -22,6 +26,61 @@ angular.module('fmApp')
 
   };
 
+  var getBays = function () {
+
+    $http.get(httpHost + '/bays').success( function (data) {      
+      if(data.length !== 0){
+        $scope.bays = data;
+        $scope.incVal.bay = $scope.bays[0];
+        console.log('Bays');
+        console.log($scope.bays);
+      }else{
+         $scope.noBays = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+
+  };
+
   getIncompleteCases();
+  getBays();
+
+   $scope.combineBay = function (bay){
+    return bay.bay_name + ' ' + bay.bay_label;
+  };
+
+  $scope.showIncForm = function (data) {
+    $scope.incForm = data;
+  };
+
+  $scope.incompleteClicked = function (inc){
+    $scope.showIncForm(true);
+    $scope.incVal = inc;
+  };
+
+   $scope.submit = function (inc){
+    console.log(inc);
+    var info = {
+    "sku_id":  inc.sku_id.id,
+    "cases": inc.cases,
+    "bottlespercase": inc.sku_id.bottlespercase,
+    "bay": inc.bay.id,
+    "lifespan": inc.sku_id.lifespan,
+    "exp_date": inc.exp_date 
+    };
+
+    console.log(info);
+
+     io.socket.request($scope.socketOptions('post','/incompletes/assemble',{"Authorization": "Bearer " + authService.getToken()},info), function (body, JWR) {
+      console.log('Sails responded with post bad order: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 201){
+        $scope.showIncForm(false);
+        $scope.$digest();
+      }
+    }); 
+
+  };
   
 }]);
