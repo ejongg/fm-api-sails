@@ -34,6 +34,7 @@ angular.module('fmApp')
         $scope.incVal.bay = $scope.bays[0];
         console.log('Bays');
         console.log($scope.bays);
+        console.log($scope.incVal.bay);
       }else{
          $scope.noBays = true;
       }
@@ -78,7 +79,7 @@ angular.module('fmApp')
     "exp_date": inc.exp_date 
     };
 
-    // console.log(info);
+    console.log(product);
 
      io.socket.request($scope.socketOptions('post','/incompletes/assemble',{"Authorization": "Bearer " + authService.getToken()},{"product": product }), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
