@@ -34,9 +34,26 @@ module.exports = {
 	},
 
 	list : function (req, res){
+		var list = [];
+
 		Incomplete_cases.find({bottles : {'>' : 0}}).populateAll()
-			.then(function (result){
-				return res.send(result);
+			.then(function (results){
+				return results;
+			})
+
+			.each(function (item){
+				return new Promise(function (resolve, reject){
+					SkuService.getProductName(item.sku_id.id)
+						.then(function (brandName){
+							item.brand_name = brandName;
+							list.push(item);
+							resolve();
+						})
+				});
+			})
+
+			.then(function (){
+				return res.send(list);
 			})
 	}
 };
