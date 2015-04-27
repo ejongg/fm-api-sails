@@ -10,7 +10,8 @@ var moment = require("moment");
 module.exports = {
 	assembleCase : function (req, res){
 		var product = req.body.product;
-		var productionDate = moment(product.exp_date).substract(lifespan, 'months');
+
+		var productionDate =moment(product.exp_date, "YYYY-MM-DD").subtract(product.lifespan, 'M').format('YYYY-MM-DD');
 
 		InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay, productionDate, product.lifespan)	
 			.then(function (){
@@ -24,7 +25,7 @@ module.exports = {
 			})
 
 			.then(function (item){
-				item.bottles = item.bottles - (product.cases * bottlespercase);
+				item.bottles = item.bottles - (product.cases * product.bottlespercase);
 
 				item.save(function (err, saved){
 					sails.sockets.blast("incomplete_cases", {verb : "created", data : saved});
