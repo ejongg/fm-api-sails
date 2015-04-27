@@ -52,6 +52,9 @@ angular.module('fmApp')
 
   $scope.showIncForm = function (data) {
     $scope.incForm = data;
+    if(data === false){
+      clearForm();
+    }
   };
 
   $scope.incompleteClicked = function (inc){
@@ -61,6 +64,7 @@ angular.module('fmApp')
 
   var clearForm = function () {
     $scope.incVal = {};
+    $scope.incVal.bay = $scope.bays[0];
   };
 
    $scope.submit = function (inc){
@@ -74,7 +78,7 @@ angular.module('fmApp')
     "exp_date": inc.exp_date 
     };
 
-    console.log(info);
+    // console.log(info);
 
      io.socket.request($scope.socketOptions('post','/incompletes/assemble',{"Authorization": "Bearer " + authService.getToken()},product), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
