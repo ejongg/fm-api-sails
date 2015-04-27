@@ -1277,6 +1277,12 @@ a.arrowlink2:hover {
   background-color: #ffffff !important;
 }
 
+.loadouthide {
+  color: #ffffff !important;
+  display: none !important;
+  background-color: #ffffff !important;
+}
+
 .routeBox {
   border: 0px solid #000000 !important;
 }
