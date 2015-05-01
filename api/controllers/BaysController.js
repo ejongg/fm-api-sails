@@ -50,16 +50,12 @@ module.exports = {
 			})
 
 			.then(function (updatedBay){
-				BaysService.countBayItems(bay.id)
+				return BaysService.countBayItems(updatedBay[0].id)
 					.then(function (count){
-						updatedBay.total_products = count;
+						updatedBay[0].total_products = count;
 						sails.sockets.blast('bays', {verb : 'updated', data : updatedBay[0]});
 						return res.send(200);
 					})
-			})
-
-			.catch(function (err){
-				return res.send(err);
 			})
 	},
 
