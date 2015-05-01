@@ -11,7 +11,7 @@ module.exports = {
 		Users.findOneByUsername(req.body.username)
 			.exec(function(err, user){
 				if(err)
-					return res.json({status : {code: 0, message: "An error has occured"}});			
+					return res.json({status : {code: 0, message: "An error has occured. Please contact your administrator."}});			
 
 				if(user){
 					bcrypt.compare(req.body.password, user.password, function(err, match){
