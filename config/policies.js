@@ -46,6 +46,10 @@ module.exports.policies = {
 
   Incomplete_casesController : {
     assembleCase : 'IncompletesPolicy'
+  },
+
+  Delivery_transactionsController : {
+    payments : 'PaymentsPolicy'
   }
 
   /***************************************************************************
