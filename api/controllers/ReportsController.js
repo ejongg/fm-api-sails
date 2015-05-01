@@ -175,9 +175,13 @@ module.exports = {
 								if(err) reject(err);
 								
 								totalAmount = totalAmount + result;
-								resolve();
+								resolve(returns);
 							});	
 						});
+					})
+
+					.each(function (returns){
+						totalAmount = totalAmount + returns.deposit;
 					})
 
 					.then(function addToDssr(){

@@ -12,7 +12,6 @@ module.exports = {
 				})
 
 				.then(function computeAmount(sku){
-					totalAmount = totalAmount + (product.cases * sku.pricepercase);
 					totalAmount = totalAmount + (product.bottles * sku.priceperbottle);						
 					cb(); 
 				})
