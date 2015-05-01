@@ -65,7 +65,7 @@ module.exports = {
 				
 				Trucks.findOne({id : updatedTruck.id}).populateAll()
 					.then(function (foundTruck){
-						sails.sockets.blast("trucks", {verb : "created", data : foundTruck});
+						sails.sockets.blast("trucks", {verb : "updated", data : foundTruck});
 					})
 			})
 
