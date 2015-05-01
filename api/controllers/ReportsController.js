@@ -75,8 +75,15 @@ module.exports = {
 				Ending_inventory.findOne(query)
 					.then(function (foundRecord){
 						if(foundRecord){
-							dssr.ending_inventory = foundRecord.count;
-							cb();
+							InventoryService.countInventory()
+								.then(function (count){
+									foundRecord.count = count;
+
+									foundRecord.save(function (err, saved){
+										dssr.ending_inventory = saved.count;
+										cb();
+									})
+								})
 						}else{
 							InventoryService.countInventory()
 								.then(function (count){
@@ -194,7 +201,7 @@ module.exports = {
 		function(err){
 			if(err) return res.send(err);
 
-			dssr.income = (dssr.deliveries + dssr.empties) - (dssr.purchases + dssr.expenses);
+			dssr.income = (dssr.stt + dssr.empties) - (dssr.purchases + dssr.expenses);
 
 			return res.send(dssr);
 		});	
