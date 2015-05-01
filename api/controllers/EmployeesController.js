@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing employees
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+ var Promise = require('bluebird');
 
 module.exports = {
 	add : function(req, res){
@@ -47,6 +48,32 @@ module.exports = {
 			.then(function (employees){
 				return res.send(employees);
 			})	
+	},
+
+	listForEdit : function(req, res){
+		var truckId = req.query.truck;
+		var position = req.query.position;
+
+		var list = [];
+
+		Employees.find({truck_id : null, position : position})
+			.then(function (unassigned){
+				list = unassigned;
+			})
+
+			.then(function (){
+				return new Promise(function (resolve, reject){
+					Employees.findOne({truck_id : truckId, position : position})
+						.then(function (current){
+							list.push(current);
+							resolve();
+						})
+				});
+			})
+
+			.then(function (){
+				return res.send(list);
+			})
 	}
 };
 
