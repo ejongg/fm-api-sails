@@ -65,7 +65,7 @@ module.exports = {
 				return new Promise(function (resolve, reject){
 					Employees.findOne({truck_id : truckId, position : position})
 						.then(function (current){
-							list.push(current);
+							list.unshift(current);
 							resolve();
 						})
 				});
