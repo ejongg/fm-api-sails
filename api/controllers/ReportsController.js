@@ -128,9 +128,19 @@ module.exports = {
 					})
 
 					.then(function (){
-						dssr.deliveries = totalAmount;
+						return Warehouse_transactions.find({date : date});
+					})
+
+					.each(function (transaction){
+						totalAmount = totalAmount + transaction.total_amount;
+					})
+
+					.then(function (){
+						dssr.stt = totalAmount;
 						cb();
 					})
+
+			
 			},
 
 			function getTotalExpenses(cb){
