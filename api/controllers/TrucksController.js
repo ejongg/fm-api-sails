@@ -82,7 +82,7 @@ module.exports = {
 				foundEmp.truck_id = null;
 
 				foundEmp.save(function (err, saved){
-					sails.sockets.blast("employees", {verb : "created", data : saved});
+					sails.sockets.blast("employees", {verb : "updated", data : saved});
 					return res.send(200);		
 				});
 			})
