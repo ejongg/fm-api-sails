@@ -16,53 +16,57 @@ module.exports = {
 		var user = req.body.user;
 		var totalAmount = req.body.total_amount;
 
-		var customerDetails = {
+		var createCustomer = {
 			establishment_name : customer.establishment,
 			owner_name : customer.owner,
 			address : customer.address,
 			distance : customer.distance
 		};
 
-		Customers.findOrCreate({establishment_name : customer.establishment}, customerDetails)
-			.exec(function(err, createdCustomer){
+		var orderId = null;
+		var customerBlast = null;
 
-				var customerOrder = {
-					customer_id : createdCustomer.id,
-					supplieragent_name : supplierAgentName,
-					date_received : moment().format('YYYY-MM-DD'),
-					user  : user,
-					total_amount : totalAmount
+		Customers.findOrCreate({establishment_name : customer.establishment}, createCustomer)
+			.then(function(resultCustomer){
+				customerBlast = resultCustomer;
+
+				return new Promise(function (resolve, reject){
+					var customerOrder = {
+						customer_id : resultCustomer.id,
+						supplieragent_name : supplierAgentName,
+						date_received : moment().format('YYYY-MM-DD'),
+						user  : user,
+						total_amount : totalAmount
+					};
+
+					Customer_orders.create(customerOrder)
+						.then(function (createdOrder){
+							orderId = createdOrder.id;
+							resolve(orders);
+						})
+				});
+
+			})
+
+			.each(function (order){
+				var orderProduct = {
+					order_id : orderId,
+					sku_id : order.sku_id,
+					cases : order.cases
 				};
 
-				Customer_orders.create(customerOrder)
-					.exec(function(err, createdCustomerOrder){
-						if(err)
-							return res.send(err);
+				return Customer_order_products.create(orderProduct);
+			})
 
-						_(orders).forEach(function(order){
+			.then(function (){
 
-							var orderProduct = {
-								order_id : createdCustomerOrder.id,
-								sku_id : order.sku_id,
-								cases : order.cases
-							};
-
-							Customer_order_products.create(orderProduct)
-								.exec(function(err, createOrderProduct){
-									if(err)
-										return res.send(err);
-								});
-						});
-
-						Customer_orders.findOne({id : createdCustomerOrder.id}).populate('customer_id')
-							.then(function(foundCustomerOrder){
-								sails.sockets.blast('customer_orders', {verb : "created", data : foundCustomerOrder});
-								return res.send(201);
-							});
-
-						sails.sockets.blast('customers',  {verb : "created", data : createdCustomer});							
+				Customer_orders.findOne({id : orderId}).populate('customer_id')
+					.then(function(foundCustomerOrder){
+						sails.sockets.blast('customer_orders', {verb : "created", data : foundCustomerOrder});
+						sails.sockets.blast('customers',  {verb : "created", data : customerBlast});
+						return res.send(201);
 					});
-		});
+			})	
 	},
 
 	list : function(req, res){
