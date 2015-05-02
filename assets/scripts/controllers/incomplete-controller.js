@@ -59,8 +59,9 @@ angular.module('fmApp')
   };
 
   $scope.incompleteClicked = function (inc){
-    $scope.showIncForm(true);
     $scope.incVal = inc;
+    $scope.incVal.bay = $scope.bays[0];
+    $scope.showIncForm(true);
   };
 
   var clearForm = function () {
