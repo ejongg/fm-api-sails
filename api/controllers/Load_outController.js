@@ -77,8 +77,6 @@ module.exports = {
 		var truck = req.body.truck_id;
 		var delivery_date = req.body.delivery_date;
 
-		console.log(req.body);
-
 		Load_out.findOne({id : loadoutId})
 			.then(function (loadout){
 				
@@ -94,28 +92,57 @@ module.exports = {
 
 			.then(function (){
 				Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date})
-					.then(function getDeliveries(delivery_transactions){
+					.then(function getDeliveries(deliveryTransactions){
+						return deliveryTransactions;
+					})
 
-						(delivery_transactions).forEach(function(transaction){
-
+					.each(function (transaction){
+						return new Promise(function (resolve, reject){
 							Delivery_products.find({dtrans_id : transaction.id}).populate('sku_id')
 								.then(function getDeliveryProducts(products){
+									return products;
+								})
 
-									(products).forEach(function(product){
-										if(product.sku_id.company == "SMB"){
-											InventoryService.SMB_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase);
-										}								
+								.each(function (product){
+									return new Promise(function (resolve ,reject){
+										SkuService.getCompanyName(product.sku_id.id)
+											.then(function (company){
+												return company;
+											})
+
+											.then(function (company){
+												if(company == "SMB"){
+													console.log("Hello");
+													
+													InventoryService.SMB_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase)
+														.then(function (){
+															resolve();
+														})
+												}
+											})
+
 									});
+								})
 
-								});
+								.then(function (){
+									resolve();
+								})
+						});
+					})
 
+					.each(function (transaction){
+						return new Promise(function (resolve, reject){
 							transaction.status = "On delivery";
+
 							transaction.save(function(err, saved){
-								return res.json({code : 1, message : "Load out confirmed"});
+								resolve();
 							});
 						});
+					})
 
-					});
+					.then(function (){
+						return res.send("Load out confirmed", 200);
+					})
 			})
 	},
 

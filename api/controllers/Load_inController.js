@@ -18,30 +18,47 @@ module.exports = {
 			loadout_id : req.body.loadout
 		};
 
+		var loadInId = null;
+
 		Load_in.create(loadin)
 			.then(function createLoadInProducts(createdLoadIn){
+				loadInId = createdLoadIn.id;
 				
-				_(products).forEach(function(product){
-					var loadInProduct = {
-						sku_id : product.sku_id,
-						cases : product.cases,
-						loadin_id : createdLoadIn.id
-					};
+				return products;
+			})
 
-					Loadin_products.create(loadInProduct)
-						.then(function(createdLoadInProduct){
-							if(product.sku_id.brand_name === "Coca-cola"){
-								return InventoryService.put(product.id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan);
-							}else{
-								return InventoryService.SMB_put(product.id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan);
-							}
-						})
+			.each(function (product){
 
-						.then(function (){
-							return res.send(200);
-						})
-				});
-			});
+				var loadInProduct = {
+					sku_id : product.sku_id,
+					cases : product.cases,
+					loadin_id : loadInId
+				};
+
+				Loadin_products.create(loadInProduct)
+					.then(function(createdLoadInProduct){
+						return new Promise(function (resolve, reject){
+
+							SkuService.getCompanyName(product.sku_id)
+								.then(function (company){
+									return company;
+								})
+
+								.then(function (company){
+									product.company = company;
+									return LoadInService.putInInventory(product);
+								})
+
+								.then(function (){
+									resolve();
+								})
+						});
+					})
+
+					.then(function (){
+						return res.send(200);
+					})
+			})
 	}
 };
 
