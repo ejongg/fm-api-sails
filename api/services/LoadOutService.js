@@ -23,5 +23,26 @@ module.exports = {
 					resolve(loadout);
 				})
 		});
+	},
+
+	deductInInventory : function (product){
+		return new Promise(function (resolve ,reject){
+
+			SkuService.getCompanyName(product.sku_id.id)
+				.then(function (company){
+					return company;
+				})
+
+				.then(function (company){
+					if(company == "SMB"){
+						return InventoryService.deduct(product.sku_id.id, product.bottles, product.cases, product.sku_id.bottlespercase);
+					}
+				})
+
+				.then(function (){
+					resolve();
+				})
+
+		});
 	}
 }

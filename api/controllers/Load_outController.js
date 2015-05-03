@@ -79,7 +79,6 @@ module.exports = {
 
 		Load_out.findOne({id : loadoutId})
 			.then(function (loadout){
-				
 				return new Promise(function (resolve, reject){
 					loadout.status = "In progress";
 
@@ -88,6 +87,7 @@ module.exports = {
 						resolve();
 					});
 				});
+
 			})
 
 			.then(function (){
@@ -104,24 +104,7 @@ module.exports = {
 								})
 
 								.each(function (product){
-									return new Promise(function (resolve ,reject){
-										SkuService.getCompanyName(product.sku_id.id)
-											.then(function (company){
-												return company;
-											})
-
-											.then(function (company){
-												if(company == "SMB"){
-													console.log("Hello");
-													
-													InventoryService.SMB_deduct(product.sku_id.id, product.cases, product.sku_id.bottlespercase)
-														.then(function (){
-															resolve();
-														})
-												}
-											})
-
-									});
+									return LoadOutService.deductInInventory(product);
 								})
 
 								.then(function (){
