@@ -19,7 +19,7 @@ module.exports = function(req, res, next){
 	
 	Auth.verifyToken(token, function(err, token){
 		if(err)
-			return res.json({error : 'Token not valid.'});
+			return res.forbidden({error : 'Token not valid.'});
 
 		req.token = token;
 
