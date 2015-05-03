@@ -487,11 +487,11 @@ h6 {
 
 @media screen and (max-width: 300px) {
     body {
-        background-color: lightblue;
+        background-color: #ffffff;
     }
 
     .panel {
-      background-color: red !important;
+      background-color: #ffffff !important;
     }
 }
 
@@ -849,7 +849,6 @@ legend {
     }
 
 
-
 .variantTable {
   margin-top: 50px; }
 
@@ -878,6 +877,41 @@ thead {
   text-transform: uppercase !important;
   margin: 0px;
 }
+
+td {
+  /*background: #cfcfcf;
+  //padding:20px;
+  //  font-size:18px;
+  text-align:left;
+  vertical-align:middle;
+  font-weight:300;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1); #C1C3D1*/
+  border-right: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+
+tr:hover td {
+  border-bottom: 4px solid #ffffff;
+  cursor: pointer !important;
+}
+
+thead {
+  color: #ffffff;
+border-bottom: 2px solid #ffffff !important;
+background-color: #000000 !important;
+}
+
+tr:last-child{
+  border-bottom: 2px solid #ffffff; 
+}
+
+td:last-child {
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff; 
+}
+
+
 
 /*
 thead {
@@ -1003,32 +1037,16 @@ tr:last-child td:last-child {
 }
  */
 
-td {
-  /*background: #cfcfcf;
-  //padding:20px;
-  //  font-size:18px;
-  text-align:left;
-  vertical-align:middle;
-  font-weight:300;
-  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);*/
-  border-right: 1px solid #C1C3D1;
-  border-left: 1px solid #C1C3D1;
-  border-bottom: 1px solid #C1C3D1;
-}
 
-tr:hover td {
-  border-bottom: 2px solid #202020;
-}
 
-td:last-child {
-  border-right: 1px solid #C1C3D1;
-  border-bottom: 1px solid #C1C3D1; 
-}
+
+
+
+
+
 
 
 /*
-
-
 
 
 
@@ -1311,19 +1329,24 @@ margin: 1.30cm;
 
 
 tr.movingpile td {
-  background-color: #ffffff !important;
-  color: #fe9f00 !important;
+  background-color: #fe9f00 !important;
+  color: #0000000 !important;
+  font-weight: bold;
   
 }
 tr.fullgoods td {
-  color: #89b405 !important;
-  background-color: #ffffff !important;
+  color: #0000000 !important;
+  background-color: #89b405 !important;
+  font-weight: bold;
+}
+/*
+tr.movingpile:hover td {
+  border-bottom: 3px solid #fe9f00 !important;
 }
 
-
-
-
-
-
+tr.fullgoods:hover td {
+  border-bottom: 3px solid #89b405 !important;
+}
+*/
 
 
