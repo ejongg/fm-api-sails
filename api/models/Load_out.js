@@ -30,7 +30,7 @@ module.exports = {
     truck_id : {
       model : "trucks"
     },
-    transactions : {
+    deliveries : {
       collection : "delivery_transactions",
       via : "loadout_id"
     }
