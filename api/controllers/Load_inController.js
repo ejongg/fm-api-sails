@@ -28,36 +28,26 @@ module.exports = {
 			})
 
 			.each(function (product){
+				return new Promise(function (resolve, reject){
+					var loadInProduct = {
+						sku_id : product.sku_id,
+						cases : product.cases,
+						loadin_id : loadInId
+					};
 
-				var loadInProduct = {
-					sku_id : product.sku_id,
-					cases : product.cases,
-					loadin_id : loadInId
-				};
+					Loadin_products.create(loadInProduct)
+						.then(function(createdLoadInProduct){
+							return InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan)
+						})
 
-				Loadin_products.create(loadInProduct)
-					.then(function(createdLoadInProduct){
-						return new Promise(function (resolve, reject){
+						.then(function (){
+							resolve();
+						})
+				});
+			})
 
-							SkuService.getCompanyName(product.sku_id)
-								.then(function (company){
-									return company;
-								})
-
-								.then(function (company){
-									product.company = company;
-									return LoadInService.putInInventory(product);
-								})
-
-								.then(function (){
-									resolve();
-								})
-						});
-					})
-
-					.then(function (){
-						return res.send(200);
-					})
+			.then(function (){
+				return res.send(200);
 			})
 	}
 };

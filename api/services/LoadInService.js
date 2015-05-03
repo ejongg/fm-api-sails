@@ -11,7 +11,7 @@ module.exports = {
 					})
 
 			}else{
-				return InventoryService.SMB_put(product.sku_id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan)
+				return InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan)
 					.then(function (){
 						resolve();
 					})

@@ -83,9 +83,13 @@ module.exports = {
 					loadout.status = "In progress";
 
 					loadout.save(function (err, saved){
-						saved.truck_id = saved.truck_id.id;
-						sails.sockets.blast("loadout", {verb : "confirmed", data : saved});
-						resolve();
+						return new Promise(function (resolve, reject){
+							LoadOutService.getDetails(loadout)
+								.then(function (detailedLoadout){
+									sails.sockets.blast("loadout", {verb : "confirmed", data : detailedLoadout});
+									resolve();
+								})
+						});
 					});
 				});
 

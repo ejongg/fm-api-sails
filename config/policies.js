@@ -50,6 +50,14 @@ module.exports.policies = {
 
   Delivery_transactionsController : {
     payments : 'PaymentsPolicy'
+  },
+
+  Load_outController : {
+    add : 'AddLoadoutPolicy'
+  },
+
+  Customer_ordersController : {
+    add : 'SMBInventoryPolicy'
   }
 
   /***************************************************************************
