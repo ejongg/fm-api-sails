@@ -292,9 +292,9 @@ h1 {
   padding: 9px;
   font-weight: bold;
   letter-spacing: 5px;
-  /* background-image: url("../../images/headerbg.png"); */ */
+  /* background-image: url("../../images/headerbg.png");  
   background-repeat: no-repeat;
-  background-position: center left;
+  background-position: center left;*/
   margin: 0px;}
 
 h2 {
@@ -306,9 +306,9 @@ h2 {
   font-weight: bold;
   letter-spacing: 10px;
   padding-top: 10px;
-  /* background-image: url("../../images/headerbg.png"); */ */
+  /* background-image: url("../../images/headerbg.png"); 
   background-repeat: no-repeat;
-  background-position: center left;
+  background-position: center left;*/
   margin: 0px;}
   /*olor: #0c5970 !important;
   margin: 0px;
