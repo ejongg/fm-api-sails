@@ -1017,7 +1017,7 @@ td {
 }
 
 tr:hover td {
-  border-bottom: 2px solid #ffa311;
+  border-bottom: 2px solid #202020;
 }
 
 td:last-child {
@@ -1310,9 +1310,15 @@ margin: 1.30cm;
 }
 
 
-
-
-
+tr.movingpile td {
+  background-color: #ffffff !important;
+  color: #fe9f00 !important;
+  
+}
+tr.fullgoods td {
+  color: #89b405 !important;
+  background-color: #ffffff !important;
+}
 
 
 

@@ -14,8 +14,9 @@
 	min-width: 500px;
 	max-width: 500px;
 	font-weight: bold;
-	/*
-	min-width: 288px;
+	min-height: 56px;
+	max-height: 100px;
+	/*min-width: 288px;
 	max-width: 568px; */
 	cursor: pointer;
 	background-color: #508213;
