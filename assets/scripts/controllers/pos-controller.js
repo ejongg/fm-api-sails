@@ -164,7 +164,7 @@ angular.module('fmApp')
      "brand_name" : returns.sku.prod_id.brand_name,
      "bottles" : returns.bottles,
      "cases" : returns.cases,
-     "bottlespercase" : returns.bottlespercase
+     "bottlespercase" : returns.sku.bottlespercase
    };
 
     if( _.findIndex($scope.returnsItems,{ 'sku_id': returnInfo.sku_id }) === -1 ){
