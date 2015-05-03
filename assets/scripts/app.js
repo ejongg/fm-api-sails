@@ -215,7 +215,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
           }
         }  
       })
-
+       .state('encoder.expenses', {
+        url:'/reports/expenses',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/expenses.html'
+            // controller:'IncompleteCtrl'
+          }
+        }  
+      })
     .state('cashier', {
       url:'/cashier',
       abstract: true,
