@@ -43,8 +43,9 @@
 <div class="container">
 
     <!-- LEFT PANEL -->
-    <div ng-class="addExpenseForm ? 'col-xs-12 col-md-4' : ''">
-      <div class="panel panel-left" ng-show="addExpenseForm">
+<!--     <div ng-class="addExpenseForm ? 'col-xs-12 col-md-4' : ''"> -->
+  <div class="col-md-4">
+      <div class="panel panel-left">
         <div class="panel-body">
           <div ng-show="!noExistingProduct">
     
@@ -67,11 +68,12 @@
                         <label for="inputSize" class="col-md-12">
                         SKU Name</label> 
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <select class="form-control" ng-model="" >
                             <option ng-repeat="unit in units" value="{{unit}}" ></option>
                           </select>
                         </div>
+                      </div>
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
@@ -122,10 +124,9 @@
 
         </div>
       </div>
-    </div>
 
 
-    <div ng-class="editOrDeleteExpenseForm ? 'col-xs-12 col-md-3' : ''">
+   <!--  <div ng-class="editOrDeleteExpenseForm ? 'col-xs-12 col-md-3' : ''"> -->
       <div class="panel panel-left" ng-show="editOrDeleteExpenseForm">
 
         <ul class="nav nav-tabs col-md-12">
@@ -210,7 +211,8 @@
     </div>
 
     <!-- START OF TABLE -->
-    <div ng-class="addExpenseForm || editOrDeleteExpenseForm ? 'col-xs-12 col-md-8' : ''">
+ <!--    <div ng-class="addExpenseForm || editOrDeleteExpenseForm ? 'col-xs-12 col-md-8' : ''"> -->
+ <div class="col-md-8">
       <div class="panel panel-right">
           <div class="panel-body">
 
@@ -236,8 +238,6 @@
                 </select>
             </div>
           </div>
-
-          <br>
 
         <div class="form-group" >
              <div class="col-md-2 pull-right"><input type="number" class="form-control" value="" ng-model="totalAmount" disabled>
@@ -295,7 +295,7 @@
 
       <!-- END OF TABLE -->
 
-      </div>
+     </div>
     </div>
   </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
   <div class="snackbar-container" data-snackbar="true"></div>
