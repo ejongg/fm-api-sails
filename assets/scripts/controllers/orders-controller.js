@@ -196,7 +196,7 @@ angular.module('fmApp')
 
     console.log(final_order);
 
-    io.socket.post('/customer_orders/add', {order : final_order});
+    // io.socket.post('/customer_orders/add', {order : final_order});
     io.socket.request($scope.socketOptions('post','/customer_orders/add',{"Authorization": "Bearer " + authService.getToken()},final_order), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
