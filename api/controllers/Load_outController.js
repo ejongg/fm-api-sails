@@ -83,54 +83,49 @@ module.exports = {
 					loadout.status = "In progress";
 
 					loadout.save(function (err, saved){
-						return new Promise(function (resolve, reject){
-							LoadOutService.getDetails(loadout)
-								.then(function (detailedLoadout){
-									sails.sockets.blast("loadout", {verb : "confirmed", data : detailedLoadout});
-									resolve();
-								})
-						});
+						LoadOutService.getDetails(loadout)
+							.then(function (detailedLoadout){
+								sails.sockets.blast("loadout", {verb : "confirmed", data : detailedLoadout});
+								resolve();
+							})
 					});
 				});
 
 			})
 
 			.then(function (){
-				Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date})
-					.then(function getDeliveries(deliveryTransactions){
-						return deliveryTransactions;
-					})
+				return Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date});
+			})
 
-					.each(function (transaction){
-						return new Promise(function (resolve, reject){
-							Delivery_products.find({dtrans_id : transaction.id}).populate('sku_id')
-								.then(function getDeliveryProducts(products){
-									return products;
-								})
+			.each(function (transaction){
+				return new Promise(function (resolve, reject){
+					Delivery_products.find({dtrans_id : transaction.id}).populate('sku_id')
+						.then(function getDeliveryProducts(products){
+							return products;
+						})
 
-								.each(function (product){
-									return LoadOutService.deductInInventory(product);
-								})
+						.each(function (product){
+							return LoadOutService.deductInInventory(product);
+						})
 
-								.then(function (){
-									resolve();
-								})
-						});
-					})
+						.then(function (){
+							resolve();
+						})
+				});
+			})
 
-					.each(function (transaction){
-						return new Promise(function (resolve, reject){
-							transaction.status = "On delivery";
+			.each(function (transaction){
+				return new Promise(function (resolve, reject){
+					transaction.status = "On delivery";
 
-							transaction.save(function(err, saved){
-								resolve();
-							});
-						});
-					})
+					transaction.save(function(err, saved){
+						resolve();
+					});
+				});
+			})
 
-					.then(function (){
-						return res.send("Load out confirmed", 200);
-					})
+			.then(function (){
+				return res.send("Load out confirmed", 200);
 			})
 	},
 
@@ -144,11 +139,16 @@ module.exports = {
 
 			.each(function (loadout){
 				return new Promise(function (resolve, reject){
-					LoadOutService.getDetails(loadout)
-						.then(function (detailedLoadout){
-							loadoutList.push(detailedLoadout);
-							resolve();
-						})
+					if(loadout.status == "Complete"){
+						resolve();
+					}else{
+						LoadOutService.getDetails(loadout)
+							.then(function (detailedLoadout){
+								loadoutList.push(detailedLoadout);
+								resolve();
+							})
+					}
+					
 				});
 			})
 

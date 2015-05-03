@@ -20,11 +20,51 @@ module.exports = {
 
 		var loadInId = null;
 
-		Load_in.create(loadin)
-			.then(function createLoadInProducts(createdLoadIn){
-				loadInId = createdLoadIn.id;
-				
-				return products;
+		Load_out.findOne({id : req.body.loadout})
+			.then(function (loadout){
+				return new Promise(function (resolve, reject){
+					loadout.status = "Complete";
+
+					loadout.save(function (err, saved){
+						resolve();
+					});
+				});
+			})
+
+			.then(function (){
+				return new Promise(function (resolve, reject){
+					Delivery_transactions.find({loadout_id : req.body.loadout})	
+						.then(function (deliveries){
+							return deliveries;
+						})
+
+						.each(function (delivery){
+							return new Promise(function (resolve, reject){
+								OrderService.completeOrders(delivery.id)
+									.then(function (){
+										delivery.status = "Complete";
+										delivery.save(function (err, saved){
+											resolve();
+										});
+									})
+							});							
+						})
+
+						.then(function (){
+							resolve();
+						})
+				});
+			})
+
+			.then(function (){
+				return new Promise(function (resolve, reject){
+					Load_in.create(loadin)
+						.then(function createLoadInProducts(createdLoadIn){
+							loadInId = createdLoadIn.id;
+							
+							resolve(products);
+						})
+				});
 			})
 
 			.each(function (product){
