@@ -35,6 +35,15 @@ module.exports = {
 		});
 	},
 
+	getLifespan : function(skuId){
+		return new Promise(function (resolve, reject){
+			Sku.findOne({id : skuId})
+				.then(function (sku){
+					resolve(sku.lifespan);
+				})
+		});
+	},
+
 	addDetails : function(item){
 		return new Promise(function (resolve, reject){
 			Sku.findOne({id : item.sku_id}).populate('prod_id')

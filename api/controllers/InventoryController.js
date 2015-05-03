@@ -18,7 +18,11 @@ module.exports = {
 			})
 
 			.each(function insertAgeToEachObject(item){
-				item.age = moment().from(item.createdAt, true);
+				SkuService.getLifespan(item.sku_id)
+					.then(function (lifespan){
+						var prodDate = moment(item.exp_date).subtract(lifespan, 'M').format('YYYY-MM-DD');
+						item.age = moment().from(prodDate, true);
+					})
 			})
 
 			.each(function (item){				
