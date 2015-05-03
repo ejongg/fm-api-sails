@@ -197,7 +197,7 @@
         </div>
 
     <!-- START OF TABLE --> 
-            <div class="form-group">
+            <div class="form-group" ng-hide= "noOrders">
               <label for="select" class="col-md-2">Number of rows:</label>
                 <div class="col-md-1">
                     <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
@@ -218,7 +218,7 @@
                         <th width="25%">Establishment Name&nbsp;
               <a href="" ng-click="sortCriteria = '-customer_id.establishment_name'" class="arrowlink"><i class="mdi-navigation-expand-more downa"></i></a>
               <a href="" ng-click="sortCriteria = '+customer_id.establishment_name'" class="arrowlink"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th width="25%">Date&nbsp;
+                        <th width="25%">Order Date&nbsp;
               <a href="" ng-click="sortCriteria = '-date_received'" class="arrowlink"><i class="mdi-navigation-expand-more downa"></i></a>
               <a href="" ng-click="sortCriteria = '+date_received'" class="arrowlink"><i class="mdi-navigation-expand-less upa"></i></a></th>
                         <th width="25%">Coke Agent name&nbsp;
@@ -241,12 +241,14 @@
                 </tbody>
             </table>
 
+             <div align="center">
              <dir-pagination-controls
                 max-size="7"
                 directional-links="true"
                 boundary-links="true"
             >
             </dir-pagination-controls>
+            </div>
         </div>
 
     <!-- END OF TABLE -->
@@ -276,7 +278,7 @@
 
                 <tbody>
                     <tr ng-repeat="product in orderProducts">
-                        <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name + " " + product.sku_id.size}}</td>
+                        <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
                         <td>{{product.cases}}</td>
                     </tr>
 

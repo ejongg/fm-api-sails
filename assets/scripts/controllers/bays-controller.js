@@ -67,6 +67,7 @@ angular.module('fmApp')
   /*getBayItems();*/
 
   $scope.showAddBayForm = function (data) {
+      
       $scope.addBayForm = data;
       if($scope.editOrDeleteBayForm === true) {
         $scope.showEditOrDeleteBayForm(false);

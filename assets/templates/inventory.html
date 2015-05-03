@@ -184,7 +184,7 @@
                 <tbody>
                     <tr dir-paginate="item in inventory | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
                         <td>{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
-                        <td>{{item.sku_name + " " + item.size}}</td>
+                        <td>{{item.sku_name}}</td>
                         <td>{{item.exp_date}}</td>
                         <td>{{item.age}}</td>
                         <td>{{item.physical_count}}</td>
