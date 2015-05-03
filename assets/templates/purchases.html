@@ -220,10 +220,30 @@
         <table  class="table table-striped table-hover " ng-hide="noPurchase || addPurchaseForm">
             <thead>
                 <tr>
-                    <th>Purchase #</th>
-                    <th>Date Received</th>
-                    <th>Total Cost</th>
-                    <th>User</th>
+                    <th>Purchase # 
+                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+
+                    <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                    </th>
+
+            
+                    <th>Date Received
+                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+
+                    <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                    </th>
+
+                    <th>Total Cost
+                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+
+                    <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                    </th>
+
+                    <th>User
+                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+
+                     <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>    
+                    </th>
                 </tr>
             </thead>
 
@@ -279,7 +299,7 @@
 
             <tbody>
                 <tr ng-repeat="product in purchaseProducts">
-                    <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name + " " + product.sku_id.size}}</td>
+                    <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
                     <td>{{product.cases}}</td>
                     <td>{{product.costpercase}}</td>
                     <td>{{product.discountpercase}}</td>
