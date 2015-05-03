@@ -153,19 +153,8 @@ module.exports = {
 			function getTotalExpenses(cb){
 				var totalExpenses = 0;
 
-				Bad_orders.find({date : date})
-					.then(function (badOrders){
-						return badOrders;
-					})
-
-					.each(function (badOrder){
-						totalExpenses = totalExpenses + badOrder.expense;
-					})
-
-					.then(function (){
-						dssr.expenses = totalExpenses;
-						cb();
-					});
+				dssr.expenses = totalExpenses;
+				cb();
 			},
 
 			function getEmpties(cb){
