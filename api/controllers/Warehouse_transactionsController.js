@@ -35,10 +35,11 @@ module.exports = {
 							cases : product.cases
 						};
 
-						Returns_products.create(item).exec(function(err, created_return_item){
-							if(err)
-								console.log(err);
-						});
+						Returns_products.create(item)
+							.then(function (){
+								return EmptiesService.put(product.sku_id, product.bottlespercase, product.bottles, product.cases);
+							});
+
 					});
 				}
 				

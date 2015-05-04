@@ -14,7 +14,6 @@ module.exports = {
 						order.status = "Complete";
 
 						order.save(function (err, saved){
-							console.log("Hello");
 							resolve();
 						});
 					});
