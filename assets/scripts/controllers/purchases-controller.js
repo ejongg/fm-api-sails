@@ -88,10 +88,15 @@ angular.module('fmApp')
       
     }
     $scope.addPurchaseForm = data;
+
     if(data === false){
       clearForm();
       $scope.purchases = [];
       $scope.totalAmount = 0;
+    }
+
+    if($scope.itemExistingError === true){
+      $scope.showItemExistingError(false)
     }
   };
 
@@ -148,6 +153,7 @@ angular.module('fmApp')
     if($scope.itemExistingError === true){
       $scope.showItemExistingError(false);
     }
+  console.log(purchase.sku.pricepercase);
 
     var purchaseInfo = {
       "sku_id" : purchase.sku.id,
@@ -157,9 +163,9 @@ angular.module('fmApp')
       "bay" : purchase.bay.bay_name,
       "prod_date" : $scope.formatDate(purchase.prod_date),
       "cases" : purchase.cases,
-      "costpercase" : purchase.cost,
+      "costpercase" : purchase.sku.pricepercase,
       "discountpercase" : purchase.discount,
-      "amount" : purchase.cases * (purchase.cost - purchase.discount),
+      "amount" : purchase.cases * (purchase.sku.pricepercase - purchase.discount),
       "lifespan" : purchase.sku.lifespan
     };
     
