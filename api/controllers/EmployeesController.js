@@ -12,20 +12,34 @@ module.exports = {
 		    emp_fname : req.body.emp_fname,
 			emp_lname : req.body.emp_lname,
 			position : req.body.position,
-			office : req.body.office
-		}
+			office : req.body.office,
+			hire_date : req.body.hire_date,
+			end_contract : req.body.end_contract,
+			status : req.body.status
+		};
 
-		Employees.findOne(employee)
-			.then(function(found_employee){
-				if(found_employee){
-					return res.send("You are entering a duplicate entry");
+		var findEmployee = {
+		    emp_fname : req.body.emp_fname,
+			emp_lname : req.body.emp_lname,
+			position : req.body.position,
+			office : req.body.office,	
+		};
+
+		Employees.findOne(findEmployee)
+			.then(function (foundEmployee){
+
+				if(foundEmployee){
+					return res.send("Sorry! Employee already exist");
 				}else{
-					Employees.create(employee).exec(function(err, createdEmployee){
-						sails.sockets.blast("employees", {verb : "created", data : createdEmployee});
-						return res.send(201);
-					});
+
+					Employees.create(employee)
+						.then(function(createdEmployee){
+							sails.sockets.blast("employees", {verb : "created", data : createdEmployee});
+							return res.send(201);
+						});
 				}
 			})
+
 	},
 
 	list : function(req, res){

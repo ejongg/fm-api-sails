@@ -31,6 +31,18 @@ module.exports = {
       type : "string",
       required : true
     },
+    hire_date : {
+      type : "string",
+      required : true
+    },
+    end_contract : {
+      type : "string",
+      required : true
+    },
+    status : {
+      type : "string",
+      required : true
+    },
     truck_id : {
       model : "trucks"
     }
