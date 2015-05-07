@@ -99,7 +99,7 @@
                     <div class="form-group">
                         <label class="col-md-4">Hired Date</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputHiredDate" class="form-control" ng-model="" required>
+                        <input type="date" name="inputHiredDate" class="form-control" ng-model="employee.hire_date" required>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputHiredDate.$invalid && employeeForm.inputHiredDate.$dirty"> Hired date required! </strong>
                         </div>
@@ -108,7 +108,7 @@
                     <div class="form-group">
                         <label class="col-md-4">End of Contract</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputEndContract" class="form-control" ng-model="" required>
+                        <input type="date" name="inputEndContract" class="form-control" ng-model="employee.end_contract" required>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputEndContract.$invalid && employeeForm.inputEndContract.$dirty"> End of contract required! </strong>
                         </div>
@@ -117,9 +117,9 @@
                     <div class="form-group">
                         <label class="col-md-4">Status</label> 
                         <div class="col-md-12">
-                        <select class="form-control" id="selectType" ng-model="">
-                                <option ng-repeat="" value=""></option>
-                            </select>
+                        <select class="form-control" id="selectType" ng-model="employee.status" ng-init="employee.status = statuses[0]">
+                                <option ng-repeat="status in statuses" value="{{status}}">{{status}}</option>
+                        </select>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputStatus.$invalid && employeeForm.inputStatus.$dirty"> Status required! </strong>
                         </div>
@@ -213,7 +213,7 @@
                     <div class="form-group">
                         <label class="col-md-4">Hired Date</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputHiredDate" class="form-control" ng-model="" required>
+                        <input type="date" name="inputHiredDate" class="form-control" ng-model="employeeEdit.hire_date" required>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputHiredDate.$invalid && employeeForm.inputHiredDate.$dirty"> Hired date required! </strong>
                         </div>
@@ -222,7 +222,7 @@
                     <div class="form-group">
                         <label class="col-md-4">End of Contract</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputEndContract" class="form-control" ng-model="employee.office" required>
+                        <input type="date" name="inputEndContract" class="form-control" ng-model="employeeEdit.end_contract" required>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputEndContract.$invalid && employeeForm.inputEndContract.$dirty"> End of contract required! </strong>
                         </div>
@@ -231,8 +231,8 @@
                     <div class="form-group">
                         <label class="col-md-4">Status</label> 
                         <div class="col-md-12">
-                        <select class="form-control" id="selectType" ng-model="">
-                                <option ng-repeat="" value=""></option>
+                        <select class="form-control" id="selectType" ng-model="employeeEdit.status">
+                                <option ng-repeat="status in statuses" value="{{status}}">{{status}}</option>
                             </select>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputStatus.$invalid && employeeForm.inputStatus.$dirty"> Status required! </strong>
@@ -283,7 +283,7 @@
                     <div class="form-group">
                         <label class="col-md-4">Hired Date</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputHiredDate" class="form-control" ng-model="" disabled>
+                        <input type="date" name="inputHiredDate" class="form-control" ng-model="employeeDelete.hire_date" disabled>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputHiredDate.$invalid && employeeForm.inputHiredDate.$dirty"> Hired date required! </strong>
                         </div>
@@ -292,7 +292,7 @@
                     <div class="form-group">
                         <label class="col-md-4">End of Contract</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputEndContract" class="form-control" ng-model="employee.office" disabled>
+                        <input type="date" name="inputEndContract" class="form-control" ng-model="employeeDelete.end_contract" disabled>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputEndContract.$invalid && employeeForm.inputEndContract.$dirty"> End of contract required! </strong>
                         </div>
@@ -301,8 +301,8 @@
                     <div class="form-group">
                         <label class="col-md-4">Status</label> 
                         <div class="col-md-12">
-                        <select class="form-control" id="selectType" ng-model="" disabled>
-                                <option ng-repeat="" value=""></option>
+                        <select class="form-control" id="selectType" ng-model="employeeDelete.status" disabled>
+                                <option ng-repeat="status in statuses" value="{{status}}">{{status}}</option>
                             </select>
 
                         <strong class="fbackMsg" ng-show="employeeForm.inputStatus.$invalid && employeeForm.inputStatus.$dirty"> Status required! </strong>
@@ -384,9 +384,9 @@
                         <td>{{employee.emp_lname}}</td>
                         <td>{{employee.office}}</td>
                         <td>{{employee.position}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{employee.hire_date}}</td>
+                        <td>{{employee.end_contract}}</td>
+                        <td>{{employee.status}}</td>
                     </tr>
 
                 </tbody>

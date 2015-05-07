@@ -3,13 +3,23 @@
 angular.module('fmApp')
 .controller('EmployeesCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
 	$scope.positions = ['Driver','Checker','Delivery Sales Personnel','Delivery Helper', 'Encoder', 'Cashier'];
+  $scope.statuses = ['Contractual','Provisional','Regular'];
 	$scope.employees = [];
 
   $scope.noEmployees = false;
 
 	$scope.employee = {};
+  $scope.employee.hire_date = new Date();
+  $scope.employee.end_contract = new Date();
+
   $scope.employeeEdit = {};
+  $scope.employeeEdit.hire_date = new Date();
+  $scope.employeeEdit.end_contract = new Date();
+
   $scope.employeeDelete = {};
+  $scope.employeeDelete.hire_date = new Date();
+  $scope.employeeDelete.end_contract = new Date();
+
   $scope.copiedEmployee = {};
 
 	$scope.addEmployeeForm = false;
@@ -69,17 +79,14 @@ angular.module('fmApp')
       $scope.showAddEmployeeForm(false);
     }
     $scope.copiedEmployee = angular.copy(employee);
-    $scope.employeeEdit.id = $scope.copiedEmployee.id;
-    $scope.employeeEdit.emp_fname = $scope.copiedEmployee.emp_fname;
-    $scope.employeeEdit.emp_lname = $scope.copiedEmployee.emp_lname;
-    $scope.employeeEdit.office = $scope.copiedEmployee.office;
-    $scope.employeeEdit.position = $scope.copiedEmployee.position;
-    
-    $scope.employeeDelete.id = $scope.copiedEmployee.id;
-    $scope.employeeDelete.emp_fname = $scope.copiedEmployee.emp_fname;
-    $scope.employeeDelete.emp_lname = $scope.copiedEmployee.emp_lname;
-    $scope.employeeDelete.office = $scope.copiedEmployee.office;
-    $scope.employeeDelete.position = $scope.copiedEmployee.position;
+
+    $scope.employeeEdit = $scope.copiedEmployee;
+    $scope.employeeEdit.hire_date = new Date($scope.copiedEmployee.hire_date);
+    $scope.employeeEdit.end_contract = new Date($scope.copiedEmployee.end_contract);
+
+    $scope.employeeDelete = $scope.copiedEmployee;
+    $scope.employeeDelete.hire_date = new Date($scope.copiedEmployee.hire_date);
+    $scope.employeeDelete.end_contract = new Date($scope.copiedEmployee.end_contract);
 
     $scope.showEditOrDeleteEmployeeForm(true);
   };
@@ -93,6 +100,8 @@ angular.module('fmApp')
   }; 
 
 	$scope.addEmployee = function (employee) {
+    employee.hire_date = $scope.formatDate(employee.hire_date );
+    employee.end_contract = $scope.formatDate(employee.end_contract);
     io.socket.request($scope.socketOptions('post','/employees/add',{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
       console.log('Sails responded with post employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
