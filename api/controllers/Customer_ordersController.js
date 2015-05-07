@@ -55,7 +55,24 @@ module.exports = {
 					cases : order.cases
 				};
 
-				return Customer_order_products.create(orderProduct);
+				return new Promise(function (resolve, reject){
+					/* Change 999 to bottlespercase */
+
+					Customer_order_products.create(orderProduct)
+						.then(function (){
+							return SkuService.getCompanyName(order.sku_id);
+						})
+
+						.then(function (company){
+							if(company == "SMB"){
+								return InventoryService.deduct(order.sku_id, order.bottles, order.cases, 999);
+							}
+						})
+
+						.then(function (){
+							resolve();
+						})
+				});
 			})
 
 			.then(function (){
