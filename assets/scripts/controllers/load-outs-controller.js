@@ -32,11 +32,11 @@ angular.module('fmApp')
     $http.get(httpHost + '/customer-orders/list').success( function (data) {
 
       if(data.length !== 0){
-        $scope.customerOrdersAvailable = data;
-        $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+         $scope.customerOrdersAvailable = data;
+         $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
          $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
-        console.log($scope.customerOrdersAvailable);
+        console.log($scope.ordersAvailableList);
       }else{
         $scope.noCustomerOrdersAvailable = true;
       }
@@ -119,16 +119,32 @@ angular.module('fmApp')
     return "Truck " + index;
   };
 
-  $scope.addAvaiableCustomer = function (data){
+  $scope.addAvaiableCustomer = function (data,index){
     console.log("Dropped");
     console.log(data);
-    for (var i = 0; i <= $scope.loadOut.orders.length; i++) {
-      if(_.findIndex($scope.loadOut.orders[i].order,{ 'id': data.id}) === -1 ){
-        $scope.loadOut.orders.push(data);
-      }else{
-        $scope.showExistingAddressInRouteError(true,data.address_name);
-      }
-    };
+    $scope.loadOut.orders.push(data);
+
+    console.log("Find Index");
+    var index = _.findIndex($scope.customerOrdersAvailable,{'id': data.id});
+    console.log(index);
+    
+    console.log("Splice");
+    $scope.customerOrdersAvailable.splice(index,1);
+    console.log($scope.customerOrdersAvailable.length);
+    $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+    $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
+
+    if($scope.customerOrdersAvailable.length === 0){
+      $scope.noCustomerOrdersAvailable = true;
+    }
+    // for (var i = 0; i <= $scope.loadOut.orders.length; i++) {
+    //   if(_.findIndex($scope.loadOut.orders[i].order,{ 'id': data.id}) === -1 ){
+    //     $scope.loadOut.orders.push(data);
+    //   }else{
+    //     $scope.showExistingAddressInRouteError(true,data.address_name);
+    //   }
+    // };
+
    
   };
 
