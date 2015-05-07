@@ -5,6 +5,7 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
  var Promise = require('bluebird');
+ var moment = require('moment');
 
 module.exports = {
 	add : function(req, res){
@@ -42,7 +43,25 @@ module.exports = {
 
 	},
 
-	list : function(req, res){
+	listAll : function (req, res){
+		var employeeList = [];
+
+		Employees.find()
+			.then(function (employees){
+				return employees;
+			})
+
+			.each(function (employee){
+				employee.duration = moment().from(employee.hire_date, true);
+				employeeList.push(employee);
+			})
+
+			.then(function () {
+				return res.send(employeeList);
+			})
+	},
+
+	list : function (req, res){
 		var position = req.query.position;
 
 		var query;
@@ -64,7 +83,7 @@ module.exports = {
 			})	
 	},
 
-	listForEdit : function(req, res){
+	listForEdit : function (req, res){
 		var truckId = req.query.truck;
 		var position = req.query.position;
 
