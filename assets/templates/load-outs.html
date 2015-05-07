@@ -46,63 +46,7 @@
 
      <!-- LEFT PANEL -->
 
-
-     <div class="loadouthide">
-
-    <div class="col-md-6">
-
-    <div ng-hide="noCustomerOrders">
-      <h4> CUSTOMERS ORDERS </h4>
-      <div class="panel panel-body">
-        <br>
-        <br>
-
-      <div ng-show="noCustomerOrders"  align="center">
-              <h3><strong>NO CUSTOMER ORDERS! </strong></h3>
-    </div>    
-        
-                  
-    <table ng-hide="noCustomerOrders" class="table table-condensed" style="border-collapse: collapse;">
-            
-                  <thead>
-                      <tr>
-                          <th>Customer Establishment</th>
-                          <th>Distance</th>
-                  </thead>
-                  
-                  <tbody>
-
-                      <tr dir-paginate="order in customerOrders | filter: search | orderBy: sortCriteria | itemsPerPage: 10 " style="cursor:button;">
-                          <td class="routesText">{{order.customer_id.establishment_name}}</td>
-                          <td class="routesText">{{order.customer_id.distance}}</td>
-                      </tr>
-
-                  </tbody>
-
-          </table>
-
-        </div>
-
-          <div align="center">
-          <dir-pagination-controls
-            max-size="7"
-            directional-links="true"
-            boundary-links="true"
-          >
-
-          </dir-pagination-controls>
-        </div>
-
-        </div>
-
-    </div>
-    </div>
-
-
-
-
-
-    <div class="col-md-6"><div class="loadouthide">
+    <div class="col-md-12"><div class="loadouthide">
       <h4>LOAD OUT </h4>
               <div class="panel panel-body">
 

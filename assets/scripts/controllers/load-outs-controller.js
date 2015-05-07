@@ -4,7 +4,6 @@ angular.module('fmApp')
 .controller('LoadOutsCtrl',['$scope', '_', '$http', 'httpHost','authService','userService','$filter', function($scope, _, $http, httpHost, authService,userService,$filter){
 	
   $scope.loadOutNumbers = [1,2,3,4,5];
-  $scope.customerOrders = [];
   $scope.customerOrdersAvailable = [];
   $scope.loadOuts = [];
   $scope.trucks = [];
@@ -29,23 +28,6 @@ angular.module('fmApp')
 
   $scope.sortCriteria = '';
   
-
-  var getCustomerOrders = function () {
-    $http.get(httpHost + '/customer_orders').success( function (data) {
-     
-      if(data.length !== 0){
-        $scope.customerOrders = data;
-        console.log("Customer Orders:");
-        console.log($scope.customerOrders);
-      }else{
-        $scope.noCustomerOrders = true;
-      }
-
-    }).error(function (err) {
-      $scope.checkError(err);
-    });
-  };
-
   var getCustomerOrdersAvailable = function () {
     $http.get(httpHost + '/customer-orders/list').success( function (data) {
 
@@ -95,7 +77,6 @@ angular.module('fmApp')
     });
   };
 
-  getCustomerOrders();
   getCustomerOrdersAvailable();
   getLoadOuts();
   getTrucks();
@@ -141,11 +122,14 @@ angular.module('fmApp')
   $scope.addAvaiableCustomer = function (data){
     console.log("Dropped");
     console.log(data);
-    if(_.findIndex($scope.loadOut.orders,{ 'id': data.id}) === -1 ){
-      $scope.loadOut.orders.push(data);
-    }else{
-      $scope.showExistingAddressInRouteError(true,data.address_name);
-    }
+    for (var i = 0; i <= $scope.loadOut.orders.length; i++) {
+      if(_.findIndex($scope.loadOut.orders[i].order,{ 'id': data.id}) === -1 ){
+        $scope.loadOut.orders.push(data);
+      }else{
+        $scope.showExistingAddressInRouteError(true,data.address_name);
+      }
+    };
+   
   };
 
   $scope.editAvailableCustomer = function (data,loadout_no, loadout_id,truck_id){
