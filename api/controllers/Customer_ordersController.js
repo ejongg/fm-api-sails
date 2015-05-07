@@ -79,7 +79,8 @@ module.exports = {
 
 					Customer_order_products.find({order_id : order.id}).populate('sku_id')
 						.then(function getProducts(products){
-							ordersWithProducts.push({order : order, products : products});
+							order.productslist = products;
+							ordersWithProducts.push(order);
 							cb();							
 						});					
 

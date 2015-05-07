@@ -11,7 +11,7 @@ module.exports = {
 
 				.each(function (order){
 					return new Promise(function (resolve, reject){
-						order.status = "Complete";
+						order.status = "Delivered";
 
 						order.save(function (err, saved){
 							resolve();
