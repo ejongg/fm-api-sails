@@ -33,7 +33,7 @@ module.exports = {
 
 			Bad_order_details.create(badOrderItem)
 				.then(function (createdProduct){
-					return InventoryService.badOrdersDeduct(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.bay_id);
+					return InventoryService.deductInSpecificBay(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.bay_id);
 				})
 
 				.then(function (){

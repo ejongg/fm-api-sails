@@ -44,8 +44,8 @@ module.exports = {
 
 			.each(function (product){
 				return SkuService.getProductName(product.sku_id.id)
-					.then(function (brand_name){
-						product.sku_id.brand_name = brand_name;
+					.then(function (brandName){
+						product.sku_id.brand_name = brandName;
 						badOrdersList.push(product);
 					})
 			})
