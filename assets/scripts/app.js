@@ -219,8 +219,8 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
         url:'/reports/expenses',
         views: {
           'mainContent': {
-            templateUrl: 'templates/expenses.html'
-            // controller:'IncompleteCtrl'
+            templateUrl: 'templates/expenses.html',
+             controller:'ExpensesCtrl'
           }
         }  
       })
