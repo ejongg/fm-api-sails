@@ -49,7 +49,7 @@
             <form class="form-horizontal" name="employeeForm" ng-submit="addEmployee(employee)" novalidate>
                 <fieldset>
 
-                    <div class="alert alert-warning" ng-show="(employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid) || (employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty) || (employeeForm.inputOfficeName.$dirty && employeeForm.inputOfficeName.$invalid)">
+                    <div class="alert alert-warning" ng-show="(employeeForm.inputFirstName.$dirty && employeeForm.inputFirstName.$invalid) || (employeeForm.inputLastName.$invalid && employeeForm.inputLastName.$dirty) || (employeeForm.inputOfficeName.$dirty && employeeForm.inputOfficeName.$invalid)" >
 
                     <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div>
 
@@ -79,7 +79,6 @@
                     </div>
 
                     <div class="form-group">
-
                         <label for="inputLastName" class="col-md-4">Office</label> 
                         <div class="col-md-12">
                         <input type="text" name="inputOfficeName" class="form-control" placeholder="Enter office name." ng-model="employee.office" required>
@@ -96,6 +95,36 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">Hired Date</label> 
+                        <div class="col-md-12">
+                        <input type="date" name="inputHiredDate" class="form-control" ng-model="" required>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputHiredDate.$invalid && employeeForm.inputHiredDate.$dirty"> Hired date required! </strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">End of Contract</label> 
+                        <div class="col-md-12">
+                        <input type="date" name="inputEndContract" class="form-control" ng-model="" required>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputEndContract.$invalid && employeeForm.inputEndContract.$dirty"> End of contract required! </strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">Status</label> 
+                        <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="">
+                                <option ng-repeat="" value=""></option>
+                            </select>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputStatus.$invalid && employeeForm.inputStatus.$dirty"> Status required! </strong>
+                        </div>
+                    </div>
+
 
                     <div class="form-group rightalign">
                         <button type="submit" class="btn btn-primary" ng-disabled="employeeForm.$invalid">Add</button>
@@ -125,7 +154,10 @@
           <form class="form-horizontal" name="editEmployeeForm" ng-submit="editEmployee(employeeEdit)" novalidate>
                 <fieldset>
                         
-                        <div class="alert alert-warning" ng-show="(editEmployeeForm.inputFirstName.$dirty && editEmployeeForm.inputFirstName.$invalid) || (editEmployeeForm.inputLastName.$invalid && editEmployeeForm.inputLastName.$dirty) || (editEmployeeForm.inputOffice.$invalid && editEmployeeForm.inputOffice.$dirty)">
+                        <div class="alert alert-warning" ng-show="(editEmployeeForm.inputFirstName.$dirty && editEmployeeForm.inputFirstName.$invalid) || (editEmployeeForm.inputLastName.$invalid && editEmployeeForm.inputLastName.$dirty) || (editEmployeeForm.inputOffice.$invalid && editEmployeeForm.inputOffice.$dirty) || 
+                        (employeeForm.inputHiredDate.$dirty && employeeForm.inputHiredDate.$invalid) || 
+                        (employeeForm.inputEndContract.$dirty && employeeForm.inputEndContract.$invalid) || 
+                        (employeeForm.inputStatus.$dirty && employeeForm.inputStatus.$invalid)">
 
                         <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div>
 
@@ -178,6 +210,35 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="col-md-4">Hired Date</label> 
+                        <div class="col-md-12">
+                        <input type="date" name="inputHiredDate" class="form-control" ng-model="" required>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputHiredDate.$invalid && employeeForm.inputHiredDate.$dirty"> Hired date required! </strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">End of Contract</label> 
+                        <div class="col-md-12">
+                        <input type="date" name="inputEndContract" class="form-control" ng-model="employee.office" required>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputEndContract.$invalid && employeeForm.inputEndContract.$dirty"> End of contract required! </strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">Status</label> 
+                        <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="">
+                                <option ng-repeat="" value=""></option>
+                            </select>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputStatus.$invalid && employeeForm.inputStatus.$dirty"> Status required! </strong>
+                        </div>
+                    </div>
+
                     <div class="form-group rightalign">
                         <button type="submit" class="btn btn-primary" ng-disabled="editEmployeeForm.$invalid">Save</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteEmployeeForm(false)">Cancel</button> 
@@ -216,6 +277,35 @@
                             <select class="form-control" id="selectType" ng-model="employeeDelete.position" disabled>
                                 <option ng-repeat="position in positions" value="{{position}}">{{position}}</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">Hired Date</label> 
+                        <div class="col-md-12">
+                        <input type="date" name="inputHiredDate" class="form-control" ng-model="" disabled>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputHiredDate.$invalid && employeeForm.inputHiredDate.$dirty"> Hired date required! </strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">End of Contract</label> 
+                        <div class="col-md-12">
+                        <input type="date" name="inputEndContract" class="form-control" ng-model="employee.office" disabled>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputEndContract.$invalid && employeeForm.inputEndContract.$dirty"> End of contract required! </strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4">Status</label> 
+                        <div class="col-md-12">
+                        <select class="form-control" id="selectType" ng-model="" disabled>
+                                <option ng-repeat="" value=""></option>
+                            </select>
+
+                        <strong class="fbackMsg" ng-show="employeeForm.inputStatus.$invalid && employeeForm.inputStatus.$dirty"> Status required! </strong>
                         </div>
                     </div>
 
