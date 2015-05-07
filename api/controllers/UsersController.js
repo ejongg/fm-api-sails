@@ -55,7 +55,7 @@ module.exports = {
 			})
 	},
 	
-	changepassword : function(req, res){
+	changePassword : function(req, res){
 		var new_password = req.body.new_password;
 		var old_password = req.body.old_password;
 		var user_id = req.body.user_id;
@@ -86,6 +86,29 @@ module.exports = {
 					}
 					
 				});
+			})
+	},
+
+	resetPassword : function (req, res){
+		var userId = req.body.user;
+		var temp = Math.random().toString(36).slice(10);
+
+		Users.findOne({id : userId})
+			.then(function (user){
+
+				if(user){
+					bcrypt.genSalt(10, function (err, salt){
+						bcrypt.hash(temp, salt, null, function (err, hashed){
+							user.password = hashed;
+							user.save(function (err, saved){});
+
+							return res.send(temp);
+						});
+					});
+				}else{
+					return res.send("User not found");
+				}
+
 			})
 	}
 };
