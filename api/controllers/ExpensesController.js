@@ -37,7 +37,7 @@ module.exports = {
 								return Inventory.deductInSpecificBay(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.bay_id);
 							})
 
-							then(function (){
+							.then(function (){
 								resolve();
 							})
 					});
