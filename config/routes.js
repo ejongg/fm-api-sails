@@ -26,7 +26,8 @@ module.exports.routes = {
 		changepassword - for changing password of users
 	*/
 	'POST /users/login' : 'Users.login',
-	'POST /users/changepassword' : 'Users.changepassword',
+	'POST /users/changepassword' : 'Users.changePassword',
+	'POST /users/resetpassword' : 'Users.resetPassword',
 
 	/* 	BAD ORDERS
 		add - for creating bad orders
