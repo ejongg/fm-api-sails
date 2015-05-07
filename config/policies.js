@@ -30,9 +30,7 @@ module.exports.policies = {
 
   UsersController : {
     login : 'alreadyLoggedIn', 
-
     mobileLogin : 'alreadyLoggedIn',
-
     create : 'disableTokenAuth'
   },
 
@@ -58,6 +56,10 @@ module.exports.policies = {
 
   Customer_ordersController : {
     add : 'SMBInventoryPolicy'
+  },
+
+  ExpensesController : {
+    add : 'AddExpensePolicy'
   }
 
   /***************************************************************************

@@ -10,10 +10,7 @@ module.exports = function(req, res, next){
 		});
 	};
 
-	getOrders()
-		.then(function (orders){
-			return orders;
-		})
+	return getOrders()
 
 		.each(function (order){
 			return new Promise(function (resolve, reject){
@@ -41,6 +38,7 @@ module.exports = function(req, res, next){
 													notAvailable.push(order.sku);
 													resolve();
 												}else{
+													console.log(order);
 													resolve();
 												}
 
@@ -55,6 +53,8 @@ module.exports = function(req, res, next){
 								}
 							});
 							
+						}else{
+							resolve();
 						}
 					})
 			});
