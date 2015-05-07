@@ -212,11 +212,13 @@ angular.module('fmApp')
       "bottlespercase": sku.bottlespercase,
       "weightpercase": sku.weightpercase,
       "lifespan": sku.lifespan,
-      "prod_id": prod_id
+      "prod_id": prod_id,
+      "id": sku.id
     };
     console.log(newInfo);
+    console.log(sku.id);
 
-    io.socket.request($scope.socketOptions('put','/sku/edit/'+sku.id,{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/sku/edit',{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
       console.log('Sails responded with edit sku: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
