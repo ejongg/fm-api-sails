@@ -100,8 +100,9 @@ angular.module('fmApp')
   }; 
 
 	$scope.addEmployee = function (employee) {
-    employee.hire_date = $scope.formatDate(employee.hire_date );
+    employee.hire_date = $scope.formatDate(employee.hire_date);
     employee.end_contract = $scope.formatDate(employee.end_contract);
+    console.log(employee);
     io.socket.request($scope.socketOptions('post','/employees/add',{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
       console.log('Sails responded with post employee: ', body);
       console.log('and with status code: ', JWR.statusCode);

@@ -152,7 +152,8 @@ angular.module('fmApp')
       "sku_id" : order.sku.id,
       "sku" : order.sku.sku_name + " " + order.sku.size,
       "cases" : order.cases,
-      "price" : order.sku.pricepercase * order.cases
+      "price" : order.sku.pricepercase * order.cases,
+      "bottlespercase": order.sku.bottlespercase
     };
 
     console.log(order);
