@@ -4,9 +4,14 @@ angular.module('fmApp')
 .controller('ExpensesCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
   $scope.expenseType = ['Breakage', 'Spoilage', 'Utilities'];
   $scope.skuList = [];
+
   $scope.expense = {};
-  $scope.expense.products= {};
+  $scope.expense.products = {};
+  $scope.expenseEdit = {};
+
   $scope.noSKU = false;
+
+  $scope.addExpenseForm = false;
 
 
   var getSKUAvailable = function () {
@@ -26,8 +31,20 @@ angular.module('fmApp')
 
   getSKUAvailable();
 
+  $scope.showAddExpenseForm = function (data) {
+    $scope.addExpenseForm = data;
+  };
+
   $scope.combine = function (sku){
     return sku.prod_id.brand_name + ' ' + sku.sku_name;
+  };
+
+  $scope.addExpense = function (expense) {
+    console.log(expense);
+  };
+
+  $scope.editExpense = function (expense) {
+    console.log(expense);
   };
 
 }]);

@@ -16,17 +16,17 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search">
-                                    <input name="q" ng-model="" type="text" size="50" placeholder="SEARCH" ng-hide=""/>
+                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide=""/>
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <a ng-hide=""  ng-click="">
+                            <a ng-hide="noSKU"  ng-click="showAddExpenseForm(true)">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD EXPENSE</h6></a>
 
                         </li>
                         <li>
-                            <a ng-click="" ng-hide="">
+                            <a ng-click="">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -44,13 +44,13 @@
 
     <!-- LEFT PANEL -->
 <!--     <div ng-class="addExpenseForm ? 'col-xs-12 col-md-4' : ''"> -->
-  <div class="col-md-4">
+  <div class="col-md-4" ng-show="addExpenseForm">
       <div class="panel panel-left">
         <div class="panel-body">
           <div ng-show="!noExistingProduct">
     
             <h4><i class="mdi-content-add-circle"></i> ADD EXPENSES</h4>
-            <form class="form-horizontal" name="expenseForm" ng-submit="" novalidate>
+            <form class="form-horizontal" name="expenseForm" ng-submit="addExpense(expense)" novalidate>
                 <fieldset>
 
             
@@ -107,8 +107,8 @@
                     <!-- ADD BUTTON -->
 
                         <div class="icon-preview">
-                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="" >Cancel</button>
-                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="">Add</button>
+                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showAddExpenseForm(false)" >Cancel</button>
+                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseForm.$invalid">Add</button>
 
                           <br>
                         </div>
@@ -125,91 +125,9 @@
 
         </div>
       </div>
+</div>
 
-
-   <!--  <div ng-class="editOrDeleteExpenseForm ? 'col-xs-12 col-md-3' : ''"> -->
-      <div class="panel panel-left" ng-show="editOrDeleteExpenseForm">
-
-        <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <a ng-click="setEditExpenseTab(true)"><i class="mdi-editor-mode-edit"/>&nbsp;</a>Edit Expenses</a>
-                        </li>
-                      <!--   <li>
-                            <a ng-click="setEditExpenseTab(false)">
-                            <i class="mdi-action-delete"/>&nbsp;Delete Expe</a>
-                        </li> -->
-                    </ul>
-
-        <div class="panel-body col-md-3" ng-show="editExpenseTab">
-
-            <h4><i class="mdi-image-edit"></i> EDIT SAFE KEEPING UNIT</h4>
-            <form class="form-horizontal" name="editExpenseForm" ng-submit="" novalidate>
-                <fieldset>
-                        
-                    <div class="form-group">
-                        <label for="inputBrandName" class="col-md-12">
-                        Expense</label>
-                        <div class="col-md-12">
-                          <select class="form-control" ng-model="" ng-options="">
-                          </select>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="inputSize" class="col-md-12">
-                        SKU Name</label> 
-
-                        <div class="col-md-6">
-                          <select class="form-control" ng-model="" >
-                            <option ng-repeat="unit in units" value="{{unit}}" ></option>
-                          </select>
-                        </div>
-
-                    <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                        Cases</label> 
-                        <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="" required>
-
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                       Bottles</label> 
-                       <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter no. of bottle" ng-model="" required>
-
-                       </div>
-                    </div>
-
-                     <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                        Amount</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter amount." ng-model="" required>
-                             
-                        </div>
-                        
-                       
-                    </div>
-
-                    <!-- ADD BUTTON -->
-
-                        <div class="icon-preview">
-                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="" >Cancel</button>
-                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="">Save</button>
-
-                          <br>
-                        </div>
-
-
-                </fieldset>
-            </form>
-        </div>
-
-
-      </div>
-    </div>
+  
 
     <!-- START OF TABLE -->
  <!--    <div ng-class="addExpenseForm || editOrDeleteExpenseForm ? 'col-xs-12 col-md-8' : ''"> -->
@@ -286,12 +204,7 @@
             </table>
 
             <div align="center">
-            <dir-pagination-controls
-                max-size="7"
-                directional-links="true"
-                boundary-links="true"
-            >
-            </dir-pagination-controls>
+            
       </div></div>
 
       <!-- END OF TABLE -->

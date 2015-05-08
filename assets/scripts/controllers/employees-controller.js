@@ -100,10 +100,20 @@ angular.module('fmApp')
   }; 
 
 	$scope.addEmployee = function (employee) {
-    employee.hire_date = $scope.formatDate(employee.hire_date);
-    employee.end_contract = $scope.formatDate(employee.end_contract);
-    console.log(employee);
-    io.socket.request($scope.socketOptions('post','/employees/add',{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
+
+    var employeeInfo = {
+      "emp_fname": employee.emp_fname,
+      "emp_lname": employee.emp_lname,
+      "office": employee.office,
+      "position": employee.position,
+      "hire_date":  $scope.formatDate(employee.hire_date),
+      "end_contract": $scope.formatDate(employee.end_contract),
+      "status": employee.status
+    };
+
+    console.log(employeeInfo);
+
+    io.socket.request($scope.socketOptions('post','/employees/add',{"Authorization": "Bearer " + authService.getToken()},employeeInfo), function (body, JWR) {
       console.log('Sails responded with post employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
