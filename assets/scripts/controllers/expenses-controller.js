@@ -100,7 +100,7 @@ angular.module('fmApp')
     var prod = {
       "bottles" : expense.bottles,
       "cases": expense.cases,
-      "id": expense.sku.id,
+      "sku_id": expense.sku.id,
       "bottlespercase": expense.sku.bottlespercase,
       "sku": $scope.combine(expense.sku),
       "bay_id": expense.bay
