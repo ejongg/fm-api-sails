@@ -166,7 +166,7 @@ angular.module('fmApp')
       "costpercase" : purchase.sku.pricepercase,
       "discountpercase" : purchase.discount,
       "amount" : purchase.cases * (purchase.sku.pricepercase - purchase.discount),
-      "empty_bottles" purchase.empty_bottles,
+      "empty_bottles": purchase.empty_bottles,
       "lifespan" : purchase.sku.lifespan
     };
     
