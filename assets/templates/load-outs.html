@@ -80,7 +80,7 @@
                   </select>
                 </div>
                   
-                     <button class="btn btn-xs btn-default pull-right" type="button" ng-click="addAvaiableCustomer(ordersAvailableList)">ADD</button>
+                     <button class="btn btn-xs btn-default pull-right" type="button" ng-click="addAvaiableCustomer(ordersAvailableList)" ng-hide="noCustomerOrdersAvailable">ADD</button>
               </div>
 
               <br>
@@ -89,10 +89,6 @@
               <div class = "form-group" ng-hide="noTrucks">
                 <label class="col-md-2  control-label">Truck:</label>
 
-                <div class = "col-md-8" ng-show="noTrucks">
-                  NO TRUCKS, ADD TRUCK FIRST
-                </div>
-
                 <div class = "col-md-8"  ng-hide="noTrucks">
                    <select class="form-control" ng-model="loadOut.truck" ng-options=" truck as truckName(truck) for truck in trucks" 
                 ng-change="dropdownChange(loadOut.truck)" required>
@@ -100,9 +96,13 @@
                 </div>
 
               </div>
+
+                <div class = "col-md-8" ng-show="noTrucks">
+                  NO TRUCKS, ADD TRUCK FIRST
+                </div>
             
           <br>
-              <div class="form-group " ng-hide="noCustomerOrdersAvailable || noTrucks">
+              <div class="form-group " ng-hide="noTrucks">
                      <label class="col-md-3 control-label">Load Out #: &nbsp; </label>
 
                   <div class="col-md-7">
@@ -117,7 +117,7 @@
              
               
               <br><br><br>
-              <div class="routeBox" ng-hide="noCustomerOrdersAvailable" > <br>
+              <div class="routeBox" > <br>
 
                <div ng-repeat="orderInAddLoudOut in loadOut.orders">
 
@@ -128,7 +128,7 @@
 
              <div class="form-group pull-right" >
                 <br>
-               <button ng-hide="noCustomerOrdersAvailable" type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-primary">Add</button>
+               <button ng-hide="noCustomerOrdersAvailable && loadOut.orders.length === 0" type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-primary">Add</button>
 
                <button type="button" ng-click="showAddLoadOutBox(false)" class="btn btn-xs btn-default">Cancel</button>
              </div>

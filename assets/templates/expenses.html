@@ -58,53 +58,56 @@
                         <label for="inputBrandName" class="col-md-12">
                         Expense</label>
                         <div class="col-md-12">
-                          <select class="form-control" ng-model="expense.type" ng-init="expense.type = expenseType[0]">
+                          <select class="form-control" ng-model="expense.type" ng-init="expense.type = expenseType[0]" ng-change="typeChange(expense.type)">
                             <option ng-repeat="type in expenseType" value="{{type}}">{{type}}</option>
                           </select>
                         </div>
                     </div>
 
                     <div  ng-show="expense.type === 'Breakage' || expense.type === 'Spoilage'">
-                    <div class="form-group">
-                        <label for="inputSize" class="col-md-12">
-                        SKU Name</label> 
+                    <form class="form-horizontal" name="expenseForm" ng-submit="addExpense(expense)" novalidate>
+                      <div class="form-group">
+                          <label for="inputSize" class="col-md-12">
+                          SKU Name</label> 
 
-                        <div class="col-md-12">
-                          <select class="form-control" ng-model="expense.products.sku" ng-options="sku as combine(sku) for sku in skuList">
-                          </select>
+                          <div class="col-md-12">
+                            <select class="form-control" ng-model="expense.products.sku" ng-options="sku as combine(sku) for sku in skuList">
+                            </select>
+                          </div>
                         </div>
+
+                      <div class="form-group">
+                          <label for="inputSkuName" class="col-md-12">
+                          Cases</label> 
+                          <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.products.cases" required>
+
+
+                          </div>
                       </div>
 
-                    <div class="form-group">
+                      <div class="form-group">
+                          <label for="inputSkuName" class="col-md-12">
+                         Bottles</label> 
+                         <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter no. of bottle" ng-model="expense.products.bottles" required>
+
+                         </div>
+                      </div>
+
+                      <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Cases</label> 
-                        <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.products.cases" required>
-
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                       Bottles</label> 
-                       <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter no. of bottle" ng-model="expense.products.bottles" required>
-
+                       Date</label> 
+                       <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
                        </div>
-                    </div>
                     </div>
 
                      <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Amount</label> 
-                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter amount." ng-model="expense.amount" required>
-                             
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter amount." ng-model="expense.amount" required>       
                         </div>
-                        
-                       
-                    </div>
+                     </div>
 
-
-                    <!-- ADD BUTTON -->
+                          <!-- ADD BUTTON -->
 
                         <div class="icon-preview">
                           <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showAddExpenseForm(false)" >Cancel</button>
@@ -112,6 +115,36 @@
 
                           <br>
                         </div>
+
+                    </form>
+                    </div>
+
+                    <div  ng-hide="expense.type === 'Breakage' || expense.type === 'Spoilage'">
+                    <form class="form-horizontal" name="expenseOtherForm" ng-submit="addExpense(expense)" novalidate>
+                       <div class="form-group">
+                        <label for="inputSkuName" class="col-md-12">
+                       Date</label> 
+                       <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
+                       </div>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="inputSkuName" class="col-md-12">
+                        Amount</label> 
+                        <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter amount." ng-model="expense.amount" required>       
+                        </div>
+                     </div>
+
+                          <!-- ADD BUTTON -->
+
+                        <div class="icon-preview">
+                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showAddExpenseForm(false)" >Cancel</button>
+                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseOtherForm.$invalid">Add</button>
+
+                          <br>
+                        </div>
+                      </form>
+                    </div>
 
 
                 </fieldset>
@@ -133,19 +166,7 @@
  <!--    <div ng-class="addExpenseForm || editOrDeleteExpenseForm ? 'col-xs-12 col-md-8' : ''"> -->
  <div class="col-md-8">
       <div class="panel panel-right">
-          <div class="panel-body">
-
-    <!--     <div ng-show="noProducts" align="center">
-          <h3><strong>NO PRODUCTS!
-            <small> <br/>Please add product first.</small>
-          </strong></h3>
-        </div>
-
-        <div ng-show="noSKU && !noProducts" align="center">
-          <h3><strong>NO SAFE KEEPING UNIT ( SKU )</add></strong></h3>
-        </div>
-
-        <div ng-hide="noProducts || noSKU">  -->
+          <div class="panel-body" ng-show="addOtherMode">
 
          <div class="form-group">
             <label for="select" class="col-md-2">Number of rows:</label>
@@ -157,12 +178,6 @@
                 </select>
             </div>
           </div>
-
-        <div class="form-group" >
-             <div class="col-md-2 pull-right"><input type="number" class="form-control" value="" ng-model="totalAmount" disabled>
-            </div>
-            <legend class="col-md-3 pull-right control-label">Total Amount</legend>
-        </div>
 
         <table class="table variantTable table-striped table-hover">
 
@@ -205,12 +220,55 @@
 
             <div align="center">
             
-      </div></div>
+      </div>
+    </div>
+
+    <div class="panel-body" ng-hide="addOtherMode">
+        <div class="form-group" >
+             <div class="col-md-2 pull-right"><input type="number" class="form-control" value="" ng-model="totalAmount" disabled>
+            </div>
+            <legend class="col-md-3 pull-right control-label">Total Amount</legend>
+
+            <table class="table variantTable table-striped table-hover">
+
+                <thead>
+                    <tr>
+                        <th><font size="1px">SKU Name&nbsp;</font>
+                            <a href="" ng-click="sortCriteria = '-prod_id.brand_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+                             <a href="" ng-click="sortCriteria = '+prod_id.brand_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+
+                        </th>
+
+                        <th><font size="1px">Cases&nbsp;</font>
+                             <a href="" ng-click="sortCriteria = '-sku_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+                              <a href="" ng-click="sortCriteria = '+sku_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        </th>
+
+                        <th><font size="1px">Bottles&nbsp;</font>
+                            <a href="" ng-click="sortCriteria = '-size'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
+                            <a href="" ng-click="sortCriteria = '+size'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        </th>
+
+  
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 
       <!-- END OF TABLE -->
 
      </div>
-    </div>
   </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
   <div class="snackbar-container" data-snackbar="true"></div>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
