@@ -6,10 +6,10 @@ angular.module('fmApp')
   $scope.beginning_inventory = 0;
   $scope.ending_inventory = 0;
   $scope.purchases = 0;
-  $scope.deliveries = 0;
   $scope.expenses = 0;
   $scope.empties = 0;
   $scope.income = 0;
+  $scope.stt = 0;
 
 
   var getDSSR = function () {
@@ -17,9 +17,11 @@ angular.module('fmApp')
       $scope.beginning_inventory = data.beginning_inventory;
       $scope.ending_inventory = data.ending_inventory;
       $scope.purchases = data.purchases;
-      $scope.deliveries = data.deliveries;
       $scope.expenses = data.expenses;
       $scope.empties = data.empties;
+      $scope.stt = data.stt;
+      $scope.income = data.income;
+
       console.log(data);
     }).error(function (err) {
       console.log(err);
