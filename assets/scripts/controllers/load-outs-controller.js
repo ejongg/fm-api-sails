@@ -36,8 +36,7 @@ angular.module('fmApp')
          $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
          $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
-        console.log($scope.ordersAvailableList);
-        console.log($scope.ordersAvailableListEdit);
+        console.log($scope.customerOrdersAvailable);
       }else{
         $scope.noCustomerOrdersAvailable = true;
       }
@@ -284,6 +283,9 @@ angular.module('fmApp')
         console.log(orderDeleted[0]);
         $scope.customerOrdersAvailable.push(orderDeleted[0]);
         $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
+        if($scope.noCustomerOrdersAvailable === true){
+          $scope.noCustomerOrdersAvailable =false;
+        }
         $scope.$digest();
     }
 

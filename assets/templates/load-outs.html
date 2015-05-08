@@ -165,17 +165,18 @@
               </div>
                 
             </div>
+             
 
             <div class="rpanel panel-body" ng-show="editIndex === $index">
+               <label class="col-md-4">Available Establishment:</label>
               <div ng-show="noCustomerOrdersAvailable" align="center">
                   NO CUSTOMER ORDER AVAILABLE
               </div>
 
               <div class="form-group" ng-hide="noCustomerOrdersAvailable">
-                <label class="col-md-4">Available Establishment:</label>
 
                 <div class="col-md-8">
-                  <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as orderAvailable.order.customer_id.establishment_name for orderAvailable in customerOrdersAvailableEdit">
+                  <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as orderAvailable.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
                   </select>
                 </div>
                 
@@ -193,8 +194,8 @@
               <div class="form-group pull-right" style="margin-bottom: -5px;">
                    <br>
 
-               <button class="btn btn-xs btn-primary" type="button" 
-                     ng-click="editAvailableCustomer(ordersAvailableListEdit,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">ADD</button>
+               <button ng-hide="noCustomerOrdersAvailable" class="btn btn-xs btn-primary" type="button" 
+                     ng-click="editAvailableCustomer(ordersAvailableListEdit,loadOut.loadout_number,loadOut.id,loadOut.truck_id)">ADD</button>
 
               <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditLoadOut(-1)">DONE</button> 
             </div>
