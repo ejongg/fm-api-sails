@@ -1,6 +1,6 @@
 
 module.exports = function(req, res, next){
-	
+	var type = req.body.type;
 
 	if(type == "Breakage" || type == "Spoilage"){
 		checkInventory();

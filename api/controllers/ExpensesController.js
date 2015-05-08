@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing expenses
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+ var Promise = require('bluebird');
 
 module.exports = {
 	add : function (req, res){
@@ -34,7 +35,7 @@ module.exports = {
 
 						Expense_products.create(expenseProduct)
 							.then(function (){
-								return Inventory.deductInSpecificBay(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.bay_id);
+								return InventoryService.deductInSpecificBay(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.bay_id);
 							})
 
 							.then(function (){
@@ -53,7 +54,7 @@ module.exports = {
 		}else{
 
 			Expenses.create({type : type, amount : amount, date : date, user : user})
-				then(function (expense){
+				.then(function (expense){
 					sails.sockets.blast("expenses", {verb : "created", data : expense});
 					return res.send(201);
 				})
