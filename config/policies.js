@@ -60,6 +60,10 @@ module.exports.policies = {
 
   ExpensesController : {
     add : 'AddExpensePolicy'
+  },
+
+  PurchasesController : {
+    add : 'EmptyPolicy'
   }
 
   /***************************************************************************

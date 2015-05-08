@@ -42,5 +42,63 @@ module.exports = {
 					});
 				})
 		});
+	},
+
+	deductEmptyBottles : function (skuId, emptyBottles, bottlespercase){
+		return new Promise(function (resolve, reject){
+			Empties.findOne({sku_id : skuId})
+				.then(function (emptyRecord){
+					if(emptyBottles > bottlespercase){
+						EmptiesService.countCases(emptyBottles, bottlespercase)
+							.then(function (result){
+								console.log(result);
+								emptyRecord.bottles = emptyRecord.bottles - result.bottles;
+								emptyRecord.cases = emptyRecord.cases - result.cases;
+
+								emptyRecord.save(function (err, saved){
+									resolve();
+								});
+							})
+					}else{
+						emptyRecord.bottles = emptyRecord.bottles - emptyBottles;
+						emptyRecord.cases = emptyRecord.cases - 1;
+						emptyRecord.save(function (err, saved){
+							resolve();
+						});
+					}
+				})
+		});
+	},
+
+	countEmptyBottles : function (skuId){
+		return new Promise(function (resolve, reject){
+			var totalBottles = 0;
+
+			Empties.find({sku_id : skuId})
+				.then(function (emptyItems){
+					return emptyItems;
+				})
+
+				.each(function (emptyItem){
+					totalBottles = totalBottles + emptyItem.bottles;
+				})
+
+				.then(function (){
+					resolve(totalBottles);
+				})
+		});
+	},
+
+	countCases : function (bottles, bottlespercase){
+		return new Promise(function (resolve, reject){
+			var cases = 0;
+
+			do{
+				cases = cases + 1;
+
+			}while((bottles % bottlespercase) > bottlespercase);
+
+			resolve({cases : cases, bottles : bottles});
+		});
 	}
 };

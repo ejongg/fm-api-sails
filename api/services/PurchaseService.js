@@ -29,6 +29,12 @@ module.exports = {
 							})
 
 							.then(function (){
+								if(product.empty_bottles > 0){
+									return EmptiesService.deductEmptyBottles(product.sku_id, product.empty_bottles, product.bottlespercase);
+								}								
+							})
+
+							.then(function (){
 								resolve();
 							})
 					});
