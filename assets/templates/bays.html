@@ -253,7 +253,7 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="bay in bays | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="bayClicked(bay)">
+                    <tr dir-paginate="bay in bays | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
                         <td>Bay {{bay.bay_name}}</td>
                         <td>{{bay.bay_label}}</td> 
                         <td>{{bay.total_products}}</td>
