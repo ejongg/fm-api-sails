@@ -4,6 +4,7 @@ angular.module('fmApp')
 .controller('ExpensesCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
   $scope.expenseType = ['Utilities','Breakage', 'Spoilage'];
   $scope.skuList = [];
+  $scope.bays = [];
 
   $scope.expense = {};
   $scope.expense.date = new Date();
@@ -13,6 +14,7 @@ angular.module('fmApp')
   $scope.expenseEdit = {};
 
   $scope.noSKU = false;
+  $scope.noBays = false;
 
   $scope.addExpenseForm = false;
   $scope.addOtherMode = true;
@@ -33,7 +35,23 @@ angular.module('fmApp')
     });
   };
 
+  var getBays = function () {
+    $http.get(httpHost + '/bays/unempty').success( function (data) {
+      if(data.length !== 0){
+      $scope.bays = data;
+      $scope.expense.bay = $scope.bays[0].id;
+      console.log("Bays:");
+      console.log($scope.bays);
+      }else{
+        $scope.noBays = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
+
   getSKUAvailable();
+  getBays();
 
   $scope.typeChange = function (type) {
     console.log(type);
@@ -73,6 +91,10 @@ angular.module('fmApp')
     return sku.prod_id.brand_name + ' ' + sku.sku_name;
   };
 
+  $scope.combineBay = function (bay){
+    return bay.bay_name + ' ' + bay.bay_label;
+  };
+
   $scope.addSKUToList = function (expense) {
     console.log(expense);
     var prod = {
@@ -80,7 +102,8 @@ angular.module('fmApp')
       "cases": expense.cases,
       "id": expense.sku.id,
       "bottlespercase": expense.sku.bottlespercase,
-      "sku": $scope.combine(expense.sku)
+      "sku": $scope.combine(expense.sku),
+      "bay_id": expense.bay
     };
 
     if( _.findIndex($scope.expense.products,{ 'id': prod.id}) === -1 ){

@@ -82,6 +82,16 @@
                         </div>
 
                       <div class="form-group">
+                          <label for="inputSize" class="col-md-12">
+                          Bay</label> 
+
+                          <div class="col-md-12">
+                            <select class="form-control" ng-model="expense.bay" ng-options="bay.id as combineBay(bay) for bay in bays">
+                            </select>
+                          </div>
+                        </div>
+
+                      <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
                           Cases</label> 
                           <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.cases" required>
