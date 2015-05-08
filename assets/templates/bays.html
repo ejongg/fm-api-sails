@@ -55,7 +55,7 @@
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay name</label>  
-                        <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="2" class="form-control" placeholder="Enter bay name." ng-model="bay.bay_name" required>
+                        <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="5" class="form-control" placeholder="Enter bay name." ng-model="bay.bay_name" required>
                          <strong class="fbackMsg" ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Bay name required!  </strong>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Bay Name</label>  
-                        <div class="col-md-12"><input type="text" name="inputBayName" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" required>
+                        <div class="col-md-12"><input type="text" name="inputBayName" maxlength="5" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" required>
                          <strong class="fbackMsg" ng-show="editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid"> Bay name required!  </strong>
                         </div>
                     </div>
@@ -305,8 +305,12 @@
       </div>
       <div class="modal-footer">
         <form class="form-horizontal" name="deleteBayForm" ng-submit="deleteBay(bayDelete)" novalidate>
-        <button type="submit" class="btn btn-primary" >Yes</button>
+
+              <button type="submit" class="btn btn-primary" >Yes</button>
+
          </form>
+
+        
 
          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
        
