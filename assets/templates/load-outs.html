@@ -13,19 +13,20 @@
         <div class="form-group">
             <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <div class="search" ng-hide="">
+                            <div class="search" ng-hide="noLoadOut">
                                 <form method="get" action="/search" id="search">
                                     <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
- <!--                        <li>
-                            <a ng-click="" ng-hide="">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASE</h6></a>
-
-                        </li> -->
                         <li>
-                            <a ng-hide="" ng-click="pagePrint()">
+                            <a ng-click="showAddLoadOutBox(true)">
+                              <h6><i class="mdi-content-add-box"/>
+                              &nbsp;ADD LOUD OUT&nbsp;</h6></a>
+                        </li>
+
+                        <li>
+                            <a ng-hide="noLoadOut" ng-click="pagePrint()">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -45,28 +46,19 @@
 <div class="container">
 
      <!-- LEFT PANEL -->
+<div ng-class="addLoadOutBox ? 'col-xs-12 col-md-6' : ''">
+    <div class="loadouthide">
+      <div class="panel" ng-show="addLoadOutBox">
+        <div class="panel-body" > 
 
-    <div class="col-md-12"><div class="loadouthide">
-      <h4>LOAD OUT </h4>
-              <div class="panel panel-body">
+          <!-- ng-hide="noCustomerOrdersAvailable" -->
 
-                
-
-                 <ul class="nav nav-tabs">
-                        <li>
-                            <a ng-click="showAddLoadOutBox(true)"><i class="mdi-content-add-box"/>
-                              &nbsp;ADD&nbsp;</a>
-                        </li>
-                    </ul>
-                    <br>
-
-                </div>
+        <h4><i class="mdi-content-add-circle"></i> ADD LOAD OUT </h4>   
 
       <div ng-show="existingAddressInRouteError">{{existingAddressInRoute}}</div>
 
-      <div ng-show="addLoadOutBox" class="form-group">
-         <h4 ng-hide="noCustomerOrdersAvailable"><i class="mdi-content-add-circle"></i> ADD LOAD OUT </h4>
 
+        <div  class="form-group">
           <form name="loadOutAddForm" ng-submit="addLoadOut(loadOut)" novalidate>
 
               <div class="form-group">
@@ -135,19 +127,29 @@
           </form> 
         </div>
       </div>
+     </div>
+    </div>
 
-      <br><br><br><br>
+    </div>
 
-      <!-- loadoutbox -->
+     <!-- Right Panel -->
 
-      <div ng-show="noLoadOut" align="center">
-          <h3><strong>NO LOADOUTS!</strong></h3>
-      </div>   
+      <div ng-class="addLoadOutBox || editOrDeleteBayForm? 'col-xs-12 col-md-6' : ''">
+
+      <div class="panel">
+        <div class="panel-body">
+
+      <!-- loadoutbox --> 
+      <div ng-show="noLoadOut"  align="center">
+          <h3 ng-hide="addLoadOutBox"><strong>NO LOAD OUTS!</strong></h3>
+      </div> 
+
+
        
-       <div ng-hide="noLoadOut" ng-repeat="loadOut in loadOuts">
+       <div ng-hide="noLoadOut" ng-repeat="loadOut in loadOuts" ng-class="addLoadOutBox ? 'col-xs-12 col-md-12' : 'col-md-6'">
           <div class="panel-primary" >
               <div class="panel-heading" >
-                <h3 class="panel-title">{{getTruckNumber(loadOut.truck_id)}} Loud out #{{loadOut.loadout_number}}</h3>
+                <h3 class="panel-title">{{getTruckNumber(loadOut.truck_id)}} Load out #{{loadOut.loadout_number}}</h3>
               </div>
 
             <div class="rpanel panel-body" ng-hide="editIndex === $index">
@@ -170,16 +172,11 @@
               <div class="form-group" ng-hide="noCustomerOrdersAvailable">
                 <label class="col-md-4">Available Establishment</label>
 
-                <div class="col-md-6">
+                <div class="col-md-8">
                   <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as orderAvailable.order.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
                   </select>
                 </div>
-                  
-                  <div class = "col-md-2">
-                     <button class="btn btn-xs btn-default pull-right" type="button" 
-                     ng-click="editAvailableCustomer(ordersAvailableListEdit,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">ADD</button>
-                  </div>
-                 
+                
               </div>
               
 
@@ -187,7 +184,12 @@
                 <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="customerOrder in loadOut.transactions" class="btn btn-xs btn-danger"  ng-click="deleteOrderInLoadout(loadOut.id,customerOrder.id)"> {{customerOrder.customer_id.establishment_name}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
 
                  <br>
-              <div class="form-group pull-right" style="margin-bottom: -5px;"> 
+              <div class="form-group pull-right" style="margin-bottom: -5px;">
+
+               <button class="btn btn-xs btn-primary" type="button" 
+                     ng-click="editAvailableCustomer(ordersAvailableListEdit,loadOut.loadout_number,loadOut.id,loadOut.transactions[0].truck_id)">ADD</button>
+
+              <button class="btn btn-xs btn-primary" >SAVE</button> 
 
               <button class="btn btn-xs btn-default" ng-show="editIndex === $index" ng-click="setEditLoadOut(-1)">CANCEL</button> 
             </div>
@@ -203,6 +205,8 @@
 
 
      </div>
+    </div>
+  </div>
 
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 <div class="snackbar-container" data-snackbar="true"></div>

@@ -48,7 +48,7 @@
                 <fieldset>
 
                     <div class="form-group">
-                        <div ng-show="noTruckDriver">No Truck Driver</div>
+                        <div ng-show="noTruckDriver" ng-repeat="truck in trucks">No Truck Driver</div>
                         <div ng-hide="noTruckDriver">
                         <label for="inputTruckname" class="col-md-6">Truck Driver</label>  
                         <div class="col-md-12">
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div ng-show="noChecker">No Checker</div>
+                        <div ng-show="noChecker" ng-repeat="truck in trucks">No Checker</div>
                         <div ng-hide="noChecker">
                         <label for="inputCheckerName" class="col-md-6">Checker</label>
                         <div class="col-md-12">
@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div ng-show="noDSP">No Delivery Sales Personnel</div>
+                        <div ng-show="noDSP" class=" col-md-9">No Delivery Sales Personnel</div>
                         <div ng-hide="noDSP">
                         <label for="inpuDPName" class="col-md-9">Delivery Sales Personnel</label>
                         <div class="col-md-12">
@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div ng-show="noDH">No Delivery Helper</div>
+                        <div ng-show="noDH" ng-repeat="truck in trucks">No Delivery Helper</div>
                         <div ng-hide="noDH">
                         <label for="inputDHName" class="col-md-6">Delivery Helper</label> 
                         <div class="col-md-12">
@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div ng-show="noRoute">No Routes</div>
+                        <div ng-show="noRoute" ng-repeat="truck in trucks">No Routes</div>
                         <div ng-hide="noRoute">
                         <label for="inputRoute" class="col-md-6">Route</label> 
                         <div class="col-md-12">
@@ -124,14 +124,11 @@
             <div class="panel-body">
 
             <div ng-show="noTrucks" align="center">
-            <h3><strong>NO TRUCKS!</strong></h3>
+            <h3 ng-hide="addTruckForm"><strong>NO TRUCKS!</strong></h3>
              </div>
 
-            <div class="truck-table truck-tableout col-md-2">
-            </div>
-
-            <div class="truck-table truck-tableout col-md-7">
-              <div class="panel-primary" ng-repeat="truck in trucks">
+            <div class="truck-table truck-tableout"  >
+              <div class="panel-primary" ng-class="addTruckForm ? 'col-xs-12 col-md-12' : 'col-md-6'" ng-repeat="truck in trucks">
                 <div class="panel-heading" align="center">
                   <h3 class="panel-title">Truck {{$index + 1}}</h3>
                 </div>

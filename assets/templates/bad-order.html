@@ -16,18 +16,18 @@
             <ul class="nav nav-tabs col-md-12">
                         <li>
                             <div class="search">
-                                <form method="get" action="/search" id="search" ng-hide="addBadOrderForm">
+                                <form method="get" action="/search" id="search" ng-hide="addBadOrderForm || noBadOrders">
                                     <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <a ng-click="showAddBadOrderForm(true)" ng-hide="addBadOrderForm || noBays || noSKU">
+                            <a ng-click="showAddBadOrderForm(true)" ng-hide="addBadOrderForm || noBays || noSKU ">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD BAD ORDERS</h6></a>
 
                         </li>
                         <li>
-                            <a ng-click="pagePrint()" ng-hide="addBadOrderForm">
+                            <a ng-click="pagePrint()" ng-hide="addBadOrderForm || noBadOrders">
                             <h6><i class="mdi-action-print center" /> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -225,7 +225,7 @@
         </div>
 
         <div ng-show="noBadOrders && !noSKU && !noBays" align="center">
-          <h3><strong>NO BAD ORDERS
+          <h3><strong>NO BAD ORDERS!
           </strong></h3>
         </div>
 
@@ -278,7 +278,7 @@
         <h4 class="modal-title">Bad order details</h4>
       </div>
       <div class="modal-body">
-         <table class="table table-striped table-hover ">
+         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>SKU</th>

@@ -18,7 +18,7 @@ angular.module('fmApp')
   $scope.editOrDeleteBayForm = false;
   $scope.editBayTab = true;
 
-  $scope.companies = ['Coca-Cola','SMB', 'Coca-Cola and SMB'];
+  $scope.companies = ['Coca-Cola','SMB' ];
 
   // forSorting
   $scope.sortCriteria = '';

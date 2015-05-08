@@ -6,7 +6,7 @@
 <div class="row">
 
     <div class="pageheader-left">
-        <h1> Bays </h1>
+        <h1> Lines </h1>
     </div>
 
     <div class="pageheader-right">
@@ -21,7 +21,7 @@
                         </li>
                         <li>
                             <a ng-hide="addBayForm" ng-click="showAddBayForm(true)">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD BAYS</h6></a>
+                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD LINES</h6></a>
 
                         </li>
                     </ul>
@@ -42,7 +42,7 @@
     <div class="panel" ng-show="addBayForm">
         <div class="panel-body">
 
-        <h4><i class="mdi-content-add-circle"></i> ADD NEW BAY  </h4>
+        <h4><i class="mdi-content-add-circle"></i> ADD NEW LINE  </h4>
 
             <form class="form-horizontal" name="bayForm" ng-submit="addBay(bay)" novalidate>
                 <fieldset>
@@ -54,14 +54,14 @@
                 </div>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay name</label>  
-                        <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="5" class="form-control" placeholder="Enter bay name." ng-model="bay.bay_name" required>
-                         <strong class="fbackMsg" ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Bay name required!  </strong>
+                        <label for="inputEstablishmentName" class="col-md-4">Line name</label>  
+                        <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="5" class="form-control" placeholder="Enter line name." ng-model="bay.bay_name" required>
+                         <strong class="fbackMsg" ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Line name required!  </strong>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Label</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Label</label>  
                           <div class="col-md-12">
 
                           <!-- <input type="text" name = "inputBayLabel" class="form-control" placeholder="Enter bay label." ng-model="bay.bay_label" typeahead="bay.bay_label as bay.bay_label for bay in bays | limitTo:6" required>
@@ -76,9 +76,9 @@
                     </div>
                     
                      <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
-                          <div class="col-md-12"><input type="number" name = "inputBayLimit" min="0" class="form-control" placeholder="Enter bay limit (case)." ng-model="bay.bay_limit" required>
-                          <strong class="fbackMsg" ng-show="bayForm.inputBayLimit.$invalid &&bayForm.inputBayLimit.$dirty"> Bay limit required! Enter numbers only. </strong> 
+                        <label for="inputEstablishmentName" class="col-md-4">Line Limit</label>  
+                          <div class="col-md-12"><input type="number" name = "inputBayLimit" min="0" class="form-control" placeholder="Enter Line limit (case)." ng-model="bay.bay_limit" required>
+                          <strong class="fbackMsg" ng-show="bayForm.inputBayLimit.$invalid &&bayForm.inputBayLimit.$dirty"> Line limit required! Enter numbers only. </strong> 
                         </div>
                     </div>
 
@@ -99,16 +99,16 @@
 
         <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <a ng-click="setEditBayTab(true)"><i class="mdi-editor-mode-edit"/>&nbsp;Edit Bay</a>
+                            <a ng-click="setEditBayTab(true)"><i class="mdi-editor-mode-edit"/>&nbsp;Edit Line</a>
                         </li>
                         <li>
-                            <a ng-click="setEditBayTab(false)"><i class="mdi-action-delete"/>&nbsp;Delete Bay</a>
+                            <a ng-click="setEditBayTab(false)"><i class="mdi-action-delete"/>&nbsp;Delete Line</a>
                         </li>
                     </ul>
 
         <div class="panel-body" ng-show="editBayTab">
 
-         <h4><i class="mdi-image-edit"></i> EDIT BAY </h4>
+         <h4><i class="mdi-image-edit"></i> EDIT LINE </h4>
 
           <form class="form-horizontal" name="editBayForm" ng-submit="editBay(bayEdit)" novalidate>
                 <fieldset>
@@ -122,14 +122,14 @@
 
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Name</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Name</label>  
                         <div class="col-md-12"><input type="text" name="inputBayName" maxlength="5" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" required>
-                         <strong class="fbackMsg" ng-show="editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid"> Bay name required!  </strong>
+                         <strong class="fbackMsg" ng-show="editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid"> Line name required!  </strong>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Label</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Label</label>  
                           <div class="col-md-12">
 
                          <select class="form-control" id="selectType" ng-model="bayEdit.bay_label">
@@ -140,15 +140,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Limit</label>  
                           <div class="col-md-12"><input type="number" name="inputBayLimit" min="0" class="form-control" placeholder="Enter bay label." ng-model="bayEdit.bay_limit" required>
-                          <strong class="fbackMsg" ng-show="editBayForm.inputBayLimit.$invalid &&editBayForm.inputBayLimit.$dirty"> Bay limit required! Enter numbers only. </strong>
+                          <strong class="fbackMsg" ng-show="editBayForm.inputBayLimit.$invalid &&editBayForm.inputBayLimit.$dirty"> Line limit required! Enter numbers only. </strong>
 
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Pile Status</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Status</label>  
                           <div class="col-md-12">
                             <select class="form-control" ng-model="bayEdit.pile_status">
                                 <option ng-repeat="status in pileStatus" value="{{status}}">{{status}}</option>
@@ -166,25 +166,25 @@
 
         <div class="panel-body" ng-hide="editBayTab">
 
-         <h4><i class="mdi-action-delete"></i> DELETE BAY </h4>
+         <h4><i class="mdi-action-delete"></i> DELETE LINE </h4>
 
           <form class="form-horizontal" name="deleteBayForm" ng-submit="deleteBay(bayDelete)" novalidate>
                 <fieldset>
                    
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Name</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Name</label>  
                         <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="bayDelete.bay_name" disabled>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Label</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Label</label>  
                           <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter bay label." ng-model="bayDelete.bay_label" disabled>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Bay Limit</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Limit</label>  
                           <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter bay label." ng-model="bayDelete.bay_limit" disabled>
                         </div>
                     </div>
@@ -229,24 +229,24 @@
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
-                        <th width="20%">Bay name&nbsp;
+                        <th width="20%">Line name&nbsp;
                           <a href="" ng-click="sortCriteria = '-bay_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
                           <a href="" ng-click="sortCriteria = '+bay_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
                         </th>
 
-                        <th width="20%">Bay label&nbsp;
+                        <th width="20%">Line label&nbsp;
                           <a href="" ng-click="sortCriteria = '-bay_label'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
                           <a href="" ng-click="sortCriteria = '+bay_label'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
 
-                        <th width="20%">No. of cases in Bay&nbsp;
+                        <th width="20%">No. of cases in Line&nbsp;
                           <a href="" ng-click="sortCriteria = '-total_products'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
                           <a href="" ng-click="sortCriteria = '+total_products'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
 
-                        <th width="20%">Bay limit&nbsp;
+                        <th width="20%">Line limit&nbsp;
                           <a href="" ng-click="sortCriteria = '-bay_limit'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
                           <a href="" ng-click="sortCriteria = '+bay_limit'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
 
-                        <th width="20%">Pile status&nbsp;
+                        <th width="20%">Line status&nbsp;
                           <a href="" ng-click="sortCriteria = '-pile_status'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
                           <a href="" ng-click="sortCriteria = '+pile_status'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
                     </tr>
