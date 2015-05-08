@@ -11,7 +11,6 @@ module.exports = function(req, res, next){
 	};
 
 	return getOrders()
-
 		.each(function (order){
 			return new Promise(function (resolve, reject){
 				SkuService.getCompanyName(order.sku_id)
@@ -20,9 +19,10 @@ module.exports = function(req, res, next){
 
 							BaysService.findMovingPile(company, function(err, bay_result){
 								if(typeof bay_result == 'number'){
+
 									Inventory.find({sku_id : order.sku_id, bay_id : bay_result})
 										.then(function (found_sku){
-
+											console.log(order.sku_id + " " + bay_result);
 											if(found_sku){
 												var totalCaseCount = 0;
 

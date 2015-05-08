@@ -20,11 +20,10 @@ module.exports = {
 
 	createDelivery : function(order, loadoutId, loadoutNumber, truckId, deliveryDate, user){
 		return new Promise(function (resolve, reject){
-
 			var delivery = {
-				total_amount : order.order.total_amount,				
-				customer_id : order.order.customer_id.id,
-				order_id : order.order.id,
+				total_amount : order.total_amount,				
+				customer_id : order.customer_id.id,
+				order_id : order.id,
 				loadout_id : loadoutId,
 				loadout_number : loadoutNumber,
 				delivery_date : deliveryDate,
@@ -39,7 +38,7 @@ module.exports = {
 
 				.then(function (createdDelivery){
 					return new Promise(function (resolve, reject){
-						async.each(order.products, function (product, cb){
+						async.each(order.productslist, function (product, cb){
 							DeliveryService.createDeliveryProducts(createdDelivery.id, product)
 								.then(function (){
 									cb();
