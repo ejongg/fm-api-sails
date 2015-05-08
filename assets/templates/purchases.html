@@ -94,6 +94,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="inputEmpty" class="col-md-6">Empty Bottles</label>
+                        <div class="col-md-12">
+
+                            <input type="number"  name="inputEmptyBottles" min="1" class="form-control" placeholder="Enter number of empty bottles." nrequired>
+
+                            <strong class="fbackMsg" ng-show=""> Invalid! Please enter no. of empty bottles. </strong>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="inputDiscount" class="col-md-6">Discount Per Case</label>
                         <div class="col-md-12">
                             
@@ -136,6 +147,7 @@
                     <th>Bay</th>
                     <th>Production date</th>
                     <th>Cases</th>
+                    <th>Empty Bottles</th>
                     <th>Cost per case</th>
                     <th>Discount per case</th>
                     <th>Amount</th>
@@ -150,6 +162,7 @@
                     <td>{{purchase.bay}}</td>
                     <td>{{purchase.prod_date}}</td>
                     <td>{{purchase.cases}}</td>
+                    <td></td>
                     <td>{{purchase.costpercase}}</td>
                     <td>{{purchase.discountpercase}}</td>
                     <td>{{purchase.amount}}</td>
@@ -196,7 +209,7 @@
           <br><br>
         
         <div ng-show="noBays">
-         <h3><strong><center>NO BAYS! <small></br>Please add bays first.</small></center></strong></h3>
+         <h3><strong><center>NO LINES! <small></br>Please add lines first.</small></center></strong></h3>
         </div>
         <div ng-show="noSKU">
          <h3><strong><center>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</center></small></strong></h3>
