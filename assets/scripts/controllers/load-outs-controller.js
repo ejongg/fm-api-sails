@@ -279,7 +279,11 @@ angular.module('fmApp')
         console.log($scope.loadOuts[index].transactions);
         var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery[0].delivery_id});
         console.log(transIndex);
-        $scope.loadOuts[index].transactions.splice(transIndex,1);
+        // $scope.loadOuts[index].transactions.splice(transIndex,1);
+        var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
+        console.log(orderDeleted[0]);
+        $scope.customerOrdersAvailable.push(orderDeleted[0]);
+        $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         $scope.$digest();
     }
 
