@@ -37,6 +37,7 @@ angular.module('fmApp')
          $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
         console.log($scope.ordersAvailableList);
+        console.log($scope.ordersAvailableListEdit);
       }else{
         $scope.noCustomerOrdersAvailable = true;
       }
@@ -86,10 +87,14 @@ angular.module('fmApp')
   };
   
   $scope.setEditLoadOut = function (index) {
+    if($scope.addLoadOutBox === true){
+      $scope.showAddLoadOutBox(false);
+    }
     $scope.editIndex = index;
   };
 
   $scope.showAddLoadOutBox = function (data){
+    $scope.editIndex = -1;
     $scope.addLoadOutBox = data;
     if(data === true){
       if($scope.loadOut.truck){
@@ -268,7 +273,7 @@ angular.module('fmApp')
         $scope.$digest();
         break;
       case "destroyed": 
-        console.log("Load Updated");
+        console.log("Load Destroyed");
         var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout});
         console.log(index);
         console.log($scope.loadOuts[index].transactions);
