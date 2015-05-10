@@ -19,8 +19,24 @@ module.exports = {
 			})
 
 			.then(function (destroyedDelivery){
-				sails.sockets.blast("loadout", {verb : "destroyed", data : order});
-				return res.send("Delivery removed from " + loadout, 200);
+				Customer_orders.findOne({id : order.order_id})
+					.then(function (foundOrder){
+						return new Promise (function (resolve, reject){
+							Customer_order_products.find({order_id : foundOrder.id}).populate('sku_id')
+								.then(function getProducts(products){
+									foundOrder.productslist = products;
+									resolve(foundOrder);					
+								});	
+
+						});
+					})
+
+					.then(function (foundOrder){
+						sails.sockets.blast("loadout", {verb : "destroyed", data : foundOrder});
+						return res.send("Delivery removed from " + loadout, 200);
+					})
+
+
 			})
 	},
 
