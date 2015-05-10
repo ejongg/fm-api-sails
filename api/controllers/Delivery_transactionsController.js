@@ -11,7 +11,7 @@ module.exports = {
 	remove : function (req, res){
 		var delivery = req.body.delivery;
 		var loadout = req.body.loadout;
-
+		var order = req.body.order;
 
 		Delivery_transactions.destroy({id : delivery})
 			.then(function (destroyedDelivery){
@@ -19,12 +19,7 @@ module.exports = {
 			})
 
 			.then(function (destroyedDelivery){
-				var obj = {
-					delivery : destroyedDelivery,
-					loadout : loadout
-				};
-
-				sails.sockets.blast("loadout", {verb : "destroyed", data : obj});
+				sails.sockets.blast("loadout", {verb : "destroyed", data : order});
 				return res.send("Delivery removed from " + loadout, 200);
 			})
 	},
