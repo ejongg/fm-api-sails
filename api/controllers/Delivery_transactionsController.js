@@ -19,7 +19,7 @@ module.exports = {
 			})
 
 			.then(function (destroyedDelivery){
-				Customer_orders.findOne({id : order.order_id})
+				Customer_orders.findOne({id : order.order_id}).populateAll()
 					.then(function (foundOrder){
 						return new Promise (function (resolve, reject){
 							Customer_order_products.find({order_id : foundOrder.id}).populate('sku_id')
