@@ -21,6 +21,7 @@ module.exports = {
 			.then(function (destroyedDelivery){
 				Customer_orders.findOne({id : order.order_id}).populateAll()
 					.then(function (foundOrder){
+
 						return new Promise (function (resolve, reject){
 							Customer_order_products.find({order_id : foundOrder.id}).populate('sku_id')
 								.then(function getProducts(products){
@@ -29,6 +30,24 @@ module.exports = {
 								});	
 
 						});
+
+					})
+
+					.then(function (foundOrder){
+						return new Promise(function (resolve){
+							Delivery_transactions.find({loadout_id : loadout})
+								.then(function (transactions){
+
+									if(transactions.length == 0){
+										return Load_out.destroy({id : loadout});
+										sails.sockets.blast("loadout", {verb : "deleted", data : loadout});
+										resolve(foundOrder);
+									}else{
+										resolve(foundOrder);
+									}
+
+								})
+						});						
 					})
 
 					.then(function (foundOrder){
