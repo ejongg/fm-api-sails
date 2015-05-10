@@ -185,7 +185,7 @@
               <div class="form-group">
               <label class="col-md-12 control-label">Establishment Name:</label>
                 <div class="col-md-12 col-md-offset-1">
-                <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="customerOrder in loadOut.transactions" class="btn btn-xs btn-danger"  ng-click="deleteOrderInLoadout(loadOut.id,customerOrder.id)"> {{customerOrder.customer_id.establishment_name}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
+                <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="customerOrder in loadOut.transactions" class="btn btn-xs btn-danger"  ng-click="deleteOrderInLoadout(loadOut,customerOrder)"> {{customerOrder.customer_id.establishment_name}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
                 </div>
               </div>
 

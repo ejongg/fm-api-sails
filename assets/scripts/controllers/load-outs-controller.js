@@ -156,7 +156,20 @@ angular.module('fmApp')
     console.log("Dropped");
     // console.log(data);
     // console.log(index);
+    
+    console.log("Find Index");
+    var index = _.findIndex($scope.customerOrdersAvailable,{'id': data.id});
+    console.log(index);
+    
+    console.log("Splice");
+    $scope.customerOrdersAvailable.splice(index,1);
+    console.log($scope.customerOrdersAvailable.length);
+    $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+    $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
 
+    if($scope.customerOrdersAvailable.length === 0){
+      $scope.noCustomerOrdersAvailable = true;
+    }
 
     var newOrder = {
     "delivery_date": todayDayFormatted,
@@ -174,7 +187,6 @@ angular.module('fmApp')
       console.log('Sails responded with post loadout: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        $scope.setEditLoadOut(-1);
         $scope.snackbarShow('Load Out Edited');
         $scope.$digest();
       }
@@ -206,12 +218,12 @@ angular.module('fmApp')
     console.log(addLoadOut);
   };
 
-  $scope.deleteOrderInLoadout = function (loadout_id,customerOrders_id) {
-    console.log(loadout_id);
-    console.log(customerOrders_id);
+  $scope.deleteOrderInLoadout = function (loadout,customerOrders) {
+    console.log(loadout);
+    console.log(customerOrders);
     var deliverInfo = {
-      "delivery": customerOrders_id,
-      "loadout": loadout_id
+      "delivery": customerOrders.id,
+      "loadout": loadout.id
     };
 
     io.socket.request($scope.socketOptions('post','/delivery/remove',{"Authorization": "Bearer " + authService.getToken()},deliverInfo), function (body, JWR) {
@@ -219,6 +231,13 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Deleted Address");
+         if($scope.noCustomerOrdersAvailable === true){
+           $scope.noCustomerOrdersAvailable = false;
+         }
+         $scope.customerOrdersAvailable.push(customerOrders);
+         $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+         $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
+         console.log($scope.customerOrdersAvailable);
          $scope.$digest();
       }
     }); 
@@ -275,17 +294,16 @@ angular.module('fmApp')
         console.log("Load Destroyed");
         var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout});
         console.log(index);
-        console.log($scope.loadOuts[index].transactions);
+        // console.log($scope.loadOuts[index].transactions);
         var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery[0].delivery_id});
-        console.log(transIndex);
-        // $scope.loadOuts[index].transactions.splice(transIndex,1);
-        var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
-        console.log(orderDeleted[0]);
-        $scope.customerOrdersAvailable.push(orderDeleted[0]);
-        $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
-        if($scope.noCustomerOrdersAvailable === true){
-          $scope.noCustomerOrdersAvailable =false;
-        }
+        $scope.loadOuts[index].transactions.splice(transIndex,1);
+        // var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
+        // console.log(orderDeleted[0]);
+        // $scope.customerOrdersAvailable.push(orderDeleted[0]);
+        // $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
+        // if($scope.noCustomerOrdersAvailable === true){
+        //   $scope.noCustomerOrdersAvailable =false;
+        // }
         $scope.$digest();
     }
 
