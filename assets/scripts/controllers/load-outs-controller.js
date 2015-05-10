@@ -26,6 +26,9 @@ angular.module('fmApp')
   $scope.loadOut.delivery_date = todayDayFormatted;
   $scope.loadOut.flag = "add";
 
+  $scope.ordersAvailableList = {};
+  $scope.ordersAvailableListEdit = {};
+
   $scope.sortCriteria = '';
   
   var getCustomerOrdersAvailable = function () {
@@ -231,15 +234,6 @@ angular.module('fmApp')
       console.log('Sails responded with put address: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-         console.log("Deleted Address");
-         if($scope.noCustomerOrdersAvailable === true){
-           $scope.noCustomerOrdersAvailable = false;
-         }
-         $scope.customerOrdersAvailable.push(customerOrders);
-         $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
-         $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
-         console.log($scope.customerOrdersAvailable);
-         $scope.$digest();
       }
     }); 
   };
@@ -293,18 +287,22 @@ angular.module('fmApp')
         break;
       case "destroyed": 
         console.log("Load Destroyed");
-        var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout});
+        if($scope.noCustomerOrdersAvailable === true){
+          $scope.noCustomerOrdersAvailable =false;
+        }
+
+        var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout_id});
         console.log(index);
         // console.log($scope.loadOuts[index].transactions);
-        var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery[0].delivery_id});
+        var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery_id});
         $scope.loadOuts[index].transactions.splice(transIndex,1);
         // var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
         // console.log(orderDeleted[0]);
-        // $scope.customerOrdersAvailable.push(orderDeleted[0]);
-        // $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
-        // if($scope.noCustomerOrdersAvailable === true){
-        //   $scope.noCustomerOrdersAvailable =false;
-        // }
+        $scope.customerOrdersAvailable.push(msg.data.order);
+        console.log($scope.customerOrdersAvailable);
+
+        $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+        $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         $scope.$digest();
     }
 
