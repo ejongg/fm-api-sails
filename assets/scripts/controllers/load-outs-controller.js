@@ -223,7 +223,8 @@ angular.module('fmApp')
     console.log(customerOrders);
     var deliverInfo = {
       "delivery": customerOrders.id,
-      "loadout": loadout.id
+      "loadout": loadout.id,
+      "order": customerOrders
     };
 
     io.socket.request($scope.socketOptions('post','/delivery/remove',{"Authorization": "Bearer " + authService.getToken()},deliverInfo), function (body, JWR) {
