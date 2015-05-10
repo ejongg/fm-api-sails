@@ -73,8 +73,8 @@ angular.module('fmApp')
     $http.get(httpHost + '/address/list').success( function (data) {
       if(data.length !== 0){
         $scope.addressesAvailable = data;
-        $scope.addressAvailableList = data[0];
-        $scope.addressAvailableListEdit = data[0];
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
         console.log("Addresses Available:");
         console.log($scope.addressesAvailable);
       }else{
@@ -403,22 +403,33 @@ angular.module('fmApp')
     console.log("Dropped");
     console.log(data);
     console.log($scope.route.address);
-    if(_.findIndex($scope.route.address,{ 'id': data.id}) === -1 ){
-      $scope.route.address.push(data);
-      console.log($scope.route.address);
-      console.log("add address");
-    }else{
-       console.log("address exist");
-      $scope.showExistingAddressInRouteError(true,data.address_name);
-    }
+
+    console.log("Find Index");
+    var index = _.findIndex( $scope.addressesAvailable,{'id': data.id});
+    console.log(index);
+    
+    console.log("Splice");
+    $scope.addressesAvailable.splice(index,1);
+    $scope.addressAvailableList  =  $scope.addressesAvailable[0];
+    $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
+    $scope.route.address.push(data);
   };
 
-  $scope.addAvaiableAddressEdit = function (data, index, name){
+  $scope.addAvaiableAddressEdit = function (data, routeIndex, name){
     console.log("Dropped");
     console.log(data);
     console.log(name);
- 
-    var currentAddress = $scope.routes[index].address;
+    
+    console.log("Find Index");
+    var index = _.findIndex( $scope.addressesAvailable,{'id': data.id});
+    console.log(index);
+    
+    console.log("Splice");
+    $scope.addressesAvailable.splice(index,1);
+    $scope.addressAvailableList  =  $scope.addressesAvailable[0];
+    $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
+
+    var currentAddress = $scope.routes[routeIndex].address;
     console.log(currentAddress);
     currentAddress.push(data);
 
@@ -443,16 +454,17 @@ angular.module('fmApp')
     
     var addressInfo = {
     "route": route,
-    "address": address
+    "address": address.id
     };
 
-    console.log(addressInfo);
+    console.log(address);
 
     io.socket.request($scope.socketOptions('post','/address/remove',{"Authorization": "Bearer " + authService.getToken()},addressInfo), function (body, JWR) {
       console.log('Sails responded with put address: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Deleted Address");
+         $scope.addressesAvailable.push(address);
          $scope.$digest();
       }
     }); 
