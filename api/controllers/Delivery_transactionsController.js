@@ -32,7 +32,7 @@ module.exports = {
 					})
 
 					.then(function (foundOrder){
-						sails.sockets.blast("loadout", {verb : "destroyed", data : foundOrder});
+						sails.sockets.blast("loadout", {verb : "destroyed", data : {order : foundOrder, delivery_id : delivery}});
 						return res.send("Delivery removed from " + loadout, 200);
 					})
 
