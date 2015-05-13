@@ -401,6 +401,10 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
     return $filter('date')(passedDate,'yyyy-MM-dd');
   };
 
+  $scope.sortData = function(data,predicate){
+    return $filter('orderBy')(data,predicate);
+  };
+
 }]);
 
 var isEmpty = function (value) {

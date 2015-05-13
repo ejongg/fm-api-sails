@@ -72,7 +72,7 @@ angular.module('fmApp')
   var getAdressesAvailable = function () {
     $http.get(httpHost + '/address/list').success( function (data) {
       if(data.length !== 0){
-        $scope.addressesAvailable = data;
+        $scope.addressesAvailable = $scope.sortData(data,'address_name');
         $scope.addressAvailableList = $scope.addressesAvailable[0];
         $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
         console.log("Addresses Available:");
@@ -143,10 +143,21 @@ angular.module('fmApp')
   };
 
   $scope.showAddRouteBox = function (data){
+    if($scope.editIndex !== -1){
+      $scope.editIndex = -1;
+    }
     $scope.addRouteBox = data;
     if(data === false){
       $scope.route.route_name = '';
-      $scope.route.address= [];
+      if($scope.route.address.length !== 0){
+        for (var i = 0; i < $scope.route.address.length; i++) {
+          $scope.addressesAvailable.push($scope.route.address[i]);
+        }
+        $scope.route.address= [];
+        $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.noAddressesAvailable = false;
+      }
     }
   };
 
@@ -242,6 +253,9 @@ angular.module('fmApp')
   };
 
   $scope.setEditRoute = function (index){
+     if($scope.addRouteBox === true){
+       $scope.showAddRouteBox(false);
+     }
      $scope.editIndex = index;
   };
 
@@ -413,6 +427,11 @@ angular.module('fmApp')
     $scope.addressAvailableList  =  $scope.addressesAvailable[0];
     $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
     $scope.route.address.push(data);
+
+     if($scope.addressesAvailable.length === 0){
+      $scope.noAddressesAvailable = true;
+    }
+
   };
 
   $scope.addAvaiableAddressEdit = function (data, routeIndex, name){
@@ -448,6 +467,21 @@ angular.module('fmApp')
          $scope.$digest();
       }
     }); 
+  };
+
+  $scope.deleteAvailableAddress = function (address) {
+    console.log("Find Index");
+    var index = _.findIndex($scope.route.address,{'id': address.id});
+    console.log(index);
+
+    console.log("Splice");
+    $scope.route.address.splice(index,1);
+    $scope.addressesAvailable.push(address);
+    $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+    $scope.addressAvailableList = $scope.addressesAvailable[0];
+    if($scope.noAddressesAvailable === true){
+      $scope.noAddressesAvailable = false;
+    }
   };
 
   $scope.deleteAddressInRoute = function (route,address) {
