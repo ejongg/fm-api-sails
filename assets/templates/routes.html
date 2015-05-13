@@ -322,11 +322,7 @@
           </div>
 
           <div ng-show="addRouteBox">
-              <h4 ng-hide="noAddressesAvailable"><i class="mdi-content-add-circle"></i> ADD ROUTE</h4>
-
-              <div ng-show="noAddressesAvailable" align="center">
-                  <h3><strong>NO ADDRESS AVAILABLE!</strong></h3>
-             </div>
+              <h4><i class="mdi-content-add-circle"></i> ADD ROUTE</h4>
 
             <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
 
@@ -336,7 +332,7 @@
              </div> 
 
              <br>
-              <div class="form-group" ng-hide="noAddressesAvailable">
+              <div class="form-group">
                 <label class="col-md-3">Route:</label>
                 <div class="col-md-7">
                   <input type="text" class="form-control" ng-model="route.route_name" required>
@@ -345,19 +341,18 @@
                 <br>
                 <br>
 
-                <div ng-hide="noAddressesAvailable">
+                <div>
                   <label class="col-md-3">Available Route:</label>
 
-                  <!-- <div class="col-md-8" ng-show="noAddressesAvailable">
+                  <div class="col-md-7" ng-show="noAddressesAvailable">
                     NO ADDRESS AVAILABLE
-                
-                  <div class="col-md-8"> -->
-                  <div class="col-md-7">
-                    <select class="form-control" ng-model="addressAvailableList" ng-options="address as address.address_name for address in addressesAvailable">
+                  </div>
+                  <div class="col-md-7" ng-hide="noAddressesAvailable">
+                    <select class="form-control" ng-model="addressAvailableList" ng-options="address as address.address_name for address in addressesAvailable | orderBy: 'address_name'">
                     </select> 
                   </div>
 
-                    <button type="button" class="btn btn-xs btn-default  pull-right" align="right" ng-click="addAvaiableAddress(addressAvailableList)">ADD</button>
+                    <button ng-hide="noAddressesAvailable" type="button" class="btn btn-xs btn-default  pull-right" align="right" ng-click="addAvaiableAddress(addressAvailableList)">ADD</button>
               </div>
 
               <br>
@@ -365,15 +360,14 @@
               <br>
         
 
-                <div class="routeBox" ng-hide="noAddressesAvailable"> <br>
-                  <div ng-repeat="address in route.address" style=" z-index: -10000;"> 
-                    <div class="col-md-offset-1" style="padding-top:5px;">{{address.address_name}}</div>
-                  </div>      
+                <div class="routeBox"> <br>
+                   <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="address in route.address" class="btn btn-xs btn-danger" ng-click="deleteAvailableAddress(address)"> {{address.address_name}} &nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong>
+                   </button> &nbsp;   
                 </div>
 
               <div class="form-group pull-right">
                 <br>
-                 <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-xs btn-primary" ng-hide="noAddressesAvailable">Add</button>
+                 <button type="submit" ng-disabled="routeAddForm.$invalid || route.address.length === 0" class="btn btn-xs btn-primary">Add</button>
                  <button type="button" ng-click="showAddRouteBox(false)" class="btn btn-xs btn-default">Cancel</button>
               </div>
 
@@ -431,7 +425,7 @@
             </div>
 
           <label class="col-md-12">Address:</label>
-                   <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="address in routeInfo.address" class="btn btn-xs btn-danger" ng-click="deleteAddressInRoute(routeInfo.id,address.id)"> {{address.address_name}} &nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong>
+                   <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="address in routeInfo.address" class="btn btn-xs btn-danger" ng-click="deleteAddressInRoute(routeInfo.id,address)"> {{address.address_name}} &nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong>
                    </button> &nbsp;
                   
               <br>

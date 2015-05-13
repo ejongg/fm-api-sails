@@ -35,7 +35,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/customer-orders/list').success( function (data) {
 
       if(data.length !== 0){
-         $scope.customerOrdersAvailable = data;
+         $scope.customerOrdersAvailable = $scope.sortData(data,'customer_id.establishment_name');
          $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
          $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
@@ -105,12 +105,22 @@ angular.module('fmApp')
     }
 
     if(data === false){
-      $scope.loadOut.orders = [];
       $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
       $scope.loadOutNumbers = [1,2,3,4,5];
       if($scope.noTrucks === false){
         $scope.loadOut.truck_id = $scope.trucks[0].id;
       }
+
+      if($scope.loadOut.orders.length !== 0){
+        for (var i = 0; i < $scope.loadOut.orders.length; i++) {
+          $scope.customerOrdersAvailable.push($scope.loadOut.orders[i]);
+        }
+         $scope.loadOut.orders = [];
+         $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
+         $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+         $scope.noCustomerOrdersAvailable = false;
+      }
+
     }
   };
 
@@ -126,7 +136,7 @@ angular.module('fmApp')
     return "Truck " + index;
   };
 
-  $scope.addAvaiableCustomer = function (data,index){
+  $scope.addAvailableCustomer = function (data,index){
     console.log("Dropped");
     console.log(data);
     $scope.loadOut.orders.push(data);
@@ -153,6 +163,21 @@ angular.module('fmApp')
     // };
 
    
+  };
+
+  $scope.deleteAvailableCustomer = function (order) {
+    console.log("Find Index");
+    var index = _.findIndex($scope.loadOut.orders,{'id': order.id});
+    console.log(index);
+
+    console.log("Splice");
+    $scope.loadOut.orders.splice(index,1);
+    $scope.customerOrdersAvailable.push(order);
+    $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
+    $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+    if($scope.noCustomerOrdersAvailable === true){
+      $scope.noCustomerOrdersAvailable = false;
+    }
   };
 
   $scope.editAvailableCustomer = function (data,loadout_no, loadout_id,truck_id){
