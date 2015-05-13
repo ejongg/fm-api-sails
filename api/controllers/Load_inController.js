@@ -11,83 +11,24 @@ module.exports = {
 	
 	add : function(req, res){
 		var products = req.body.products;
+		var loadoutId = req.body.loadout;
+		var loadinNo = req.body.loadin_no;
 
-		var loadin = {
-			date_received : moment().format('YYYY-MM-DD'),
-			loadin_number : req.body.loadin_no,
-			loadout_id : req.body.loadout
-		};
-
-		var loadInId = null;
-
-		Load_out.findOne({id : req.body.loadout})
+		Load_out.findOne({id : loadoutId})
 			.then(function (loadout){
-				return new Promise(function (resolve, reject){
-					loadout.status = "Complete";
-
-					loadout.save(function (err, saved){
-						resolve();
-					});
-				});
+				return LoadOutService.changeStatus(loadout);
 			})
 
 			.then(function (){
-				return new Promise(function (resolve, reject){
-					Delivery_transactions.find({loadout_id : req.body.loadout})	
-						.then(function (deliveries){
-							return deliveries;
-						})
-
-						.each(function (delivery){
-							return new Promise(function (resolve, reject){
-								OrderService.completeOrders(delivery.id)
-									.then(function (){
-										delivery.status = "Complete";
-										delivery.save(function (err, saved){
-											resolve();
-										});
-									})
-							});							
-						})
-
-						.then(function (){
-							resolve();
-						})
-				});
+				return DeliveryService.completeDeliveries(loadoutId);
 			})
 
 			.then(function (){
-				return new Promise(function (resolve, reject){
-					Load_in.create(loadin)
-						.then(function createLoadInProducts(createdLoadIn){
-							loadInId = createdLoadIn.id;
-							
-							resolve(products);
-						})
-				});
-			})
-
-			.each(function (product){
-				return new Promise(function (resolve, reject){
-					var loadInProduct = {
-						sku_id : product.sku_id,
-						cases : product.cases,
-						loadin_id : loadInId
-					};
-
-					Loadin_products.create(loadInProduct)
-						.then(function(createdLoadInProduct){
-							return InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay_id, product.prod_date, product.lifespan)
-						})
-
-						.then(function (){
-							resolve();
-						})
-				});
+				return LoadInService.createLoadin(loadinNo, loadoutId, products);
 			})
 
 			.then(function (){
-				return res.send(200);
+				return res.send("Load in successful", 200);
 			})
 	}
 };

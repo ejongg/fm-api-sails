@@ -42,7 +42,16 @@ module.exports = {
 				.then(function (){
 					resolve();
 				})
+		});
+	},
 
+	changeStatus : function (loadout){
+		return new Promise(function (resolve){
+			loadout.status = "Complete";
+
+			loadout.save(function (err, saved){
+				resolve();
+			});
 		});
 	}
 }
