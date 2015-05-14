@@ -1,34 +1,46 @@
-var Promise = require("bluebird");
+var Promise = require('bluebird');
+var moment = require('moment');
 
 module.exports = {
-	createBadOrderProducts : function (products , badOrderId){
-		return new Promise(function (resolve, reject){
-
-			function getProducts(){
-				return new Promise(function (resolve, reject){
-					resolve(products);
-				})
+	createBadOrder : function (expense, accountable, products){
+		return new Promise(function (resolve){
+			var badOrder = {
+				expense : expense,
+				accountable : accountable,
+				date : moment().format('YYYY-MM-DD')
 			};
 
-			getProducts()
-				.each(function (product){
-					return BadOrdersService.createProducts(product, badOrderId);
-				})
+			Bad_orders.create(badOrder)
+				.then(function (createdBadOrder){
 
-				.then(function (){
-					resolve(badOrderId);
-				})				
+					new Promise(function (resolve){
+						resolve(products);
+					})
+
+					.each(function (product){
+						return BadOrdersService.createBadOrderProduct(product, createdBadOrder.id);
+					})
+
+					.then(function (){
+						resolve(createdBadOrder);
+					})
+				})
 		});
 	},
 
-	createProducts : function (product, badOrderId){
-		return new Promise(function (resolve, reject){
+	createBadOrderProduct : function (product, badOrderId){
+		return new Promise(function (resolve){
+
 			var badOrderItem = {
 				bad_order_id : 	badOrderId,
 				sku_id : product.sku_id,
 				bottles : product.bottles,
 				cases : product.cases,
 				reason : product.reason
+			};
+
+			if(product.bottles > 0){
+				badOrderItem.cases = badOrderItem.cases - 1;
 			};
 
 			Bad_order_details.create(badOrderItem)
@@ -38,7 +50,7 @@ module.exports = {
 
 				.then(function (){
 					resolve();
-				})
+				})		
 		});
 	}
 };

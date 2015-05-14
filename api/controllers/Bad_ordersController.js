@@ -10,26 +10,13 @@ var Promise = require("bluebird");
 module.exports = {
 	add : function(req, res){
 		var products = req.body.products;
+		var expense = req.body.total_expense;
+		var accountable = req.body.accountable;
 
-		var bad_order = {
-			expense : req.body.total_expense,
-			accountable : req.body.accountable,
-			date : moment().format('YYYY-MM-DD')
-		};
-
-		Bad_orders.create(bad_order)
-			.then(function (createdBadOrder){
-				return new Promise(function (resolve, reject){
-					BadOrdersService.createBadOrderProducts(products, createdBadOrder.id)
-						.then(function (){
-							resolve(createdBadOrder);
-						})
-				});			
-			})
-
+		BadOrdersService.createBadOrder(expense, accountable, products)
 			.then(function (createdBadOrder){
 				sails.sockets.blast('bad_orders', {verb : "created", data : createdBadOrder});
-				return res.send(201);
+				return res.send("Bad order recorded", 201);
 			})
 	},
 
