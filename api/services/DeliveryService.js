@@ -89,5 +89,19 @@ module.exports = {
 
 				})
 		});	
+	},
+
+	assignEmpties : function (returnId){
+		return new Promise(function (resolve){
+
+			Delivery_transactions.findOne({id : deliveryId})
+				.then(function (foundDelivery){
+					foundDelivery.returns_id = returnId;
+
+					foundDelivery.save(function (err, saved){
+						resolve(saved);
+					});
+				})
+		});
 	}
 };

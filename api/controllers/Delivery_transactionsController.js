@@ -80,6 +80,26 @@ module.exports = {
 				});
 				
 			})
+	},
+
+	empties : function (req, res){
+		var returns = req.body.returns;
+		var deposit = req.body.deposit;
+		var deliveryId = req.body.delivery;
+
+		if(!deposit){
+			deposit = 0;
+		}
+
+		ReturnsService.createReturns(returns, deposit)
+			.then(function (returnId){
+				return DeliveryService.assignEmpties(returnId);
+			})
+
+			.then(function (updatedDelivery){
+				sails.sockets.blast('delivery_transactions', {verb : "updated", data : updatedDelivery});
+				return res.send("Empties successfully added")
+			})
 	}
 };
 
