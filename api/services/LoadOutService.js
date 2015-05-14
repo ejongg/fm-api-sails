@@ -53,5 +53,24 @@ module.exports = {
 				resolve();
 			});
 		});
+	},
+
+	countTransactions : function (loadoutId){
+		return new Promise(function (resolve){
+
+			Delivery_transactions.find({loadout_id : loadoutId})
+				.then(function (transactions){
+
+					if(transactions.length == 0){
+
+						return Load_out.destroy({id : loadoutId});
+						resolve();
+
+					}else{
+						resolve();
+					}
+
+				})
+		});		
 	}
 }

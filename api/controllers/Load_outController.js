@@ -10,13 +10,15 @@
 
 module.exports = {
 	add : function(req, res){
+
 		var orders = req.body.orders;
-		var truckId = req.body.truck_id;
-		var user = req.body.user;
-		var deliveryDate = moment(req.body.delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+		var truckId = req.body.truck_id;	
 		var loadoutNumber = req.body.loadout_no;
 		var loadoutId = req.body.loadout_id;
+		var user = req.body.user;
 		var flag = req.body.flag;
+		var deliveryDate = moment(req.body.delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+
 
 		var loadout = {
 			loadout_number : loadoutNumber,
@@ -57,7 +59,6 @@ module.exports = {
 
 			.then(function (){
 				LoadOutService.getDetails(createdLoadout)
-
 					.then(function(detailedLoadout){
 
 						if(flag == "add"){

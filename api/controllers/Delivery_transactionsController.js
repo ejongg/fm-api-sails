@@ -9,53 +9,30 @@ var Promise = require("bluebird");
 
 module.exports = {
 	remove : function (req, res){
-		var delivery = req.body.delivery;
+
+		var deliveryId = req.body.delivery;
 		var loadout = req.body.loadout;
 		var order = req.body.order;
 
-		Delivery_transactions.destroy({id : delivery})
-			.then(function (destroyedDelivery){
-				return destroyedDelivery;
+		Delivery_transactions.destroy({id : deliveryId})
+			.then(function (){
+				return Customer_orders.findOne({id : order.order_id}).populateAll();
 			})
 
-			.then(function (destroyedDelivery){
-				Customer_orders.findOne({id : order.order_id}).populateAll()
-					.then(function (foundOrder){
+			.then(function (customerOrder){
+				return CustomerOrderService.getOrderProducts(customerOrder);		
+			})
 
-						return new Promise (function (resolve, reject){
-							Customer_order_products.find({order_id : foundOrder.id}).populate('sku_id')
-								.then(function getProducts(products){
-									foundOrder.productslist = products;
-									resolve(foundOrder);					
-								});	
+			.then(function (detailedOrder){
+				sails.sockets.blast("loadout", {verb : "destroyed", data : {order : detailedOrder, delivery_id : deliveryId, loadout_id : loadout}});
+			})
 
-						});
+			.then(function (){
+				return LoadOutService.countTransactions(loadout);				
+			})
 
-					})
-
-					.then(function (foundOrder){
-						return new Promise(function (resolve){
-							Delivery_transactions.find({loadout_id : loadout})
-								.then(function (transactions){
-
-									if(transactions.length == 0){
-										return Load_out.destroy({id : loadout});
-										sails.sockets.blast("loadout", {verb : "deleted", data : loadout});
-										resolve(foundOrder);
-									}else{
-										resolve(foundOrder);
-									}
-
-								})
-						});						
-					})
-
-					.then(function (foundOrder){
-						sails.sockets.blast("loadout", {verb : "destroyed", data : {order : foundOrder, delivery_id : delivery, loadout_id : loadout}});
-						return res.send("Delivery removed from " + loadout, 200);
-					})
-
-
+			.then(function (){
+				return res.send("Delivery removed from " + loadout, 200);
 			})
 	},
 
