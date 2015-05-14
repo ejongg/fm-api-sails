@@ -59,7 +59,7 @@
 
 
         <div  class="form-group">
-          <form name="loadOutAddForm" ng-submit="addLoadOut(loadOut)" novalidate>
+          <form name="loadOutAddForm" novalidate>
 
               <div class="form-group">
                 <label class="col-md-4">Establishment Name:</label>
@@ -117,7 +117,7 @@
 
              <div class="form-group pull-right" >
                 <br>
-               <button ng-hide="noCustomerOrdersAvailable && loadOut.orders.length === 0" type="submit" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-primary">Add</button>
+               <button type="submit" ng-click="addLoadOut(loadOut)" ng-hide="noCustomerOrdersAvailable && loadOut.orders.length === 0" ng-disabled="loadOutAddForm.$invalid || loadOut.orders.length === 0" class="btn btn-flat btn-primary">Add</button>
 
                <button type="button" ng-click="showAddLoadOutBox(false)" class="btn btn-xs btn-default">Cancel</button>
              </div>

@@ -223,6 +223,7 @@ angular.module('fmApp')
   };
 
   $scope.addLoadOut = function (loadOut) {
+    console.log("loadout");
     $scope.loadOut.user = $scope.userName;
     var addLoadOut = {
       "delivery_date": loadOut.delivery_date,
