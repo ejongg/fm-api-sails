@@ -11,14 +11,17 @@
 module.exports = {
 	add : function(req, res){
 
-		var orders = req.body.orders;
+		var orders = req.body.orders;	
+		var user = req.body.user;
+		var flag = req.body.flag;
 		var truckId = req.body.truck_id;	
 		var loadoutNumber = req.body.loadout_no;
 		var loadoutId = req.body.loadout_id;
-		var user = req.body.user;
-		var flag = req.body.flag;
 		var deliveryDate = moment(req.body.delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD');
 
+		if(!Array.isArray(orders)){
+			orders = [orders];
+		}
 
 		var loadout = {
 			loadout_number : loadoutNumber,
@@ -30,44 +33,35 @@ module.exports = {
 
 		Load_out.findOrCreate(loadout, loadout)
 			.then(function (resultLoadout){
-				createdLoadout = resultLoadout;
+				return resultLoadout;
 			})
 
-			.then(function (){
-				return new Promise(function (resolve, reject){
-					if(Array.isArray(orders)){
+			.then(function (resultLoadout){
+				return new Promise(function (resolve){
+					new Promise (function (resolve){
 						resolve(orders);
-					}else{
-						resolve([orders]);
-					}
+					})
+
+					.each(function (order){
+						return DeliveryService.createDelivery(order, resultLoadout.id, loadoutNumber, truckId, deliveryDate, user)
+					})
+
+					.then(function (){
+						resolve(resultLoadout);
+					})
 				});
 			})
 
-			.each(function (order){
-				return new Promise(function (resolve, reject){
-
-					DeliveryService.createDelivery(order, createdLoadout.id, loadoutNumber, truckId, deliveryDate, user)
-						.then(function (createdDelivery){
-
-							Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id})
-								.then(function (updatedOrder){
-									resolve();	
-								})
-						})
-				});
-			})
-
-			.then(function (){
-				LoadOutService.getDetails(createdLoadout)
+			.then(function (resultLoadout){
+				LoadOutService.getDetails(resultLoadout)
 					.then(function(detailedLoadout){
-
 						if(flag == "add"){
-							sails.sockets.blast("loadout", {verb : "created", data : detailedLoadout});	
+							sails.sockets.blast("loadout", {verb : "created", data : detailedLoadout});
+							return res.send("Loadout successfully created", 200);	
 						}else{
 							sails.sockets.blast("loadout", {verb : "updated", data : detailedLoadout});
-						}
-						
-						return res.send("Loadout successfully added");
+							return res.send("Loadout successfully updated", 200);	
+						}	
 					})	
 			})
 	},
