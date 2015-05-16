@@ -4,25 +4,22 @@
  * @description :: Server-side logic for managing addresses
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
- var Promise = require('bluebird');
+var Promise = require('bluebird');
 
 module.exports = {
 	remove : function(req, res){
-		var address = req.body.address;
+		var addressId = req.body.address;
 		var route = req.body.route;
 
-		Address.findOne({id : address})
-			.then(function removeRoute(foundAddress){
-				return AddressService.removeRoute(foundAddress);
-			})
-
-			.then(function emitEvent(updatedAddress){
-				var obj = {
+		Address.update({id : addressId}, {route_id : null})
+			.then(function (updatedAddress){
+				
+				var data = {
 					address : updatedAddress,
 					route : route
 				};
 
-				sails.sockets.blast("address", {verb : "removed", data : obj});
+				sails.sockets.blast("address", {verb : "removed", data : data});
 				return res.send("Address removed from route " + route, 200);
 			})
 
