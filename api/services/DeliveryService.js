@@ -3,8 +3,8 @@ var moment = require('moment');
 var Promise = require("bluebird");
 
 module.exports = {
-	createDeliveryProducts : function (deliveryId, product){
-		return new Promise(function (resolve, reject){
+	createDeliveryProducts : function (product, deliveryId){
+		return new Promise(function (resolve){
 			var orderProduct = {
 				dtrans_id : deliveryId,
 				sku_id : product.sku_id,
@@ -12,20 +12,19 @@ module.exports = {
 			};
 
 			Delivery_products.create(orderProduct)
-				.then(function (deliveryProduct){
+				.then(function (){
 					resolve();
 				})
 		});
 	},
 
 	createDelivery : function (order, loadoutId, loadoutNumber, truckId, deliveryDate, user){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 			var delivery = {
 				total_amount : order.total_amount,				
 				customer_id : order.customer_id.id,
 				order_id : order.id,
 				loadout_id : loadoutId,
-				loadout_number : loadoutNumber,
 				delivery_date : deliveryDate,
 				truck_id : truckId,
 				user : user	
@@ -37,22 +36,27 @@ module.exports = {
 				})
 
 				.then(function (createdDelivery){
-					return new Promise(function (resolve, reject){
-						async.each(order.productslist, function (product, cb){
-							DeliveryService.createDeliveryProducts(createdDelivery.id, product)
-								.then(function (){
-									cb();
-								})
-						},
+					return new Promise(function (resolve){
+						new Promise(function (resolve){
+							resolve(order.productslist);
+						})
 
-						function (err){
+						.each(function (product){
+							return DeliveryService.createDeliveryProducts(product, createdDelivery.id);
+						})
+						
+						.then(function (){
 							resolve(createdDelivery);
-						});
+						})
 					});
 				})
 
 				.then(function (createdDelivery){
-					resolve(createdDelivery);
+					return Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id});
+				})
+
+				.then(function (){
+					resolve();
 				})
 		});
 	},

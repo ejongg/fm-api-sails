@@ -59,7 +59,6 @@ module.exports = {
 
 	getOrderProducts : function(order){
 		return new Promise(function (resolve){
-
 			Customer_order_products.find({order_id : order.id}).populate('sku_id')
 				.then(function (products){
 					order.productslist = products;

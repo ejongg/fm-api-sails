@@ -16,7 +16,7 @@ module.exports = {
 
 		Delivery_transactions.destroy({id : deliveryId})
 			.then(function (){
-				return Customer_orders.findOne({id : order.order_id}).populateAll();
+				return Customer_orders.findOne({id : order.order_id}).populate("customer_id");
 			})
 
 			.then(function (customerOrder){
