@@ -124,7 +124,7 @@ angular.module('fmApp')
     $scope.order.cases = null;
     $scope.order.establishment = '';
     $scope.order.owner = '';
-    $scope.cokeagent_name = '';        
+    $scope.order.cokeagent_name = '';        
   };
 
   $scope.getOrderProducts = function (order_id) {
