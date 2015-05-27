@@ -93,7 +93,7 @@ module.exports = {
 
 		ReturnsService.createReturns(returns, deposit)
 			.then(function (returnId){
-				return DeliveryService.assignEmpties(returnId);
+				return DeliveryService.assignEmpties(deliveryId, returnId);
 			})
 
 			.then(function (updatedDelivery){

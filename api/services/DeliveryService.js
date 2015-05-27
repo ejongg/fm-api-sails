@@ -95,7 +95,7 @@ module.exports = {
 		});	
 	},
 
-	assignEmpties : function (returnId){
+	assignEmpties : function (deliveryId, returnId){
 		return new Promise(function (resolve){
 
 			Delivery_transactions.findOne({id : deliveryId})
