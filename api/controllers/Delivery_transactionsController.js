@@ -104,9 +104,20 @@ module.exports = {
 
 	list : function (req, res){
 		var loadoutId = req.query.loadout;
+		var deliveryId = req.query.id;
 		var deliveryList = [];
 
-		Delivery_transactions.find({loadout_id : loadoutId}).populate('products').populate('customer_id')
+		var findDelivery = {
+			loadout_id : loadoutId
+		};
+
+		if(deliveryId){
+			findDelivery = {
+				id : deliveryId
+			}
+		}
+
+		Delivery_transactions.find(findDelivery).populate('products').populate('customer_id')
 			.then(function (deliveries){
 				return deliveries;
 			})
@@ -120,16 +131,16 @@ module.exports = {
 					.each(function (product){
 						return new Promise(function (resolve){
 							SkuService.getSkuDetails(product.sku_id)
-							.then(function (detailedProduct){
-								product.sku_id = detailedProduct;
-								deliveryList.push(delivery);
-								resolve();
-							})
+								.then(function (detailedProduct){
+									product.sku_id = detailedProduct;
+									resolve();
+								})
 						});
 						
 					})
 
 					.then(function (){
+						deliveryList.push(delivery);
 						resolve();
 					})
 				});
