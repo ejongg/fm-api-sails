@@ -100,6 +100,44 @@ module.exports = {
 				sails.sockets.blast('delivery_transactions', {verb : "updated", data : updatedDelivery});
 				return res.send("Empties successfully added")
 			})
+	},
+
+	list : function (req, res){
+		var loadoutId = req.query.loadout;
+		var deliveryList = [];
+
+		Delivery_transactions.find({loadout_id : loadoutId}).populate('products')
+			.then(function (deliveries){
+				return deliveries;
+			})
+
+			.each(function (delivery){
+				return new Promise(function (resolve){
+					new Promise(function (resolve){
+						resolve(delivery.products);
+					})
+
+					.each(function (product){
+						return new Promise(function (resolve){
+							SkuService.getSkuDetails(product.sku_id)
+							.then(function (detailedProduct){
+								product.sku_id = detailedProduct;
+								deliveryList.push(delivery);
+								resolve();
+							})
+						});
+						
+					})
+
+					.then(function (){
+						resolve();
+					})
+				});
+			})
+
+			.then(function (){
+				return res.send(deliveryList, 200);
+			})
 	}
 };
 
