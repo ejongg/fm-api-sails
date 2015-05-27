@@ -147,7 +147,12 @@ module.exports = {
 			})
 
 			.then(function (){
-				return res.send(deliveryList, 200);
+				if(deliveryId){
+					return res.send(deliveryList[0], 200);
+				}else{
+					return res.send(deliveryList, 200);
+				}
+				
 			})
 	}
 };
