@@ -104,19 +104,9 @@ module.exports = {
 
 	list : function (req, res){
 		var loadoutId = req.query.loadout;
-		var deliveryId = req.query.id;
 		var deliveryList = [];
 
-		var findDelivery = {
-			id : deliveryId, 
-			loadout_id : loadoutId
-		};
-
-		if(!deliveryId){
-			delete findDelivery.id;
-		}
-
-		Delivery_transactions.find(findDelivery).populate('products').populate('customer_id')
+		Delivery_transactions.find({loadout_id : loadoutId}).populate('products').populate('customer_id')
 			.then(function (deliveries){
 				return deliveries;
 			})
