@@ -166,7 +166,7 @@
                   </div>
 
                     <div class="form-group rightalign">
-                        <button type="submit" class="btn btn-primary" ng-disabled="deleteProductForm.$invalid">Delete</button>
+                        <button type="button" class="btn btn-primary" ng-disabled="deleteProductForm.$invalid"  data-toggle="modal" data-target="#myModal">Delete</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteProductForm(false)">Cancel</button> 
                     </div>
                 </fieldset>
@@ -192,7 +192,7 @@
 
         <div class="form-group">
           <label for="select" class="col-md-2">Number of rows:</label>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
                   <option value="10">10</option>
                   <option value="25">25</option>
@@ -250,5 +250,33 @@
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Confirmation</h4> 
+      </div>
+      <div class="modal-body">
+            Do you really want to delete the data?
+      </div>
+      <div class="modal-footer">
+            <form class="form-horizontal" name="deleteProductForm" ng-submit="deleteProduct(productDelete)" novalidate>
+
+          <button type="submit" class="btn btn-primary" >Yes</button>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+
+         </form>
+
+        
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 

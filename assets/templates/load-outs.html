@@ -22,7 +22,7 @@
                         <li>
                             <a ng-click="showAddLoadOutBox(true)">
                               <h6><i class="mdi-content-add-box"/>
-                              &nbsp;ADD LOUD OUT&nbsp;</h6></a>
+                              &nbsp;ADD LOAD OUT&nbsp;</h6></a>
                         </li>
 
                         <li>
@@ -127,7 +127,6 @@
      </div>
     </div>
 
-    </div>
 
      <!-- Right Panel -->
 
@@ -143,7 +142,7 @@
 
 
        
-       <div ng-hide="noLoadOut" ng-repeat="loadOut in loadOuts" ng-class="addLoadOutBox ? 'col-xs-12 col-md-12' : 'col-md-6'">
+       <div ng-repeat="loadOut in loadOuts" ng-class="addLoadOutBox ? 'col-xs-12 col-md-12' : 'col-md-6'">
           <div class="panel-primary" >
               <div class="panel-heading" >
                 <h3 class="panel-title">{{getTruckNumber(loadOut.truck_id)}} Load out #{{loadOut.loadout_number}}</h3>
