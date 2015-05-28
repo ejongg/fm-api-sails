@@ -147,21 +147,21 @@
         <table class="table table-striped table-hover ">
             <thead>
                 <tr>
-                    <th>SKU&nbsp;
-              <a href="" ng-click="sortCriteria = '-sku_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+sku_name'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                    <th>Cases&nbsp;
-              <a href="" ng-click="sortCriteria = '-cases'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+cases'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                  <th>SKU&nbsp;
+                  </th>
 
-              <th>Bottles&nbsp;
-              <a href="" ng-click="sortCriteria = '-cases'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+cases'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                    <th>Expense&nbsp;
-              <a href="" ng-click="sortCriteria = '-expense'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+expense'" class="arrowlink2"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                    <th>Reason</th>
-                    <th></th>
+                  <th>Cases&nbsp;
+                  </th>
+
+                  <th>Bottles&nbsp;
+                  </th>
+                  
+                  <th>Expense&nbsp;
+                  </th>
+                  
+                  <th>Reason</th>
+                  
+                  <th></th>
                 </tr>
             </thead>
 
@@ -233,23 +233,50 @@
 
             <thead>
               <tr class="labels">
-                <th>Bad Order #&nbsp;
-              <a href="" ng-click="sortCriteria='-id'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" ng-click="sortCriteria='+id'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                <th>Expense&nbsp;
-              <a href="" ng-click="sortCriteria='-expense'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" ng-click="sortCriteria='+expense'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                <th>Accountable&nbsp;
-              <a href="" ng-click="sortCriteria='-accountable'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" ng-click="sortCriteria='+accountable'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
-                <th>Date&nbsp;
-              <a href="" ng-click="sortCriteria='-date'" class="arrowlink"><i class="mdi-navigation-arrow-drop-down downa"></i></a>
-              <a href="" ng-click="sortCriteria='+date'" class="arrowlink"><i class="mdi-navigation-arrow-drop-up upa"></i></a></th>
+                <th>
+                  <a href="" ng-click="sortCriteria='id'; reverseSort = !reverseSort">
+                    Bad Order #
+                    <span ng-show="sortCriteria == 'id'">
+                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                    </span>
+                  </a>
+                </th>
+
+                <th>
+                  <a href="" ng-click="sortCriteria='expense'; reverseSort = !reverseSort">
+                    Expense
+                    <span ng-show="sortCriteria == 'expense'">
+                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                    </span>
+                  </a>
+                </th>
+               
+                <th>
+                  <a href="" ng-click="sortCriteria='accountable'; reverseSort = !reverseSort">
+                    Accountable
+                    <span ng-show="sortCriteria == 'accountable'">
+                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                    </span>
+                  </a>
+                </th>
+                
+                <th>
+                  <a href="" ng-click="sortCriteria='date'; reverseSort = !reverseSort">
+                    Date
+                    <span ng-show="sortCriteria == 'date'">
+                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                    </span>
+                  </a>
+                </th>
             </tr>
         </thead>
 
         <tbody>
-          <tr dir-paginate="badOrder in badOrdersList | filter: search | orderBy: sortCriteria | itemsPerPage: 10" ng-click="getBadOrderDetails(badOrder.id)"  data-toggle="modal" data-target="#myModal">
+          <tr dir-paginate="badOrder in badOrdersList | filter: search | orderBy: sortCriteria: reverseSort | itemsPerPage: 10" ng-click="getBadOrderDetails(badOrder.id)"  data-toggle="modal" data-target="#myModal">
             <td>{{badOrder.id}}</td>
             <td>{{badOrder.expense}}</td>
             <td>{{badOrder.accountable}}</td>

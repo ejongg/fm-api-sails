@@ -23,6 +23,10 @@ angular.module('fmApp')
   $scope.noSKU = false;
   $scope.noEmployees = false;
 
+  // forSorting
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
+
   var getBadOrderList = function () {
     $http.get(httpHost + '/bad_orders').success( function (data) {
       if(data.length !== 0){
