@@ -176,7 +176,6 @@ angular.module('fmApp')
       animation: true,
       templateUrl: 'productModalDelete.html',
       controller: 'ProductModalCtrl',
-      size: 'sm',
       resolve: {
         product: function () {
           return product;

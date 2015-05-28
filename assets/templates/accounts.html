@@ -137,7 +137,7 @@
                             <a ng-click="setEditTab(true)"> <i class="mdi-editor-mode-edit"/>&nbsp; Reset Password</a>
                         </li>
                         <li>
-                            <a ng-click="setResetPasswordTab(false)"><i class="mdi-action-delete"/>&nbsp; Delete Employee</a>
+                            <a ng-click="setResetPasswordTab(false)"><i class="mdi-action-delete"/>&nbsp; Delete Account</a>
                         </li>
                     </ul>
 
@@ -181,7 +181,7 @@
 
             <div class="panel-body" ng-hide="resetPasswordTab">
               <h4><i class="mdi-action-delete"></i> DELETE ACCOUNT </h4>
-             <form class="form-horizontal" name="deleteForm" ng-submit="" novalidate>
+             <form class="form-horizontal" name="deleteForm" novalidate>
                     <fieldset>
 
                         <div class="form-group">
@@ -212,7 +212,7 @@
                         </div>
 
                         <div class="form-group rightalign">
-                            <button type="submit" class="btn btn-primary">Delete</button>
+                            <button type="button" class="btn btn-primary" ng-click="open(userDelete)">Delete</button>
                             <button type="button" class="btn btn-default" ng-click="showEditOrDeleteUserForm(false)">Cancel</button> 
                         </div>
                     </fieldset>
@@ -266,3 +266,21 @@
     </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+
+<!-- Modal -->
+<script type="text/ng-template" id="accountModalDelete.html">
+      <div class="modal-dialog">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete Account</h4> 
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">Yes</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+      </div>
+</script>

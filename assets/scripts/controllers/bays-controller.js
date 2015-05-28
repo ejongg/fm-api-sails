@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('BaysCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
+.controller('BaysCtrl',['$scope','_','$http', 'httpHost', 'authService','$modal', 
+  function($scope, _, $http, httpHost, authService, $modal){
   $scope.pileStatus = ["Full goods", "Moving pile"];
   $scope.bays = [];
   $scope.bayItems = [];
@@ -232,6 +233,39 @@ angular.module('fmApp')
 
   });
 
+  $scope.open = function (bay) {
+    console.log("Open Modal");
 
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'bayModalDelete.html',
+      controller: 'BayModalCtrl',
+      resolve: {
+        bay: function () {
+          return bay;
+        }
+      }
+    });
 
-}]);
+    modalInstance.result.then(function (bay) {
+      $scope.deleteBay(bay);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+}])
+
+.controller('BayModalCtrl', function ($scope, $modalInstance, bay) {
+
+  $scope.ok = function () {
+    $modalInstance.close(bay);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+ 

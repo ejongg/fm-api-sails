@@ -309,7 +309,7 @@
         <div class="panel-body" ng-hide="editSKUTab">
 
             <h4><i class="mdi-action-delete"></i> DELETE SAFE KEEPING UNIT </h4>
-            <form class="form-horizontal" name="deleteskuForm" ng-submit="deleteSKU(skuDelete)" novalidate>
+            <form class="form-horizontal" name="deleteskuForm" novalidate>
                 <fieldset>
 
                     <div class="form-group">
@@ -379,8 +379,8 @@
                     <!-- ADD BUTTON -->
 
                         <div class="icon-preview">
-                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteSkuForm(false)" >Cancel</button>
-                          <button type="submit" class="btn btn-primary btn-xs pull-right">Delete</button>
+                          <button type="button" class="btn btn-default btn-xs rightalign"  ng-click="showEditOrDeleteSkuForm(false)" >Cancel</button>
+                          <button type="button" class="btn btn-primary btn-xs pull-right"  ng-click="open(skuDelete)">Delete</button>
 
                           <br>
                         </div>
@@ -538,3 +538,21 @@
   </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
   <div class="snackbar-container" data-snackbar="true"></div>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+
+
+<!-- Modal -->
+<script type="text/ng-template" id="skuModalDelete.html">
+      <div class="modal-dialog">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete Safe Keeping Unit (SKU)</h4> 
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">Yes</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+      </div>
+</script>

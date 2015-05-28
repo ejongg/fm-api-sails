@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('EmployeesCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
+.controller('EmployeesCtrl',['$scope', '_', '$http', 'httpHost','authService', '$modal', function($scope, _, $http, httpHost, authService, $modal){
 	$scope.positions = ['Driver','Checker','Delivery Sales Personnel','Delivery Helper', 'Encoder', 'Cashier'];
   $scope.statuses = ['Contractual','Provisional','Regular'];
 	$scope.employees = [];
@@ -187,5 +187,38 @@ angular.module('fmApp')
 
   });
 
+    $scope.open = function (employee) {
+    console.log("Open Modal");
 
-}]);
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'employeeModalDelete.html',
+      controller: 'EmployeeModalCtrl',
+      resolve: {
+        employee: function () {
+          return employee;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (employee) {
+      $scope.deleteEmployee(employee);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+}])
+
+  .controller('EmployeeModalCtrl', function ($scope, $modalInstance, employee) {
+
+  $scope.ok = function () {
+    $modalInstance.close(employee);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+

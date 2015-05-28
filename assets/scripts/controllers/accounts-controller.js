@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('AccountsCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
+.controller('AccountsCtrl',['$scope', '_', '$http', 'httpHost','authService', '$modal', function($scope, _, $http, httpHost, authService, $modal){
 	$scope.types = ['admin','encoder','checker','cashier'];
 	$scope.users = [];
 
@@ -146,4 +146,38 @@ angular.module('fmApp')
   });
 
 
-}]);
+  $scope.open = function (account) {
+    console.log("Open Modal");
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'accountModalDelete.html',
+      controller: 'AccountModalCtrl',
+      resolve: {
+        account: function () {
+          return account;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (account) {
+      $scope.deleteUser(account);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+
+}])
+
+    .controller('AccountModalCtrl', function ($scope, $modalInstance, account) {
+
+  $scope.ok = function () {
+    $modalInstance.close(account);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});

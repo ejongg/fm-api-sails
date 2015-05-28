@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('TrucksCtrl',['$scope','_','$http','httpHost', 'authService', function($scope, _, $http, httpHost, authService){
+.controller('TrucksCtrl',['$scope','_','$http','httpHost', 'authService', '$modal', function($scope, _, $http, httpHost, authService, $modal){
   $scope.trucks = [];
   $scope.editIndex = -1;
   $scope.truck = {};
@@ -392,4 +392,39 @@ angular.module('fmApp')
 
   });
 
-}]);
+  $scope.open = function (truckId) {
+    console.log("Open Modal");
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'truckModalDelete.html',
+      controller: 'TruckModalCtrl',
+      resolve: {
+        truckId: function () {
+          return truckId;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (truckId) {
+      $scope.deleteTruck(truckId);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+}])
+ 
+ .controller('TruckModalCtrl', function ($scope, $modalInstance, truckId) {
+
+  $scope.ok = function () {
+    $modalInstance.close(truckId);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+

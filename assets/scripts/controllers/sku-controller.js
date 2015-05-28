@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('SKUCtrl',['$scope','_','authService','httpHost','$http', function($scope, _, authService, httpHost,$http){
+.controller('SKUCtrl',['$scope','_','authService','httpHost','$http', '$modal', 
+  function($scope, _, authService, httpHost,$http, $modal){
 	$scope.products = [];
   $scope.skuLists = [];
 	$scope.existingCompany = [];
@@ -349,4 +350,37 @@ angular.module('fmApp')
     }
   });
 
-}]);
+    $scope.open = function (sku) {
+    console.log("Open Modal");
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'skuModalDelete.html',
+      controller: 'SkuModalCtrl',
+      resolve: {
+        sku: function () {
+          return sku;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (sku) {
+      $scope.deleteSku(sku);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+}])
+
+  .controller('SkuModalCtrl', function ($scope, $modalInstance, sku) {
+
+  $scope.ok = function () {
+    $modalInstance.close(sku);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
