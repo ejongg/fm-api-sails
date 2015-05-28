@@ -19,6 +19,8 @@ module.exports = {
 					route : route
 				};
 
+				RoutesService.checkIfEmpty(route);
+
 				sails.sockets.blast("address", {verb : "removed", data : data});
 				return res.send("Address removed from route " + route, 200);
 			})
