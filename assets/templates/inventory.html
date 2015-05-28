@@ -160,29 +160,70 @@
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
-                      <th>Line&nbsp;
-              <a href="" ng-click="sortCriteria='-bay_label'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+bay_label'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                      <th>SKU&nbsp;
-              <a href="" ng-click="sortCriteria='-sku_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+sku_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                      <th>Exp. date&nbsp;
-              <a href="" ng-click="sortCriteria='-exp_date'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+exp_date'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                      <th>Age&nbsp;
-              <a href="" ng-click="sortCriteria='-age'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+age'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                      <th>Physical Count&nbsp;
-              <a href="" ng-click="sortCriteria='-physical_count'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+physical_count'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                      <th>Logical Count&nbsp;
-              <a href="" ng-click="sortCriteria='-logical_count'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+logical_count'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                        <th>
+                            <a href="" ng-click="sortCriteria='bay_id.bay_name'; reverseSort = !reverseSort">
+                                Line
+                                <span ng-show="sortCriteria == 'bay_id.bay_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='sku_name'; reverseSort = !reverseSort">
+                                SKU
+                                <span ng-show="sortCriteria == 'sku_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='exp_date'; reverseSort = !reverseSort">
+                                Exp. date
+                                <span ng-show="sortCriteria == 'exp_date'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='age'; reverseSort = !reverseSort">
+                                Age
+                                <span ng-show="sortCriteria == 'age'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='physical_count'; reverseSort = !reverseSort">
+                                Physical Count
+                                <span ng-show="sortCriteria == 'physical_count'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='logical_count'; reverseSort = !reverseSort">
+                                Logical Count
+                                <span ng-show="sortCriteria == 'logical_count'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="item in inventory | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
+                    <tr dir-paginate="item in inventory | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
                         <td>{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
                         <td>{{item.sku_name}}</td>
                         <td>{{item.exp_date}}</td>

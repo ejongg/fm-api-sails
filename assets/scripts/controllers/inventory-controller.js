@@ -9,6 +9,7 @@ angular.module('fmApp')
   $scope.noInventory = false;
 
   $scope.sortCriteria='id';
+  $scope.reverseSort = false;
 
   var getInventory = function () {
     // io.socket.request($scope.socketOptions('get','/inventory'), function (body, JWR) {

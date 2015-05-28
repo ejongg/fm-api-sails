@@ -426,35 +426,90 @@
 
                 <thead>
                     <tr>
-                        <th><font size="1px">Brand&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-prod_id.brand_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+prod_id.brand_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th><font size="1px">Name&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-sku_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+sku_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th><font size="1px">Size&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-size'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+size'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th><font size="1px">Company&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-prod_id.company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+prod_id.company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th><font size="1px">Price Per Bottle&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-priceperbottle'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+priceperbottle'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th><font size="1px">Price Per Case&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-pricepercase'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+pricepercase'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th><font size="1px">Bottles&nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-bottlespercase'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+bottlespercase'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th><font size="1px">Lifespan (months) &nbsp;</font>
-              <a href="" ng-click="sortCriteria = '-lifespan'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+lifespan'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                        <th>
+                          <a href="" ng-click="sortCriteria='prod_id.brand_name'; reverseSort = !reverseSort">
+                             Brand
+                              <span ng-show="sortCriteria == 'prod_id.brand_name'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='sku_name'; reverseSort = !reverseSort">
+                                Name
+                                <span ng-show="sortCriteria == 'sku_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='size'; reverseSort = !reverseSort">
+                                Size
+                                <span ng-show="sortCriteria == 'size'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='prod_id.company'; reverseSort = !reverseSort">
+                                Company
+                                <span ng-show="sortCriteria == 'prod_id.company'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='priceperbottle'; reverseSort = !reverseSort">
+                                Price Per Bottle
+                                <span ng-show="sortCriteria == 'priceperbottle'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='pricepercase'; reverseSort = !reverseSort">
+                                Price Per Case
+                                <span ng-show="sortCriteria == 'pricepercase'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+                       
+                        <th>
+                            <a href="" ng-click="sortCriteria='bottlespercase'; reverseSort = !reverseSort">
+                                Bottles
+                                <span ng-show="sortCriteria == 'bottlespercase'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='lifespan'; reverseSort = !reverseSort">
+                                Lifespan (months)
+                                <span ng-show="sortCriteria == 'lifespan'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="sku in skuLists | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="skuClicked(sku)">
+                    <tr dir-paginate="sku in skuLists | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="skuClicked(sku)">
                       <td>{{sku.prod_id.brand_name}}</td>
                       <td>{{sku.sku_name}}</td>
                       <td>{{sku.size}}</td>
