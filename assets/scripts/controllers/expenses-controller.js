@@ -5,6 +5,7 @@ angular.module('fmApp')
   $scope.expenseType = ['Utilities','Breakage', 'Spoilage'];
   $scope.skuList = [];
   $scope.bays = [];
+  $scope.expenses = [];
 
   $scope.expense = {};
   $scope.expense.date = new Date();
@@ -15,6 +16,7 @@ angular.module('fmApp')
 
   $scope.noSKU = false;
   $scope.noBays = false;
+  $scope.noExpenses = false;
 
   $scope.addExpenseForm = false;
   $scope.addOtherMode = true;
@@ -23,6 +25,22 @@ angular.module('fmApp')
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
 
+  
+  var getExpenses = function () {
+    console.log("GET EXPENSES");
+     $http.get(httpHost + '/expenses').success( function (data) {
+      if(data.length !== 0){
+      $scope.expenses = data;
+      console.log("Expenses:");
+      console.log($scope.expenses);
+      }else{
+        console.log("No expenses");
+        $scope.noExpenses = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  }; 
 
   var getSKUAvailable = function () {
     $http.get(httpHost + '/sku/available').success( function (data) {
@@ -54,6 +72,7 @@ angular.module('fmApp')
     });
   };
 
+  getExpenses();
   getSKUAvailable();
   getBays();
 
@@ -66,9 +85,12 @@ angular.module('fmApp')
     }else{
       $scope.addOtherMode = true;
       $scope.expense.sku = $scope.skuList[0];
+      $scope.expense.bay = $scope.bays[0].id;
       $scope.expense.cases = null;
       $scope.expense.bottles = null;
       $scope.expense.date = new Date();
+      $scope.expense.total_amount = 0;
+      $scope.expense.products = [];
     }
 
   };
@@ -79,9 +101,13 @@ angular.module('fmApp')
       console.log("Close");
       $scope.expense = {};
       $scope.expense.type = $scope.expenseType[0];
-      $scope.expense.date = new Date();
-      $scope.expense.products = [];
       $scope.expense.sku = $scope.skuList[0];
+      $scope.expense.bay = $scope.bays[0].id;
+      $scope.expense.cases = null;
+      $scope.expense.bottles = null;
+      $scope.expense.date = new Date();
+      $scope.expense.total_amount = 0;
+      $scope.expense.products = [];
       console.log("Add Other Moder");
       console.log($scope.addOtherMode);
       if($scope.addOtherMode === false){
@@ -107,24 +133,39 @@ angular.module('fmApp')
       "sku_id": expense.sku.id,
       "bottlespercase": expense.sku.bottlespercase,
       "sku": $scope.combine(expense.sku),
-      "bay_id": expense.bay
+      "bay_id": expense.bay,
+      "amount": (expense.bottles * expense.sku.priceperbottle) + (expense.cases * expense.sku.pricepercase)
     };
 
-    if( _.findIndex($scope.expense.products,{ 'id': prod.id}) === -1 ){
+    console.log($scope.expense.products);
+    console.log(prod);
+
+    if( _.findIndex($scope.expense.products,{'sku_id': prod.sku_id}) === -1 ){
            $scope.expense.products.push(prod);
-           $scope.expense.total_amount += (prod.bottles * expense.sku.priceperbottle) + (prod.cases * expense.sku.pricepercase);
+           $scope.expense.total_amount += prod.amount;
            console.log(expense);
            console.log($scope.expense.products);
            console.log($scope.expense.total_amount);
     }else{
-      var index = _.findIndex($scope.expense.products,{ 'id': prod.id});
+      var index = _.findIndex($scope.expense.products,{'sku_id': prod.sku_id});
       console.log(index);
       $scope.expense.products[index].cases += prod.cases;
       $scope.expense.products[index].bottles += prod.bottles;
-      $scope.expense.total_amount += (prod.bottles * expense.sku.priceperbottle) + (prod.cases * expense.sku.pricepercase);
+      $scope.expense.total_amount += prod.amount;
       //$scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
 
+    $scope.expense.sku = $scope.skuList[0];
+    $scope.expense.bay = $scope.bays[0].id;
+    $scope.expense.cases = null;
+    $scope.expense.bottles = null;
+
+  };
+
+  $scope.deleteSKUToList = function (index){
+    console.log($scope.expense.products[index].amount);
+    $scope.expense.total_amount -= $scope.expense.products[index].amount;
+    $scope.expense.products.splice(index,1);
   };
 
   $scope.addExpense = function (expense) {
@@ -154,7 +195,7 @@ angular.module('fmApp')
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-        $scope.showAddPurchaseForm(false);
+        $scope.showAddExpenseForm(false);
         $scope.snackbarShow('Expense Added');
         $scope.expense.total_amount = 0;
         $scope.$digest();
@@ -163,8 +204,21 @@ angular.module('fmApp')
 
   };
 
-  $scope.editExpense = function (expense) {
-    console.log(expense);
-  };
+  io.socket.on('expenses', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    if(msg.verb === 'created'){
+      $scope.expenses.push(msg.data);
+      if($scope.noExpenses === true){
+        $scope.noExpenses = false;
+      }
+      $scope.$digest();
+    }
+    
+
+  });
+
 
 }]);
