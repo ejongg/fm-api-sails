@@ -17,8 +17,10 @@ angular.module('fmApp')
 	$scope.editOrDeleteUserForm = false;
 	// $scope.editUserTab = true;
 
-  //for Sorting
-  $scope.sortCriteria = "";
+  //for sorting
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
+
 
 	var getUsers = function () {
     $http.get(httpHost + '/users').success( function (data) {

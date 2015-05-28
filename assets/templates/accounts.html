@@ -232,20 +232,40 @@
                 <table class="table table-striped table-hover ">
                     <thead>
                         <tr>
-                            <th width="35%">Username&nbsp;
-              <a href="" ng-click="sortCriteria='-username'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+username'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                            <th width="35%">Type&nbsp;
-              <a href="" ng-click="sortCriteria='-type'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+type'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                            <th width="30%">Full Name&nbsp;
-              <a href="" ng-click="sortCriteria='-firstname'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria='+firstname'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                            <th width="35%">
+                                <a href="" ng-click="sortCriteria='username'; reverseSort = !reverseSort">
+                                    Username
+                                    <span ng-show="sortCriteria == 'username'">
+                                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                    </span>
+                                </a>
+                            </th>
+
+                            <th width="35%">
+                                <a href="" ng-click="sortCriteria='type'; reverseSort = !reverseSort">
+                                    Type
+                                    <span ng-show="sortCriteria == 'type'">
+                                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                    </span>
+                                </a>
+                            </th>
+
+                            <th width="30%">
+                                <a href="" ng-click="sortCriteria='firstname'; reverseSort = !reverseSort">
+                                    Full Name
+                                    <span ng-show="sortCriteria == 'firstname'">
+                                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                    </span>
+                                </a>
+                            </th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr dir-paginate="user in users | filter: search | orderBy: sortCriteria | itemsPerPage: 10" ng-click="userClicked(user)">
+                        <tr dir-paginate="user in users | filter: search | orderBy: sortCriteria:reverseSort | itemsPerPage: 10" ng-click="userClicked(user)">
                             <td>{{user.username}}</td>
                             <td>{{user.type}}</td>
                             <td>{{user.firstname + " " + user.lastname}}</td>
