@@ -25,6 +25,8 @@ angular.module('fmApp')
 
   // forSorting
   $scope.sortCriteria = 'id';
+  $scope.reverseSort = false;
+
   
   
   var getSKU = function () {

@@ -223,35 +223,51 @@
         <table  class="table table-striped table-hover " ng-hide="noPurchase || addPurchaseForm">
             <thead>
                 <tr>
-                    <th>Purchase # 
-                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                    <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                    <th>
+                        <a href="" ng-click="sortCriteria='id'; reverseSort = !reverseSort">
+                            Purchase #
+                            <span ng-show="sortCriteria == 'id'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                        </a>
                     </th>
 
             
-                    <th>Date Received
-                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                    <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                    <th>
+                        <a href="" ng-click="sortCriteria='date_received'; reverseSort = !reverseSort">
+                            Date Received
+                            <span ng-show="sortCriteria == 'date_received'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                        </a>
                     </th>
 
-                    <th>Total Cost
-                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                    <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                    <th>
+                        <a href="" ng-click="sortCriteria='total_amount'; reverseSort = !reverseSort">
+                            Total Cost
+                            <span ng-show="sortCriteria == 'total_amount'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                        </a>
                     </th>
 
-                    <th>User
-                    <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                     <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>    
+                    <th>
+                        <a href="" ng-click="sortCriteria='user'; reverseSort = !reverseSort">
+                            User
+                            <span ng-show="sortCriteria == 'user'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                        </a>
                     </th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
+                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
                     <td>{{purchaseInfo.id}}</td>
                     <td>{{purchaseInfo.date_received}}</td>
                     <td>{{purchaseInfo.total_amount}}</td>
