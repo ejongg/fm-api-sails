@@ -85,7 +85,7 @@ module.exports = {
 	empties : function (req, res){
 		var returns = req.body.returns;
 		var deposit = req.body.deposit;
-		var deliveryId = req.body.delivery;
+		var deliveryId = req.body.deliveryId;
 
 		if(!deposit){
 			deposit = 0;
