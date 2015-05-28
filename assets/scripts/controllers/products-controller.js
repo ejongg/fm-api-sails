@@ -192,8 +192,6 @@ angular.module('fmApp')
   };
 
 
-
-
 }])
 
 .controller('ProductModalCtrl', function ($scope, $modalInstance, product) {

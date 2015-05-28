@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('LoadOutsCtrl',['$scope', '_', '$http', 'httpHost','authService','userService','$filter', function($scope, _, $http, httpHost, authService,userService,$filter){
-	
+.controller('LoadOutsCtrl',['$scope', '_', '$http', 'httpHost','authService','userService','$filter', '$modal', function($scope, _, $http, httpHost, authService,userService,$filter,$modal){
+  
   $scope.loadOutNumbers = [1,2,3,4,5];
   $scope.customerOrdersAvailable = [];
   $scope.loadOuts = [];
@@ -342,4 +342,47 @@ angular.module('fmApp')
 
   });
 
-}]);
+
+  $scope.open = function (loadOut,customerOrder) {
+    console.log("Open Modal");
+    console.log(loadOut);
+  console.log(customerOrder);
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'loadOutModalDelete.html',
+      controller: 'LoadOutModalCtrl',
+      resolve: {
+        customerOrder: function () {
+          return customerOrder;
+        },
+        loadOut: function () {
+          return loadOut;
+        }
+
+      }
+    });
+
+    modalInstance.result.then(function (customerOrder, loadOut) {
+      console.log(loadOut);
+  console.log(customerOrder);
+      $scope.deleteOrderInLoadout(loadOut,customerOrder);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+}])
+
+.controller('LoadOutModalCtrl', function ($scope, $modalInstance, loadOut,customerOrder) {
+ console.log(loadOut);
+  console.log(customerOrder);
+  $scope.ok = function () {
+    $modalInstance.close(loadOut,customerOrder);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});

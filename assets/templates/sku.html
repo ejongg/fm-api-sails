@@ -510,14 +510,14 @@
 
                 <tbody>
                     <tr dir-paginate="sku in skuLists | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="skuClicked(sku)">
-                      <td>{{sku.prod_id.brand_name}}</td>
-                      <td>{{sku.sku_name}}</td>
-                      <td>{{sku.size}}</td>
-                      <td>{{sku.prod_id.company}}</td>
-                      <td>{{sku.priceperbottle}}</td>
-                      <td>{{sku.pricepercase}}</td>
-                      <td>{{sku.bottlespercase}}</td>
-                      <td>{{sku.lifespan}}</td>
+                      <td width ="10%">{{sku.prod_id.brand_name}}</td>
+                      <td width ="15%">{{sku.sku_name}}</td>
+                      <td width ="10%">{{sku.size}}</td>
+                      <td width ="10%">{{sku.prod_id.company}}</td>
+                      <td width ="13%">{{sku.priceperbottle}}</td>
+                      <td width ="13%">{{sku.pricepercase}}</td>
+                      <td width ="10%">{{sku.bottlespercase}}</td>
+                      <td width ="15%">{{sku.lifespan}}</td>
                     </tr>
                 </tbody>
             </table>

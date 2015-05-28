@@ -167,11 +167,11 @@
 
             <tbody>
                 <tr ng-repeat="product in products | orderBy: sortCriteria">
-                    <td>{{product.sku_name}}</td>
-                    <td>{{product.cases}}</td>
-                    <td>{{product.bottles}}</td>
-                    <td>{{product.expense}}</td>
-                    <td>{{product.reason}}</td>
+                    <td width="15%">{{product.sku_name}}</td>
+                    <td width="15%">{{product.cases}}</td>
+                    <td width="15%">{{product.bottles}}</td>
+                    <td width="15%">{{product.expense}}</td>
+                    <td width="15%">{{product.reason}}</td>
                     <td><button ng-click="deleteProduct($index)" class="btn btn-primary btn-xs ">Delete</button></td>
                 </tr>
 
@@ -277,10 +277,10 @@
 
         <tbody>
           <tr dir-paginate="badOrder in badOrdersList | filter: search | orderBy: sortCriteria: reverseSort | itemsPerPage: 10" ng-click="getBadOrderDetails(badOrder.id)"  data-toggle="modal" data-target="#myModal">
-            <td>{{badOrder.id}}</td>
-            <td>{{badOrder.expense}}</td>
-            <td>{{badOrder.accountable}}</td>
-            <td>{{badOrder.date}}</td>
+            <td width="10%">{{badOrder.id}}</td>
+            <td width="25%">{{badOrder.expense}}</td>
+            <td width="30%">{{badOrder.accountable}}</td>
+            <td width="20%">{{badOrder.date}}</td>
         </tr>
     </tbody>
 

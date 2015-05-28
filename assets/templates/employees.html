@@ -397,13 +397,13 @@
 
                 <tbody>
                     <tr dir-paginate="employee in employees | filter: search | orderBy:sortCriteria:reverseSort | itemsPerPage: 10" ng-click="employeeClicked(employee)">
-                        <td>{{employee.emp_fname}}</td>
-                        <td>{{employee.emp_lname}}</td>
-                        <td>{{employee.office}}</td>
-                        <td>{{employee.position}}</td>
-                        <td>{{employee.status}}</td>
-                        <td>{{employee.hire_date}}</td>
-                        <td>{{employee.end_contract}}</td>
+                        <td width="15%">{{employee.emp_fname}}</td>
+                        <td width="15%">{{employee.emp_lname}}</td>
+                        <td width="15%">{{employee.office}}</td>
+                        <td width="15%">{{employee.position}}</td>
+                        <td width="15%">{{employee.status}}</td>
+                        <td width="10%">{{employee.hire_date}}</td>
+                        <td width="25%">{{employee.end_contract}}</td>
                     </tr>
 
                 </tbody>
