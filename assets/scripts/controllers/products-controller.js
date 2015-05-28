@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost','authService',
-  function($scope, $http, _,$filter, httpHost, authService){
+.controller('ProductsCtrl',['$scope','$http','_','$filter','httpHost','authService','$modal',
+  function($scope, $http, _,$filter, httpHost, authService, $modal){
 
   $scope.products = [];
   $scope.companies = ['Coca-Cola','SMB'];
@@ -21,6 +21,7 @@ angular.module('fmApp')
 
   //forSorting. Default is set to id
   $scope.sortCriteria = 'id';
+
 
   var getProducts = function () {
     $http.get(httpHost + '/products').success( function (data) {
@@ -167,7 +168,44 @@ angular.module('fmApp')
     }
   });
 
-}]);
+  $scope.open = function (product) {
+    console.log("Open Modal");
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'productModalDelete.html',
+      controller: 'ProductModalCtrl',
+      size: 'sm',
+      resolve: {
+        product: function () {
+          return product;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (product) {
+      $scope.deleteProduct(product);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+
+
+
+}])
+
+.controller('ProductModalCtrl', function ($scope, $modalInstance, product) {
+
+  $scope.ok = function () {
+    $modalInstance.close(product);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
 
 
 

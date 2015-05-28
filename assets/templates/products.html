@@ -147,7 +147,7 @@
           
           <h4><i class="mdi-action-delete"></i> DELETE PRODUCT </h4>
 
-          <form class="form-horizontal" name="deleteProductForm" ng-submit="deleteProduct(productDelete)" novalidate>
+          <form class="form-horizontal" name="deleteProductForm" novalidate>
                 <fieldset>
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Brand Name</label>
@@ -166,7 +166,7 @@
                   </div>
 
                     <div class="form-group rightalign">
-                        <button type="button" class="btn btn-primary" ng-disabled="deleteProductForm.$invalid"  data-toggle="modal" data-target="#myModal">Delete</button>
+                        <button type="button" class="btn btn-primary" ng-click="open(productDelete)" ng-disabled="deleteProductForm.$invalid">Delete</button>
                         <button type="button" class="btn btn-default" ng-click="showEditOrDeleteProductForm(false)">Cancel</button> 
                     </div>
                 </fieldset>
@@ -242,6 +242,8 @@
     </div> 
 </div>
 
+<button ng-click="open()">Open</button>
+
 <!-- END OF LEFT PANEL -->
 
 <div class="snackbar-container" data-snackbar="true"></div>
@@ -252,31 +254,14 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" >
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Confirmation</h4> 
-      </div>
-      <div class="modal-body">
-            Do you really want to delete the data?
-      </div>
-      <div class="modal-footer">
-            <form class="form-horizontal" name="deleteProductForm" ng-submit="deleteProduct(productDelete)" novalidate>
-
-          <button type="submit" class="btn btn-primary" >Yes</button>
-
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-       
-
-         </form>
-
-        
-
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<script type="text/ng-template" id="productModalDelete.html">
+        <div class="modal-body">
+            <h2>Do you really want to delete this product?</h2>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+</script>
 
 
