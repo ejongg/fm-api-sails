@@ -19,6 +19,10 @@ angular.module('fmApp')
   $scope.addExpenseForm = false;
   $scope.addOtherMode = true;
 
+  // forSorting
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
+
 
   var getSKUAvailable = function () {
     $http.get(httpHost + '/sku/available').success( function (data) {
