@@ -246,6 +246,7 @@ angular.module('fmApp')
       console.log('Sails responded with put address: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
+         $scope.route.address= [];
          $scope.showAddRouteBox(false);
          $scope.$digest();
       }

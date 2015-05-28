@@ -110,16 +110,18 @@ angular.module('fmApp')
       if($scope.noTrucks === false){
         $scope.loadOut.truck_id = $scope.trucks[0].id;
       }
-
+      
       if($scope.loadOut.orders.length !== 0){
         for (var i = 0; i < $scope.loadOut.orders.length; i++) {
           $scope.customerOrdersAvailable.push($scope.loadOut.orders[i]);
         }
          $scope.loadOut.orders = [];
-         $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
-         $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
          $scope.noCustomerOrdersAvailable = false;
       }
+
+      $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
+      $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+      $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
 
     }
   };
@@ -147,7 +149,8 @@ angular.module('fmApp')
     
     console.log("Splice");
     $scope.customerOrdersAvailable.splice(index,1);
-    console.log($scope.customerOrdersAvailable.length);
+    console.log($scope.customerOrdersAvailable);
+    $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
     $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
     $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
 
@@ -192,6 +195,7 @@ angular.module('fmApp')
     console.log("Splice");
     $scope.customerOrdersAvailable.splice(index,1);
     console.log($scope.customerOrdersAvailable.length);
+    $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
     $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
     $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
 
@@ -239,6 +243,7 @@ angular.module('fmApp')
       console.log('Sails responded with post loadout: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
+        $scope.loadOut.orders = [];
         $scope.showAddLoadOutBox(false);
         $scope.snackbarShow('Load Out Added');
         $scope.$digest();
@@ -326,7 +331,7 @@ angular.module('fmApp')
         // console.log(orderDeleted[0]);
         $scope.customerOrdersAvailable.push(msg.data.order);
         console.log($scope.customerOrdersAvailable);
-
+        $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
         $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
         $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         $scope.$digest();

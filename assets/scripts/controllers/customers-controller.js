@@ -9,6 +9,10 @@ angular.module('fmApp')
 
   $scope.noCustomers = false;
 
+  // forSorting
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
+
 	var getCustomers = function () {
     $http.get(httpHost + '/customers').success( function (data) {
       if(data.length !== 0){
