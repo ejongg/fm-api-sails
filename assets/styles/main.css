@@ -654,18 +654,17 @@ a.arrowlink:hover {
 
 
 
-a.arrowlink1:link, a.arrowlink1:visited, a.arrowlink2:active {
-  font-size: 15px;
+a.thlink:link, a.thlink:visited, a.thlink:active {
+  font-size: 13px;
   color: #ffffff !important;
   cursor: pointer !important;
-  background: #202020 !important;
+  background: transparent !important;
   margin: 0px;
   padding-top: 0px;
   padding-bottom:0px;
   padding-left: 2px;
   padding-right: 2px;
   text-decoration: none;
-  border-radius: 50%;
   text-align: center;
   font-weight: bold;
   height: auto;
@@ -675,18 +674,17 @@ a.arrowlink1:link, a.arrowlink1:visited, a.arrowlink2:active {
     transition: all 0.2s ease 0s;
 }
 
-a.arrowlink1:hover {
-  font-size: 15px;
+a.thlink:hover {
+  font-size: 13px;
   color: #ffa311 !important;
   cursor: pointer !important;
-  background: #202020;
+  background: transparent;
   margin: 0px;
   padding-top: 0px;
   padding-bottom:0px;
   padding-left: 2px;
   padding-right: 2px;
   text-decoration: none;
-  border-radius: 50%;
   text-align: center;
   font-weight: bold;
   height: auto;
