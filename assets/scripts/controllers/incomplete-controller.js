@@ -10,6 +10,10 @@ angular.module('fmApp')
   $scope.noIncomplete = false;
   $scope.noBays = false;
 
+  /*for SOrting..*/
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
+
   var getIncompleteCases = function () {
 
     $http.get(httpHost + '/incomplete_cases/list').success( function (data) {      
