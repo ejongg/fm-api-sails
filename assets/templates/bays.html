@@ -229,31 +229,60 @@
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
-                        <th width="20%">Line name&nbsp;
-                          <a href="" ng-click="sortCriteria = '-bay_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+bay_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th width="20%">
+                          <a href="" ng-click="sortCriteria='bay_name'; reverseSort = !reverseSort">
+                            Line Name
+                            <span ng-show="sortCriteria == 'bay_name'">
+                              <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                              <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                          </a>
                         </th>
 
-                        <th width="20%">Line label&nbsp;
-                          <a href="" ng-click="sortCriteria = '-bay_label'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+bay_label'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                        <th width="20%">
+                          <a href="" ng-click="sortCriteria='bay_label'; reverseSort = !reverseSort">
+                            Line Label
+                            <span ng-show="sortCriteria == 'bay_label'">
+                              <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                              <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                          </a>
+                        </th>
 
-                        <th width="20%">No. of cases in Line&nbsp;
-                          <a href="" ng-click="sortCriteria = '-total_products'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+total_products'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                        <th width="20%">
+                          <a href="" ng-click="sortCriteria='total_products'; reverseSort = !reverseSort">
+                            No. of cases in Line
+                            <span ng-show="sortCriteria == 'total_products'">
+                              <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                              <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                          </a>
+                        </th>
 
-                        <th width="20%">Line limit&nbsp;
-                          <a href="" ng-click="sortCriteria = '-bay_limit'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+bay_limit'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                        <th width="20%">
+                          <a href="" ng-click="sortCriteria='bay_limit'; reverseSort = !reverseSort">
+                           Line limit
+                            <span ng-show="sortCriteria == 'bay_limit'">
+                              <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                              <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                          </a>
+                        </th>
 
-                        <th width="20%">Line status&nbsp;
-                          <a href="" ng-click="sortCriteria = '-pile_status'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+pile_status'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                        <th width="20%">
+                          <a href="" ng-click="sortCriteria='pile_status'; reverseSort = !reverseSort">
+                           Line status
+                            <span ng-show="sortCriteria == 'pile_status'">
+                              <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                              <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                          </a>
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="bay in bays | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
+                    <tr dir-paginate="bay in bays | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
                         <td>Bay {{bay.bay_name}}</td>
                         <td>{{bay.bay_label}}</td> 
                         <td>{{bay.total_products}}</td>

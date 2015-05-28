@@ -21,7 +21,8 @@ angular.module('fmApp')
   $scope.companies = ['Coca-Cola','SMB' ];
 
   // forSorting
-  $scope.sortCriteria = '';
+  $scope.sortCriteria = 'bay_name';
+  $scope.reverseSort = false;
 
   var getBays = function () {
     
