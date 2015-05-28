@@ -24,7 +24,8 @@ angular.module('fmApp')
   $scope.noAddresses = false;
 
   // forSorting
-  $scope.sortCriteria = 'id';
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
   
   var getSKU = function () {
     $http.get(httpHost + '/sku').success( function (data) {

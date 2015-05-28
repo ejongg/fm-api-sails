@@ -215,23 +215,50 @@
             <table ng-hide="noSKU || noOrders" class="table table-striped table-hover ">
                 <thead>
                     <tr>
-                        <th width="25%">Establishment Name&nbsp;
-              <a href="" ng-click="sortCriteria = '-customer_id.establishment_name'" class="arrowlink"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+customer_id.establishment_name'" class="arrowlink"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th width="25%">Order Date&nbsp;
-              <a href="" ng-click="sortCriteria = '-date_received'" class="arrowlink"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+date_received'" class="arrowlink"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th width="25%">Supplier Agent name&nbsp;
-              <a href="" ng-click="sortCriteria = '-supplieragent_name'" class="arrowlink"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+supplieragent_name'" class="arrowlink"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                        <th width="25%">Status&nbsp;
-              <a href="" ng-click="sortCriteria = '-status'"  class="arrowlink"><i class="mdi-navigation-expand-more downa"></i></a>
-              <a href="" ng-click="sortCriteria = '+status'" class="arrowlink"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                        <th>
+                            <a href="" ng-click="sortCriteria='customer_id.establishment_name'; reverseSort = !reverseSort">
+                              Establishment Name
+                                <span ng-show="sortCriteria == 'customer_id.establishment_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                      </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='date_received'; reverseSort = !reverseSort">
+                                Order Date
+                                <span ng-show="sortCriteria == 'date_received'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                      </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort">
+                                Supplier Agent Name
+                                <span ng-show="sortCriteria == 'supplieragent_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='status'; reverseSort = !reverseSort">
+                                Status
+                                <span ng-show="sortCriteria == 'status'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="order in ordersList | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" ng-click="getOrderProducts(order.id)" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
+                    <tr dir-paginate="order in ordersList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getOrderProducts(order.id)" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
                         <td>{{order.customer_id.establishment_name}}</td>
                         <td>{{order.date_received}}</td>
                         <td>{{order.supplieragent_name}}</td>
