@@ -34,11 +34,6 @@ module.exports = {
       collection : "delivery_transactions",
       via : "loadout_id"
     }
-  },
-
-  afterDestroy : function(loadout, next){
-    sails.sockets.blast('loadout', {verb : 'destroyed', data : loadout});
-    next();
   }
 };
 
