@@ -6,6 +6,10 @@ angular.module('fmApp')
   $scope.transactions = [];
   $scope.noTransactionHistory = false;
 
+  // forSorting
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
+
   var getTransactions= function () {
     $http.get(httpHost + '/reports/transactions').success( function (data) {
       if(data.length !== 0){
