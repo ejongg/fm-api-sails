@@ -115,22 +115,42 @@
 
                   <thead>
                       <tr class="labels">
-                          <th>SKU&nbsp;
-                          <a href="" ng-click="sortCriteria = '-brand_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+brand_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                          <th>EXPIRATION DATE&nbsp;
-                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                          <th>BOTTLES&nbsp;
-                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                          <th>
+                            <a href="" ng-click="sortCriteria='sku_id.sku_name'; reverseSort = !reverseSort">
+                              SKU
+                              <span ng-show="sortCriteria == 'sku_id.sku_name'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
+                          <th>
+                            <a href="" ng-click="sortCriteria='exp_date'; reverseSort = !reverseSort">
+                              EXPIRATION DATE
+                              <span ng-show="sortCriteria == 'exp_date'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
+                          <th>
+                            <a href="" ng-click="sortCriteria='bottles'; reverseSort = !reverseSort">
+                              BOTTLES
+                              <span ng-show="sortCriteria == 'bottles'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
                       </tr>
                   </thead>
 
                   <tbody>
 
 
-                    <tr dir-paginate="inc in incompleteCases | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows"  ng-click="incompleteClicked(inc)">
+                    <tr dir-paginate="inc in incompleteCases | filter:search | orderBy:sortCriteria:sortCriteria | itemsPerPage: noOfRows"  ng-click="incompleteClicked(inc)">
 
                       <td>{{inc.sku_id.sku_name + " " + inc.sku_id.size}}</td>
                       <td>{{inc.exp_date}}</td>
