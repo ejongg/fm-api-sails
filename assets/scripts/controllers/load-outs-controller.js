@@ -321,12 +321,15 @@ angular.module('fmApp')
         if($scope.noCustomerOrdersAvailable === true){
           $scope.noCustomerOrdersAvailable =false;
         }
-
+        
         var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout_id});
         console.log(index);
         // console.log($scope.loadOuts[index].transactions);
         var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery_id});
         $scope.loadOuts[index].transactions.splice(transIndex,1);
+        if($scope.loadOuts[index].transactions.length === 0){
+          $scope.loadOuts.splice(index,1);
+        }
         // var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
         // console.log(orderDeleted[0]);
         $scope.customerOrdersAvailable.push(msg.data.order);

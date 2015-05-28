@@ -446,12 +446,14 @@ angular.module('fmApp')
     
     console.log("Splice");
     $scope.addressesAvailable.splice(index,1);
-    $scope.addressAvailableList  =  $scope.addressesAvailable[0];
-    $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
 
     var currentAddress = $scope.routes[routeIndex].address;
     console.log(currentAddress);
     currentAddress.push(data);
+
+    // $scope.addressesAvailable = $scope.sortData(data,'address_name');
+    $scope.addressAvailableList  =  $scope.addressesAvailable[0];
+    $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
 
     var newAddress = {
     "route_name": name,
@@ -464,7 +466,6 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Added Address");
-         $scope.showAddRouteBox(false);
          $scope.$digest();
       }
     }); 
@@ -539,17 +540,17 @@ angular.module('fmApp')
         console.log(msg.data);
         $scope.$digest();
         break;
-      case "destroyed":
-        console.log("Address Deleted");
-        console.log(msg.data[0]);
-        var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
-        console.log(index);
-        $scope.addresses.splice(index,1);
-        if($scope.addresses.length === 0){
-          $scope.noAddresses = true;
-        }
-        $scope.$digest();
-        break;
+      // case "destroyed":
+      //   console.log("Address Deleted");
+      //   console.log(msg.data[0]);
+      //   var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
+      //   console.log(index);
+      //   $scope.addresses.splice(index,1);
+      //   if($scope.addresses.length === 0){
+      //     $scope.noAddresses = true;
+      //   }
+      //   $scope.$digest();
+      //   break;
       case "removed":
         console.log("Address Removed");
        // console.log(msg.data.route);
@@ -557,7 +558,7 @@ angular.module('fmApp')
         var routeIndex =  _.findIndex($scope.routes,{'id': msg.data.route});
         console.log(routeIndex);
         console.log($scope.routes[routeIndex]);
-        var addressIndex =  _.findIndex($scope.routes[routeIndex].address,{'id': msg.data.address.id});
+        var addressIndex =  _.findIndex($scope.routes[routeIndex].address,{'id': msg.data.address[0].id});
         console.log(addressIndex);
         $scope.routes[routeIndex].address.splice(addressIndex,1);
         $scope.$digest();
