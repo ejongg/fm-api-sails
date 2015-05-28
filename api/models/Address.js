@@ -31,11 +31,6 @@ module.exports = {
   afterCreate : function(address, next){
     sails.sockets.blast('address', {verb : 'created', data : address});
     next();
-  },
-
-  afterDestroy : function(address, next){
-    sails.sockets.blast('address', {verb : 'destroyed', data : address});
-    next();
   }
 };
 
