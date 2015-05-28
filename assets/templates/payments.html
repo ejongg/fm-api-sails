@@ -154,25 +154,52 @@
 
                   <thead>
                       <tr class="labels">
-                          <th>Customer&nbsp;
-                          <a href="" ng-click="sortCriteria = '-brand_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+brand_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                          <th>Delivery Date&nbsp;
-                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                          <th>Total Amount&nbsp;
-                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                          <th>Payment Date&nbsp;
-                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                          <th>
+                            <a href="" ng-click="sortCriteria='customer_id.establishment_name'; reverseSort = !reverseSort">
+                              Customer
+                              <span ng-show="sortCriteria == 'customer_id.establishment_name'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
+                          <th>
+                            <a href="" ng-click="sortCriteria='delivery_date'; reverseSort = !reverseSort">
+                              Delivery Date
+                              <span ng-show="sortCriteria == 'delivery_date'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
+                          <th>
+                            <a href="" ng-click="sortCriteria='total_amount'; reverseSort = !reverseSort">
+                              Total Amount
+                              <span ng-show="sortCriteria == 'total_amount'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
+                          <th>
+                            <a href="" ng-click="sortCriteria='payment_date'; reverseSort = !reverseSort">
+                              Payment Date
+                              <span ng-show="sortCriteria == 'payment_date'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
                       </tr>
                   </thead>
 
                   <tbody>
 
 
-                    <tr dir-paginate="transaction in deliveryTransactions | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows"  ng-click="transactionClicked(transaction)">
+                    <tr dir-paginate="transaction in deliveryTransactions | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows"  ng-click="transactionClicked(transaction)">
 
                       <td>{{transaction.customer_id.establishment_name}}</td>
                       <td>{{transaction.delivery_date}}</td>

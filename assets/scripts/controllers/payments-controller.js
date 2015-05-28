@@ -11,6 +11,10 @@ angular.module('fmApp')
   $scope.payment.payment_date = new Date();
   $scope.summary = {};
 
+  // forSorting
+  $scope.sortCriteria='id';
+  $scope.reverseSort = false;
+
 
 
   $scope.noDeliveryTransactions = false;
