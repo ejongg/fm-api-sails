@@ -13,6 +13,7 @@ module.exports = {
 		var products = req.body.products;
 		var loadoutId = req.body.loadout;
 		var loadinNo = req.body.loadin_no;
+		var customerId = req.body.customer;
 
 		Load_out.findOne({id : loadoutId})
 			.then(function (loadout){
@@ -24,7 +25,7 @@ module.exports = {
 			})
 
 			.then(function (){
-				return LoadInService.createLoadin(loadinNo, loadoutId, products);
+				return LoadInService.createLoadin(loadinNo, loadoutId, customerId, products);
 			})
 
 			.then(function (){

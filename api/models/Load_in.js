@@ -31,7 +31,11 @@ module.exports = {
   	loadout_id : {
   		model : "load_out",
   		required : true
-  	}
+  	},
+    customer_id : {
+      model : "customers".
+      required : true
+    }
   },
 
   afterUpdate : function(loadin, next){

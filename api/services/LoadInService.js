@@ -2,12 +2,13 @@ var Promise = require('bluebird');
 var moment = require('moment');
 
 module.exports = {
-	createLoadin : function (loadinNo, loadoutId, products){
+	createLoadin : function (loadinNo, loadoutId, customerId, products){
 		return new Promise(function (resolve){
 			var loadin = {
 				date_received : moment().format('YYYY-MM-DD'),
 				loadin_number : loadinNo,
-				loadout_id : loadoutId
+				loadout_id : loadoutId,
+				customer_id : customerId
 			};
 
 			Load_in.create(loadin)
