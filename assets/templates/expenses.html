@@ -172,6 +172,8 @@
       <div class="panel panel-right">
           <div class="panel-body" ng-show="addOtherMode">
 
+
+        <div ng-hide="noExpenses">
          <div class="form-group">
             <label for="select" class="col-md-2">Number of rows:</label>
             <div class="col-md-1">
@@ -187,13 +189,7 @@
 
                 <thead>
                     <tr>
-                        <th><font size="1px">Expense&nbsp;</font>
-                            <a href="" ng-click="sortCriteria = '-prod_id.brand_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                             <a href="" ng-click="sortCriteria = '+prod_id.brand_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
-
-                        </th>
-
-                        <th><font size="1px">Description&nbsp;</font>
+                        <th><font size="1px">Type&nbsp;</font>
                              <a href="" ng-click="sortCriteria = '-sku_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
                               <a href="" ng-click="sortCriteria = '+sku_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
                         </th>
@@ -213,18 +209,18 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                    <tr ng-repeat="expense in expenses">
+                      <td>{{expense.type}}</td>
+                      <td>{{expense.date}}</td>
+                      <td>{{expense.amount}}</td>
                     </tr>
                 </tbody>
             </table>
+          </div>
 
-            <div align="center">
-            
-      </div>
+            <div ng-show="noExpenses" align="center">
+            NO EXPENSES!
+            </div>
     </div>
 
     <div class="panel-body" ng-hide="addOtherMode">
@@ -262,7 +258,7 @@
                       <td>{{product.sku}}</td>
                       <td>{{product.cases}}</td>
                       <td>{{product.bottles}}</td>
-                      <td></td>
+                      <td><button ng-click="deleteSKUToList($index)" class="btn btn-primary btn-xs">Delete</button></td>
                     </tr>
                 </tbody>
             </table>

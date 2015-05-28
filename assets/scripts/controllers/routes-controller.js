@@ -451,7 +451,7 @@ angular.module('fmApp')
     console.log(currentAddress);
     currentAddress.push(data);
 
-    // $scope.addressesAvailable = $scope.sortData(data,'address_name');
+    $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
     $scope.addressAvailableList  =  $scope.addressesAvailable[0];
     $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
 
@@ -500,7 +500,6 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Deleted Address");
-         $scope.addressesAvailable.push(address);
          $scope.$digest();
       }
     }); 
@@ -561,6 +560,10 @@ angular.module('fmApp')
         var addressIndex =  _.findIndex($scope.routes[routeIndex].address,{'id': msg.data.address[0].id});
         console.log(addressIndex);
         $scope.routes[routeIndex].address.splice(addressIndex,1);
+        $scope.addressesAvailable.push(msg.data.address[0]);
+        $scope.addressesAvailable = $scope.sortData( $scope.addressesAvailable,'address_name');
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
         $scope.$digest();
     }
 
