@@ -207,19 +207,32 @@
 
                   <thead>
                       <tr class="labels">
-                          <th>Brand&nbsp;
-                          <a href="" ng-click="sortCriteria = '-brand_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+brand_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
-                          <th>Company&nbsp;
-                          <a href="" ng-click="sortCriteria = '-company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                          <a href="" ng-click="sortCriteria = '+company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a></th>
+                          <th>
+                            <a href="" ng-click="sortCriteria='brand_name'; reverseSort = !reverseSort">
+                             Brand
+                              <span ng-show="sortCriteria == 'brand_name'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
+                          <th>
+                          <a href="" ng-click="sortCriteria='company'; reverseSort = !reverseSort">
+                             Company
+                              <span ng-show="sortCriteria == 'company'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
                       </tr>
                   </thead>
 
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows"  ng-click="productClicked(product)">
 
                       <td>{{product.brand_name}}</td>
                       <td>{{product.company}}</td>

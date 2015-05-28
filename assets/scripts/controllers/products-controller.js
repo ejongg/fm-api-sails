@@ -21,6 +21,7 @@ angular.module('fmApp')
 
   //forSorting. Default is set to id
   $scope.sortCriteria = 'id';
+  $scope.reverseSort = false;
 
 
   var getProducts = function () {
