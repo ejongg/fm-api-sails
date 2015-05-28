@@ -322,53 +322,81 @@
             <table class="table table-striped table-hover" >
                 <thead>
                     <tr>
-                        <th>First Name
-                            <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                            <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>     
+                        <th>
+                            <a href="" ng-click="sortCriteria='emp_fname'; reverseSort = !reverseSort">
+                                First Name
+                                <span ng-show="sortCriteria == 'emp_fname'">
+                                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
                         </th>
                             
-                        <th>Last Name
-                            <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                            <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                            <a href="" ng-click="sortCriteria='emp_lname'; reverseSort = !reverseSort">
+                                Last Name
+                                <span ng-show="sortCriteria == 'emp_lname'">
+                                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                          </a>
                         </th>
 
-                        <th>Office
-                             <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                             <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                            <a href="" ng-click="sortCriteria='office'; reverseSort = !reverseSort">
+                                Office
+                                <span ng-show="sortCriteria == 'office'">
+                                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
                         </th>
 
-                        <th>Position
-                             <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                            <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                            <a href="" ng-click="sortCriteria='position'; reverseSort = !reverseSort">
+                                Position
+                                <span ng-show="sortCriteria == 'position'">
+                                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
                         </th>
 
-                        <th>Status
-                             <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                            <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                            <a href="" ng-click="sortCriteria='status'; reverseSort = !reverseSort">
+                                Status
+                                <span ng-show="sortCriteria == 'status'">
+                                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
                         </th>
 
-                        <th>Hired Date
-                             <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                            <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                            <a href="" ng-click="sortCriteria='hire_date'; reverseSort = !reverseSort">
+                                Hired Date
+                                <span ng-show="sortCriteria == 'hire_date'">
+                                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
                         </th>
 
-                        <th>End Of contract
-                             <a href="" ng-click="" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-
-                            <a href="" ng-click="" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                            <a href="" ng-click="sortCriteria='end_contract'; reverseSort = !reverseSort">
+                                End Of contract
+                                <span ng-show="sortCriteria == 'end_contract'">
+                                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
                         </th>
 
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="employee in employees | filter: search | orderBy:sortCriteria | itemsPerPage: 10" ng-click="employeeClicked(employee)">
+                    <tr dir-paginate="employee in employees | filter: search | orderBy:sortCriteria:reverseSort | itemsPerPage: 10" ng-click="employeeClicked(employee)">
                         <td>{{employee.emp_fname}}</td>
                         <td>{{employee.emp_lname}}</td>
                         <td>{{employee.office}}</td>
