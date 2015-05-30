@@ -2,8 +2,9 @@
 
 angular.module('fmApp')
 .controller('EmployeesCtrl',['$scope', '_', '$http', 'httpHost','authService', '$modal', function($scope, _, $http, httpHost, authService, $modal){
-	$scope.positions = ['Driver','Checker','Delivery Sales Personnel','Delivery Helper', 'Encoder', 'Cashier'];
-  $scope.statuses = ['Contractual','Provisional','Regular'];
+	$scope.positions = ['Cashier','Checker','Delivery Helper','Delivery Sales Personnel','Driver','Encoder'];
+  $scope.statuses = ['Contractual','Probational','Regular'];
+  $scope.offices = ['Coke','FM Office','Beer'];
 	$scope.employees = [];
 
   $scope.noEmployees = false;
@@ -68,12 +69,17 @@ angular.module('fmApp')
 	};
 
 	$scope.setEditEmployeeTab = function (data) {
+     console.log("switch tab" + data);
       $scope.editEmployeeTab = data;
       if(data === true){
+        $scope.employeeEdit = $scope.copiedEmployee;
         $scope.employeeEdit.emp_fname = $scope.copiedEmployee.emp_fname;
         $scope.employeeEdit.emp_lname = $scope.copiedEmployee.emp_lname;
         $scope.employeeEdit.office = $scope.copiedEmployee.office;
         $scope.employeeEdit.position = $scope.copiedEmployee.position;
+        $scope.employeeEdit.hire_date = new Date($scope.copiedEmployee.hire_date);
+        $scope.employeeEdit.end_contract = new Date($scope.copiedEmployee.end_contract);
+        console.log($scope.employeeEdit);
       } 
 	};
     
@@ -82,12 +88,22 @@ angular.module('fmApp')
       $scope.showAddEmployeeForm(false);
     }
     $scope.copiedEmployee = angular.copy(employee);
-
-    $scope.employeeEdit = $scope.copiedEmployee;
+    
+    $scope.employeeEdit.id = $scope.copiedEmployee.id;
+    $scope.employeeEdit.emp_fname = $scope.copiedEmployee.emp_fname;
+    $scope.employeeEdit.emp_lname = $scope.copiedEmployee.emp_lname;
+    $scope.employeeEdit.office = $scope.copiedEmployee.office;
+    $scope.employeeEdit.position = $scope.copiedEmployee.position;
+    $scope.employeeEdit.status = $scope.copiedEmployee.status;
     $scope.employeeEdit.hire_date = new Date($scope.copiedEmployee.hire_date);
     $scope.employeeEdit.end_contract = new Date($scope.copiedEmployee.end_contract);
-
-    $scope.employeeDelete = $scope.copiedEmployee;
+    
+    $scope.employeeDelete.id = $scope.copiedEmployee.id;
+    $scope.employeeDelete.emp_fname = $scope.copiedEmployee.emp_fname;
+    $scope.employeeDelete.emp_lname = $scope.copiedEmployee.emp_lname;
+    $scope.employeeDelete.office = $scope.copiedEmployee.office;
+    $scope.employeeDelete.position = $scope.copiedEmployee.position;
+    $scope.employeeDelete.status = $scope.copiedEmployee.status;
     $scope.employeeDelete.hire_date = new Date($scope.copiedEmployee.hire_date);
     $scope.employeeDelete.end_contract = new Date($scope.copiedEmployee.end_contract);
 
@@ -100,6 +116,8 @@ angular.module('fmApp')
     $scope.employee.emp_lname = '';
     $scope.employee.office = '';
     $scope.employee.position = $scope.positions[0];
+    $scope.employee.hire_date = new Date();
+    $scope.employee.end_contract = new Date();
   }; 
 
 	$scope.addEmployee = function (employee) {
