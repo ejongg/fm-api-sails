@@ -67,6 +67,8 @@ angular.module('fmApp')
 
 	$scope.showAddEmployeeForm = function (data) {
       $scope.addEmployeeForm = data;
+        $scope.employeeForm.$setPristine();
+       $scope.hasError = false;
       if($scope.editOrDeleteEmployeeForm === true) {
         $scope.showEditOrDeleteEmployeeForm(false);
       }
@@ -77,6 +79,8 @@ angular.module('fmApp')
 
 	$scope.showEditOrDeleteEmployeeForm = function (data) {
       $scope.editOrDeleteEmployeeForm = data;
+       $scope.employeeForm.$setPristine();
+       $scope.hasError = false;
       if($scope.editEmployeeTab === false){
         $scope.setEditEmployeeTab(true);
       }
@@ -166,6 +170,7 @@ angular.module('fmApp')
       if(JWR.statusCode === 201){
         $scope.showAddEmployeeForm(false);
         $scope.snackbarShow('Employee Added');
+        console.log("201");
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
         $scope.showErrorMessage(true,body);
@@ -185,9 +190,12 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteEmployeeForm(false);
-        $scope.snackbarShow('Employee Edited'); 
-        $scope.$digest(); 
+        $scope.snackbarShow('Employee Edited');  
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
       }
+       $scope.$digest(); 
     });
 	};
 

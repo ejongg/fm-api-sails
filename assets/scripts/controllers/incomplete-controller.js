@@ -10,6 +10,9 @@ angular.module('fmApp')
   $scope.noIncomplete = false;
   $scope.noBays = false;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   /*for SOrting..*/
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
@@ -55,21 +58,36 @@ angular.module('fmApp')
     return bay.bay_name + ' ' + bay.bay_label;
   };
 
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       clearForm();
+    }
+  }
+
   $scope.showIncForm = function (data) {
+    clearForm();
     $scope.incForm = data;
+    $scope.incCaseForm.$setPristine();
+    $scope.hasError = false;
     if(data === false){
       clearForm();
     }
   };
 
   $scope.incompleteClicked = function (inc){
+    $scope.incCaseForm.$setPristine();
     $scope.incVal = inc;
     $scope.incVal.bay = $scope.bays[0];
     $scope.showIncForm(true);
   };
 
   var clearForm = function () {
-    $scope.incVal = {};
+    $scope.incVal.cases = '';
     $scope.incVal.bay = $scope.bays[0];
   };
 
@@ -91,8 +109,12 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showIncForm(false);
-        $scope.$digest();
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
       }
+
+       $scope.$digest();
     }); 
 
   };
