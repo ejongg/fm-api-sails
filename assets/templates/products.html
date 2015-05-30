@@ -60,6 +60,11 @@
                      <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
                     </div>
 
+                    <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>Sorry! Product is already existing.</strong>
+                    </div> 
+
 
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Brand Name</label>
@@ -117,6 +122,11 @@
 
                      <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
                   </div>
+
+                   <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>Sorry! Product is already existing.</strong>
+                    </div> 
 
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Brand Name</label>
