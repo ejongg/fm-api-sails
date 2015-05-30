@@ -20,7 +20,6 @@ module.exports = {
 			Expenses.create({type : type, amount : amount, date : date, user : user})
 				.then(function (expense){
 					expenseId = expense.id;
-
 					return products;
 				})
 

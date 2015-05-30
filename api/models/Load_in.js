@@ -33,7 +33,7 @@ module.exports = {
   		required : true
   	},
     customer_id : {
-      model : "customers".
+      model : "customers",
       required : true
     }
   },
