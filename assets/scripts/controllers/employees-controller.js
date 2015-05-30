@@ -160,18 +160,18 @@ angular.module('fmApp')
 
     console.log(employeeInfo);
 
-    // io.socket.request($scope.socketOptions('post','/employees/add',{"Authorization": "Bearer " + authService.getToken()},employeeInfo), function (body, JWR) {
-    //   console.log('Sails responded with post employee: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 201){
-    //     $scope.showAddEmployeeForm(false);
-    //     $scope.snackbarShow('Employee Added');
-    //   }else if (JWR.statusCode === 200){
-    //     console.log("Error Occured");
-    //     $scope.showErrorMessage(true,body);
-    //   }
-    //    $scope.$digest(); 
-    // });   
+    io.socket.request($scope.socketOptions('post','/employees/add',{"Authorization": "Bearer " + authService.getToken()},employeeInfo), function (body, JWR) {
+      console.log('Sails responded with post employee: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 201){
+        $scope.showAddEmployeeForm(false);
+        $scope.snackbarShow('Employee Added');
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
+      }
+       $scope.$digest(); 
+    });   
 	}; 
 
 	$scope.editEmployee = function (employee) {
