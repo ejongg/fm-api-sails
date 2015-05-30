@@ -83,5 +83,24 @@ module.exports = {
 			function(err){
 				callback(err);
 			});
+	},
+
+	checkLineAvailable : function(bayId, cases){
+		return new Promise(function (resolve){
+
+			BaysService.countBayItems(bayId)
+				.then(function (bayItemsCount){
+
+					Bays.findOne({id : bayId})
+						.then(function (foundBay){
+							if((bayItemsCount + cases) < foundBay.bay_limit){
+								resolve(true);
+							}else{
+								resolve(false);
+							}
+						})
+				})
+
+		});
 	}
 };
