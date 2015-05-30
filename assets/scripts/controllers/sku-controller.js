@@ -21,9 +21,25 @@ angular.module('fmApp')
   $scope.noProducts = false;
   $scope.noSKU = false;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   // forSorting
   $scope.sortCriteria = 'id';
   $scope.reverseSort = false;
+
+  $scope.showErrorMessage = function (data,msg) {
+    $scope.hasError = data;
+    console.log($scope.hasError);
+    
+    if(data === true){
+      console.log(data);
+      console.log(msg);
+      $scope.errorMessage = msg;
+      $scope.skuForm.$setPristine();
+      clearForm();
+    }
+  }
   
 
   var getProducts = function (){  
@@ -74,6 +90,7 @@ angular.module('fmApp')
   */
   $scope.showAddSkuForm = function (data) {
     $scope.addSKUForm = data;
+    $scope.hasError = false;
     clearForm();
     if($scope.editOrDeleteSKUForm === true){
       $scope.showEditOrDeleteSkuForm(false);
@@ -119,6 +136,7 @@ angular.module('fmApp')
     $scope.sku.unit = $scope.units[0];
     $scope.sku.priceperbottle = null;
     $scope.sku.pricepercase = null;
+    $scope.sku.bottleprice = null;
     $scope.sku.bottlespercase = null;
     $scope.sku.weightpercase = null;
     $scope.sku.lifespan = null;
@@ -192,6 +210,7 @@ angular.module('fmApp')
         $scope.$digest();
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
+        $scope.showErrorMessage(true,body);
       }
     });
 
@@ -227,6 +246,9 @@ angular.module('fmApp')
         $scope.showEditOrDeleteSkuForm(false);
         $scope.snackbarShow('SKU Edited');
         $scope.$digest();
+      }else if(JWR.statusCode === 400){
+        console.log("SKU already exist");
+        $scope.showErrorMessage(true,body);
       }
     });
 
@@ -365,7 +387,7 @@ angular.module('fmApp')
     });
 
     modalInstance.result.then(function (sku) {
-      $scope.deleteSku(sku);
+      $scope.deleteSKU(sku);
     }, function () {
       console.log("close");
     });

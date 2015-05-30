@@ -17,9 +17,26 @@ angular.module('fmApp')
 	$scope.editOrDeleteUserForm = false;
 	// $scope.editUserTab = true;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   //for sorting
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
+
+  $scope.showErrorMessage = function (data,msg) {
+    $scope.hasError = data;
+    console.log($scope.hasError);
+    
+    if(data === true){
+      console.log(data);
+      console.log(msg);
+      $scope.errorMessage = msg;
+      $scope.userForm.$setPristine();
+      clearForm();
+      
+    }
+  }
 
 
 	var getUsers = function () {
@@ -52,6 +69,7 @@ angular.module('fmApp')
 
 	$scope.showAddUserForm = function (data) {
       $scope.addUserForm = data;
+      $scope.hasError = false;
       if($scope.editOrDeleteUserForm === true) {
         $scope.showEditOrDeleteUserForm(false);
       }
@@ -108,8 +126,12 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
           $scope.showAddUserForm(false);
-          $scope.$digest();
+          
+      }else if (JWR.statusCode === 400){
+        console.log("User already exist");
+        $scope.showErrorMessage(true,body);
       }
+      $scope.$digest();
     });   
 	}; 
 
