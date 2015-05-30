@@ -527,6 +527,10 @@ angular.module('fmApp')
       case "created": 
         console.log("Address Created");
         $scope.addresses.push(msg.data);
+        $scope.addressesAvailable.push(msg.data);
+        $scope.addressesAvailable = $scope.sortData(addressesAvailable,'address_name');
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
          if($scope.noAddresses === true){
           $scope.noAddresses = false;
         }
