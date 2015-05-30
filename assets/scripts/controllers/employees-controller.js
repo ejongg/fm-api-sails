@@ -135,8 +135,19 @@ angular.module('fmApp')
   }; 
 
 	$scope.addEmployee = function (employee) {
-
-    var employeeInfo = {
+    console.log(employee.status);
+    if(employee.status === 'Regular'){
+      var employeeInfo = {
+      "emp_fname": employee.emp_fname,
+      "emp_lname": employee.emp_lname,
+      "office": employee.office,
+      "position": employee.position,
+      "hire_date":  $scope.formatDate(employee.hire_date),
+      "end_contract": 'N/A',
+      "status": employee.status
+      };
+    }else{
+      var employeeInfo = {
       "emp_fname": employee.emp_fname,
       "emp_lname": employee.emp_lname,
       "office": employee.office,
@@ -145,6 +156,7 @@ angular.module('fmApp')
       "end_contract": $scope.formatDate(employee.end_contract),
       "status": employee.status
     };
+    }
 
     console.log(employeeInfo);
 
@@ -154,16 +166,20 @@ angular.module('fmApp')
       if(JWR.statusCode === 201){
         $scope.showAddEmployeeForm(false);
         $scope.snackbarShow('Employee Added');
-      }else if (JWR.statusCode === 200){
+      }else if (JWR.statusCode === 400){
         console.log("Error Occured");
         $scope.showErrorMessage(true,body);
       }
-
        $scope.$digest(); 
     });   
 	}; 
 
 	$scope.editEmployee = function (employee) {
+    if(employee.status === 'Regular'){
+      employee.end_contract = 'N/A';
+    };
+    
+    console.log(employee);
     io.socket.request($scope.socketOptions('put','/employees/' + employee.id,{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);

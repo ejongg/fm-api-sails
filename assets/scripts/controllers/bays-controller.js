@@ -21,6 +21,10 @@ angular.module('fmApp')
 
   $scope.companies = ['Coca-Cola','SMB' ];
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
+
   // forSorting
   $scope.sortCriteria = 'bay_name';
   $scope.reverseSort = false;
@@ -67,6 +71,17 @@ angular.module('fmApp')
 
   getBays();
   /*getBayItems();*/
+
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       clearForm();
+    }
+  }
 
   $scope.showAddBayForm = function (data) {
       
@@ -149,9 +164,12 @@ angular.module('fmApp')
       if(JWR.statusCode === 201){
         // $scope.bays.push(body);
         $scope.showAddBayForm(false);
-        $scope.snackbarShow('Bay Added');
-        $scope.$digest();
+        $scope.snackbarShow('Bay Added');    
+      } else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
       }
+       $scope.$digest(); 
     }); 
   }; 
 

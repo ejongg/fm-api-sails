@@ -36,7 +36,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/employees').success( function (data) {
       if(data.length !== 0){
         $scope.employees =  $scope.sortData(data,'emp_fname');
-        $scope.user.fullname = $scope.employees[0];
+         $scope.user.fullname = null;
         console.log("Employees:");
         console.log($scope.employees);
       }else{

@@ -16,7 +16,6 @@ angular.module('fmApp')
 
 
   $scope.noTrucks = false;
-  $scope.noRoute = false;
   $scope.noTruckDriver = false;
   $scope.noChecker = false;
   $scope.noDSP = false;
@@ -63,7 +62,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/employees/list?position=Driver').success(function(data){
     
      if (data.length !== 0){
-        $scope.employeeDrivers = data;
+        $scope.employeeDrivers = $scope.sortData(data,'emp_fname');
         $scope.truck.driver = $scope.employeeDrivers[0];
         $scope.truckEdit.driver = $scope.employeeDrivers[0];
         console.log($scope.truckEdit.driver);
@@ -82,7 +81,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/employees/list?position=Checker').success(function(data){
 
      if (data.length !== 0){
-       $scope.employeeCheckers = data;
+       $scope.employeeCheckers = $scope.sortData(data,'emp_fname');
        $scope.truck.dispatcher = $scope.employeeCheckers[0];
        $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
        console.log("Checkers");
@@ -100,7 +99,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/employees/list?position=Delivery Sales Personnel').success(function(data){
      
      if (data.length !== 0){
-       $scope.employeeDeliverySalesPersonnel = data;
+       $scope.employeeDeliverySalesPersonnel = $scope.sortData(data,'emp_fname');
        $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
        $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
        console.log("Delivery Sales Personel");
@@ -118,7 +117,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/employees/list?position=Delivery Helper').success(function(data){
      
      if (data.length !== 0){
-       $scope.employeeDeliveryHelper = data;
+       $scope.employeeDeliveryHelper = $scope.sortData(data,'emp_fname');
        $scope.truck.helper = $scope.employeeDeliveryHelper[0];
        $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
        console.log("Delivery Helper");
@@ -284,18 +283,43 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         console.log("Employee Created");
+        console.log(msg.data.position);
         switch (msg.data.position){
           case "Driver":
             $scope.employeeDrivers.push(msg.data);
+            $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers,'emp_fname');
+            $scope.truck.driver = $scope.employeeDrivers[0];
+            $scope.truckEdit.driver = $scope.employeeDrivers[0];
+            if($scope.noTruckDriver === true){
+              $scope.noTruckDriver = false;
+            }
           break;
           case "Checker":
             $scope.employeeCheckers.push(msg.data);
+            $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
+            $scope.truck.dispatcher = $scope.employeeCheckers[0];
+            $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+            if($scope.noChecker === true){
+              $scope.noChecker = false;
+            }
           break;
           case "Delivery Sales Personnel":
             $scope.employeeDeliverySalesPersonnel.push(msg.data);
+            $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
+            $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+            $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+            if($scope.noDSP === true){
+              $scope.noDSP = false;
+            }
           break;
           case "Delivery Helper":
             $scope.employeeDeliveryHelper.push(msg.data);
+            $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
+            $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+            $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+            if($scope.noDH === true){
+              $scope.noDH = false;
+            }
         }
         $scope.$digest();
         break;
@@ -337,21 +361,45 @@ angular.module('fmApp')
             index = _.findIndex($scope.employeeDrivers,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeDrivers.splice(index,1);
+            $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers,'emp_fname');
+            $scope.truck.driver = $scope.employeeDrivers[0];
+            $scope.truckEdit.driver = $scope.employeeDrivers[0];
+            if($scope.employeeDrivers.length === 0){
+              $scope.noTruckDriver = true;
+            }
           break;
           case "Checker":
             index = _.findIndex($scope.employeeCheckers,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeCheckers.splice(index,1);
+            $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
+            $scope.truck.dispatcher = $scope.employeeCheckers[0];
+            $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+            if($scope.employeeCheckers.length === 0){
+              $scope.noChecker = true;
+            }
           break;
           case "Delivery Sales Personnel":
             index = _.findIndex($scope.employeeDeliverySalesPersonnel,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeDeliverySalesPersonnel.splice(index,1);
+            $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
+            $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+            $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+            if($scope.employeeDeliverySalesPersonnel.length === 0){
+              $scope.noDSP = true;
+            }
           break;
           case "Delivery Helper":
             index = _.findIndex($scope.employeeDeliveryHelper,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeDeliveryHelper.splice(index,1);
+            $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
+            $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+            $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+            if($scope.employeeDeliveryHelper.length === 0){
+              $scope.noDH = true;
+            }
         }
         $scope.$digest();
     }
