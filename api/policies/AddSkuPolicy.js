@@ -7,6 +7,8 @@ module.exports = function (req, res, next){
 
 	};
 
+	console.log(findSku);
+
 	Sku.findOne(findSku)
 		.then(function (foundSku){
 

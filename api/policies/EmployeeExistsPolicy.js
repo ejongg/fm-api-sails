@@ -6,10 +6,12 @@ module.exports = function(req, res, next){
 			office : req.body.office,	
 		};
 
+	console.log("Hello");
+
 	Employees.findOne(findEmployee)
 		.then(function (foundEmployee){
 			if(foundEmployee){
-				return res.send("Employee already exist", 400);
+				return res.send("Employee already exists", 400);
 			}else{
 				next();
 			}
