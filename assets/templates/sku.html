@@ -54,8 +54,13 @@
 
                     <div class="alert alert-warning" ng-show="(skuForm.inputSkuName.$dirty && skuForm.inputSkuName.$invalid) || (skuForm.inputSize.$invalid && skuForm.inputSize.$dirty) || (skuForm.inputSkuPrice.$invalid && skuForm.inputSkuPrice.$dirty)|| (skuForm.inputSkuPriceB.$invalid && skuForm.inputSkuPriceB.$dirty) || (skuForm.inputBottlePerCase.$invalid && skuForm.inputBottlePerCase.$dirty) || (skuForm.inputWeightPerCase.$invalid && skuForm.inputWeightPerCase.$dirty) || (skuForm.inputLifeSpan.$invalid && skuForm.inputLifeSpan.$dirty)">
                         
-                        <div class="icon-preview"><i class="mdi-alert-error"></i><small> Some fields are empty or incorrect.</small></div> 
+                    <div class="icon-preview"><i class="mdi-alert-error"></i><small> Some fields are empty or incorrect.</small></div> 
 
+                    </div>
+
+                    <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>Sorry! This SKU is already existing.</strong>
                     </div>
 
 
@@ -116,7 +121,7 @@
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Bottle price</label> 
-                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price."  required>
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price." ng-model="sku.bottleprice"  required>
                        </div>
                     </div>
 

@@ -51,6 +51,11 @@
 
                     </div>
 
+                    <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>Sorry! Username is already existing.</strong>
+                    </div> 
+
                         <div class="form-group">
                             <label for="inputUsername" class="col-md-2 control-label">Username</label>  
                             <div class="col-md-12">

@@ -765,7 +765,7 @@ li.divider {
 height: 2px;
 background-color: red;
 }
-h3 class="panel-title">Route {{routeInfo.route_name}}</h3>
+
 a.user-account:hover {
   background: none !important;
     color: #0c5970;
@@ -856,21 +856,21 @@ thead {
 }
 
 td {
-  border-right: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
   border-bottom: 2px solid #ffffff;
 }
 
-tr:hover td {
-  border-bottom: 4px solid #ffffff;
+tr:hover, td {
+
   cursor: pointer !important;
 }
 
 thead {
   color: #ffffff;
-border-bottom: 2px solid #ffffff !important;
+border-bottom: 3px solid #ffffff !important;
 background-color: #000000 !important;
-border: 2px solid #ffffff !important;
+border: 1px solid #ffffff !important;
   
     table-layout: fixed;
 }
@@ -881,14 +881,38 @@ th {
 }
 
 tr:last-child{
-  border-bottom: 2px solid #ffffff; 
+  border-bottom: 1px solid #ffffff; 
 }
 
 td:last-child {
-  border-right: 2px solid #ffffff;
+  border-right: 1px solid #ffffff;
   border-bottom: 2px solid #ffffff; 
 }
 
+table-striped{}
+
+table-hover {}
+
+tr.movingpile td {
+  background-color: #fe9f00 !important;
+  color: #0000000 !important;
+  font-weight: bold;
+  
+}
+tr.fullgoods td {
+  color: #0000000 !important;
+  background-color: #89b405 !important;
+  font-weight: bold;
+}
+
+tr:hover td {
+    background-color: #efefef !important;
+    transition: 1s;
+    border-top: 2px solid #202020; 
+    border-bottom: 2px solid #202020; 
+    font-weight: bold;
+    color: #000000;
+}
 
 .routeBox{
   background-color:#202020;
@@ -1118,16 +1142,6 @@ margin: 1.30cm;
 }
 
 
-tr.movingpile td {
-  background-color: #fe9f00 !important;
-  color: #0000000 !important;
-  font-weight: bold;
-  
-}
-tr.fullgoods td {
-  color: #0000000 !important;
-  background-color: #89b405 !important;
-  font-weight: bold;
-}
+
 
 

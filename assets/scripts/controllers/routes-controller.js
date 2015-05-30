@@ -527,8 +527,15 @@ angular.module('fmApp')
       case "created": 
         console.log("Address Created");
         $scope.addresses.push(msg.data);
+        $scope.addressesAvailable.push(msg.data);
+        $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
          if($scope.noAddresses === true){
           $scope.noAddresses = false;
+        } 
+        if($scope.noAddressesAvailable === true){
+          $scope.noAddressesAvailable = false;
         }
         $scope.$digest();
         break;
@@ -538,6 +545,16 @@ angular.module('fmApp')
         console.log(index);
         $scope.addresses[index] = msg.data[0];   
         console.log(msg.data);
+
+        if(_.findIndex($scope.addressesAvailable,{'id': msg.data[0].id}) !== -1){
+        console.log("Available");
+        var index = _.findIndex($scope.addressesAvailable,{'id': msg.data[0].id});
+        $scope.addressesAvailable[index] = msg.data[0];
+        $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+        }
+
         $scope.$digest();
         break;
       // case "destroyed":
