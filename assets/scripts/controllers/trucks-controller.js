@@ -294,6 +294,7 @@ angular.module('fmApp')
           break;
           case "Delivery Sales Personnel":
             $scope.employeeDeliverySalesPersonnel.push(msg.data);
+            console.log($scope.employeeDeliverySalesPersonnel);
           break;
           case "Delivery Helper":
             $scope.employeeDeliveryHelper.push(msg.data);
