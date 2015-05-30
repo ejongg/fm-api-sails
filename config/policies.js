@@ -72,6 +72,11 @@ module.exports.policies = {
 
   SkuController : {
     create : 'AddSkuPolicy'
+  },
+
+  EmployeeController : {
+    create : 'EmployeeExistsPolicy',
+    update : 'EmployeeExistsPolicy'
   }
 
   /***************************************************************************
