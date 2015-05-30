@@ -84,7 +84,8 @@ angular.module('fmApp')
   }
 
   $scope.showAddBayForm = function (data) {
-      
+    $scope.bayForm.$setPristine();
+    $scope.hasError = false;
       $scope.addBayForm = data;
       if($scope.editOrDeleteBayForm === true) {
         $scope.showEditOrDeleteBayForm(false);
@@ -98,6 +99,8 @@ angular.module('fmApp')
 
   $scope.showEditOrDeleteBayForm = function (data) {
       $scope.editOrDeleteBayForm = data;
+       $scope.bayForm.$setPristine();
+       $scope.hasError = false;
   };
 
   $scope.setEditBayTab = function (data) {
@@ -164,11 +167,12 @@ angular.module('fmApp')
       if(JWR.statusCode === 201){
         // $scope.bays.push(body);
         $scope.showAddBayForm(false);
-        $scope.snackbarShow('Bay Added');    
-      } else if (JWR.statusCode === 400){
+        $scope.snackbarShow('Line Added');
+      } else if (JWR.statusCode === 200){
         console.log("Error Occured");
         $scope.showErrorMessage(true,body);
       }
+
        $scope.$digest(); 
     }); 
   }; 
@@ -188,9 +192,14 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          $scope.showEditOrDeleteBayForm(false);
-         $scope.snackbarShow('Bay Edited');
-         $scope.$digest();
+         $scope.snackbarShow('Line Edited');
+      } else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
+      } else {
+        console.log("Error!!!");
       }
+       $scope.$digest(); 
     });
   };
 

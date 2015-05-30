@@ -125,6 +125,10 @@
 
                 </div>
 
+                <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>Sorry! Line is already existing.</strong>
+                </div> 
 
 
                     <div class="form-group">

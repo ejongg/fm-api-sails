@@ -1,4 +1,5 @@
 
+
 <!-- START OF CONTENT -->
 
 
@@ -51,6 +52,12 @@
           <form class="form-horizontal" name="incCaseForm" ng-submit="submit(incVal)" novalidate>
                 <fieldset>
 
+                   <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+                    </div> 
+
+
                    <!-- <div class="alert alert-warning" ng-show="(productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid) || (productForm.addProductCompanyName.$invalid && productForm.addProductCompanyName.$dirty) ">
 
                      <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
@@ -65,7 +72,7 @@
                 </div>
 
                   <div class="form-group">
-                    <label for="inputBrandName" class="col-md-12">Cases</label>
+                    <label for="inputBrandName" class="col-md-12">No. of Cases</label>
                     <div class="col-md-12">
                       <input type="number" class="form-control empty" name="" min="0" ng-model="incVal.cases" required>
                       <!-- <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong> -->
