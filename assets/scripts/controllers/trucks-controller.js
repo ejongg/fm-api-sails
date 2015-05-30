@@ -287,25 +287,25 @@ angular.module('fmApp')
         switch (msg.data.position){
           case "Driver":
             $scope.employeeDrivers.push(msg.data);
-            if($scope.employeeDrivers.length = 0){
+            if($scope.noTruckDriver === true){
               $scope.noTruckDriver = false;
             }
           break;
           case "Checker":
             $scope.employeeCheckers.push(msg.data);
-            if($scope.employeeCheckers.length = 0){
+            if($scope.noChecker === true){
               $scope.noChecker = false;
             }
           break;
           case "Delivery Sales Personnel":
             $scope.employeeDeliverySalesPersonnel.push(msg.data);
-            if($scope.employeeDeliverySalesPersonnel.length = 0){
+            if($scope.noDSP === true){
               $scope.noDSP = false;
             }
           break;
           case "Delivery Helper":
             $scope.employeeDeliveryHelper.push(msg.data);
-            if($scope.employeeDeliveryHelper.length = 0){
+            if($scope.noDH === true){
               $scope.noDH = false;
             }
         }
