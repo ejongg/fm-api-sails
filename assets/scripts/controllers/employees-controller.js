@@ -114,7 +114,7 @@ angular.module('fmApp')
     $scope.employeeForm.$setPristine();
     $scope.employee.emp_fname = '';
     $scope.employee.emp_lname = '';
-    $scope.employee.office = '';
+    $scope.employee.office =  $scope.offices[0];
     $scope.employee.position = $scope.positions[0];
     $scope.employee.hire_date = new Date();
     $scope.employee.end_contract = new Date();
