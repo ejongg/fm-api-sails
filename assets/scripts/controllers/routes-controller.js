@@ -545,6 +545,15 @@ angular.module('fmApp')
         console.log(index);
         $scope.addresses[index] = msg.data[0];   
         console.log(msg.data);
+
+        if(_.findIndex($scope.addressesAvailable,{'id': msg.data[0].id})){
+        var index = _.findIndex($scope.addressesAvailable,{'id': msg.data[0].id});
+        $scope.addressesAvailable[index] = msg.data[0];
+        $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+        }
+
         $scope.$digest();
         break;
       // case "destroyed":
