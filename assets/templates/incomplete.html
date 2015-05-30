@@ -100,7 +100,7 @@
 
         <div class="form-group">
           <label for="select" class="col-md-2">Number of rows:</label>
-            <div class="col-md-1">
+            <div ng-class = "incForm ? 'col-md-2' : 'col-md-1'">
                 <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
                   <option value="10">10</option>
                   <option value="25">25</option>
@@ -152,9 +152,9 @@
 
                     <tr dir-paginate="inc in incompleteCases | filter:search | orderBy:sortCriteria:sortCriteria | itemsPerPage: noOfRows"  ng-click="incompleteClicked(inc)">
 
-                      <td>{{inc.sku_id.sku_name + " " + inc.sku_id.size}}</td>
-                      <td>{{inc.exp_date}}</td>
-                      <td>{{inc.bottles}}</td>
+                      <td width="33%">{{inc.sku_id.sku_name + " " + inc.sku_id.size}}</td>
+                      <td width="33%">{{inc.exp_date}}</td>
+                      <td width="33%">{{inc.bottles}}</td>
 
                     </tr>
 

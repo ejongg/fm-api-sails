@@ -268,10 +268,10 @@
 
             <tbody>
                 <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
-                    <td>{{purchaseInfo.id}}</td>
-                    <td>{{purchaseInfo.date_received}}</td>
-                    <td>{{purchaseInfo.total_amount}}</td>
-                    <td>{{purchaseInfo.user}}</td>
+                    <td width ="25%">{{purchaseInfo.id}}</td>
+                    <td width ="25%">{{purchaseInfo.date_received}}</td>
+                    <td width ="25%">{{purchaseInfo.total_amount}}</td>
+                    <td width ="25%">{{purchaseInfo.user}}</td>
                 </tr>
 
             </tbody>
@@ -282,7 +282,7 @@
         <dir-pagination-controls
             max-size="7"
             directional-links="true"
-            boundary-links="true"
+            boundary-links="true"inven
             >
         </dir-pagination-controls>
         </div>

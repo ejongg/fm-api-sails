@@ -119,11 +119,11 @@
 
                 <tbody>
                     <tr dir-paginate="customer in customers | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getCustomerOrders(customer.id)"  data-toggle="modal" data-target="#myModal">
-                        <td>{{customer.establishment_name}}</td>
-                        <td>{{customer.owner_name}}</td>
-                        <td>{{customer.address}}</td>
-                        <td>{{customer.distance}}</td>
-                        <td>{{customer.orders.length}}</td>
+                        <td width="25%">{{customer.establishment_name}}</td>
+                        <td width="15%">{{customer.owner_name}}</td>
+                        <td width="30%">{{customer.address}}</td>
+                        <td width="15%">{{customer.distance}}</td>
+                        <td width="15%">{{customer.orders.length}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->

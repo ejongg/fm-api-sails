@@ -224,12 +224,12 @@
 
                 <tbody>
                     <tr dir-paginate="item in inventory | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
-                        <td>{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
-                        <td>{{item.sku_name}}</td>
-                        <td>{{item.exp_date}}</td>
-                        <td>{{item.age}}</td>
-                        <td>{{item.physical_count}}</td>
-                        <td>{{item.logical_count}}</td>
+                        <td width="15%">{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
+                        <td width="15%">{{item.sku_name}}</td>
+                        <td width="15%">{{item.exp_date}}</td>
+                        <td width="15%">{{item.age}}</td>
+                        <td width="15%">{{item.physical_count}}</td>
+                        <td width="15%">{{item.logical_count}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('RoutesCtrl',['$scope', '_', '$http', 'httpHost','authService', function($scope, _, $http, httpHost, authService){
-	$scope.days = ['monday','tuesday','wednesday','thursday','friday','saturday'];
+.controller('RoutesCtrl',['$scope', '_', '$http', 'httpHost','authService', '$modal', function($scope, _, $http, httpHost, authService, $modal){
+  $scope.days = ['monday','tuesday','wednesday','thursday','friday','saturday'];
   $scope.addresses = [];
   $scope.addressAvailableList = [];
   $scope.addressesAvailable = [];
@@ -451,7 +451,7 @@ angular.module('fmApp')
     console.log(currentAddress);
     currentAddress.push(data);
 
-    $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+    // $scope.addressesAvailable = $scope.sortData(data,'address_name');
     $scope.addressAvailableList  =  $scope.addressesAvailable[0];
     $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
 
@@ -500,6 +500,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Deleted Address");
+         $scope.addressesAvailable.push(address);
          $scope.$digest();
       }
     }); 
@@ -560,10 +561,6 @@ angular.module('fmApp')
         var addressIndex =  _.findIndex($scope.routes[routeIndex].address,{'id': msg.data.address[0].id});
         console.log(addressIndex);
         $scope.routes[routeIndex].address.splice(addressIndex,1);
-        $scope.addressesAvailable.push(msg.data.address[0]);
-        $scope.addressesAvailable = $scope.sortData( $scope.addressesAvailable,'address_name');
-        $scope.addressAvailableList = $scope.addressesAvailable[0];
-        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
         $scope.$digest();
     }
 
@@ -605,5 +602,76 @@ angular.module('fmApp')
     }
 
   });
+ $scope.open = function (address) {
+    console.log("Open Modal");
 
-}]);
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'addressModalDelete.html',
+      controller: 'AddressModalCtrl',
+      resolve: {
+        address: function () {
+          return address;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (address) {
+      $scope.deleteAddress(address);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+
+ $scope.openRoute = function (routeInfo) {
+    console.log("Open Modal");
+
+    var routeModalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'routesModalDelete.html',
+      controller: 'RoutesModalCtrl',
+      resolve: {
+        routeInfo: function () {
+          return routeInfo;
+        }
+      }
+    });
+
+    routeModalInstance.result.then(function (routeInfo) {
+      $scope.deleteRoute(routeInfo);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+}])
+
+.controller('AddressModalCtrl', function ($scope, $modalInstance, address) {
+
+  $scope.ok = function () {
+    $modalInstance.close(address);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+})
+
+.controller('RoutesModalCtrl', function ($scope, $modalInstance, routeInfo) {
+
+  $scope.ok = function () {
+    $modalInstance.close(routeInfo);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+
+
+
+

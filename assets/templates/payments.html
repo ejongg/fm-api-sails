@@ -201,10 +201,10 @@
 
                     <tr dir-paginate="transaction in deliveryTransactions | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows"  ng-click="transactionClicked(transaction)">
 
-                      <td>{{transaction.customer_id.establishment_name}}</td>
-                      <td>{{transaction.delivery_date}}</td>
-                      <td>{{transaction.total_amount}}</td>
-                      <td>{{transaction.payment_date}}</td>
+                      <td width="25%">{{transaction.customer_id.establishment_name}}</td>
+                      <td width="25%">{{transaction.delivery_date}}</td>
+                      <td width="25%">{{transaction.total_amount}}</td>
+                      <td width="25%">{{transaction.payment_date}}</td>
 
                     </tr>
 
