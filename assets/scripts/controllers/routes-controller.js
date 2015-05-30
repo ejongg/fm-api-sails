@@ -576,6 +576,11 @@ angular.module('fmApp')
         if($scope.addresses.length === 0){
           $scope.noAddresses = true;
         }
+
+        if($scope.addressesAvailable.length === 0){
+          $scope.noAddressesAvailable = true;
+        }
+
         $scope.$digest();
         break;
       case "removed":
