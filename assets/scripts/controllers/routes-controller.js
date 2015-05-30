@@ -533,6 +533,9 @@ angular.module('fmApp')
         $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
          if($scope.noAddresses === true){
           $scope.noAddresses = false;
+        } 
+        if($scope.noAddressesAvailable === true){
+          $scope.noAddressesAvailable = false;
         }
         $scope.$digest();
         break;
