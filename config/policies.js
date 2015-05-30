@@ -63,7 +63,15 @@ module.exports.policies = {
   },
 
   PurchasesController : {
-    add : 'EmptyPolicy'
+    add : ['EmptyPolicy', 'LineLimitPolicy']
+  },
+
+  Load_inController : {
+    add : 'LineLimitPolicy'
+  },
+
+  SkuController : {
+    create : 'AddSkuPolicy'
   }
 
   /***************************************************************************
