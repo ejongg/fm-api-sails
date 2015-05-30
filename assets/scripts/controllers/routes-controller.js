@@ -225,7 +225,7 @@ angular.module('fmApp')
   $scope.deleteAddress = function (address){
     console.log(address.id);
     io.socket.request($scope.socketOptions('delete','/address/' + address.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
-      console.log('Sails responded with delete employee: ', body);
+      console.log('Sails responded with delete emplkjbkoyee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){ 
       }
