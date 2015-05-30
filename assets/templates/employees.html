@@ -223,10 +223,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-if="employeeEdit.status !== 'Regular'">
                         <label class="col-md-6">End of Contract</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputEndContract" class="form-control" ng-model="employeeEdit.end_contract" required>
+                        <input type="date" name="inputEndContract" class="form-control" min="{{formatDate(dateToday)}}" ng-model="employeeEdit.end_contract" required>
                         </div>
                     </div>
 

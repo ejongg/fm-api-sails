@@ -175,6 +175,11 @@ angular.module('fmApp')
 	}; 
 
 	$scope.editEmployee = function (employee) {
+    if(employee.status === 'Regular'){
+      employee.end_contract = 'N/A';
+    };
+    
+    console.log(employee);
     io.socket.request($scope.socketOptions('put','/employees/' + employee.id,{"Authorization": "Bearer " + authService.getToken()},employee), function (body, JWR) {
       console.log('Sails responded with edit employee: ', body);
       console.log('and with status code: ', JWR.statusCode);

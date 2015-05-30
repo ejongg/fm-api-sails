@@ -104,7 +104,9 @@
                             <div class="col-md-12">
                                 <!-- <input type="select" class="form-control" name="" placeholder="" ng-model="user.fullname" required> -->
                                 <div ng-hide="noEmployees">
-                                <select class="form-control" ng-model="user.fullname" ng-options="employee as fullName(employee) for employee in employees"></select>
+                                <select class="form-control" ng-model="user.fullname" ng-options="employee as fullName(employee) for employee in employees | filter: user.type">
+                                <option value="">Select Employee</option>
+                                </select>
                                 </div>
 
                                 <div ng-show="noEmployees">
@@ -119,7 +121,7 @@
 
 
                         <div class="form-group rightalign">
-                            <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Add</button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid || user.fullname === null">Add</button>
                             <button type="button" class="btn btn-default" ng-click="showAddUserForm(false)">Cancel</button> 
                         </div>
                     </fieldset>
