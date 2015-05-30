@@ -31,7 +31,7 @@ module.exports = function (req, res, next){
 
 		.then(function (){
 			if(notAvailable.length > 0){
-				return res.json({code : 0, message : 'Insufficient bottles in Empties Inventory', data : notAvailable});
+				return res.json({code : 0, message : 'Insufficient bottles in Empties Inventory', data : notAvailable}, 400);
 			}else{
 				next();
 			}

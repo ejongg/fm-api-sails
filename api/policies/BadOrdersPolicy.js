@@ -38,7 +38,7 @@ module.exports = function(req, res, next){
 		if(err) return res.send(err);
 
 		if(notAvailableProducts.length > 0){
-			return res.json({code : 0, message : 'Insufficient stocks in Bay', data : notAvailableProducts});
+			return res.json({code : 0, message : 'Insufficient stocks in Bay', data : notAvailableProducts}, 400);
 		}else{
 			next();
 		}

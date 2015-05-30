@@ -33,7 +33,7 @@ module.exports = {
 
 			.then(function (createdTransaction){
 				sails.sockets.blast('warehouse_transactions', {verb : 'created', data : createdTransaction});
-				return res.json({code : 1, message : 'Transaction completed'});	
+				return res.json({code : 1, message : 'Transaction completed'}, 200);	
 			})			
 	},
 
