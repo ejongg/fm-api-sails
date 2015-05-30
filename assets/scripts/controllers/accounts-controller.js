@@ -35,12 +35,12 @@ angular.module('fmApp')
     var getEmployees = function () {
     $http.get(httpHost + '/employees').success( function (data) {
       if(data.length !== 0){
-        $scope.employees = data;
-        $scope.noEmployees = false;
+        $scope.employees =  $scope.sortData(data,'emp_fname');
         $scope.user.fullname = $scope.employees[0];
-
         console.log("Employees:");
         console.log($scope.employees);
+      }else{
+        $scope.noEmployees = true;
       }
     }).error(function (err) {
       console.log(err);
