@@ -30,7 +30,7 @@ module.exports = {
 			.then(function (foundEmployee){
 
 				if(foundEmployee){
-					return res.send("Sorry! Employee already exist");
+					return res.send("Sorry! Employee already exist", 400);
 				}else{
 
 					Employees.create(employee)

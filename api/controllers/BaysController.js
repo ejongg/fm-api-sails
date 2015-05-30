@@ -30,7 +30,7 @@ module.exports = {
 			})
 
 			.catch(function (err){
-				return res.send(err);
+				return res.send(err, 400);
 			})
 	},
 
