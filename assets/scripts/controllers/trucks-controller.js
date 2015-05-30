@@ -361,6 +361,9 @@ angular.module('fmApp')
             index = _.findIndex($scope.employeeDrivers,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeDrivers.splice(index,1);
+            $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers,'emp_fname');
+            $scope.truck.driver = $scope.employeeDrivers[0];
+            $scope.truckEdit.driver = $scope.employeeDrivers[0];
             if($scope.employeeDrivers.length === 0){
               $scope.noTruckDriver = true;
             }
@@ -369,6 +372,9 @@ angular.module('fmApp')
             index = _.findIndex($scope.employeeCheckers,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeCheckers.splice(index,1);
+            $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
+            $scope.truck.dispatcher = $scope.employeeCheckers[0];
+            $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
             if($scope.employeeCheckers.length === 0){
               $scope.noChecker = true;
             }
@@ -377,6 +383,9 @@ angular.module('fmApp')
             index = _.findIndex($scope.employeeDeliverySalesPersonnel,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeDeliverySalesPersonnel.splice(index,1);
+            $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
+            $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+            $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
             if($scope.employeeDeliverySalesPersonnel.length === 0){
               $scope.noDSP = true;
             }
@@ -385,6 +394,9 @@ angular.module('fmApp')
             index = _.findIndex($scope.employeeDeliveryHelper,{'id': msg.data[0].emp_id});
             console.log(index);
             $scope.employeeDeliveryHelper.splice(index,1);
+            $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
+            $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+            $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
             if($scope.employeeDeliveryHelper.length === 0){
               $scope.noDH = true;
             }
