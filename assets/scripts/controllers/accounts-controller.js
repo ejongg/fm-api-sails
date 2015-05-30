@@ -147,6 +147,48 @@ angular.module('fmApp')
 
   });
 
+  io.socket.on('employees', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("Employee Created");
+        $scope.employees.push(msg.data);
+        $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
+        $scope.user.fullname = $scope.employees[0];
+        if($scope.noEmployees === true){
+          $scope.noEmployees = false;
+        }
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("Employee Updated");
+        var index = _.findIndex($scope.employees,{'id': msg.data.id});
+        console.log(index);
+        $scope.employees[index] = msg.data;
+        $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
+        $scope.user.fullname = $scope.employees[0];   
+        console.log(msg.data);
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Employee Deleted");
+        console.log(msg.data[0].emp_id);
+        var index = _.findIndex($scope.employees,{'id': msg.data[0].emp_id});
+        console.log(index);
+        $scope.employees.splice(index,1);
+        $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
+        $scope.user.fullname = $scope.employees[0];
+        if($scope.employees.length === 0){
+          $scope.noEmployees = true;
+        }
+        $scope.$digest();
+    }
+
+  });
+
 
   $scope.open = function (account) {
     console.log("Open Modal");
