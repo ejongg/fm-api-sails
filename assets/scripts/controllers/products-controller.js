@@ -19,6 +19,9 @@ angular.module('fmApp')
 
   $scope.noProducts = false;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   //forSorting. Default is set to id
   $scope.sortCriteria = 'id';
   $scope.reverseSort = false;
@@ -46,14 +49,31 @@ angular.module('fmApp')
     window.print();
   };
 
+    $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+        $scope.productForm.$setPristine();
+        $scope.product.brand_name = '';
+        $scope.product.company = $scope.companies[0];
+
+    }
+  }
+
+
   $scope.showAddProductForm = function (data) {
     $scope.productForm.$setPristine();
+    $scope.hasError = false;
     if($scope.editOrDeleteProductForm === true) {
         $scope.showEditOrDeleteProductForm(false);
       }
       
       $scope.addProductForm = data;
       if(data === false){
+          $scope.productForm.$setPristine();
           $scope.product.brand_name = '';
           $scope.product.company = $scope.companies[0];
       }
@@ -61,6 +81,8 @@ angular.module('fmApp')
 
   $scope.showEditOrDeleteProductForm = function (data) {
     $scope.editOrDeleteProductForm = data;
+    $scope.productForm.$setPristine();
+    $scope.hasError = false;
   };
 
   $scope.setEditProductTab = function (data) {
@@ -104,10 +126,11 @@ angular.module('fmApp')
         $scope.snackbarShow('Product Created');
       }else if (JWR.statusCode === 400){
         console.log("Product already exist");
+        $scope.showErrorMessage(true,body);
       }else{
         console.log("Error!!!");
       }
-    
+  
       $scope.$digest();
     });
   };
@@ -119,8 +142,15 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteProductForm(false);
         $scope.snackbarShow('Product Edited');
-        $scope.$digest();
+      }else if(JWR.statusCode === 400){
+        console.log("Product already exist");
+        $scope.showErrorMessage(true,body);
+      }else{
+        console.log("Error!!!");
       }
+  
+      $scope.$digest();
+      
     });
   };
 
