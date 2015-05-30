@@ -284,6 +284,7 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         console.log("Employee Created");
+        console.log(msg.data.position);
         switch (msg.data.position){
           case "Driver":
             $scope.employeeDrivers.push(msg.data);
