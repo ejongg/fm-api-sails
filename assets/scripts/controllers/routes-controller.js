@@ -546,7 +546,8 @@ angular.module('fmApp')
         $scope.addresses[index] = msg.data[0];   
         console.log(msg.data);
 
-        if(_.findIndex($scope.addressesAvailable,{'id': msg.data[0].id})){
+        if(_.findIndex($scope.addressesAvailable,{'id': msg.data[0].id}) !== -1){
+        console.log("Available");
         var index = _.findIndex($scope.addressesAvailable,{'id': msg.data[0].id});
         $scope.addressesAvailable[index] = msg.data[0];
         $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
