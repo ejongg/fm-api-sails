@@ -27,6 +27,9 @@ angular.module('fmApp')
 	$scope.editOrDeleteEmployeeForm = false;
   $scope.editEmployeeTab = true;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   // forSorting
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
@@ -50,6 +53,17 @@ angular.module('fmApp')
   $scope.pagePrint = function () {
     window.print();
   };
+
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       clearForm();
+    }
+  }
 
 	$scope.showAddEmployeeForm = function (data) {
       $scope.addEmployeeForm = data;
@@ -140,8 +154,12 @@ angular.module('fmApp')
       if(JWR.statusCode === 201){
         $scope.showAddEmployeeForm(false);
         $scope.snackbarShow('Employee Added');
-        $scope.$digest(); 
+      }else if (JWR.statusCode === 200){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
       }
+
+       $scope.$digest(); 
     });   
 	}; 
 
