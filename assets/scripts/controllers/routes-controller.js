@@ -557,17 +557,27 @@ angular.module('fmApp')
 
         $scope.$digest();
         break;
-      // case "destroyed":
-      //   console.log("Address Deleted");
-      //   console.log(msg.data[0]);
-      //   var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
-      //   console.log(index);
-      //   $scope.addresses.splice(index,1);
-      //   if($scope.addresses.length === 0){
-      //     $scope.noAddresses = true;
-      //   }
-      //   $scope.$digest();
-      //   break;
+      case "destroyed":
+        console.log("Address Deleted");
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
+        console.log(index);
+        $scope.addresses.splice(index,1);
+        
+        if(_.findIndex($scope.addressesAvailable,{'id': msg.data[0].address_id}) !== -1){
+          console.log("Available");
+          var index = _.findIndex($scope.addressesAvailable,{'id': msg.data[0].address_id});
+          $scope.addressesAvailable.splice(index,1);
+          $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+          $scope.addressAvailableList = $scope.addressesAvailable[0];
+          $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+        }
+
+        if($scope.addresses.length === 0){
+          $scope.noAddresses = true;
+        }
+        $scope.$digest();
+        break;
       case "removed":
         console.log("Address Removed");
        // console.log(msg.data.route);
