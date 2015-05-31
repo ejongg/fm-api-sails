@@ -162,7 +162,6 @@
                     <th>Line</th>
                     <th>Production date</th>
                     <th>Cases</th>
-                    <th>REB</th>
                     <th>Empty Bottles</th>
                     <th>Cost per case</th>
                     <th>Discount per case</th>
@@ -178,7 +177,7 @@
                     <td>{{purchase.bay}}</td>
                     <td>{{purchase.prod_date}}</td>
                     <td>{{purchase.cases}}</td>
-                    <td>{{purchase.reb}}</td>
+                    <td>{{purchase.empty_bottles  | currency : "₱"}}</td>
                     <td>{{purchase.costpercase | currency : "₱"}}</td>
                     <td>{{purchase.discountpercase | currency : "₱"}}</td>
                     <td>{{purchase.amount | currency : "₱"}}</td>

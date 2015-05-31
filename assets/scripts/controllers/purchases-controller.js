@@ -170,11 +170,10 @@ angular.module('fmApp')
       "cases" : purchase.cases,
       "costpercase" : purchase.sku.pricepercase,
       "discountpercase" : purchase.discount,
-      "amount" : purchase.cases * (purchase.sku.pricepercase - purchase.discount),
-      "empty_bottles": purchase.empty_bottles,
+      "amount" : (purchase.cases * (purchase.sku.pricepercase - purchase.discount)) - (purchase.empty_bottles * purchase.sku.priceperempty),
+      "empty_bottles": purchase.empty_bottles * purchase.sku.priceperempty,
       "bottlespercase": purchase.sku.bottlespercase,
-      "lifespan" : purchase.sku.lifespan,
-      "reb": purchase.empty_bottles
+      "lifespan" : purchase.sku.lifespan
     };
     
     console.log(purchaseInfo);
@@ -183,6 +182,8 @@ angular.module('fmApp')
     'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date}) === -1 ){
            $scope.purchases.push(purchaseInfo);
            $scope.totalAmount += purchaseInfo.amount;
+           console.log($scope.totalAmount);
+           console.log($scope.totalAmount);
     }else{
       var index = _.findIndex($scope.purchases,{ 'sku_id': purchaseInfo.sku_id, 
       'bay_id': purchaseInfo.bay_id, 'prod_date': purchaseInfo.prod_date});
