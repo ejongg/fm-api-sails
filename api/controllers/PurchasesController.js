@@ -29,6 +29,7 @@ module.exports = {
 			})
 
 			.then(function (purchase){
+				sails.sockets.blast('inventory', {verb : 'updated'});
 				sails.sockets.blast('purchases', {verb : 'created', data : purchase});
 				return res.send(201);
 			});
