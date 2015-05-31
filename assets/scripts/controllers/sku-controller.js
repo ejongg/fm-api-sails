@@ -89,8 +89,9 @@ angular.module('fmApp')
   - If data is false clear the form.
   */
   $scope.showAddSkuForm = function (data) {
-    $scope.addSKUForm = data;
+    $scope.skuForm.$setPristine();
     $scope.hasError = false;
+    $scope.addSKUForm = data;
     clearForm();
     if($scope.editOrDeleteSKUForm === true){
       $scope.showEditOrDeleteSkuForm(false);
@@ -102,7 +103,9 @@ angular.module('fmApp')
   */
   $scope.showEditOrDeleteSkuForm = function (data) {
     $scope.editOrDeleteSKUForm = data;
-    console.log("edit here");
+    $scope.skuForm.$setPristine();
+    $scope.hasError = false;   
+     console.log("edit here");
     if(data === false){
       if($scope.editSKUTab === false){
         $scope.setEditSKUTab(true);
@@ -207,11 +210,11 @@ angular.module('fmApp')
       if (JWR.statusCode === 201) {
         $scope.showAddSkuForm(false);
         $scope.snackbarShow('SKU Added');
-        $scope.$digest();
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
         $scope.showErrorMessage(true,body);
       }
+       $scope.$digest();
     });
 
   };
@@ -245,11 +248,11 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteSkuForm(false);
         $scope.snackbarShow('SKU Edited');
-        $scope.$digest();
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
         $scope.showErrorMessage(true,body);
       }
+        $scope.$digest();
     });
 
   };

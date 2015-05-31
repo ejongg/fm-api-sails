@@ -189,33 +189,58 @@
 
                 <thead>
                     <tr>
-                        <th><font size="1px">Type&nbsp;</font>
-                             <a href="" ng-click="sortCriteria = '-sku_name'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                              <a href="" ng-click="sortCriteria = '+sku_name'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                            <a href="" ng-click="sortCriteria='type'; reverseSort = !reverseSort" class="thlink">
+                             Type
+                              <span ng-show="sortCriteria == 'type'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
+
+                        <th>
+                          <a href="" ng-click="sortCriteria='date'; reverseSort = !reverseSort" class="thlink">
+                          Date
+                          <span ng-show="sortCriteria == 'date'">
+                            <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                            <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                          </span>
+                          </a>
                         </th>
 
-                        <th><font size="1px">Date&nbsp;</font>
-                            <a href="" ng-click="sortCriteria = '-size'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                            <a href="" ng-click="sortCriteria = '+size'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
+                        <th>
+                          <a href="" ng-click="sortCriteria='amount'; reverseSort = !reverseSort" class="thlink">
+                          Amount
+                          <span ng-show="sortCriteria == 'amount'">
+                            <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                            <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                          </span>
+                          </a>
                         </th>
-
-                        <th><font size="1px">Amount&nbsp;</font>
-                             <a href="" ng-click="sortCriteria = '-prod_id.company'" class="arrowlink1"><i class="mdi-navigation-expand-more downa"></i></a>
-                            <a href="" ng-click="sortCriteria = '+prod_id.company'" class="arrowlink2"><i class="mdi-navigation-expand-less upa"></i></a>
-
-                      </th>
                     
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="expense in expenses">
+                    <tr dir-paginate="expense in expenses | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows">
                       <td>{{expense.type}}</td>
                       <td>{{expense.date}}</td>
                       <td>{{expense.amount}}</td>
                     </tr>
                 </tbody>
             </table>
+
+            <div align="center">
+            <dir-pagination-controls
+                  max-size="7"
+                  directional-links="true"
+                  boundary-links="true"
+                  >
+            </dir-pagination-controls>
+          </div>
+
           </div>
 
             <div ng-show="noExpenses" align="center">
