@@ -30,7 +30,7 @@ angular.module('fmApp')
   $scope.reverseSort = false;
 
   var getBays = function () {
-    
+    console.log("Get Bays");
     $http.get(httpHost + '/bays/list').success( function (data) {
       if(data.length !== 0){
       $scope.bays = data;
