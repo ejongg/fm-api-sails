@@ -269,8 +269,8 @@
 
             <tbody>
                 <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
-                    <td width ="25%">{{purchaseInfo.id}}</td>
-                    <td width ="25%">{{purchaseInfo.date_received}}</td>
+                    <td width ="5%">{{purchaseInfo.id}}</td>
+                    <td width ="10s%">{{purchaseInfo.date_received}}</td>
                     <td width ="25%">{{purchaseInfo.total_amount | currency : "₱"}}</td>
                     <td width ="25%">{{purchaseInfo.user}}</td>
                 </tr>
@@ -319,10 +319,10 @@
 
             <tbody>
                 <tr ng-repeat="product in purchaseProducts">
-                    <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
-                    <td>{{product.cases}}</td>
-                    <td>{{product.costpercase | currency : "(₱)" }}</td>
-                    <td>{{product.discountpercase | currency : "₱"}}</td>
+                    <td width ="15%">{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
+                    <td width ="1%">{{product.cases}}</td>
+                    <td width ="10%">{{product.costpercase | currency : "₱" }}</td>
+                    <td width ="10%">{{product.discountpercase | currency : "₱"}}</td>
                 </tr>
 
                 <!-- DON'T REMOVE CODE BELOW -->
