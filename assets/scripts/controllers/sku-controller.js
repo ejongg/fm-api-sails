@@ -297,6 +297,7 @@ angular.module('fmApp')
         }
         $scope.products.push(msg.data);
         // $scope.existingCompany = _.uniq($scope.products, 'company');
+         $scope.products = $scope.sortData($scope.products,'brand_name');
         $scope.sku.brand_name = $scope.products[0].brand_name;
         $scope.$digest();
         break;
@@ -305,6 +306,7 @@ angular.module('fmApp')
         var index = _.findIndex($scope.products,{'id': msg.data.id});
         $scope.products[index] = msg.data;
         // $scope.existingCompany = _.uniq($scope.products, 'company');
+         $scope.products = $scope.sortData($scope.products,'brand_name');
         $scope.sku.brand_name = $scope.products[0].brand_name;
         $scope.$digest();
         break;
@@ -325,6 +327,7 @@ angular.module('fmApp')
           console.log("change filter");
           // $scope.existingCompany = _.uniq($scope.products, 'company');
           // console.log($scope.existingCompany);
+          $scope.products = $scope.sortData($scope.products,'brand_name');
           $scope.sku.brand_name = $scope.products[0].brand_name;
         }
         
