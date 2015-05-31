@@ -9,10 +9,10 @@ module.exports = function (req, res, next){
 	})
 
 	.each(function (product){
-		return BaysService.checkLineAvailable(product.bay, product.cases)
+		return BaysService.checkLineAvailable(product.bay_id, product.cases)
 			.then(function (available){
 				if(available == false){
-					unavailableLines.push(product.bay);
+					unavailableLines.push(product.bay_id);
 				}
 			})
 	})
