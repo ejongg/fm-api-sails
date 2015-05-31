@@ -425,8 +425,9 @@ angular.module('fmApp')
     
     console.log("Splice");
     $scope.addressesAvailable.splice(index,1);
-    $scope.addressAvailableList  =  $scope.addressesAvailable[0];
-    $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
+    $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+    $scope.addressAvailableList = $scope.addressesAvailable[0];
+    $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
     $scope.route.address.push(data);
 
      if($scope.addressesAvailable.length === 0){
@@ -446,14 +447,17 @@ angular.module('fmApp')
     
     console.log("Splice");
     $scope.addressesAvailable.splice(index,1);
+    $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+    $scope.addressAvailableList = $scope.addressesAvailable[0];
+    $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+
+      if($scope.addressesAvailable.length === 0){
+      $scope.noAddressesAvailable = true;
+    }
 
     var currentAddress = $scope.routes[routeIndex].address;
     console.log(currentAddress);
     currentAddress.push(data);
-
-    // $scope.addressesAvailable = $scope.sortData(data,'address_name');
-    $scope.addressAvailableList  =  $scope.addressesAvailable[0];
-    $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
 
     var newAddress = {
     "route_name": name,
@@ -501,6 +505,9 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
          console.log("Deleted Address");
          $scope.addressesAvailable.push(address);
+         $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+         $scope.addressAvailableList = $scope.addressesAvailable[0];
+         $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
          $scope.$digest();
       }
     }); 
@@ -587,6 +594,10 @@ angular.module('fmApp')
         console.log("Address Removed");
        // console.log(msg.data.route);
         //console.log(msg.data.address.id);
+        if ($scope.noAddressesAvailable === true) {
+          $scope.noAddressesAvailable = false;
+        }
+
         var routeIndex =  _.findIndex($scope.routes,{'id': msg.data.route});
         console.log(routeIndex);
         console.log($scope.routes[routeIndex]);
