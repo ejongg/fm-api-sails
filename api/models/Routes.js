@@ -29,14 +29,6 @@ module.exports = {
   afterUpdate : function(route, next){
     sails.sockets.blast('routes', {verb : 'updated', data : route});
     next();
-  },
-
-  beforeDestroy : function(route, next){
-    Routes.findOne({id : route.id}).populate('address')
-      .then(function (foundRoute){
-        sails.sockets.blast('routes', {verb : 'destroyed', data : foundRoute});
-        next();
-      })
   }
 };
 
