@@ -82,7 +82,7 @@
                           SKU Name</label> 
 
                           <div class="col-md-12">
-                            <select class="form-control" ng-model="expense.sku" ng-options="sku as combine(sku) for sku in skuList">
+                            <select class="form-control" ng-model="expense.sku" ng-options="sku as combine(sku) for sku in skuList" ng-change="getMaxBottles(expense)" >
                             </select>
                           </div>
                         </div>
@@ -109,7 +109,7 @@
                       <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
                         Extra Bottles</label> 
-                         <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter no. of bottle" ng-model="expense.bottles" required>
+                         <div class="col-md-12"><input type="number" min="0" max="{{maxBottles}}" class="form-control" placeholder="Enter no. of bottle" ng-model="expense.bottles" required>
 
                          </div>
                       </div>

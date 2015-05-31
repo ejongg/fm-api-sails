@@ -21,6 +21,8 @@ angular.module('fmApp')
   $scope.addExpenseForm = false;
   $scope.addOtherMode = true;
 
+  $scope.maxBottles = 0;
+
   // forSorting
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
@@ -47,6 +49,8 @@ angular.module('fmApp')
       if(data.length !== 0){
       $scope.skuList = data;
       $scope.expense.sku = $scope.skuList[0];
+      $scope.maxBottles = $scope.skuList[0].bottlespercase;
+      console.log("MAX BOTTLES:" + $scope.maxBottles);
       console.log("SKU:");
       console.log($scope.skuList);
       }else{
@@ -75,6 +79,12 @@ angular.module('fmApp')
   getExpenses();
   getSKUAvailable();
   getBays();
+
+  $scope.getMaxBottles = function (expense){
+    $scope.maxBottles = expense.sku.bottlespercase;
+    console.log(expense);
+    console.log($scope.maxBottles);
+  };
 
   $scope.typeChange = function (type) {
     console.log(type);
