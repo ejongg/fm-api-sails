@@ -230,7 +230,7 @@
                     </div>
                 
                 <div ng-show="editIndex === $index" class="pull-right">
-                  <button type="button" ng-disabled="editTruckForm.$invalid" ng-click="editTruck(truckEdit)" class="btn btn-primary btn-xs">Save</button>
+                  <button type="button" ng-disabled="editTruckForm.$invalid || noTruckDriver || noChecker || noDSP || noDH || noRoute" ng-click="editTruck(truckEdit)" class="btn btn-primary btn-xs">Save</button>
 
                   <button type="button" ng-click="truckEditClicked(-1)" class="btn btn-primary btn-xs">Cancel</button>
                 </div>
