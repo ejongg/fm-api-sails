@@ -32,6 +32,7 @@ angular.module('fmApp')
   var getBays = function () {
     console.log("Get Bays");
     $http.get(httpHost + '/bays/list').success( function (data) {
+      console.log("Bay List");
       if(data.length !== 0){
       $scope.bays = data;
       console.log("Bays:");
@@ -269,9 +270,6 @@ angular.module('fmApp')
       case "updated":
         console.log("Bay Updated");
         getBays();
-        // var index = _.findIndex($scope.bays,{'id': msg.data.id});
-        // $scope.bays[index] = msg.data;
-        // $scope.product.bay = $scope.bays[0];
         $scope.$digest();
     }
 
