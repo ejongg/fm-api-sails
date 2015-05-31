@@ -28,19 +28,6 @@ angular.module('fmApp')
   $scope.sortCriteria = 'id';
   $scope.reverseSort = false;
 
-  $scope.showErrorMessage = function (data,msg) {
-    $scope.hasError = data;
-    console.log($scope.hasError);
-    
-    if(data === true){
-      console.log(data);
-      console.log(msg);
-      $scope.errorMessage = msg;
-      $scope.skuForm.$setPristine();
-      clearForm();
-    }
-  }
-  
 
   var getProducts = function (){  
     $http.get(httpHost + '/products').success( function (data) {
@@ -88,6 +75,18 @@ angular.module('fmApp')
   Show add sku form
   - If data is false clear the form.
   */
+
+        $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       clearForm();
+    }
+  }
+
   $scope.showAddSkuForm = function (data) {
     $scope.skuForm.$setPristine();
     $scope.hasError = false;
@@ -308,8 +307,13 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteSkuForm(false);
         $scope.snackbarShow('SKU Deleted');
-        $scope.$digest();
+      }else if (JWR.statusCode === 500){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
       }
+
+       $scope.$digest();
+
     });
   }
 
