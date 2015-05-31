@@ -77,7 +77,7 @@ angular.module('fmApp')
     console.log("EMPLOYEE GET");
     $http.get(httpHost + '/employees').success( function (data) {
       if(data.length !== 0){
-        $scope.employees = data;
+        $scope.employees = $scope.sortData(data,'emp_fname');
         $scope.accountable = $scope.employees[0];
         console.log("Employees:");
         console.log($scope.employees);
@@ -147,6 +147,7 @@ angular.module('fmApp')
     $scope.product.sku = $scope.skuList[0];
     $scope.product.cases = null;
     $scope.product.bottles = null;
+    $scope.product.reason = "";
   };
 
   $scope.getBadOrderDetails = function (id) {
@@ -233,6 +234,48 @@ angular.module('fmApp')
 
   });
 
+    io.socket.on('employees', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("Employee Created");
+        $scope.employees.push(msg.data);
+        $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
+        $scope.accountable = $scope.employees[0];
+        if($scope.noEmployees === true){
+          $scope.noEmployees = false;
+        }
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("Employee Updated");
+        var index = _.findIndex($scope.employees,{'id': msg.data.id});
+        console.log(index);
+        $scope.employees[index] = msg.data;
+        $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
+        $scope.accountable = $scope.employees[0];   
+        console.log(msg.data);
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Employee Deleted");
+        console.log(msg.data[0].emp_id);
+        var index = _.findIndex($scope.employees,{'id': msg.data[0].emp_id});
+        console.log(index);
+        $scope.employees.splice(index,1);
+        $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
+        $scope.accountable = $scope.employees[0];
+        if($scope.employees.length === 0){
+          $scope.noEmployees = true;
+        }
+        $scope.$digest();
+    }
+
+  });
+
   // io.socket.on('bays', function(msg){
   //   console.log("Message Verb: " + msg.verb);
   //   console.log("Message Data :");
@@ -283,6 +326,7 @@ io.socket.on('inventory', function(msg){
       case "updated":
         console.log("Bay Updated");
         getBays();
+        getSKU();
         // var index = _.findIndex($scope.bays,{'id': msg.data.id});
         // $scope.bays[index] = msg.data;
         // $scope.product.bay = $scope.bays[0];

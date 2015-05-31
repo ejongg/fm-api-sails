@@ -432,8 +432,18 @@
 
         <div ng-hide="noProducts || noSKU"> 
 
+          <div class="form-group">
+          <label for="select" class="col-md-1">Company:</label>
+            <div ng-class = "addProductForm || editOrDeleteProductForm ? 'col-md-2' : 'col-md-2'">
+                <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect">
+                  <option value="Coca-Cola">Coca-Cola</option>
+                  <option value="SMB">SMB</option>
+                </select>
+            </div>
+          </div>
+
          <div class="form-group">
-            <label for="select" class="col-md-2">Number of rows:</label>
+            <label for="select" class=" col-md-offset-2 col-md-2 control-label">Number of rows:</label>
             <div class="col-md-1">
                 <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
                 <option value="10">10</option>
@@ -443,15 +453,6 @@
             </div>
           </div>
 
-          <div class="form-group">
-          <label for="select" class="col-md-2">Company:</label>
-            <div ng-class = "addProductForm || editOrDeleteProductForm ? 'col-md-2' : 'col-md-1'">
-                <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect">
-                  <option value="Coca-Cola">Coca-Cola</option>
-                  <option value="SMB">SMB</option>
-                </select>
-            </div>
-          </div>
 
           <br>
 
@@ -461,7 +462,7 @@
                     <tr>
                         <th>
                           <a href="" ng-click="sortCriteria='prod_id.brand_name'; reverseSort = !reverseSort" class="thlink">
-                             Brand
+                             Brand Name
                               <span ng-show="sortCriteria == 'prod_id.brand_name'">
                                 <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                 <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
@@ -469,15 +470,6 @@
                             </a>
                         </th>
 
-                        <th>
-                            <a href="" ng-click="sortCriteria='sku_name'; reverseSort = !reverseSort" class="thlink">
-                                Name
-                                <span ng-show="sortCriteria == 'sku_name'">
-                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                                </span>
-                            </a>
-                        </th>
 
                         <th>
                             <a href="" ng-click="sortCriteria='size'; reverseSort = !reverseSort" class="thlink">
@@ -553,8 +545,7 @@
 
                 <tbody>
                     <tr dir-paginate="sku in skuLists | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="skuClicked(sku)">
-                      <td width ="10%">{{sku.prod_id.brand_name}}</td>
-                      <td width ="15%">{{sku.sku_name}}</td>
+                      <td width ="10%">{{sku.prod_id.brand_name +" " + sku.sku_name}}</td>
                       <td width ="10%">{{sku.size}}</td>
                       <td width ="10%">{{sku.prod_id.company}}</td>
                       <td width ="13%">{{sku.priceperbottle | currency:"₱"}}</td>

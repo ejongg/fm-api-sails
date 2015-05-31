@@ -80,8 +80,12 @@ module.exports = {
 					})
 			})
 
-			.then(function (){
-				return res.send(orderList);
+			.then(function (products){
+				return CustomerOrderService.getTotalAmount(products);
+			})
+
+			.then(function (totalAmount){
+				return res.send({orders : orderList, total_amount : totalAmount});
 			})
 	}
 };
