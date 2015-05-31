@@ -68,7 +68,7 @@
                         <label for="inputBrandName" class="col-md-12">
                         Brand Name</label>
                         <div class="col-md-12">
-                          <select class="form-control" ng-model="sku.brand_name" ng-options="product.brand_name as product.brand_name for product in products">
+                          <select class="form-control" ng-model="sku.brand_name" ng-options="product.brand_name as product.brand_name group by product.company for product in products">
                           </select>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
                         <label for="inputBrandName" class="col-md-12">
                         Brand Name</label>
                         <div class="col-md-12">
-                          <select class="form-control" ng-model="skuEdit.brand_name" ng-options="product.brand_name as product.brand_name for product in products">
+                          <select class="form-control" ng-model="skuEdit.brand_name" ng-options="product.brand_name as product.brand_name group by product.company for product in products">
                           </select>
                         </div>
                     </div>

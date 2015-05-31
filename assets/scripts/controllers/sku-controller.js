@@ -46,7 +46,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/products').success( function (data) {
       
       if(data.length !== 0){
-        $scope.products = data;
+        $scope.products = $scope.sortData(data,'brand_name');
         $scope.sku.brand_name = $scope.products[0].brand_name;
         console.log("Products:");
         console.log($scope.products);
@@ -92,7 +92,9 @@ angular.module('fmApp')
     $scope.skuForm.$setPristine();
     $scope.hasError = false;
     $scope.addSKUForm = data;
-    clearForm();
+    if(data === false){
+       clearForm();
+    }
     if($scope.editOrDeleteSKUForm === true){
       $scope.showEditOrDeleteSkuForm(false);
     } 
@@ -132,6 +134,7 @@ angular.module('fmApp')
   Clear form inputs
   */
   var clearForm = function () {
+    console.log("clear form");
     $scope.skuForm.$setPristine();
     $scope.sku.brand_name = $scope.products[0].brand_name;
     $scope.sku.sku_name = '';
