@@ -16,7 +16,7 @@ angular.module('fmApp')
   $scope.noBays = false;
   $scope.noSKU = false;
   $scope.noPurchase = false;
-
+  
 
   $scope.itemExistingError = false;
   $scope.itemExisting = '';
@@ -36,7 +36,7 @@ angular.module('fmApp')
       
       if(data.length !== 0){
         $scope.skuList = data;
-        $scope.purchase.sku = $scope.skuList[0];
+        $scope.purchase.sku = null;
         console.log("SKU List:");
         console.log($scope.skuList);
       }else{
@@ -59,7 +59,7 @@ angular.module('fmApp')
      $http.get(httpHost + '/bays').success( function (data) {
       if(data.length !== 0){
       $scope.bays = data;
-      $scope.purchase.bay = $scope.bays[0];          
+      $scope.purchase.bay = null;          
       console.log("Bays:");
       console.log($scope.bays);
       }else{
@@ -135,6 +135,7 @@ angular.module('fmApp')
     $scope.purchase.sku = $scope.skuList[0];
     $scope.purchase.bay = $scope.bays[0];
     $scope.purchase.cases = null;
+    $scope.purchase.empty_bottles = null;
     $scope.purchase.cost = null;
     $scope.purchase.discount = null;
     $scope.purchase.prod_date = new Date();
@@ -178,7 +179,8 @@ angular.module('fmApp')
       "amount" : purchase.cases * (purchase.sku.pricepercase - purchase.discount),
       "empty_bottles": purchase.empty_bottles,
       "bottlespercase": purchase.sku.bottlespercase,
-      "lifespan" : purchase.sku.lifespan
+      "lifespan" : purchase.sku.lifespan,
+      "reb": purchase.empty_bottles
     };
     
     console.log(purchaseInfo);
