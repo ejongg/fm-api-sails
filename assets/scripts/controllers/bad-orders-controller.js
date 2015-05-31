@@ -233,43 +233,60 @@ angular.module('fmApp')
 
   });
 
-  io.socket.on('bays', function(msg){
+  // io.socket.on('bays', function(msg){
+  //   console.log("Message Verb: " + msg.verb);
+  //   console.log("Message Data :");
+  //   console.log(msg.data);
+    
+  //   switch (msg.verb) {
+  //     case "created": 
+  //       console.log("Bay Created");
+  //       $scope.bays.push(msg.data);
+  //       if($scope.noBays === true){
+  //         $scope.noBays = false;
+  //       }
+  //       $scope.product.bay = $scope.bays[0];
+  //       $scope.$digest();
+  //       break;
+  //     case "updated":
+  //       console.log("Bay Updated");
+  //       var index = _.findIndex($scope.bays,{'id': msg.data.id});
+  //       $scope.bays[index] = msg.data;
+  //       $scope.product.bay = $scope.bays[0];
+  //       $scope.$digest();
+  //       break;
+  //     case "destroyed":
+  //       console.log("Bay Deleted");
+  //       var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
+  //       $scope.bays.splice(index,1);
+  //       if($scope.bays.length === 0){
+  //         $scope.noBays = true;
+  //         if($scope.addBadOrderForm === true){
+  //           console.log("Close form");
+  //           $scope.addBadOrderForm = false;
+  //         }
+  //       }else{
+  //         $scope.product.bay = $scope.bays[0];
+  //       }
+  //       $scope.$digest();
+
+  //   }
+
+  // });
+
+io.socket.on('inventory', function(msg){
     console.log("Message Verb: " + msg.verb);
     console.log("Message Data :");
     console.log(msg.data);
     
     switch (msg.verb) {
-      case "created": 
-        console.log("Bay Created");
-        $scope.bays.push(msg.data);
-        if($scope.noBays === true){
-          $scope.noBays = false;
-        }
-        $scope.product.bay = $scope.bays[0];
-        $scope.$digest();
-        break;
       case "updated":
         console.log("Bay Updated");
-        var index = _.findIndex($scope.bays,{'id': msg.data.id});
-        $scope.bays[index] = msg.data;
-        $scope.product.bay = $scope.bays[0];
+        getBays();
+        // var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        // $scope.bays[index] = msg.data;
+        // $scope.product.bay = $scope.bays[0];
         $scope.$digest();
-        break;
-      case "destroyed":
-        console.log("Bay Deleted");
-        var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
-        $scope.bays.splice(index,1);
-        if($scope.bays.length === 0){
-          $scope.noBays = true;
-          if($scope.addBadOrderForm === true){
-            console.log("Close form");
-            $scope.addBadOrderForm = false;
-          }
-        }else{
-          $scope.product.bay = $scope.bays[0];
-        }
-        $scope.$digest();
-
     }
 
   });
