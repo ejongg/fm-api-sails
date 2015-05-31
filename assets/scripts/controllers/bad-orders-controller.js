@@ -325,7 +325,7 @@ io.socket.on('inventory', function(msg){
       case "updated":
         console.log("Bay Updated");
         getBays();
-        getSKU():
+        getSKU();
         // var index = _.findIndex($scope.bays,{'id': msg.data.id});
         // $scope.bays[index] = msg.data;
         // $scope.product.bay = $scope.bays[0];
