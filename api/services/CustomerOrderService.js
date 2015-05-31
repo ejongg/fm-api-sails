@@ -66,5 +66,24 @@ module.exports = {
 				});	
 
 		});
+	},
+
+	getTotalAmount : function(products){
+		return new Promise(function (resolve){
+			var totalAmount = 0;
+
+			new Promise(function (resolve){
+				resolve(products);
+			})
+
+			.each(function (product){
+				totalAmount = totalAmount + (product.sku_id.pricepercase * product.cases);
+			})
+
+			.then(function (){
+				resolve(totalAmount);
+			})
+
+		});
 	}
 };
