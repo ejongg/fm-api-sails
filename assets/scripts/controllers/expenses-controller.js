@@ -80,6 +80,10 @@ angular.module('fmApp')
   getSKUAvailable();
   getBays();
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
   $scope.getMaxBottles = function (expense){
     $scope.maxBottles = expense.sku.bottlespercase;
     console.log(expense);
