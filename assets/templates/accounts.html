@@ -141,7 +141,7 @@
 
             <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <a ng-click="setEditTab(true)"> <i class="mdi-editor-mode-edit"/>&nbsp; Reset Password</a>
+                            <a data-toggle="modal" data-target="#myModal" bs-modal="modal"> <i class="mdi-editor-mode-edit"/>&nbsp; Reset Password</a>
                         </li>
                         <li>
                             <a ng-click="setResetPasswordTab(false)"><i class="mdi-action-delete"/>&nbsp; Delete Account</a>
@@ -294,6 +294,25 @@
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="showViewProducts(false)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Reset Password</h4> 
+      </div>
+      <div class="modal-body">
+            Are you sure you want to reset the password of this account?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 <!-- Modal -->
 <script type="text/ng-template" id="accountModalDelete.html">
@@ -311,3 +330,4 @@
         </div>
       </div>
 </script>
+
