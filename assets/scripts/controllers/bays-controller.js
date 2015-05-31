@@ -260,6 +260,23 @@ angular.module('fmApp')
 
   });
 
+  io.socket.on('inventory', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "updated":
+        console.log("Bay Updated");
+        getBays();
+        // var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        // $scope.bays[index] = msg.data;
+        // $scope.product.bay = $scope.bays[0];
+        $scope.$digest();
+    }
+
+  });
+
   $scope.open = function (bay) {
     console.log("Open Modal");
 
