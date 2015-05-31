@@ -121,7 +121,7 @@
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Empty Bottle price (₱)</label> 
-                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price." ng-model="sku.bottleprice"  required>
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price." ng-model="sku.priceperempty"  required>
                        </div>
                     </div>
 
@@ -198,7 +198,7 @@
         <div class="panel-body col-md-3" ng-show="editSKUTab">
 
             <h4><i class="mdi-image-edit"></i> EDIT SAFE KEEPING UNIT</h4>
-            <form class="form-horizontal" name="editskuForm" ng-submit="editSKU(skuEdit)" novalidate>
+            <form class="form-horizontal" name="editSKUFirstForm" ng-submit="editFirstSKU(skuEdit)" novalidate>
                 <fieldset>
 
                     <div class="alert alert-warning" ng-show="(editskuForm.inputSkuName.$dirty && editskuForm.inputSkuName.$invalid) || (editskuForm.inputSize.$invalid && editskuForm.inputSize.$dirty) || (editskuForm.inputSkuPrice.$invalid && editskuForm.inputSkuPrice.$dirty)|| (editskuForm.inputSkuPriceB.$invalid && editskuForm.inputSkuPriceB.$dirty) || (editskuForm.inputBottlePerCase.$invalid && editskuForm.inputBottlePerCase.$dirty) || (editskuForm.inputWeightPerCase.$invalid && editskuForm.inputWeightPerCase.$dirty) || (editskuForm.inputLifeSpan.$invalid && editskuForm.inputLifeSpan.$dirty)">
@@ -246,6 +246,19 @@
 
                     </div>
 
+                      <div class="icon-preview">
+                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteSkuForm(false)" >Cancel</button>
+                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="editSKUFirstForm.$invalid">Save</button>
+
+                          <br>
+                        </div>
+
+
+                </fieldset>
+            </form>
+
+            <form class="form-horizontal" name="editSKUSecondForm" ng-submit="editSecondSKU(skuEdit)" novalidate>
+                <fieldset>
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Price per bottle (₱)</label> 
@@ -269,7 +282,7 @@
                      <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                        Empty Bottle price (₱)</label> 
-                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price."  required>
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price." ng-model="skuEdit.priceperempty"  required>
                        </div>
                     </div>
 
@@ -306,7 +319,7 @@
 
                         <div class="icon-preview">
                           <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showEditOrDeleteSkuForm(false)" >Cancel</button>
-                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="editskuForm.$invalid">Save</button>
+                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="editSKUSecondForm.$invalid">Save</button>
 
                           <br>
                         </div>
@@ -359,7 +372,7 @@
                      <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
                         Empty Bottle price (₱)</label> 
-                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price."  disabled>
+                       <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price."  ng-model="skuDelete.priceperempty"  disabled>
                        </div>
                     </div>
 
@@ -505,6 +518,16 @@
                                 </span>
                             </a>
                         </th>
+
+                         <th>
+                            <a href="" ng-click="sortCriteria='pricepercase'; reverseSort = !reverseSort" class="thlink">
+                                Price Per Empty
+                                <span ng-show="sortCriteria == 'pricepercase'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
                        
                         <th>
                             <a href="" ng-click="sortCriteria='bottlespercase'; reverseSort = !reverseSort" class="thlink">
@@ -536,6 +559,7 @@
                       <td width ="10%">{{sku.prod_id.company}}</td>
                       <td width ="13%">{{sku.priceperbottle | currency:"₱"}}</td>
                       <td width ="13%">{{sku.pricepercase | currency:"₱"}}</td>
+                      <td width ="13%">{{sku.priceperempty | currency:"₱"}}</td>
                       <td width ="10%">{{sku.bottlespercase}}</td>
                       <td width ="15%">{{sku.lifespan}}</td>
                     </tr>

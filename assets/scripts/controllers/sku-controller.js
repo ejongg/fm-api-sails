@@ -169,6 +169,7 @@ angular.module('fmApp')
     $scope.skuEdit.bottlespercase = $scope.copiedSku.bottlespercase;
     $scope.skuEdit.weightpercase = $scope.copiedSku.weightpercase;
     $scope.skuEdit.lifespan = $scope.copiedSku.lifespan;
+    $scope.skuEdit.priceperempty = $scope.copiedSku.priceperempty;
 
     $scope.skuDelete.id = $scope.copiedSku.id;
     $scope.skuDelete.sku_name = $scope.copiedSku.sku_name;
@@ -179,6 +180,7 @@ angular.module('fmApp')
     $scope.skuDelete.bottlespercase = $scope.copiedSku.bottlespercase;
     $scope.skuDelete.weightpercase = $scope.copiedSku.weightpercase;
     $scope.skuDelete.lifespan = $scope.copiedSku.lifespan;
+    $scope.skuDelete.priceperempty = $scope.copiedSku.priceperempty;
 
     if($scope.addSKUForm === true){
       $scope.showAddSkuForm(false);
@@ -202,8 +204,10 @@ angular.module('fmApp')
       "pricepercase":sku.pricepercase,
       "bottlespercase": sku.bottlespercase,
       "weightpercase": sku.weightpercase,
+      "priceperempty": sku.priceperempty,
       "lifespan": sku.lifespan,
       "prod_id": prod_id
+
     }
     console.log(skuInfo);
 
@@ -226,7 +230,7 @@ angular.module('fmApp')
    Edit SKU in the server
     - If success close the form.
   */
-  $scope.editSKU = function (sku) {
+  $scope.editFirstSKU = function (sku) {
     console.log(sku.brand_name);
     var size = sku.size + ' ' +sku.unit;
     var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
@@ -234,13 +238,42 @@ angular.module('fmApp')
     var newInfo = {
       "sku_name":sku.sku_name,
       "size":size,
+      "prod_id": prod_id,
+      "id": sku.id,
+      "flag": 1
+    };
+    console.log(newInfo);
+    console.log(sku.id);
+
+    io.socket.request($scope.socketOptions('put','/sku/edit',{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
+      console.log('Sails responded with edit sku: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.showEditOrDeleteSkuForm(false);
+        $scope.snackbarShow('SKU Edited');
+      }else if(JWR.statusCode === 400){
+        console.log("SKU already exist");
+        $scope.showErrorMessage(true,body);
+      }
+        $scope.$digest();
+    });
+
+  };
+
+  $scope.editSecondSKU = function (sku) {
+    console.log(sku.brand_name);
+    var size = sku.size + ' ' +sku.unit;
+    var prod_id = _.result(_.find($scope.products, {'brand_name': sku.brand_name }), 'id');
+ 
+    var newInfo = {
       "priceperbottle":sku.priceperbottle,
       "pricepercase":sku.pricepercase,
       "bottlespercase": sku.bottlespercase,
       "weightpercase": sku.weightpercase,
+      "priceperempty": sku.priceperempty,
       "lifespan": sku.lifespan,
-      "prod_id": prod_id,
-      "id": sku.id
+      "id": sku.id,
+      "flag": 2
     };
     console.log(newInfo);
     console.log(sku.id);
