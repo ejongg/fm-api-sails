@@ -4,10 +4,7 @@ module.exports = function (req, res, next){
 		prod_id : req.body.prod_id,
 		sku_name : req.body.sku_name,
 		size : req.body.size
-
 	};
-
-	console.log(findSku);
 
 	Sku.findOne(findSku)
 		.then(function (foundSku){

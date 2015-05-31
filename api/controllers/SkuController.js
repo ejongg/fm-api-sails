@@ -44,7 +44,7 @@ module.exports = {
 			})
 
 			.then(function (oldSku){
-				return new Promise(function (resolve, reject){
+				return new Promise(function (resolve){
 					Sku.update({id : sku.id}, sku)
 						.then(function (updatedSku){
 							return InventoryService.updateExpirationDate(sku.id, updatedSku[0].lifespan, oldSku.lifespan);

@@ -19,6 +19,10 @@ module.exports = {
   		type : 'string',
   		required : true
   	},
+    prod_date : {
+      type : 'string',
+      required : true
+    },
   	age : {
   		type : 'integer',
       defaultsTo : 0

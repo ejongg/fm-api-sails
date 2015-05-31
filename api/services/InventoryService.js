@@ -146,7 +146,7 @@ module.exports = {
 
 			var exp_date = moment(prod_date).add(lifespan, 'M').format('YYYY-MM-DD');
 			
-			Inventory.findOne({sku_id : sku_id, bay_id : bay_id, exp_date : exp_date})
+			Inventory.findOne({sku_id : sku_id, bay_id : bay_id, exp_date : exp_date, prod_date : prod_date,})
 				.then(function findInInventory(found_sku){
 					if(found_sku){
 						found_sku.bottles = found_sku.bottles + (bottlespercase * cases);
@@ -161,6 +161,7 @@ module.exports = {
 							bay_id : bay_id,
 							sku_id : sku_id,
 							exp_date : exp_date,
+							prod_date : prod_date,
 							bottles : cases * bottlespercase,
 							physical_count : cases,
 							logical_count : cases
