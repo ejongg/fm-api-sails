@@ -47,6 +47,7 @@
             <form class="form-horizontal" name="truckForm" ng-submit="addTruck(truck)" novalidate>
                 <fieldset>
 
+
                     <div class="form-group">
                         <div ng-show="noTruckDriver" class=" col-md-9">No Truck Driver</div>
                         <div ng-hide="noTruckDriver">
@@ -122,6 +123,13 @@
     <div ng-class="addTruckForm ? 'col-xs-12 col-md-8' : ''">
         <div class="panel">
             <div class="panel-body">
+
+
+                    <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                         <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                         <strong>"Truck cannot be deleted!"</strong>
+                    </div> 
+
 
             <div ng-show="noTrucks" align="center">
             <h3 ng-hide="addTruckForm"><strong>NO TRUCKS!</strong></h3>
@@ -230,7 +238,7 @@
                     </div>
                 
                 <div ng-show="editIndex === $index" class="pull-right">
-                  <button type="button" ng-disabled="editTruckForm.$invalid" ng-click="editTruck(truckEdit)" class="btn btn-primary btn-xs">Save</button>
+                  <button type="button" ng-disabled="editTruckForm.$invalid || noTruckDriver || noChecker || noDSP || noDH || noRoute" ng-click="editTruck(truckEdit)" class="btn btn-primary btn-xs">Save</button>
 
                   <button type="button" ng-click="truckEditClicked(-1)" class="btn btn-primary btn-xs">Cancel</button>
                 </div>

@@ -13,7 +13,8 @@ angular.module('fmApp')
   $scope.employeeDeliveryHelper = [];
   $scope.routes = [];
 
-
+  $scope.errorMessage = '';
+  $scope.hasError = false;
 
   $scope.noTrucks = false;
   $scope.noTruckDriver = false;
@@ -139,6 +140,18 @@ angular.module('fmApp')
   getRoutes();
   
 
+   $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       clearForm();
+    }
+  }
+
+
   $scope.showAddTruckForm = function (data) {
     if(data === true){
       $scope.editIndex = -1;
@@ -234,8 +247,13 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          $scope.editIndex = -1;
-         $scope.$digest();
       }
+      else if (JWR.statusCode === 500){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
+      }
+
+       $scope.$digest();
     }); 
   };
 

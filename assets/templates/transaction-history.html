@@ -119,7 +119,7 @@
     
                             <td width="20%">{{transaction.customer_name}}</td>
                             <td width="20%">{{transaction.date}}</td>
-                            <td width="20%">{{transaction.total_amount}}</td>
+                            <td width="20%">{{transaction.total_amount | currency : "₱"}}</td>
                             <td width="20%">{{transaction.type}}</td>
                             <td width="20%">{{transaction.user}}</td>
 

@@ -68,7 +68,7 @@
                         <label for="inputBrandName" class="col-md-12">
                         Brand Name</label>
                         <div class="col-md-12">
-                          <select class="form-control" ng-model="sku.brand_name" ng-options="product.brand_name as product.brand_name for product in products">
+                          <select class="form-control" ng-model="sku.brand_name" ng-options="product.brand_name as product.brand_name group by product.company for product in products">
                           </select>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Price per bottle</label> 
+                        Price per bottle (₱)</label> 
                         <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPrice" placeholder="Enter price per bottle." ng-model="sku.priceperbottle" required>
 
                         <strong class= "fbackMsg" ng-show="skuForm.inputSkuPrice.$invalid && skuForm.inputSkuPrice.$dirty">Price per Bottle Required! </strong>
@@ -110,7 +110,7 @@
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Price per case</label> 
+                        Price per case (₱)</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPriceB" placeholder="Enter price per case." ng-model="sku.pricepercase" required>
 
                         <strong class= "fbackMsg" ng-show="skuForm.inputSkuPriceB.$invalid && skuForm.inputSkuPriceB.$dirty">Price per Case Required!</strong>
@@ -120,7 +120,7 @@
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Bottle price</label> 
+                        Empty Bottle price (₱)</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price." ng-model="sku.bottleprice"  required>
                        </div>
                     </div>
@@ -216,7 +216,7 @@
                         <label for="inputBrandName" class="col-md-12">
                         Brand Name</label>
                         <div class="col-md-12">
-                          <select class="form-control" ng-model="skuEdit.brand_name" ng-options="product.brand_name as product.brand_name for product in products">
+                          <select class="form-control" ng-model="skuEdit.brand_name" ng-options="product.brand_name as product.brand_name group by product.company for product in products">
                           </select>
                         </div>
                     </div>
@@ -248,7 +248,7 @@
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Price per bottle</label> 
+                        Price per bottle (₱)</label> 
                         <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPrice" placeholder="Enter price per bottle." ng-model="skuEdit.priceperbottle" required>
                             
                              <strong class= "fbackMsg" ng-show="editskuForm.inputSkuPrice.$invalid && editskuForm.inputSkuPrice.$dirty">Price per Bottle Required! </strong>
@@ -258,7 +258,7 @@
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Price per case</label> 
+                        Price per case (₱)</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="inputSkuPriceB" placeholder="Enter price per case." ng-model="skuEdit.pricepercase" required>
                         
                          <strong class= "fbackMsg" ng-show="editskuForm.inputSkuPriceB.$invalid && editskuForm.inputSkuPriceB.$dirty">Price per Case Required!</strong>
@@ -268,7 +268,7 @@
 
                      <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Bottle price</label> 
+                       Empty Bottle price (₱)</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price."  required>
                        </div>
                     </div>
@@ -344,21 +344,21 @@
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Price per bottle</label> 
+                        Price per bottle (₱)</label> 
                         <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" id="inputSkuName" placeholder="Enter price per bottle." ng-model="skuDelete.priceperbottle" disabled>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Price per case</label> 
+                        Price per case (₱)</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" placeholder="Enter price per case." ng-model="skuDelete.pricepercase" disabled>
                        </div>
                     </div>
 
                      <div class="form-group">
                         <label for="inputSkuName" class="col-md-12">
-                        Bottle price</label> 
+                        Empty Bottle price (₱)</label> 
                        <div class="col-md-12"><input type="number" min="0" step="0.01" class="form-control" name="" placeholder="Enter bottle price."  disabled>
                        </div>
                     </div>
@@ -498,7 +498,7 @@
                        
                         <th>
                             <a href="" ng-click="sortCriteria='bottlespercase'; reverseSort = !reverseSort" class="thlink">
-                                Bottles
+                                Bottles Per Case
                                 <span ng-show="sortCriteria == 'bottlespercase'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                     <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
@@ -524,8 +524,8 @@
                       <td width ="15%">{{sku.sku_name}}</td>
                       <td width ="10%">{{sku.size}}</td>
                       <td width ="10%">{{sku.prod_id.company}}</td>
-                      <td width ="13%">{{sku.priceperbottle}}</td>
-                      <td width ="13%">{{sku.pricepercase}}</td>
+                      <td width ="13%">{{sku.priceperbottle | currency:"₱"}}</td>
+                      <td width ="13%">{{sku.pricepercase | currency:"₱"}}</td>
                       <td width ="10%">{{sku.bottlespercase}}</td>
                       <td width ="15%">{{sku.lifespan}}</td>
                     </tr>

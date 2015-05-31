@@ -60,9 +60,9 @@
 
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Line name</label>  
-                        <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="5" class="form-control" placeholder="Enter line name." ng-model="bay.bay_name" required>
-                         <strong class="fbackMsg" ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Line name required!  </strong>
+                        <label for="inputEstablishmentName" class="col-md-4">Line Number</label>  
+                        <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="5" class="form-control" placeholder="Enter line number." ng-model="bay.bay_name" required>
+                         <strong class="fbackMsg" ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Line number required!  </strong>
                         </div>
                     </div>
 
@@ -132,7 +132,7 @@
 
 
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Line Name</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Number</label>  
                         <div class="col-md-12"><input type="text" name="inputBayName" maxlength="5" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" required>
                          <strong class="fbackMsg" ng-show="editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid"> Line name required!  </strong>
                         </div>
@@ -182,7 +182,7 @@
                 <fieldset>
                    
                     <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Line Name</label>  
+                        <label for="inputEstablishmentName" class="col-md-4">Line Number</label>  
                         <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="bayDelete.bay_name" disabled>
                         </div>
                     </div>
@@ -241,7 +241,7 @@
                     <tr>
                         <th width="20%">
                           <a href="" ng-click="sortCriteria='bay_name'; reverseSort = !reverseSort" class="thlink">
-                            Line Name
+                            Line Number
                             <span ng-show="sortCriteria == 'bay_name'">
                               <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                               <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>

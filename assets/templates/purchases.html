@@ -1,3 +1,4 @@
+
 <!-- START OF CONTENT -->
 
 
@@ -62,7 +63,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.sku" ng-options="sku as combine(sku) for sku in skuList">
+                            <select class="form-control" ng-model="purchase.sku" ng-options="sku as combine(sku) for sku in skuList" ng-change="getMaxBottles(purchase)">
                             </select>
                         </div>
                     </div>
@@ -98,7 +99,7 @@
                         <label for="inputEmpty" class="col-md-12">Returned Empty Bottles</label>
                         <div class="col-md-12">
 
-                            <input type="number"  name="inputEmptyBottles" min="0" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.empty_bottles" required>
+                            <input type="number"  name="inputEmptyBottles" min="0" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.empty_bottles" max="{{maxBottle}}" required>
 
                             <strong class="fbackMsg" ng-show=""> Invalid! Please enter no. of empty bottles. </strong>
                             
@@ -106,7 +107,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputDiscount" class="col-md-6">Discount Per Case</label>
+                        <label for="inputDiscount" class="col-md-7">Discount Per Case(₱)</label>
                         <div class="col-md-12">
                             
                             <input type="number" name="discountpercase" ng-max="purchase.cost" step="0.01" class="form-control" placeholder="Enter discount per case." ng-model="purchase.discount" required>
@@ -164,9 +165,9 @@
                     <td>{{purchase.prod_date}}</td>
                     <td>{{purchase.cases}}</td>
                     <td></td>
-                    <td>{{purchase.costpercase}}</td>
-                    <td>{{purchase.discountpercase}}</td>
-                    <td>{{purchase.amount}}</td>
+                    <td>{{purchase.costpercase | currency : "₱"}}</td>
+                    <td>{{purchase.discountpercase | currency : "₱"}}</td>
+                    <td>{{purchase.amount | currency : "₱"}}</td>
                     <td><button ng-click="deletePurchase($index)" class="btn btn-primary btn-xs">Delete</button></td>
                 </tr>
 
@@ -268,9 +269,9 @@
 
             <tbody>
                 <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
-                    <td width ="25%">{{purchaseInfo.id}}</td>
-                    <td width ="25%">{{purchaseInfo.date_received}}</td>
-                    <td width ="25%">{{purchaseInfo.total_amount}}</td>
+                    <td width ="5%">{{purchaseInfo.id}}</td>
+                    <td width ="10s%">{{purchaseInfo.date_received}}</td>
+                    <td width ="25%">{{purchaseInfo.total_amount | currency : "₱"}}</td>
                     <td width ="25%">{{purchaseInfo.user}}</td>
                 </tr>
 
@@ -311,17 +312,17 @@
                 <tr>
                     <th>SKU</th>
                     <th>Cases</th>
-                    <th>Cost Per Case</th>
-                    <th>Discount Per Case</th>
+                    <th>Cost Per Case (₱)</th>
+                    <th>Discount Per Case (₱)</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr ng-repeat="product in purchaseProducts">
-                    <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
-                    <td>{{product.cases}}</td>
-                    <td>{{product.costpercase}}</td>
-                    <td>{{product.discountpercase}}</td>
+                    <td width ="15%">{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
+                    <td width ="1%">{{product.cases}}</td>
+                    <td width ="10%">{{product.costpercase | currency : "₱" }}</td>
+                    <td width ="10%">{{product.discountpercase | currency : "₱"}}</td>
                 </tr>
 
                 <!-- DON'T REMOVE CODE BELOW -->

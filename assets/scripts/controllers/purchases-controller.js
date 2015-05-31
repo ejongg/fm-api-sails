@@ -27,6 +27,8 @@ angular.module('fmApp')
   $scope.sortCriteria = 'id';
   $scope.reverseSort = false;
 
+  $scope.maxBottle = 12;
+
   
   
   var getSKU = function () {
@@ -46,6 +48,12 @@ angular.module('fmApp')
     });
 
   };
+
+  $scope.getMaxBottles = function (purchase){
+    $scope.maxBottle = purchase.sku.bottlespercase;
+    console.log(purchase);
+    console.log($scope.maxBottle);
+    };
 
   var getBays = function (){
      $http.get(httpHost + '/bays').success( function (data) {
