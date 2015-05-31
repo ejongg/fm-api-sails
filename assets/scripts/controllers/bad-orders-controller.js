@@ -147,6 +147,7 @@ angular.module('fmApp')
     $scope.product.sku = $scope.skuList[0];
     $scope.product.cases = null;
     $scope.product.bottles = null;
+    $scope.product.reason = "";
   };
 
   $scope.getBadOrderDetails = function (id) {
@@ -243,7 +244,7 @@ angular.module('fmApp')
         console.log("Employee Created");
         $scope.employees.push(msg.data);
         $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
-        $scope.user.fullname = $scope.employees[0];
+        $scope.accountable = $scope.employees[0];
         if($scope.noEmployees === true){
           $scope.noEmployees = false;
         }
@@ -255,7 +256,7 @@ angular.module('fmApp')
         console.log(index);
         $scope.employees[index] = msg.data;
         $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
-        $scope.user.fullname = $scope.employees[0];   
+        $scope.accountable = $scope.employees[0];   
         console.log(msg.data);
         $scope.$digest();
         break;
@@ -266,7 +267,7 @@ angular.module('fmApp')
         console.log(index);
         $scope.employees.splice(index,1);
         $scope.employees =  $scope.sortData($scope.employees,'emp_fname');
-        $scope.user.fullname = $scope.employees[0];
+        $scope.accountable = $scope.employees[0];
         if($scope.employees.length === 0){
           $scope.noEmployees = true;
         }
