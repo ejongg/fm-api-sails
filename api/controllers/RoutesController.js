@@ -46,6 +46,19 @@ module.exports = {
 			.catch(function(err){
 				return res.send(err);
 			});
+	},
+
+	remove : function(req, res){
+		var routeId = req.query.id;
+
+		Routes.findOne({id : routeId}).populate('address')
+			.then(function (foundRoute){
+
+				Routes.destroy({id : routeId})
+					.then(function (destroyedRoute){
+						sails.sockets.blast('routes', {verb : 'destroyed', data : foundRoute});
+					})
+			})
 	} 
 };
 
