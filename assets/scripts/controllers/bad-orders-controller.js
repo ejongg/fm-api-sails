@@ -29,6 +29,7 @@ angular.module('fmApp')
 
   var getBadOrderList = function () {
     $http.get(httpHost + '/bad_orders').success( function (data) {
+      console.log("Get Bad Orders");
       if(data.length !== 0){
         $scope.badOrdersList = data;
         console.log("Bad Orders:");
