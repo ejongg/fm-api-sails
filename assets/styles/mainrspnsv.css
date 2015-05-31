@@ -52,7 +52,7 @@ b {
   float: right !important; }
 
 .panel {
-  background: pink;
+  background: #ffffff;
   border-top: 5px solid #202020;
   padding-top: 0px !important;
   /* width: 95%; */
@@ -98,7 +98,7 @@ h3.panel-heading {
 }
 
 .container {
-  background-color: red;
+  background-color: #ffffff;
   /*background-image: url("../../images/mesh bg.png");*/
   background-repeat: no-repeat;
   background-position: center center;
@@ -109,13 +109,22 @@ h3.panel-heading {
 }
 
 .pageheader-left {
-  background-color: #ffffff;
-  margin: 0px;
+  background-color: #202020;
+  float: left !important;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  margin-left: 60px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  height: 55px;
 }
 
 .pageheader-right {
-  background-color: orange;
-  float: left;
+  background-color: #ffffff;
   margin: 0px;
 }
 
@@ -124,31 +133,31 @@ h3.panel-heading {
 }
 
 .navbar {
-  background-color: #ffffff !important;
+  background-color: #ffa311 !important;
   padding: 0px;
   width: ;
 }
 
 .navbar-nav {
-   background-color: orange !important;
+   background-color: #ffa311 !important;
    padding: 0px;
 }
 
 .navbar-collapse {
-  background-color: blue !important;
+  color: #202020;
+  background-color: #ffa311 !important;
   padding: 0px;
-  overflow-x: none !important;
 }
 
 .navbar-header {
   padding-left: 50px;
-  background-color: green !important;
+  background-color: #ffa311 !important;
   padding: 0px;
-    overflow-x: none !important;
 }
 
 .navbar-left {
- padding: 0px;
+  margin-right: 50px;
+ padding-right: 50px;
  }
 
 .navbar-right {
@@ -263,12 +272,12 @@ h3.panel-heading {
   color: #1ca3a7; }
 
 h1 {
-  font-size: 180%;
+  font-size: 150%;
   text-transform: uppercase;
-  color: #202020 !important;
+  color: #ffffff !important;
+  padding: 9px;
   font-weight: bold;
   letter-spacing: 5px;
-  text-align: center;
   margin: 0px;}
 
 h2 {
