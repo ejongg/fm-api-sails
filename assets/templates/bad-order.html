@@ -76,9 +76,12 @@
                 <div class="form-group">
                     <label for="select" class="col-md-3">SKU</label>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12" ng-hide="noSKU">
                         <select class="form-control" ng-model="product.sku" ng-options="sku as combined(sku) for sku in skuList">
                         </select>
+                    </div>
+                    <div class="col-md-12" ng-show="noSKU">
+                      No Employee, Add first!
                     </div>
                 </div>
 
@@ -105,11 +108,16 @@
                 <div class="form-group">
                     <label for="inputEmployeeName"  class="col-md-2 control-label">Accountable</label>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12" ng-hide="noEmployees">
 
                     <!-- Error Message -->
                         <select class="form-control" ng-model="accountable" ng-options="emp as fullName(emp) for emp in employees">
                         </select>
+                    </div>
+
+                    <div class="col-md-12" ng-show="noEmployees">
+
+                    No Employee, Add first!
                     </div>
                 </div>
 
