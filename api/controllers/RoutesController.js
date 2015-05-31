@@ -57,6 +57,7 @@ module.exports = {
 				Routes.destroy({id : routeId})
 					.then(function (destroyedRoute){
 						sails.sockets.blast('routes', {verb : 'destroyed', data : foundRoute});
+						return res.send("destroyedRoute");
 					})
 			})
 	} 
