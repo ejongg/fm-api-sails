@@ -52,7 +52,7 @@ b {
   float: right !important; }
 
 .panel {
-  background: #ffffff;
+  background: pink;
   border-top: 5px solid #202020;
   padding-top: 0px !important;
   /* width: 95%; */
@@ -98,7 +98,7 @@ h3.panel-heading {
 }
 
 .container {
-  background-color: #ffffff;
+  background-color: red;
   /*background-image: url("../../images/mesh bg.png");*/
   background-repeat: no-repeat;
   background-position: center center;
@@ -114,7 +114,7 @@ h3.panel-heading {
 }
 
 .pageheader-right {
-  background-color: #ffffff;
+  background-color: orange;
   float: left;
   margin: 0px;
 }
@@ -130,12 +130,12 @@ h3.panel-heading {
 }
 
 .navbar-nav {
-   background-color: #ffffff !important;
+   background-color: orange !important;
    padding: 0px;
 }
 
 .navbar-collapse {
-  background-color: #ffffff !important;
+  background-color: blue !important;
   padding: 0px;
   overflow-x: none !important;
 }
