@@ -23,6 +23,10 @@ angular.module('fmApp')
   $scope.addPurchaseForm = false;
   $scope.viewProducts = false;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
+
   // forSorting
   $scope.sortCriteria = 'id';
   $scope.reverseSort = false;
@@ -85,6 +89,20 @@ angular.module('fmApp')
   $scope.pagePrint = function () {
     window.print();
   };
+
+
+  $scope.showErrorMessage = function (data,msg) {
+       $scope.hasError = data;
+       console.log($scope.hasError);
+      if(data === true){
+         console.log(data);
+         console.log(msg);
+         $scope.errorMessage = msg;
+         clearForm();
+      }
+    }
+
+
 
   $scope.showAddPurchaseForm = function (data) {
     if($scope.viewProducts === true){
@@ -224,8 +242,14 @@ angular.module('fmApp')
         $scope.showAddPurchaseForm(false);
         $scope.snackbarShow('Purchase Added');
         $scope.totalAmount = 0;
-        $scope.$digest();
+        
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
       }
+
+       $scope.$digest();
+    
     }); 
 
   };

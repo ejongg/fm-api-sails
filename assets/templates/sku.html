@@ -52,6 +52,12 @@
             <form class="form-horizontal" name="skuForm" ng-submit="addSKU(sku)" novalidate>
                 <fieldset>
 
+                    <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+                 </div> 
+
+
                     <div class="alert alert-warning" ng-show="(skuForm.inputSkuName.$dirty && skuForm.inputSkuName.$invalid) || (skuForm.inputSize.$invalid && skuForm.inputSize.$dirty) || (skuForm.inputSkuPrice.$invalid && skuForm.inputSkuPrice.$dirty)|| (skuForm.inputSkuPriceB.$invalid && skuForm.inputSkuPriceB.$dirty) || (skuForm.inputBottlePerCase.$invalid && skuForm.inputBottlePerCase.$dirty) || (skuForm.inputWeightPerCase.$invalid && skuForm.inputWeightPerCase.$dirty) || (skuForm.inputLifeSpan.$invalid && skuForm.inputLifeSpan.$dirty)">
                         
                     <div class="icon-preview"><i class="mdi-alert-error"></i><small> Some fields are empty or incorrect.</small></div> 
@@ -433,7 +439,7 @@
         <div ng-hide="noProducts || noSKU"> 
 
           <div class="form-group">
-          <label for="select" class="col-md-1">Company:</label>
+          <label for="select" class="col-md-2">Company:</label>
             <div ng-class = "addProductForm || editOrDeleteProductForm ? 'col-md-2' : 'col-md-2'">
                 <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect">
                   <option value="Coca-Cola">Coca-Cola</option>
@@ -441,10 +447,10 @@
                 </select>
             </div>
           </div>
-
+          </br></br>
          <div class="form-group">
-            <label for="select" class=" col-md-offset-2 col-md-2 control-label">Number of rows:</label>
-            <div class="col-md-1">
+            <label for="select" class="col-md-2 control-label">Number of rows:</label>
+            <div class="col-md-2">
                 <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -452,9 +458,6 @@
                 </select>
             </div>
           </div>
-
-
-          <br>
 
         <table class="table variantTable table-striped table-hover">
 

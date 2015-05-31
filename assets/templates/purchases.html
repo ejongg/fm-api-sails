@@ -54,6 +54,13 @@
             <form class="form-horizontal" name="purchaseForm" ng-submit="addPurchase(purchase)" novalidate>
                 <fieldset>
 
+
+                <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>Line selected already reached maximum limit!</strong>
+                </div> 
+
+
                 <div class="alert alert-warning" ng-show="(purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid) || (purchaseForm.inputCost.$invalid && purchaseForm.inputCost.$dirty) || (purchaseForm.discountpercase.$invalid && purchaseForm.discountpercase.$dirty)">
 
                     <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
@@ -147,9 +154,9 @@
     <div class="col-md-9 ">
          <!-- User's Input table --> 
         <div class="form-group" >
-             <div class="col-md-2 pull-right"><input type="number" class="form-control" value="" ng-model="totalAmount" disabled>
+             <div class="col-md-3 pull-right"><input type="number" class="form-control" value="" ng-model="totalAmount " disabled>
             </div>
-            <legend class="col-md-3 pull-right control-label">Total Amount</legend>
+            <legend class="col-md-3 pull-right control-label">Total Amount ₱</legend>
         </div>
 
         <br/>
