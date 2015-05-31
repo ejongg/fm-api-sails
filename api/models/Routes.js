@@ -31,7 +31,7 @@ module.exports = {
     next();
   },
 
-  afterDestroy : function(route, next){
+  beforeDestroy : function(route, next){
     Routes.findOne({id : route.id}).populate('address')
       .then(function (foundRoute){
         sails.sockets.blast('routes', {verb : 'destroyed', data : foundRoute});
