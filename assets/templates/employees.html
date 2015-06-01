@@ -113,7 +113,7 @@
                     <div class="form-group">
                         <label class="col-md-4">Hired Date</label> 
                         <div class="col-md-12">
-                        <input type="date" name="inputHiredDate" class="form-control" ng-model="employee.hire_date" required>
+                        <input type="date" name="inputHiredDate" class="form-control" max="{{formatDate(dateToday)}}" ng-model="employee.hire_date" required>
 
                         </div>
                     </div>
