@@ -11,6 +11,10 @@ angular.module('fmApp')
   $scope.income = 0;
   $scope.stt = 0;
 
+  $scope.labels = ['Beginning Inventory', 'Ending Inventory', 'Purchases', 'Expenses', 'Empties', 'Income', 'Sales to Trade'];
+  $scope.series = ['DSSR'];
+
+ 
 
   var getDSSR = function () {
     $http.get(httpHost + '/reports/dssr').success( function (data) {
@@ -22,6 +26,10 @@ angular.module('fmApp')
       $scope.stt = data.stt;
       $scope.income = data.income;
 
+       $scope.data = [
+    [$scope.beginning_inventory, $scope.ending_inventory, $scope.purchases, $scope.expenses, $scope.empties, $scope.income, $scope.stt]
+  ];
+
       console.log(data);
     }).error(function (err) {
       console.log(err);
@@ -29,4 +37,5 @@ angular.module('fmApp')
   };
 
   getDSSR();
+
 }]);
