@@ -85,7 +85,7 @@ module.exports = {
 			})
 
 			.then(function (totalAmount){
-				return res.send({orders : orderList, total_amount : totalAmount});
+				return res.send({products : orderList, total_amount : totalAmount, id : orderId});
 			})
 	}
 };
