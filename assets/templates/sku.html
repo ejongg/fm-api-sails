@@ -485,16 +485,6 @@
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortCriteria='prod_id.company'; reverseSort = !reverseSort" class="thlink">
-                                Company
-                                <span ng-show="sortCriteria == 'prod_id.company'">
-                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                                </span>
-                            </a>
-                        </th>
-
-                        <th>
                             <a href="" ng-click="sortCriteria='priceperbottle'; reverseSort = !reverseSort" class="thlink">
                                 Price Per Bottle
                                 <span ng-show="sortCriteria == 'priceperbottle'">
@@ -548,14 +538,13 @@
 
                 <tbody>
                     <tr dir-paginate="sku in skuLists | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="skuClicked(sku)">
-                      <td width ="10%">{{sku.prod_id.brand_name +" " + sku.sku_name}}</td>
+                      <td width ="30%">{{sku.prod_id.brand_name +" " + sku.sku_name}}</td>
                       <td width ="10%">{{sku.size}}</td>
-                      <td width ="10%">{{sku.prod_id.company}}</td>
-                      <td width ="13%">{{sku.priceperbottle | currency:"₱"}}</td>
-                      <td width ="13%">{{sku.pricepercase | currency:"₱"}}</td>
-                      <td width ="13%">{{sku.priceperempty | currency:"₱"}}</td>
-                      <td width ="10%">{{sku.bottlespercase}}</td>
-                      <td width ="15%">{{sku.lifespan}}</td>
+                      <td width ="10%">{{sku.priceperbottle | currency:"₱"}}</td>
+                      <td width ="10%">{{sku.pricepercase | currency:"₱"}}</td>
+                      <td width ="5%">{{sku.priceperempty | currency:"₱"}}</td>
+                      <td width ="5%">{{sku.bottlespercase}}</td>
+                      <td width ="5%">{{sku.lifespan}}</td>
                     </tr>
                 </tbody>
             </table>

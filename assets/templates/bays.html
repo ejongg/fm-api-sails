@@ -223,9 +223,20 @@
 
          <div ng-hide="noBays">
 
+
+          <div class="form-group">
+          <label for="select" class="col-md-2">Company:</label>
+            <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-2'">
+                <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect">
+                  <option value="Coca-Cola">Coca-Cola</option>
+                  <option value="SMB">SMB</option>
+                </select>
+            </div>
+          </div>
+        </br></br>
             <div class="form-group">
               <label for="select" class="col-md-2">Number of rows:</label>
-                <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-1'">
+                <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-2'">
                     <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
                       <option value="10">10</option>
                       <option value="25">25</option>
@@ -243,16 +254,6 @@
                           <a href="" ng-click="sortCriteria='bay_name'; reverseSort = !reverseSort" class="thlink">
                             Line Number
                             <span ng-show="sortCriteria == 'bay_name'">
-                              <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                              <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                            </span>
-                          </a>
-                        </th>
-
-                        <th width="20%">
-                          <a href="" ng-click="sortCriteria='bay_label'; reverseSort = !reverseSort" class="thlink">
-                            Line Label
-                            <span ng-show="sortCriteria == 'bay_label'">
                               <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                               <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
                             </span>
@@ -292,9 +293,8 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="bay in bays | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
+                    <tr dir-paginate="bay in bays | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
                         <td>Line {{bay.bay_name}}</td>
-                        <td>{{bay.bay_label}}</td> 
                         <td>{{bay.total_products}}</td>
                         <td>{{bay.bay_limit}} cases</td>
                         <td>{{bay.pile_status}}</td>
