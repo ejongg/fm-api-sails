@@ -30,7 +30,7 @@ angular.module('fmApp')
   var getSKU = function () {
     $http.get(httpHost + '/sku').success( function (data) {
       if(data.length !== 0){
-        $scope.skuList = data;
+        $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
         $scope.order.sku = $scope.skuList[0];
         console.log("SKU:");
         console.log($scope.skuList);
@@ -61,7 +61,7 @@ angular.module('fmApp')
   var getAddresses = function (){
     $http.get(httpHost + '/address').success( function (data) {
       if(data.length !== 0){
-        $scope.addresses = data;
+        $scope.addresses = $scope.sortData(data,'address_name');
         console.log("Addresses:");
         console.log($scope.addresses);
         $scope.order.address = $scope.addresses[0].address_name;
@@ -222,6 +222,7 @@ angular.module('fmApp')
       case "created": 
         console.log("SKU Created");
         $scope.skuList.push(msg.data);
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
         if($scope.noSKU === true){
           $scope.noSKU = false;
         }
@@ -232,6 +233,7 @@ angular.module('fmApp')
         console.log("SKU Updated");
         var index = _.findIndex($scope.skuList,{'id': msg.data.id});
         $scope.skuList[index] = msg.data;
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
         $scope.order.sku = $scope.skuList[0];
         $scope.$digest();
         break;
@@ -246,6 +248,7 @@ angular.module('fmApp')
             $scope.addOrderForm = false;
           }
         }else{
+          $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
           $scope.order.sku = $scope.skuList[0];
         }
         $scope.$digest();

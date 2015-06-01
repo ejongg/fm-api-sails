@@ -39,7 +39,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/sku').success( function (data) {
       
       if(data.length !== 0){
-        $scope.skuList = data;
+        $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
         $scope.purchase.sku = null;
         console.log("SKU List:");
         console.log($scope.skuList);
@@ -56,7 +56,7 @@ angular.module('fmApp')
   var getBays = function (){
      $http.get(httpHost + '/bays').success( function (data) {
       if(data.length !== 0){
-      $scope.bays = data;
+      $scope.bays = $scope.sortData(data,'bay_name');
       $scope.purchase.bay = null;          
       console.log("Bays:");
       console.log($scope.bays);
@@ -279,23 +279,26 @@ angular.module('fmApp')
       case "created": 
         console.log("SKU Created");
         $scope.skuList.push(msg.data);
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
         if($scope.noSKU === true){
           $scope.noSKU = false;
         }
-        $scope.purchase.sku = $scope.skuList[0];
+        $scope.purchase.sku = null;
         $scope.$digest();
         break;
       case "updated":
         console.log("SKU Updated");
         var index = _.findIndex($scope.skuList,{'id': msg.data.id});
         $scope.skuList[index] = msg.data;
-        $scope.purchase.sku = $scope.skuList[0];
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
+        $scope.purchase.sku = null;
         $scope.$digest();
         break;
       case "destroyed":
         console.log("SKU Deleted");
         var index = _.findIndex($scope.skuList,{'id': msg.data[0].sku_id});
         $scope.skuList.splice(index,1);
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
         if($scope.skuList.length === 0){
           $scope.noSKU = true;
           if($scope.addPurchaseForm === true){
@@ -303,7 +306,7 @@ angular.module('fmApp')
             $scope.addPurchaseForm = false;
           }
         }else{
-          $scope.purchase.sku = $scope.skuList[0];
+          $scope.purchase.sku = null;
         }
         $scope.$digest();
     }
@@ -318,23 +321,26 @@ angular.module('fmApp')
       case "created": 
         console.log("Bay Created");
         $scope.bays.push(msg.data);
+        $scope.bays = $scope.sortData($scope.bays,'bay_name');
         if($scope.noBays === true){
           $scope.noBays = false;
         }
-        $scope.purchase.bay = $scope.bays[0];
+        $scope.purchase.bay = null;
         $scope.$digest();
         break;
       case "updated":
         console.log("Bay Updated");
         var index = _.findIndex($scope.bays,{'id': msg.data.id});
         $scope.bays[index] = msg.data;
-        $scope.purchase.bay = $scope.bays[0];
+        $scope.bays = $scope.sortData($scope.bays,'bay_name');
+        $scope.purchase.bay = null;
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Bay Deleted");
         var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
         $scope.bays.splice(index,1);
+        $scope.bays = $scope.sortData($scope.bays,'bay_name');
         if($scope.bays.length === 0){
           $scope.noBays = true;
           if($scope.addPurchaseForm === true){
@@ -342,7 +348,7 @@ angular.module('fmApp')
             $scope.addPurchaseForm = false;
           }
         }else{
-          $scope.purchase.bay = $scope.bays[0];
+          $scope.purchase.bay = null;
         }
         $scope.$digest();
 
