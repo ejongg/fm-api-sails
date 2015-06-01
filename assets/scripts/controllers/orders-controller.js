@@ -131,13 +131,13 @@ angular.module('fmApp')
   $scope.getOrderProducts = function (order_id) {
 
     $http.get(httpHost + '/customer-orders/details?id=' + order_id).success( function (data) {  
-      $scope.orderProducts = data;
-      console.log("Order Products");
       console.log(data);
-      console.log(data[0].order_id);
-      $scope.totalAmountView = data[0].order_id.total_amount;
+      console.log(data.total_amount);
+      $scope.orderProducts.products = data.products;
+      console.log("Order Products");
+      $scope.totalAmountView = data.total_amount;
       $scope.showViewProducts(true);
-      $scope.orderProducts.order_id = order_id;
+      $scope.orderProducts.order_id = data.id;
     }).error(function (err) {
       console.log(err);
     });
@@ -154,7 +154,8 @@ angular.module('fmApp')
       "sku" : order.sku.sku_name + " " + order.sku.size,
       "cases" : order.cases,
       "price" : order.sku.pricepercase * order.cases,
-      "bottlespercase": order.sku.bottlespercase
+      "bottlespercase": order.sku.bottlespercase,
+      "listName": order.sku.prod_id.brand_name +" "+ order.sku.sku_name + " " + order.sku.size
     };
 
     console.log(order);
