@@ -547,17 +547,17 @@ angular.module('fmApp')
         console.log(msg.data);
         $scope.$digest();
         break;
-      // case "destroyed":
-      //   console.log("Address Deleted");
-      //   console.log(msg.data[0]);
-      //   var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
-      //   console.log(index);
-      //   $scope.addresses.splice(index,1);
-      //   if($scope.addresses.length === 0){
-      //     $scope.noAddresses = true;
-      //   }
-      //   $scope.$digest();
-      //   break;
+      case "destroyed":
+        console.log("Address Deleted");
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
+        console.log(index);
+        $scope.addresses.splice(index,1);
+        if($scope.addresses.length === 0){
+          $scope.noAddresses = true;
+        }
+        $scope.$digest();
+        break;
       case "removed":
         console.log("Address Removed");
        // console.log(msg.data.route);
