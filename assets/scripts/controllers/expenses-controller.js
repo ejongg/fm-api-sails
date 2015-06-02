@@ -281,4 +281,19 @@ angular.module('fmApp')
   });
 
 
+  io.socket.on('inventory', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "updated":
+        getSKUAvailable();
+        getBays();
+        $scope.$digest();
+    }
+
+  });
+
+
 }]);
