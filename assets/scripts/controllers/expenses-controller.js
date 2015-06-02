@@ -47,7 +47,7 @@ angular.module('fmApp')
   var getSKUAvailable = function () {
     $http.get(httpHost + '/sku/available').success( function (data) {
       if(data.length !== 0){
-      $scope.skuList = data;
+      $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
       $scope.expense.sku = $scope.skuList[0];
       $scope.maxBottles = $scope.skuList[0].bottlespercase;
       console.log("MAX BOTTLES:" + $scope.maxBottles);
@@ -217,6 +217,52 @@ angular.module('fmApp')
     }); 
 
   };
+
+  io.socket.on('sku', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("SKU Created");
+        $scope.skuList.push(msg.data);
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
+        if($scope.noSKU === true){
+          $scope.noSKU = false;
+        }
+        $scope.expense.sku = $scope.skuList[0];
+        $scope.maxBottles = $scope.skuList[0].bottlespercase;
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("SKU Updated");
+        var index = _.findIndex($scope.skuList,{'id': msg.data.id});
+        $scope.skuList[index] = msg.data;
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
+        $scope.expense.sku = $scope.skuList[0];
+        $scope.maxBottles = $scope.skuList[0].bottlespercase;
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("SKU Deleted");
+        var index = _.findIndex($scope.skuList,{'id': msg.data[0].sku_id});
+        $scope.skuList.splice(index,1);
+        if($scope.skuList.length === 0){
+          $scope.noSKU = true;
+          if($scope.addOrderForm === true){
+            console.log("Close form");
+            $scope.addOrderForm = false;
+          }
+        }else{
+          $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
+          $scope.expense.sku = $scope.skuList[0];
+          $scope.maxBottles = $scope.skuList[0].bottlespercase;
+        }
+        $scope.$digest();
+    }
+
+  });
 
   io.socket.on('expenses', function(msg){
     console.log("Message Verb: " + msg.verb);
