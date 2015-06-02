@@ -252,13 +252,12 @@ angular.module('fmApp')
     console.log(addLoadOut);
   };
 
-  $scope.deleteOrderInLoadout = function (loadout,customerOrders) {
-    console.log(loadout);
-    console.log(customerOrders);
+  $scope.deleteOrderInLoadout = function (loadOutInfo) {
+    console.log(loadOutInfo);
     var deliverInfo = {
-      "delivery": customerOrders.id,
-      "loadout": loadout.id,
-      "order": customerOrders
+      "delivery": loadOutInfo.customerOrder.id,
+      "loadout": loadOutInfo.loadOut.id,
+      "order": loadOutInfo.customerOrder
     };
 
     io.socket.request($scope.socketOptions('post','/delivery/remove',{"Authorization": "Bearer " + authService.getToken()},deliverInfo), function (body, JWR) {
@@ -329,6 +328,7 @@ angular.module('fmApp')
         $scope.loadOuts[index].transactions.splice(transIndex,1);
         if($scope.loadOuts[index].transactions.length === 0){
           $scope.loadOuts.splice(index,1);
+          $scope.editIndex = -1;
         }
         // var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
         // console.log(orderDeleted[0]);
@@ -363,10 +363,9 @@ angular.module('fmApp')
       }
     });
 
-    modalInstance.result.then(function (customerOrder, loadOut) {
-      console.log(loadOut);
-  console.log(customerOrder);
-      $scope.deleteOrderInLoadout(loadOut,customerOrder);
+    modalInstance.result.then(function (loadOutInfo) {
+      console.log(loadOutInfo);
+      $scope.deleteOrderInLoadout(loadOutInfo);
     }, function () {
       console.log("close");
     });
@@ -376,10 +375,17 @@ angular.module('fmApp')
 }])
 
 .controller('LoadOutModalCtrl', function ($scope, $modalInstance, loadOut,customerOrder) {
- console.log(loadOut);
-  console.log(customerOrder);
   $scope.ok = function () {
-    $modalInstance.close(loadOut,customerOrder);
+    console.log("OK");
+    console.log(loadOut);
+    console.log(customerOrder);
+
+    var loadOutInfo = {
+      "loadOut": loadOut,
+      "customerOrder": customerOrder
+    }
+
+    $modalInstance.close(loadOutInfo);
   };
 
   $scope.cancel = function () {
