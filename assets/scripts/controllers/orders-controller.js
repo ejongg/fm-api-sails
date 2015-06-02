@@ -144,6 +144,10 @@ angular.module('fmApp')
 
   };
 
+  $scope.getOwnerName = function ($item, $model, $label) {
+    $scope.order.owner = $item.customer_id.owner_name;
+  };
+
   $scope.addOrder = function (order) {
     if($scope.itemExistingError === true){
       $scope.showItemExistingError(false);

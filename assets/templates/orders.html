@@ -61,7 +61,7 @@
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="orders.customer_id.establishment_name for orders in ordersList | filter:$viewValue | limitTo:8" ng-model="order.establishment" required>
+                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="orders.customer_id.establishment_name for orders in ordersList | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
 
                             <strong class="fbackMsg" ng-show="orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
                         </div>
