@@ -45,6 +45,7 @@ angular.module('fmApp')
   }; 
 
   var getSKUAvailable = function () {
+     console.log("GET SKU");
     $http.get(httpHost + '/sku/available').success( function (data) {
       console.log("SKU AVAILABLE");
       if(data.length !== 0){
