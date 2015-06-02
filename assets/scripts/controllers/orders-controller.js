@@ -255,6 +255,48 @@ angular.module('fmApp')
     }
 
   });
+
+  io.socket.on('address', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    switch (msg.verb) {
+      case "created": 
+        console.log("Address Created");
+        $scope.addresses.push(msg.data);
+        $scope.addresses = $scope.sortData($scope.addresses,'address_name');
+        $scope.order.address = $scope.addresses[0].address_name;
+         if($scope.noAddresses === true){
+          $scope.noAddresses = false;
+        } 
+        $scope.$digest();
+        break;
+      case "updated": 
+        console.log("Address Updated");
+        var index = _.findIndex($scope.addresses,{'id': msg.data[0].id});
+        console.log(index);
+        $scope.addresses[index] = msg.data[0];   
+        $scope.addresses = $scope.sortData($scope.addresses,'address_name');
+        $scope.order.address = $scope.addresses[0].address_name;
+        console.log(msg.data);
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Address Deleted");
+        console.log(msg.data[0]);
+        var index = _.findIndex($scope.addresses,{'id': msg.data[0].address_id});
+        console.log(index);
+        $scope.addresses.splice(index,1);
+        $scope.addresses = $scope.sortData($scope.addresses,'address_name');
+        $scope.order.address = $scope.addresses[0].address_name;
+        if($scope.addresses.length === 0){
+          $scope.noAddresses = true;
+        }
+        $scope.$digest();
+    }
+
+  });
   
   io.socket.on('customer_orders', function(msg){
     console.log("Message Verb: " + msg.verb);
