@@ -46,7 +46,9 @@ angular.module('fmApp')
 
   var getSKUAvailable = function () {
     $http.get(httpHost + '/sku/available').success( function (data) {
+      console.log("SKU AVAILABLE");
       if(data.length !== 0){
+      console.log("HAS SKU AVAILABLE");
       $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
       $scope.expense.sku = $scope.skuList[0];
       $scope.maxBottles = $scope.skuList[0].bottlespercase;
