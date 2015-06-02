@@ -223,13 +223,13 @@
           </div>
       </br>
 
-          <table class="table table-striped table-hover">
+          <table class="table table-striped table-hover col-md-6">
 
                   <thead>
                       <tr class="labels">
                           <th>
                             <a href="" ng-click="sortCriteria='brand_name'; reverseSort = !reverseSort" class="thlink">
-                             Brand
+                             Coke
                               <span ng-show="sortCriteria == 'brand_name'">
                                 <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                 <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
@@ -242,7 +242,35 @@
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:'Coca-Cola' | itemsPerPage: noOfRows"  ng-click="productClicked(product)">
+
+                      <td width="50%">{{product.brand_name}}</td>
+
+                    </tr>
+
+                  </tbody>
+          </table>
+
+          <table class="table table-striped table-hover col-md-6">
+
+                  <thead>
+                      <tr class="labels">
+                          <th>
+                            <a href="" ng-click="sortCriteria='brand_name'; reverseSort = !reverseSort" class="thlink">
+                             SMB
+                              <span ng-show="sortCriteria == 'brand_name'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+
+
+                    <tr dir-paginate="product in products | filter:'SMB' | itemsPerPage: noOfRows"  ng-click="productClicked(product)">
 
                       <td width="50%">{{product.brand_name}}</td>
 

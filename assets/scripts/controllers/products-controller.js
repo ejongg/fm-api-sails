@@ -31,7 +31,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/products').success( function (data) {
       
       if(data.length !== 0){
-        $scope.products = data;
+        $scope.products = $scope.sortData(data,'brand_name');
         console.log("Products:");
         console.log($scope.products);
       }else{
@@ -177,13 +177,15 @@ angular.module('fmApp')
         if($scope.noProducts === true){
           $scope.noProducts = false;
         }
-        $scope.products.push(msg.data);
+        $scope.products.unshift(msg.data);
+        $scope.products = $scope.sortData($scope.products,'brand_name');
         $scope.$digest();
         break;
       case "updated":
         console.log("Product Updated");
         var index = _.findIndex($scope.products,{'id': msg.data.id});
         $scope.products[index] = msg.data;
+        $scope.products = $scope.sortData($scope.products,'brand_name');
         $scope.$digest();
         break;
       case "destroyed":
@@ -191,6 +193,7 @@ angular.module('fmApp')
         var index = _.findIndex($scope.products,{'id': msg.data[0].prod_id});
         console.log(index);
         $scope.products.splice(index,1);
+        $scope.products = $scope.sortData($scope.products,'brand_name');
 
         if($scope.products.length === 0){
           $scope.noProducts = true;

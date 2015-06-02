@@ -402,6 +402,7 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
   };
 
   $scope.sortData = function(data,predicate){
+    console.log("Data Sort");
     return $filter('orderBy')(data,predicate);
   };
 
