@@ -57,6 +57,7 @@ angular.module('fmApp')
       console.log("SKU:");
       console.log($scope.skuList);
       }else{
+        console.log("NO SKU");
         $scope.noSKU = true;
       }
     }).error(function (err) {
