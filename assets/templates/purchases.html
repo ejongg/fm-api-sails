@@ -14,19 +14,19 @@
         <div class="form-group">
             <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <div class="search" ng-hide="noBays || noSKU|| addPurchaseForm || noPurchase">
+                            <div class="search" ng-hide=" noSKU|| addPurchaseForm || noPurchase">
                                 <form method="get" action="/search" id="search">
                                     <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <a ng-click="showAddPurchaseForm(true)" ng-hide="noBays || noSKU || addPurchaseForm">
+                            <a ng-click="showAddPurchaseForm(true)" ng-hide="noSKU || addPurchaseForm">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD PURCHASES</h6></a>
 
                         </li>
                         <li>
-                            <a ng-click="pagePrint()" ng-hide="addPurchaseForm || noSKU || noBays || noPurchase">
+                            <a ng-click="pagePrint()" ng-hide="addPurchaseForm || noSKU || noPurchase">
                             <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
                         </li>
                     </ul>
@@ -234,13 +234,11 @@
 
           <br><br>
         
-        <div ng-show="noBays">
-         <h3><strong><center>NO LINES! <small></br>Please add lines first.</small></center></strong></h3>
-        </div>
+
         <div ng-show="noSKU">
          <h3><strong><center>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</center></small></strong></h3>
         </div>
-        <div ng-show="noPurchase" ng-hide="noSKU || noBays || !noPurchase">
+        <div ng-show="noPurchase" ng-hide="noSKU || !noPurchase">
          <h3><strong><center>NO PURCHASE!</center></strong></h3>
         </div></center>
 
