@@ -53,20 +53,22 @@ angular.module('fmApp')
 
   };
 
-  var getBays = function (){
-     $http.get(httpHost + '/bays').success( function (data) {
-      if(data.length !== 0){
-      $scope.bays = $scope.sortData(data,'bay_name');
-      $scope.purchase.bay = null;          
-      console.log("Bays:");
-      console.log($scope.bays);
-      }else{
-        $scope.noBays = true;
-      }
-    }).error(function (err) {
-      $scope.checkError(err);
-    });
-  }
+  var getBays = function (sku){
+    console.log(sku);
+    console.log("Get Bays");
+    //  $http.get(httpHost + 'bays/list/sku-lines?id =' + sku.id).success( function (data) {
+    //   if(data.length !== 0){
+    //   $scope.bays = $scope.sortData(data,'bay_name');
+    //   $scope.purchase.bay = null;          
+    //   console.log("Bays:");
+    //   console.log($scope.bays);
+    //   }else{
+    //     $scope.noBays = true;
+    //   }
+    // }).error(function (err) {
+    //   $scope.checkError(err);
+    // });
+  };
 
   var getPurchases = function (){
     $http.get(httpHost + '/purchases').success( function (data) {
@@ -84,7 +86,6 @@ angular.module('fmApp')
   
   getPurchases();
   getSKU();
-  getBays();
 
   $scope.pagePrint = function () {
     window.print();
