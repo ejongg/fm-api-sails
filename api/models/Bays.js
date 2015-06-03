@@ -36,7 +36,8 @@ module.exports = {
       required : true
     },
     sku_id : {
-      model : 'sku'
+      model : 'sku',
+      required : true
     },
   },
 
