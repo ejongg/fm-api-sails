@@ -89,7 +89,7 @@ module.exports = {
 
 		var list = [];
 
-		Employees.find({truck_id : null, position : position})
+		Employees.find({truck_id : null, position : position}).sort('emp_fname ASC')
 			.then(function (unassigned){
 				list = unassigned;
 			})
