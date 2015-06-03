@@ -55,6 +55,28 @@ module.exports = {
 			.then(function (){
 				return res.send(purchasesList);
 			})
+	},
+
+	voidPurchase : function (req, res){
+		var purchaseId = req.query.id;
+
+		Purchase_products.find({purchase_id : purchaseId}).populate('sku_id')
+			.then(function (products){
+				return products;
+			})
+
+			.each(function (product){
+				return InventoryService.deduct(product.sku_id.id, product.bottles, product.cases, product.sku_id.bottlespercase);
+			})
+
+			.then(function (){
+				return Purchases.update({id : purchaseId}, {status : "Void"});
+			})
+
+			.then(function (voidedPurchase){
+				sails.sockets.blast('purchase', {verb : 'void', data : voidedPurchase});
+				return res.send("Purchase now voided", 200);
+			})
 	}
 };
 
