@@ -12,7 +12,7 @@ module.exports = {
 			bay_name : req.body.bay_name,
 			bay_label : req.body.bay_label,
 			bay_limit : req.body.bay_limit,
-			sku_id : req.body.sku;
+			sku_id : req.body.sku
 		}
 
 		Bays.create(bay)

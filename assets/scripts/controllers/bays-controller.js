@@ -7,6 +7,7 @@ angular.module('fmApp')
   $scope.bays = [];
   $scope.bayItems = [];
   $scope.products = [];
+  $scope.skuList = [];
 
   $scope.bay = {};
   $scope.bayEdit = {};
@@ -270,7 +271,6 @@ angular.module('fmApp')
         $scope.bays.push(msg.data);
         $scope.bayItems.push(msg.bayitem);
         $scope.showAddBayForm(false);
-        clearForm()
         $scope.$digest();
         break;
       case "updated":
@@ -292,6 +292,40 @@ angular.module('fmApp')
         $scope.$digest();
     }
 
+  });
+
+  io.socket.on('sku', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("SKU Created");
+        $scope.skuLists.push(msg.data);
+        if($scope.noSKU === true){
+          $scope.noSKU = false;
+        }
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("SKU Updated");
+        console.log(msg.data);
+        var index = _.findIndex($scope.skuLists,{'id': msg.data.id});
+        $scope.skuLists[index] = msg.data;
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("SKU Deleted");
+        var index = _.findIndex($scope.skuLists,{'id': msg.data[0].sku_id});
+        console.log(msg.data[0].sku_id);
+        console.log(index);
+        $scope.skuLists.splice(index,1);
+        if($scope.skuLists.length === 0){
+          $scope.noSKU = true;
+        }
+        $scope.$digest();
+    }
   });
 
   io.socket.on('inventory', function(msg){
