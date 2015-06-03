@@ -22,7 +22,7 @@
                             </div>
                         </li>
                         <li>
-                            <a ng-click="showAddBadOrderForm(true)" ng-hide="addBadOrderForm || noBays || noSKU ">
+                            <a ng-click="showAddBadOrderForm(true)" ng-hide="addBadOrderForm  || noSKU ">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD BAD ORDERS</h6></a>
 
                         </li>
@@ -221,18 +221,12 @@
           </strong></h3>
         </div>
 
-        <div ng-show="noBays" align="center">
-          <h3><strong>NO LINES!
-            <small> <br/>Please add lines first.</small>
-          </strong></h3>
-        </div>
-
-        <div ng-show="noBadOrders && !noSKU && !noBays" align="center">
+        <div ng-show="noBadOrders && !noSKU" align="center">
           <h3><strong>NO BAD ORDERS!
           </strong></h3>
         </div>
 
-        <table ng-hide="noSKU || noBays || noBadOrders" class="table table-striped table-hover ">
+        <table ng-hide="noSKU || noBadOrders" class="table table-striped table-hover ">
 
             <thead>
               <tr class="labels">
