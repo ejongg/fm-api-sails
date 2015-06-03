@@ -91,7 +91,14 @@
                    <tr>
                     <td><label>Days:</label></td>
                     <td colspan="2">
-                      <b>&nbsp; &nbsp; &nbsp;<div class="" ng-repeat="day in address.days" style="display:inline;">{{day}},  </b>
+                      <b>&nbsp; &nbsp; &nbsp;<div class="" ng-repeat="day in address.days" style="display:inline;">
+
+                       <font style="text-transform: capitalize !important; color: red">
+                          {{day}}, 
+                        </font>
+                      </div>
+
+                      </p></b>
                     </td>
                   </tr>
 
@@ -170,7 +177,10 @@
                    <tr>
                     <td><label>Days:</label></td>
                     <td colspan="2">
-                      <b>&nbsp; &nbsp; &nbsp;<div class="" ng-repeat="day in addressEdit.days" style="display:inline;">{{day}},</div> </b>
+                      <b>&nbsp; &nbsp; &nbsp;<div class="" ng-repeat="day in addressEdit.days" style="display:inline;">
+                        <font style="text-transform: capitalize !important; color: red">
+                          {{day}},
+                        </font></div> </b>
                     </td>
                   </tr>
 
@@ -260,9 +270,20 @@
             <tbody>
               <tr dir-paginate="address in addresses | filter:search | orderBy:sortCriteria | itemsPerPage: noOfRows" pagination-id="paginationAddress">
 
-                <td class="routesText">{{address.address_name}}</td>
+                <td class="routesText">
+              
 
-                <td class="routesText">{{address.days}}</td>
+                  <font style="text-transform: lowercase !important;">{{address.address_name}}
+                  </font>
+
+                </td>
+
+                <td class="routesText">
+                  
+                  <font style="text-transform: capitalize !important;">{{address.days}}
+                  </font>
+
+                </td>
 
                 <td style="color:red; cursor:button;" ng-hide="editAddressForm">
                   <a ng-show="editState" class="btn btn-xs btn-default" ng-click="addressEditClicked(address)"><i class="mdi-editor-mode-edit"/>
@@ -331,7 +352,8 @@
 
               <div class="alert alert-dismissable alert-danger" ng-show="existingAddressInRouteError">
                 <button type="button" class="close" ng-click="showExistingAddressInRouteError(false)">×</button>
-                <strong>{{existingAddressInRoute}}</strong>
+                <strong>
+                  {{existingAddressInRoute}}</strong>
              </div> 
 
              <br>
