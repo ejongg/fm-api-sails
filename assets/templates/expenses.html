@@ -204,7 +204,7 @@
 
         <div ng-show="noBays">
          <h3><strong><center>NO LINES! <small></br>Please add lines first.</small></center></strong></h3>
-        </div
+        </div>
 
         <div ng-show="noSKU">
          <h3><strong><center>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</center></small></strong></h3>
@@ -212,8 +212,8 @@
 
         <div ng-hide="noExpenses">
          <div class="form-group">
-            <label for="select" class="col-md-2">Number of rows:</label>
-            <div class="col-md-1">
+            <label for="select" ng-class = "addExpenseForm ? 'col-md-3' : 'col-md-2'">Number of rows:</label>
+            <div ng-class = "addExpenseForm ? 'col-md-2' : 'col-md-1'">
                 <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -222,6 +222,8 @@
             </div>
           </div>
 
+          <br>
+        
         <table class="table variantTable table-striped table-hover">
 
                 <thead>
@@ -289,7 +291,8 @@
         <div class="form-group" >
              <div class="col-md-2 pull-right"><input type="number" class="form-control" ng-model="expense.total_amount" disabled>
             </div>
-            <legend class="col-md-3 pull-right control-label">Total Amount</legend>
+            <legend class="col-md-4 control-label pull-right">Total Amount</legend>
+          </div>
 
             <table class="table variantTable table-striped table-hover">
 
@@ -307,6 +310,7 @@
                         <th><font size="1px">Bottles&nbsp;</font>
                             
                         </th>
+                        <th></th>
 
   
                     </tr>
