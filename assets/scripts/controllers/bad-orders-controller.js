@@ -19,9 +19,11 @@ angular.module('fmApp')
   $scope.viewBadOrderDetails = false;
 
   $scope.noBadOrders = false;
-  $scope.noBays = false;
+  $scope.noBays = true;
   $scope.noSKU = false;
   $scope.noEmployees = false;
+
+  $scope.companies = ['Coca-Cola', 'SMB'];
 
   // forSorting
   $scope.sortCriteria='id';
@@ -32,6 +34,7 @@ angular.module('fmApp')
       console.log("Get Bad Orders");
       if(data.length !== 0){
         $scope.badOrdersList = data;
+        $scope.product.sku = null;
         console.log("Bad Orders:");
         console.log($scope.badOrdersList);
       }else{
@@ -42,27 +45,35 @@ angular.module('fmApp')
     });
   };
 
-  var getBays = function (){
-    $http.get(httpHost + '/bays/unempty').success( function (data) {
+  $scope.getBays = function (sku){
+    console.log(sku);
+    console.log("Get Bays");
+     $http.get(httpHost + '/bays/list/sku-lines?id =' + sku.id).success( function (data) {
       if(data.length !== 0){
-        $scope.bays = data;
-        $scope.product.bay = $scope.bays[0];
-        console.log("Bays:");
-        console.log($scope.bays);
+      $scope.bays = data;
+      $scope.product.bay = $scope.bays[0];        
+      console.log("Bays:");
+      console.log($scope.bays);
+        $scope.noBays =false;
       }else{
         $scope.noBays = true;
       }
     }).error(function (err) {
       $scope.checkError(err);
     });
-  }
+  };
+
+  $scope.changeCompany = function () {
+    console.log("Company Changed");
+    $scope.product.sku = null;
+  };
   
   var getSKU = function () {
   console.log("SKU GET");
     $http.get(httpHost + '/sku/available').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = data;
-        $scope.product.sku = $scope.skuList[0];
+        $scope.product.sku = null;
         console.log("SKU:");
         console.log($scope.skuList);
       }else{
@@ -90,7 +101,6 @@ angular.module('fmApp')
   };
 
   getBadOrderList();
-  getBays();
   getSKU();
   getEmployee();
   

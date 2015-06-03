@@ -25,6 +25,7 @@ angular.module('fmApp')
 
   $scope.errorMessage = '';
   $scope.hasError = false;
+  $scope.companies = ['Coca-Cola', 'SMB'];
 
 
   // forSorting
@@ -58,16 +59,22 @@ angular.module('fmApp')
     console.log("Get Bays");
      $http.get(httpHost + '/bays/list/sku-lines?id =' + sku.id).success( function (data) {
       if(data.length !== 0){
-      $scope.bays = data
+      $scope.bays = data;
       $scope.purchase.bay = $scope.bays[0];        
       console.log("Bays:");
       console.log($scope.bays);
+        $scope.noBays =false;
       }else{
         $scope.noBays = true;
       }
     }).error(function (err) {
       $scope.checkError(err);
     });
+  };
+
+  $scope.changeCompany = function () {
+    console.log("Company Changed");
+    $scope.purchase.sku = null;
   };
 
   var getPurchases = function (){
@@ -146,13 +153,14 @@ angular.module('fmApp')
 
   var clearForm = function () {
     $scope.purchaseForm.$setPristine();
-    $scope.purchase.sku = $scope.skuList[0];
-    $scope.purchase.bay = $scope.bays[0];
+    $scope.purchase.sku = null;
+    $scope.purchase.bay = null;
     $scope.purchase.cases = null;
     $scope.purchase.empty_bottles = null;
     $scope.purchase.cost = null;
     $scope.purchase.discount = null;
     $scope.purchase.prod_date = new Date();
+    $scope.companySelected = $scope.companies[0];
   };
 
   $scope.combine = function (sku){
