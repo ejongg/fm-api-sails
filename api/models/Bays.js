@@ -34,7 +34,10 @@ module.exports = {
     bay_limit : {
       type : 'integer',
       required : true
-    }
+    },
+    sku_id : {
+      model : 'sku'
+    },
   },
 
   afterDestroy : function(bay, next){

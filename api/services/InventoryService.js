@@ -23,7 +23,7 @@ module.exports = {
 	},
 
 	deductFromInventory : function(sku, bottles, cases, bottlespercase){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 			var remainingBottles = 0;
 
 			if(bottles > 0){
@@ -41,30 +41,56 @@ module.exports = {
 		});
 	},
 
-	deduct : function(sku_id, bottles, cases, bottlespercase){
-		return new Promise(function (resolve, reject){
+	deduct : function(skuId, bottles, cases, bottlespercase){
+		return new Promise(function (resolve){
 
-			Sku.findOne({id : sku_id}).populate("prod_id")
-				.then(function findSku (sku){
-					return sku;
-				})
-
-				.then(function findMovingPile (sku){
-					return new Promise(function (resolve, reject){
-						Bays.findOne({pile_status : "Moving pile", bay_label : sku.prod_id.company})
-							.then(function (bay){
-								resolve(bay);
-							})
-					});
+			Bays.findOne({sku_id : skuId, pile_status : "Moving pile"})
+				.then(function (bay){
+					return bay;
 				})
 
 				.then(function findSkusInInventory (bay){
-					return new Promise(function (resolve, reject){
-						Inventory.find({sku_id : sku_id, bay_id : bay.id}).sort("exp_date ASC")
-							.then(function (skus){
-								resolve(skus);						
-							})
-					})	
+					return Inventory.find({sku_id : skuId, bay_id : bay.id}).sort("exp_date ASC");	
+				})
+
+				.then(function (skus){
+					var index = 0;
+
+					async.whilst(
+						function (){
+							return cases > 0;
+						},
+
+						function (cb){
+							if(skus[index].physical_count > 0){
+								InventoryService.deductFromInventory(skus[index], bottles, cases, bottlespercase)
+									.then(function (remainingCases){
+										cases = remainingCases;
+										cb();
+									})
+							}else{
+								index++;
+								cb();
+							}
+							
+						},
+
+						function(err){
+							if(err) reject(err);
+
+							resolve();
+						}
+					);
+				})
+		});
+	},
+
+	deductInSpecificBay : function(skuId, bottles, cases, bottlespercase, bayId){
+		return new Promise(function (resolve, reject){
+
+			Inventory.find({sku_id : skuId, bay_id : bayId}).sort("exp_date ASC")
+				.then(function (skus){
+					return skus;
 				})
 
 				.then(function (skus){
@@ -100,10 +126,10 @@ module.exports = {
 		});
 	},
 
-	deductInSpecificBay : function(sku_id, bottles, cases, bottlespercase, bayId){
+	deductSpecificProduct : function(skuId, bottles, cases, bottlespercase, bayId, prodDate){
 		return new Promise(function (resolve, reject){
 
-			Inventory.find({sku_id : sku_id, bay_id : bayId})
+			Inventory.find({sku_id : skuId, bay_id : bayId, prod_date : prodDate})
 				.then(function (skus){
 					return skus;
 				})

@@ -11,7 +11,8 @@ module.exports = {
 		var bay = {
 			bay_name : req.body.bay_name,
 			bay_label : req.body.bay_label,
-			bay_limit : req.body.bay_limit
+			bay_limit : req.body.bay_limit,
+			sku_id : null
 		}
 
 		Bays.create(bay)
@@ -50,12 +51,11 @@ module.exports = {
 			})
 
 			.then(function (updatedBay){
-				return BaysService.countBayItems(updatedBay[0].id)
-					.then(function (count){
-						updatedBay[0].total_products = count;
-						sails.sockets.blast('bays', {verb : 'updated', data : updatedBay[0]});
-						return res.send(200);
-					})
+				return BaysService.countBayItems(updatedBay[0].id).then(function (count){
+					updatedBay[0].total_products = count;
+					sails.sockets.blast('bays', {verb : 'updated', data : updatedBay[0]});
+					return res.send(200);
+				});
 			})
 	},
 
@@ -68,11 +68,10 @@ module.exports = {
 			})
 
 			.each(function (bay){
-				return BaysService.countBayItems(bay.id)
-				 .then(function (count){
+				return BaysService.countBayItems(bay.id).then(function (count){
 				 	bay.total_products = count;
 				 	baysList.push(bay);
-				 })
+			 	})
 			})
 
 			.then(function (){
@@ -89,8 +88,7 @@ module.exports = {
 			})
 
 			.each(function (bay){
-				return BaysService.countBayItems(bay.id)
-				 .then(function (count){
+				return BaysService.countBayItems(bay.id).then(function (count){
 				 	if(count > 0){
 				 		bay.total_products = count;
 				 		baysList.push(bay);
@@ -100,6 +98,42 @@ module.exports = {
 
 			.then(function (){
 				res.send(baysList);
+			})
+	},
+
+	listSkuLines : function(req, res){
+		var skuId = req.query.id;
+
+		Bays.find({sku_id : skuId})
+			.then(function (bays){
+				return bays;
+			})
+
+			.each(function (bay){
+				return BaysService.countBayItems(bay.id).then(function (bayItemCount){
+					bay.total_products = bayItemCount;	
+				})
+			})
+
+			.then(function (bays){
+				return res.send(bays);
+			})
+	},
+
+	changeLineProduct : function(req, res){
+		var bayId = req.body.bay;
+		var skuId = req.body.sku;
+		var skuName = '';
+
+		return SkuService.getSkuCompleteName(skuId)
+			.then(function (completeSkuName){
+				skuName = completeSkuName;
+			})
+
+		Bays.update({id : bayId}, {sku_id : skuId})
+			.then(function (updatedBay){
+				sails.sockets.blast('bays', {verb : 'updated', data : updatedBay});
+				return res.send({message : 'Line Product changed successfully'}, 200);
 			})
 	}
 };

@@ -51,7 +51,7 @@ module.exports = {
 	},
 
 	countBayItems : function(bay_id){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 			var count = 0;
 
 			Inventory.find({bay_id : bay_id})
@@ -69,14 +69,17 @@ module.exports = {
 		});
 	},
 
-	findMovingPile : function(company, callback){
-		Bays.findOne({bay_label : company, pile_status : "Moving pile"})
+	findMovingPile : function(skuId, callback){
+		Bays.findOne({sku_id : skuId, pile_status : "Moving pile"})
 			.then(function(bay){
 
 				if(bay){
 					callback(null, bay.id);
 				}else{
-					callback(null, "There is no moving pile for company " + company + ". Please go to bays.");
+					SkuService.getSkuCompleteName(skuId)
+						.then(function (sku){
+							callback(null, "There is no moving pile for " + sku);
+						})
 				}
 			},
 
