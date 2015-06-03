@@ -20,7 +20,7 @@ angular.module('fmApp')
     //     $scope.$digest();
     //   }
     // });
-    $http.get(httpHost + '/empties').success( function (data) {
+    $http.get(httpHost + '/empties/list').success( function (data) {
       if(data.length !== 0){
         $scope.emptiesInventory = data;
 

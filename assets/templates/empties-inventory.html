@@ -96,7 +96,7 @@
 
                 <tbody>
                     <tr dir-paginate="item in emptiesInventory | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
-                        <td width="15%">{{item.sku_id }}</td>
+                        <td width="15%">{{item.sku_id.sku_name}}</td>
                         <td width="15%">{{item.cases}}</td>
                         <td width="15%">{{item.bottles}}</td>
                     </tr>
