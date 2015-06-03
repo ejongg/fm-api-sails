@@ -102,8 +102,8 @@ angular.module('fmApp')
       $scope.expense.date = new Date();
     }else{
       $scope.addOtherMode = true;
-      $scope.expense.sku = $scope.skuList[0];
-      $scope.expense.bay = $scope.bays[0].id;
+      $scope.expense.sku = null;
+      $scope.expense.bay = null;
       $scope.expense.cases = null;
       $scope.expense.bottles = null;
       $scope.expense.date = new Date();
@@ -119,8 +119,8 @@ angular.module('fmApp')
       console.log("Close");
       $scope.expense = {};
       $scope.expense.type = $scope.expenseType[0];
-      $scope.expense.sku = $scope.skuList[0];
-      $scope.expense.bay = $scope.bays[0].id;
+      $scope.expense.sku = null;
+      $scope.expense.bay = null;
       $scope.expense.cases = null;
       $scope.expense.bottles = null;
       $scope.expense.date = new Date();
