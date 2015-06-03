@@ -141,9 +141,8 @@
 
     <div class="col-md-8">
         <div class="form-group" >
-             <div class="col-md-2 pull-right"><input type="number" class="form-control" value="" ng-model="totalExpense" disabled>
-            </div>
-            <legend class="col-md-4 pull-right control-label">Total Expense ₱</legend>
+             <div class="col-md-2 pull-right">{{totalExpense | currency:"₱"}}</div>
+            <legend class="col-md-4 pull-right control-label">Total Expense</legend>
         </div>
 
         <br/>

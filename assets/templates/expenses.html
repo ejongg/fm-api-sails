@@ -253,7 +253,7 @@
               </a>
             </th>
 
-            <th>
+            <th style="text-align:right">
               <a href="" ng-click="sortCriteria='amount'; reverseSort = !reverseSort" class="thlink">
                 Amount
                 <span ng-show="sortCriteria == 'amount'">
@@ -270,7 +270,7 @@
           <tr dir-paginate="expense in expenses | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows">
             <td>{{expense.type}}</td>
             <td>{{expense.date}}</td>
-            <td>{{expense.amount | currency : "₱"}}</td>
+            <td align="right">{{expense.amount | currency : "₱"}}</td>
           </tr>
         </tbody>
       </table>

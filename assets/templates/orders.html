@@ -137,9 +137,8 @@
             <div class="col-md-7 col-md-offset-1">
 
                  <div class="form-group" >
-                     <div class="col-md-2 pull-right"><input type="number" class="form-control" value="{{totalAmount}}" disabled>
-                    </div>
-                    <legend class="col-md-5 pull-right control-label">Total Amount ₱</legend>
+                     <div class="col-md-2 pull-right">{{totalAmount | currency:"₱"}}</div>
+                    <legend class="col-md-5 pull-right control-label">Total Amount</legend>
                 </div>
                 <br>
 
@@ -317,9 +316,8 @@
             <br/>
              <div class="form-group " >
                 <label for="inputAddress" class="col-md-3" style="bottom:-0px;">Total Amount</label>
-                <div class="col-md-3"><input type="number" class="form-control" value="{{totalAmountView}}" disabled>
+                <div class="col-md-3">{{totalAmountView | currency:"₱"}}</div>
             </div>
-        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="showViewProducts(false)">Close</button>
