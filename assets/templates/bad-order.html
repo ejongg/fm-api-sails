@@ -50,19 +50,10 @@
         <form class="form-horizontal" name="badOrderForm" ng-submit="addProduct(product)" novalidate>
             <fieldset>
 
-             <div class="alert alert-danger" ng-show="(badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid) || (badOrderForm.inputEmployeeForm.$invalid && badOrderForm.inputEmployeeForm.$dirty) || (badOrderForm.inputReason.$invalid && badOrderForm.inputReason.$dirty) ">
+           <div class="alert alert-warning" ng-show="(badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid) || (badOrderForm.inputReason.$invalid && badOrderForm.inputReason.$dirty) || (badOrderForm.inputBottles.$invalid && badOrderForm.inputBottles.$dirty)">
 
-                        <strong ng-show="badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid"> Cases required! Enter numbers only. </strong>
-
-                        <br/>
-                        <strong ng-show="badOrderForm.inputEmployeeName.$invalid && badOrderForm.inputEmployeeName.$dirty"> Employee name required! </strong>
-
-                         <br/>
-                        <strong ng-show="badOrderForm.inputReason.$invalid && badOrderForm.inputReason.$dirty"> Reason required!  </strong>
-
-
+                    <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
                     </div>
-
 
                 <div class="form-group">
                     <label for="select" class="col-md-3">Line</label>
@@ -92,6 +83,8 @@
                         <input type="number" name="inputCases" min="0" class="form-control" placeholder="Enter the number of cases."
                         ng-model="product.cases" required>
 
+                         <strong class="fbackMsg" ng-show="badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid"> Cases required! Enter numbers only. </strong>
+
                     </div>
                 </div>
 
@@ -99,9 +92,10 @@
                     <label for="inputOwnerName" class="col-md-2 control-label">Bottles</label>
 
                     <div class="col-md-12">
-                        <input type="number" name="inputCases" min="0" max="" class="form-control" placeholder="Enter the number of bottles."
+                        <input type="number" name="inputBottles" min="0" max="" class="form-control" placeholder="Enter the number of bottles."
                         ng-model="product.bottles" required>
 
+                        <strong class="fbackMsg" ng-show="badOrderForm.inputBottles.$dirty && badOrderForm.inputBottles.$invalid"> Bottles required! Enter numbers only. </strong>
                     </div>
                 </div>
 
@@ -126,6 +120,8 @@
 
                     <div class="col-md-12">
                         <textarea name="inputReason"  cols="53" rows="4" ng-model="product.reason" required></textarea>
+
+                          <strong class="fbackMsg" ng-show="badOrderForm.inputReason.$invalid && badOrderForm.inputReason.$dirty"> Reason required! </strong>
                     </div>
                 </div>
 
@@ -147,7 +143,7 @@
         <div class="form-group" >
              <div class="col-md-2 pull-right"><input type="number" class="form-control" value="" ng-model="totalExpense" disabled>
             </div>
-            <legend class="col-md-3 pull-right control-label">Total Expense</legend>
+            <legend class="col-md-4 pull-right control-label">Total Expense ₱</legend>
         </div>
 
         <br/>
@@ -178,7 +174,7 @@
                     <td width="15%">{{product.sku_name}}</td>
                     <td width="15%">{{product.cases}}</td>
                     <td width="15%">{{product.bottles}}</td>
-                    <td width="15%">{{product.expense}}</td>
+                    <td width="15%">{{product.expense | currency:"₱"}}</td>
                     <td width="15%">{{product.reason}}</td>
                     <td><button ng-click="deleteProduct($index)" class="btn btn-primary btn-xs ">Delete</button></td>
                 </tr>
@@ -251,16 +247,7 @@
                   </a>
                 </th>
 
-                <th>
-                  <a href="" ng-click="sortCriteria='expense'; reverseSort = !reverseSort" class="thlink">
-                    Expense
-                    <span ng-show="sortCriteria == 'expense'">
-                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                    </span>
-                  </a>
-                </th>
-               
+                               
                 <th>
                   <a href="" ng-click="sortCriteria='accountable'; reverseSort = !reverseSort" class="thlink">
                     Accountable
@@ -280,15 +267,27 @@
                     </span>
                   </a>
                 </th>
+
+                <th style="text-align: right">
+                  <a href="" ng-click="sortCriteria='expense'; reverseSort = !reverseSort" class="thlink">
+                    Expense
+                    <span ng-show="sortCriteria == 'expense'">
+                      <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                      <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                    </span>
+                  </a>
+                </th>
+
             </tr>
         </thead>
 
         <tbody>
           <tr dir-paginate="badOrder in badOrdersList | filter: search | orderBy: sortCriteria: reverseSort | itemsPerPage: 10" ng-click="getBadOrderDetails(badOrder.id)"  data-toggle="modal" data-target="#myModal">
             <td width="10%">{{badOrder.id}}</td>
-            <td width="25%">{{badOrder.expense}}</td>
             <td width="30%">{{badOrder.accountable}}</td>
             <td width="20%">{{badOrder.date}}</td>
+            <td align="right" width="25%">{{badOrder.expense | currency:"₱"}}</td>
+
         </tr>
     </tbody>
 

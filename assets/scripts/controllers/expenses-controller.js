@@ -2,7 +2,8 @@
 
 angular.module('fmApp')
 .controller('ExpensesCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
-  $scope.expenseType = ['Utilities','Breakage', 'Spoilage'];
+  $scope.expenseType = ['Utilities','Breakage', 'Spoilage', 'Water', 'Electricity', 'Rent', 
+                        'SSS/PhilHealth/PAGIBIG', 'Maintenance', 'Gas', 'Office Supplies'];
   $scope.skuList = [];
   $scope.bays = [];
   $scope.expenses = [];

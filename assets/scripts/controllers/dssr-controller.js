@@ -11,23 +11,23 @@ angular.module('fmApp')
   $scope.income = 0;
   $scope.stt = 0;
 
-  $scope.labels = ['Beginning Inventory', 'Ending Inventory', 'Purchases', 'Expenses', 'Empties', 'Income', 'Sales to Trade'];
+  $scope.labels = ['Purchases', 'Expenses', 'Empties', 'Income', 'Sales to Trade'];
   $scope.series = ['DSSR'];
 
  
-
+ 
   var getDSSR = function () {
     $http.get(httpHost + '/reports/dssr').success( function (data) {
       $scope.beginning_inventory = data.beginning_inventory;
       $scope.ending_inventory = data.ending_inventory;
       $scope.purchases = data.purchases;
-      $scope.expenses = data.expenses;
+      $scope.expenses = data.expenses ;
       $scope.empties = data.empties;
       $scope.stt = data.stt;
       $scope.income = data.income;
 
        $scope.data = [
-    [$scope.beginning_inventory, $scope.ending_inventory, $scope.purchases, $scope.expenses, $scope.empties, $scope.income, $scope.stt]
+    [$scope.purchases, $scope.expenses, $scope.empties, $scope.income, $scope.stt]
   ];
 
       console.log(data);

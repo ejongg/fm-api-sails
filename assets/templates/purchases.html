@@ -154,9 +154,9 @@
     <div class="col-md-9 ">
          <!-- User's Input table --> 
         <div class="form-group" >
-             <div class="col-md-3 pull-right"><input type="number" class="form-control" value="" ng-model="totalAmount " disabled>
+             <div class="col-md-3 pull-right">{{totalAmount  | currency:"₱"}}
             </div>
-            <legend class="col-md-3 pull-right control-label">Total Amount ₱</legend>
+            <legend class="col-md-3 pull-right control-label">Total Amount</legend>
         </div>
 
         <br/>
@@ -253,8 +253,15 @@
                             </span>
                         </a>
                     </th>
-
-            
+                    <th>
+                        <a href="" ng-click="sortCriteria='user'; reverseSort = !reverseSort" class="thlink">
+                            User
+                            <span ng-show="sortCriteria == 'user'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                        </a>
+                    </th>
                     <th>
                         <a href="" ng-click="sortCriteria='date_received'; reverseSort = !reverseSort" class="thlink">
                             Date Received
@@ -265,7 +272,7 @@
                         </a>
                     </th>
 
-                    <th>
+                    <th style="text-align: right">
                         <a href="" ng-click="sortCriteria='total_amount'; reverseSort = !reverseSort" class="thlink">
                             Total Cost
                             <span ng-show="sortCriteria == 'total_amount'">
@@ -275,24 +282,16 @@
                         </a>
                     </th>
 
-                    <th>
-                        <a href="" ng-click="sortCriteria='user'; reverseSort = !reverseSort" class="thlink">
-                            User
-                            <span ng-show="sortCriteria == 'user'">
-                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                            </span>
-                        </a>
-                    </th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)" data-toggle="modal" data-target="#myModal">
                     <td width ="5%">{{purchaseInfo.id}}</td>
-                    <td width ="10s%">{{purchaseInfo.date_received}}</td>
-                    <td width ="25%">{{purchaseInfo.total_amount | currency : "₱"}}</td>
                     <td width ="25%">{{purchaseInfo.user}}</td>
+                    <td width ="10s%">{{purchaseInfo.date_received}}</td>
+                    <td align="right" width ="25%">{{purchaseInfo.total_amount | currency : "₱"}}</td>
+                    
                 </tr>
 
             </tbody>
