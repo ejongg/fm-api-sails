@@ -69,7 +69,7 @@ module.exports.routes = {
 	'POST /employees/add' : 'Employees.add',
 	'GET  /employees/list' : 'Employees.list',
 	'GET  /employees/list/all' : 'Employees.listAll',
-	'GET  /employees/edit/list' : 'Employees.listForEdit',
+	'GET  /employees/edit-list' : 'Employees.listForEdit',
 
 	/* 	INVENTORY 
 		list - for listing the contents of inventory
