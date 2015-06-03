@@ -135,9 +135,8 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Company</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-change="changeCompany()" ng-model="companySelectedEdit" ng-init="companySelectedEdit = 'Coca-Cola'">
-                              <option value="Coca-Cola">Coca-Cola</option>
-                              <option value="SMB">SMB</option>
+                            <select class="form-control" ng-change="changeCompany()" ng-model="companySelectedEdit">
+                              <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
                             </select>
                         </div>
                     </div>

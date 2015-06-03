@@ -130,8 +130,10 @@ angular.module('fmApp')
   $scope.setEditBayTab = function (data) {
       $scope.editBayTab = data;
       if(data === true){
+        $scope.bayEdit.sku = $scope.copiedBay.sku;
         $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
         $scope.bayEdit.bay_label = $scope.copiedBay.bay_label;
+        $scope.bayEdit.pile_status = $scope.copiedBay.pile_status;
       } 
   };
 
@@ -149,9 +151,11 @@ angular.module('fmApp')
       $scope.copiedBay = angular.copy(user);
       console.log($scope.copiedBay);
       $scope.bayEdit.id = $scope.copiedBay.id;
+      $scope.bayEdit.sku = $scope.copiedBay.sku;
       $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
       $scope.bayEdit.bay_limit = $scope.copiedBay.bay_limit;
       $scope.bayEdit.pile_status = $scope.copiedBay.pile_status;
+      $scope.companySelectedEdit = $scope.copiedBay.sku.prod_id.company;
      
       $scope.bayDelete.id = $scope.copiedBay.id;
       $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;
@@ -211,6 +215,7 @@ angular.module('fmApp')
   $scope.editBay = function (bay) {
      var newBayInfo  = {
       'sku': bay.sku.id,
+      'id': bay.id,
       'bay_name': bay.bay_name,
       'bay_label': bay.sku.prod_id.company,
       'bay_limit': bay.bay_limit
