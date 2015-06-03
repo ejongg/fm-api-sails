@@ -14,15 +14,16 @@ angular.module('fmApp')
   $scope.copiedBay = {};
 
   $scope.noBays = false;
+  $scope.noSKU = false;
 
   $scope.addBayForm = false;
   $scope.editOrDeleteBayForm = false;
   $scope.editBayTab = true;
 
-  $scope.companies = ['Coca-Cola','SMB' ];
-
   $scope.errorMessage = '';
   $scope.hasError = false;
+
+  $scope.companies = ['Coca-Cola', 'SMB'];
 
 
   // forSorting
@@ -44,6 +45,29 @@ angular.module('fmApp')
       $scope.checkError(err);
     });
 
+  };
+
+  var getSKU = function () {
+    $http.get(httpHost + '/sku').success( function (data) {
+      
+      if(data.length !== 0){
+        $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
+        $scope.bay.sku = null;
+        console.log("SKU List:");
+        console.log($scope.skuList);
+      }else{
+        console.log("No SKU");
+        $scope.noSKU = true;
+      }
+
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+
+  };
+
+   $scope.combine = function (sku){
+    return sku.prod_id.brand_name + ' ' + sku.sku_name;
   };
 
 
@@ -71,6 +95,7 @@ angular.module('fmApp')
   };*/
 
   getBays();
+  getSKU();
   /*getBayItems();*/
 
   $scope.showErrorMessage = function (data,msg) {
@@ -92,9 +117,7 @@ angular.module('fmApp')
         $scope.showEditOrDeleteBayForm(false);
       }
       if(data === false){
-        $scope.bay.bay_name = '';
-        $scope.bay.bay_label = $scope.companies[0];
-        $scope.bay.bay_limit = '';
+     clearForm();
       }
   };
 
@@ -111,6 +134,12 @@ angular.module('fmApp')
         $scope.bayEdit.bay_label = $scope.copiedBay.bay_label;
       } 
   };
+
+  $scope.changeCompany = function () {
+    console.log("Company Changed");
+    $scope.bay.sku = null;
+    $scope.bayEdit.sku = null;
+  };
     
   $scope.bayClicked = function (user) {
       if($scope.addBayForm === true){
@@ -121,23 +150,26 @@ angular.module('fmApp')
       console.log($scope.copiedBay);
       $scope.bayEdit.id = $scope.copiedBay.id;
       $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
-      $scope.bayEdit.bay_label = $scope.copiedBay.bay_label;
       $scope.bayEdit.bay_limit = $scope.copiedBay.bay_limit;
       $scope.bayEdit.pile_status = $scope.copiedBay.pile_status;
      
       $scope.bayDelete.id = $scope.copiedBay.id;
       $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;
-      $scope.bayDelete.bay_label = $scope.copiedBay.bay_label;
       $scope.bayDelete.bay_limit = $scope.copiedBay.bay_limit;
+      $scope.bayDelete.pile_status = $scope.copiedBay.pile_status;
 
       $scope.showEditOrDeleteBayForm(true);
   };
 
   var clearForm = function () {
+
+    console.log("Clear Form");
     $scope.bayForm.$setPristine();
     $scope.bay.bay_name = '';
     $scope.bay.bay_label = '';
     $scope.bay.bay_limit = '';
+    $scope.bay.sku = null;
+    $scope.companySelected = $scope.companies[0];
   }; 
   
   $scope.getBayCount = function (index) {
@@ -153,16 +185,14 @@ angular.module('fmApp')
   };
 
   $scope.addBay = function (bay) {
-      // $sailsSocket.post('/bays', bay).success(function (data) {
-      // console.log(data);
-      // $scope.bays.push(data);
-      // $scope.showAddBayForm(false);
-      // clearForm();
-      // }).error(function (err) {
-      // console.log(err);
-      // });
-    console.log(bay);
-    io.socket.request($scope.socketOptions('post','/bays/add',{"Authorization": "Bearer " + authService.getToken()},bay), function (body, JWR) {
+    var bayInfo  = {
+      'sku': bay.sku.id,
+      'bay_name': bay.bay_name,
+      'bay_label': bay.sku.prod_id.company,
+      'bay_limit': bay.bay_limit
+    }
+    console.log(bayInfo);
+    io.socket.request($scope.socketOptions('post','/bays/add',{"Authorization": "Bearer " + authService.getToken()},bayInfo), function (body, JWR) {
       console.log('Sails responded with post bay: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
@@ -178,30 +208,28 @@ angular.module('fmApp')
     }); 
   }; 
 
-  $scope.editBay = function (newInfo) {
-      // console.log(newInfo);
-      // $sailsSocket.put('/bays/' + newInfo.id, newInfo).success(function (data) {
-        // var index = _.findIndex($scope.bays, function(bay) { return bay.id == data.id; });
-        // $scope.bays[index] = data;
-        // $scope.showEditOrDeleteBayForm(false);
-      // }).error(function (err) {
-      //   console.log(err);
-      // });
-    console.log(newInfo);
-    io.socket.request($scope.socketOptions('put','/bays/edit',{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
-      console.log('Sails responded with edit bay: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-         $scope.showEditOrDeleteBayForm(false);
-         $scope.snackbarShow('Line Edited');
-      } else if (JWR.statusCode === 400){
-        console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
-      } else {
-        console.log("Error!!!");
-      }
-       $scope.$digest(); 
-    });
+  $scope.editBay = function (bay) {
+     var newBayInfo  = {
+      'sku': bay.sku.id,
+      'bay_name': bay.bay_name,
+      'bay_label': bay.sku.prod_id.company,
+      'bay_limit': bay.bay_limit
+    }
+    console.log(newBayInfo);
+    // io.socket.request($scope.socketOptions('put','/bays/edit',{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
+    //   console.log('Sails responded with edit bay: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //      $scope.showEditOrDeleteBayForm(false);
+    //      $scope.snackbarShow('Line Edited');
+    //   } else if (JWR.statusCode === 400){
+    //     console.log("Error Occured");
+    //     $scope.showErrorMessage(true,body);
+    //   } else {
+    //     console.log("Error!!!");
+    //   }
+    //    $scope.$digest(); 
+    // });
   };
 
   $scope.deleteBay = function (bay) {

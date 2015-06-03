@@ -58,26 +58,28 @@
                      <strong>Sorry! Line is already existing.</strong>
                 </div> 
 
+                    <div class="form-group">
+                        <label for="select" class="col-md-12">Company</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-change="changeCompany()" ng-model="companySelected" ng-init="companySelected = companies[0]">
+                              <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-model="bay.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                                <option value="" disabled>Select SKU</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Line Number</label>  
                         <div class="col-md-12"><input type="text" name = "inputBayName" maxlength="5" class="form-control" placeholder="Enter line number." ng-model="bay.bay_name" required>
                          <strong class="fbackMsg" ng-show="bayForm.inputBayName.$dirty && bayForm.inputBayName.$invalid"> Line number required!  </strong>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Line Label</label>  
-                          <div class="col-md-12">
-
-                          <!-- <input type="text" name = "inputBayLabel" class="form-control" placeholder="Enter bay label." ng-model="bay.bay_label" typeahead="bay.bay_label as bay.bay_label for bay in bays | limitTo:6" required>
-                          <strong class="fbackMsg" ng-show="bayForm.inputBayLabel.$invalid &&bayForm.inputBayLabel.$dirty"> Bay label required!  </strong> -->
-                            
-                            <select class="form-control" id="selectType" ng-init="bay.bay_label=companies[0]" ng-model="bay.bay_label">
-                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
-                            </select>
-
-
                         </div>
                     </div>
                     
@@ -130,6 +132,25 @@
                      <strong>Sorry! Line is already existing.</strong>
                 </div> 
 
+                    <div class="form-group">
+                        <label for="select" class="col-md-12">Company</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-change="changeCompany()" ng-model="companySelectedEdit" ng-init="companySelectedEdit = 'Coca-Cola'">
+                              <option value="Coca-Cola">Coca-Cola</option>
+                              <option value="SMB">SMB</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-model="bayEdit.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelectedEdit" required>
+                                <option value="" disabled>Select SKU</option>
+                            </select>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Line Number</label>  
@@ -138,16 +159,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Line Label</label>  
-                          <div class="col-md-12">
-
-                         <select class="form-control" id="selectType" ng-model="bayEdit.bay_label">
-                          <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
-                            </select>
-
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Line Limit</label>  
@@ -186,16 +197,19 @@
                         <div class="col-md-12"><input type="text" class="form-control" id="inputEstablishmentName" placeholder="Enter establishment name." ng-model="bayDelete.bay_name" disabled>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="inputEstablishmentName" class="col-md-4">Line Label</label>  
-                          <div class="col-md-12"><input type="text" class="form-control" placeholder="Enter bay label." ng-model="bayDelete.bay_label" disabled>
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Line Limit</label>  
                           <div class="col-md-12"><input type="number" min="0" class="form-control" placeholder="Enter bay label." ng-model="bayDelete.bay_limit" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEstablishmentName" class="col-md-4">Line Status</label>  
+                          <div class="col-md-12">
+                            <select class="form-control" ng-model="bayDelete.pile_status" disabled>
+                                <option ng-repeat="status in pileStatus" value="{{status}}">{{status}}</option>
+                            </select>
                         </div>
                     </div>
                     
