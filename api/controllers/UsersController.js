@@ -11,20 +11,20 @@ module.exports = {
 		Users.findOneByUsername(req.body.username)
 			.exec(function(err, user){
 				if(err)
-					return res.json({status : {code: 0, message: "An error has occured. Please contact your administrator."}});			
+					return res.send({status : {code: 0, message: "An error has occured. Please contact your administrator."}});			
 
 				if(user){
 					bcrypt.compare(req.body.password, user.password, function(err, match){
 						if(err)
-							return res.json({status : {code : 0, message : "An error has occured"}});
+							return res.send({status : {code : 0, message : "An error has occured"}});
 
 						if(match){
-							return res.json({status : {code : 1, message: "Login successful"} , token : Auth.issueToken(user.id)});
+							return res.send({status : {code : 1, message: "Login successful"} , token : Auth.issueToken(user.id)});
 						}else
-							return res.json({status : {code : 0, message : "Incorrect password"}});
+							return res.send({status : {code : 0, message : "Incorrect password"}});
 					});
 				}else{
-					return res.json({status : {code : 0, message: 'User not found'}});
+					return res.send({status : {code : 0, message: 'User not found'}});
 				}
 			});
 	},
@@ -37,12 +37,12 @@ module.exports = {
 					if(user.type == "checker"){
 						bcrypt.compare(req.body.password, user.password, function(err, match){
 							if(err)
-								return res.json({status : {code : 0, message : "An error has occured"}});
+								return res.send({status : {code : 0, message : "An error has occured"}});
 
 							if(match){
-								return res.json({status : {code : 1, message: "Login successful"} , token : Auth.issueToken(user.id)});
+								return res.send({status : {code : 1, message: "Login successful"} , token : Auth.issueToken(user.id)});
 							}else
-								return res.json({status : {code : 0, message : "Incorrect password"}});
+								return res.send({status : {code : 0, message : "Incorrect password"}});
 						});
 					}else{
 						return res.send({status : {code : 0, message: 'Unable to login. Must be a checker account'}})
@@ -68,7 +68,7 @@ module.exports = {
 			.then(function (user){
 				bcrypt.compare(old_password, user.password, function(err, match){
 					if(err)
-						return res.json({status : {code : 0, message : "An error has occured"}});
+						return res.send({status : {code : 0, message : "An error has occured"}});
 
 					if(match){
 
@@ -77,12 +77,12 @@ module.exports = {
 								user.password = hashed;
 								user.save(function(err, saved){});
 
-								return res.json({status : {code : 1, message : "Password successfully changed "}}, 200);
+								return res.send({status : {code : 1, message : "Password successfully changed "}}, 200);
 							});
 						});
 
 					}else{
-						return res.json({status : {code : 0, message : "Wrong old password entered"}}, 304);
+						return res.send({status : {code : 0, message : "Wrong old password entered"}}, 304);
 					}
 					
 				});
