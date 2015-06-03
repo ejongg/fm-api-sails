@@ -44,6 +44,15 @@ module.exports = {
 		});
 	},
 
+	getSkuCompleteName : function(skuId){
+		return new Promise(function (resolve){
+			Sku.findOne({id : skuId}).populate('prod_id')
+				.then(function (foundSku){
+					resolve(foundSku.prod_id.company + ' ' + foundSku.sku_name + ' ' + foundSku.size);
+				})
+		});
+	},
+
 	getLifespan : function(skuId){
 		return new Promise(function (resolve, reject){
 			Sku.findOne({id : skuId})

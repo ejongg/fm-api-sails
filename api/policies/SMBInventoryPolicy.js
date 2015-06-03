@@ -4,64 +4,64 @@ module.exports = function(req, res, next){
 	var orders = req.body.orders;
 	var notAvailable = [];
 
-	function getOrders(){
+	new Promise(function (resolve, reject){
+		resolve(orders);
+	})
+	.each(function (order){
 		return new Promise(function (resolve, reject){
-			resolve(orders);
-		});
-	};
+			SkuService.getCompanyName(order.sku_id)
+				.then(function (company){
+					if(company == 'SMB'){
 
-	return getOrders()
-		.each(function (order){
-			return new Promise(function (resolve, reject){
-				SkuService.getCompanyName(order.sku_id)
-					.then(function (company){
-						if(company == 'SMB'){
+						BaysService.findMovingPile(order.sku_id, function(err, bayResult){
+							if(typeof bayResult == 'number'){
 
-							BaysService.findMovingPile(company, function(err, bay_result){
-								if(typeof bay_result == 'number'){
+								Inventory.find({sku_id : order.sku_id, bay_id : bayResult})
+									.then(function (foundSku){
 
-									Inventory.find({sku_id : order.sku_id, bay_id : bay_result})
-										.then(function (found_sku){
-											console.log(order.sku_id + " " + bay_result);
-											if(found_sku){
-												var totalCaseCount = 0;
+										if(foundSku){
+											var totalCaseCount = 0;
 
-												_(found_sku).forEach(function (sku){
-													totalCaseCount = totalCaseCount + sku.physical_count;
-												});
+											_(foundSku).forEach(function (sku){
+												totalCaseCount = totalCaseCount + sku.physical_count;
+											});
 
-												if(order.bottles > 0){
-													order.cases  = order.cases + 1;
-												}
-
-												if(order.cases > totalCaseCount){
-													notAvailable.push(order.sku);
-													resolve();
-												}else{
-													resolve();
-												}
-
-											}else{
-												return res.json({code : 0, message : order.sku_name + ' not found in current moving pile'});							
+											if(order.bottles > 0){
+												order.cases  = order.cases + 1;
 											}
 
-										});	
+											if(order.cases > totalCaseCount){
+												SkuService.getSkuCompleteName(order.sku_id)
+													.then(function (skuCompleteName){
+														notAvailable.push(skuCompleteName);
+														resolve();
+													})
+												
+											}else{
+												resolve();
+											}
 
-								}else{
-									return res.send({code : 0, message : bay_result});
-								}
-							});
-							
-						}else{
-							resolve();
-						}
-					})
-			});
-		})
+										}else{
+											return res.send({message : order.sku_name + ' not found in current moving pile'}, 400);							
+										}
+
+									});	
+
+							}else{
+								return res.send({message : bayResult}, 400);
+							}
+						});
+						
+					}else{
+						resolve();
+					}
+				})
+		});
+	})
 
 		.then(function (){
 			if(notAvailable.length > 0){
-				return res.json({code : 0, message : 'Insufficient stocks in current moving pile', data : notAvailable}, 400);
+				return res.send({message : 'Insufficient stocks in current moving pile', data : notAvailable}, 400);
 			}else{
 				next();
 			}

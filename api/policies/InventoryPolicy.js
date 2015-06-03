@@ -3,20 +3,21 @@ module.exports = function(req, res, next){
 	var notAvailableProducts = [];
 
 	if(products.length == 0){
-		return res.json({code : 0, message : 'Invalid! No products sent.'});
+		return res.send({message : 'Invalid! No products sent.'}, 400);
 	}
 	
 	async.each(products, function (product, cb){
 
-		BaysService.findMovingPile(product.company, function(err, bay_result){
-			if(typeof bay_result == 'number'){
+		BaysService.findMovingPile(product.sku_id, function(err, bayResult){
+			if(typeof bayResult == 'number'){
 
-				Inventory.find({sku_id : product.sku_id, bay_id : bay_result})
-					.exec(function (err, found_sku){
-						if(found_sku){
+				Inventory.find({sku_id : product.sku_id, bay_id : bayResult})
+					.then(function (foundSku){
+
+						if(foundSku){
 							var totalCaseCount = 0;
 
-							_(found_sku).forEach(function (sku){
+							_(foundSku).forEach(function (sku){
 								totalCaseCount = totalCaseCount + sku.physical_count;
 							});
 
@@ -25,19 +26,23 @@ module.exports = function(req, res, next){
 							}
 
 							if(product.cases > totalCaseCount){
-								notAvailableProducts.push(product.sku_name);
-								cb();
+								SkuService.getSkuCompleteName(product.sku_id)
+									.then(function (completeSkuName){
+										notAvailableProducts.push(completeSkuName);
+										cb();
+									})								
 							}else{
 								cb();
 							}
 
 						}else{
-							return res.json({code : 0, message : product.sku_name + ' not found in current moving pile'});							
+							return res.send({message : product.sku_name + ' not found in current moving pile'}, 400);							
 						}
+
 					});	
 
 			}else{
-				return res.json({code : 0, message : bay_result});
+				return res.send({message : bayResult}, 400);
 			}
 		});
 
@@ -45,7 +50,7 @@ module.exports = function(req, res, next){
 		if(err) return res.send(err);
 
 		if(notAvailableProducts.length > 0){
-			return res.json({code : 0, message : 'Insufficient stocks in current moving pile', data : notAvailableProducts}, 400);
+			return res.send({message : 'Insufficient stocks in current moving pile', data : notAvailableProducts}, 400);
 		}else{
 			next();
 		}

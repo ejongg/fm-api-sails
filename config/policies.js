@@ -43,7 +43,7 @@ module.exports.policies = {
   },
 
   Incomplete_casesController : {
-    assembleCase : 'IncompletesPolicy'
+    assembleCase : ['IncompletesPolicy', 'WrongLinePolicy']
   },
 
   Delivery_transactionsController : {
@@ -63,11 +63,11 @@ module.exports.policies = {
   },
 
   PurchasesController : {
-    add : ['EmptyPolicy', 'LineLimitPolicy']
+    add : ['EmptyPolicy', 'LineLimitPolicy', 'WrongLinePolicy']
   },
 
   Load_inController : {
-    add : 'LineLimitPolicy'
+    add : ['LineLimitPolicy', 'WrongLinePolicy']
   },
 
   SkuController : {
@@ -78,6 +78,10 @@ module.exports.policies = {
   EmployeesController : {
     add : 'EmployeeExistsPolicy',
     update : 'EmployeeExistsPolicy'
+  },
+
+  BaysController : {
+    changeLineProduct : ['LineSameProductPolicy', 'LineIsNotEmptyPolicy']
   }
 
   /***************************************************************************
