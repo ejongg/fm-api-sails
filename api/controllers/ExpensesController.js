@@ -13,7 +13,24 @@ module.exports = {
 		var date = req.body.date;
 		var user = req.body.user;
 
-		if(type == "Breakage" || type == "Spoilage"){
+		switch(type){
+			case "Breakage":
+				BreakAndSpoilExpense();
+				break;
+
+			case "Spoilage":
+				BreakAndSpoilExpense();
+				break;
+
+			default :
+				Expenses.create({type : type, amount : amount, date : date, user : user})
+				.then(function (expense){
+					sails.sockets.blast("expenses", {verb : "created", data : expense});
+					return res.send(201);
+				})
+		};
+
+		function BreakAndSpoilExpense(){
 			var products = req.body.products;
 			var expenseId = null;
 
@@ -34,7 +51,7 @@ module.exports = {
 
 						Expense_products.create(expenseProduct)
 							.then(function (){
-								return InventoryService.deductInSpecificBay(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.bay_id);
+								return InventoryService.deductSpecificProduct(product.sku_id, product.bottles, product.cases, product.bottlespercase, product.bay_id, product.prod_date);
 							})
 
 							.then(function (){
@@ -50,15 +67,8 @@ module.exports = {
 							sails.sockets.blast("expenses", {verb : "created", data : expense});
 							return res.send(201);
 						})
-				})	
-		}else{
-
-			Expenses.create({type : type, amount : amount, date : date, user : user})
-				.then(function (expense){
-					sails.sockets.blast("expenses", {verb : "created", data : expense});
-					return res.send(201);
 				})
-		}
+		};
 	}
 };
 
