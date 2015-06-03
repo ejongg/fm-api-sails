@@ -39,7 +39,8 @@
       <div class="alert alert-dismissable alert-danger col-md-6" ng-show="postResult">
         <button type="button" class="close" ng-click="showPostResult(false)">×</button>
         <strong>{{postResultMessage}}</strong>
-      </div> 
+      </div>
+ 
     </div>
 
 
@@ -55,6 +56,10 @@
 
 <div class="col-md-3">
       <form class="form-horizontal" name="transactionForm" ng-submit="addTransactionItem(transaction)" novalidate>
+            <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+              <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+              <strong>{{errorMessage}}.</strong>
+            </div> 
 
             <div class="alert alert-dismissable alert-danger" ng-show="itemExistingTransactionError">
               <button type="button" class="close" ng-click="showItemExistingTransactionError(false)">×</button>
@@ -225,7 +230,6 @@
 
 
  <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' || deposit === null " class="btn btn-primary btn-lg pull-right">Done</div>
-
 
 <div class="snackbar-container" data-snackbar="true"></div>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->

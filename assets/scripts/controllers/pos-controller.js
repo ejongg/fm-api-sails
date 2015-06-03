@@ -18,6 +18,9 @@ angular.module('fmApp')
 
   $scope.noSKU = true;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
 
   $scope.totalAmount = 0;
   $scope.deposit = 0;
@@ -52,6 +55,17 @@ angular.module('fmApp')
 
   $scope.combined = function (sku) {
     return sku.prod_id.brand_name+ ' ' + sku.sku_name + ' ' + sku.size;
+  }
+
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       clearForms();
+    }
   }
 
   $scope.showItemExistingTransactionError = function (data, sku) {
@@ -215,8 +229,12 @@ angular.module('fmApp')
         $scope.showPostResult(true,body.message);
         $location.hash('resultSection');
         $anchorScroll();
-        $scope.$digest();
+      }  else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body.message);
       }
+
+       $scope.$digest(); 
     }); 
 
   };
