@@ -6,69 +6,69 @@
 
 <div class="row">
 
-    <div class="pageheader-left">
-        <h1> EXPENSES  {{sample}}</h1>
+  <div class="pageheader-left">
+    <h1> EXPENSES  {{sample}}</h1>
+  </div>
+
+  <div class="pageheader-right">
+    <div class="form-group">
+      <ul class="nav nav-tabs col-md-12">
+        <li>
+          <div class="search">
+            <form method="get" action="/search" id="search">
+              <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide=""/>
+            </form>
+          </div>
+        </li>
+        <li>
+          <a ng-hide="noSKU"  ng-click="showAddExpenseForm(true)">
+            <h6><i class="mdi-content-add-box"/> &nbsp; ADD EXPENSE</h6></a>
+
+          </li>
+          <li>
+            <a ng-click="pagePrint()">
+              <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
-    <div class="pageheader-right">
-        <div class="form-group">
-            <ul class="nav nav-tabs col-md-12">
-                        <li>
-                            <div class="search">
-                                <form method="get" action="/search" id="search">
-                                    <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide=""/>
-                                </form>
-                            </div>
-                        </li>
-                        <li>
-                            <a ng-hide="noSKU"  ng-click="showAddExpenseForm(true)">
-                                <h6><i class="mdi-content-add-box"/> &nbsp; ADD EXPENSE</h6></a>
 
-                        </li>
-                        <li>
-                            <a ng-click="pagePrint()">
-                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
-                        </li>
-                    </ul>
+
+    <!-- BODY -->
+
+    <!-- DO NOT REMOVE-->
+    <div class="container">
+
+      <!-- LEFT PANEL -->
+      <!--     <div ng-class="addExpenseForm ? 'col-xs-12 col-md-4' : ''"> -->
+      <div  ng-class="addExpenseForm ? 'col-xs-12 col-md-4' : ''" ng-show="addExpenseForm">
+        <div class="panel panel-left">
+          <div class="panel-body">
+            <div ng-show="!noExistingProduct">
+
+              <h4><i class="mdi-content-add-circle"></i> ADD EXPENSES</h4>
+
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-md-12">Expense</label>
+
+                  <div class="col-md-12">
+                    <select class="form-control" ng-model="expense.type" ng-init="expense.type = expenseType[0]" ng-change="typeChange(expense.type)">
+                      <option ng-repeat="type in expenseType" value="{{type}}">{{type}}</option>
+                    </select>
+                  </div>
                 </div>
-    </div>
-
-</div>
-
-
-
-<!-- BODY -->
-
-<!-- DO NOT REMOVE-->
-<div class="container">
-
-    <!-- LEFT PANEL -->
-<!--     <div ng-class="addExpenseForm ? 'col-xs-12 col-md-4' : ''"> -->
-  <div  ng-class="addExpenseForm ? 'col-xs-12 col-md-4' : ''" ng-show="addExpenseForm">
-      <div class="panel panel-left">
-        <div class="panel-body">
-          <div ng-show="!noExistingProduct">
-    
-            <h4><i class="mdi-content-add-circle"></i> ADD EXPENSES</h4>
-
-            <div class="form-horizontal">
-              <div class="form-group">
-              <label class="col-md-12">Expense</label>
-                
-              <div class="col-md-12">
-                  <select class="form-control" ng-model="expense.type" ng-init="expense.type = expenseType[0]" ng-change="typeChange(expense.type)">
-                    <option ng-repeat="type in expenseType" value="{{type}}">{{type}}</option>
-                  </select>
               </div>
-            </div>
-            </div>
               
-  
 
-                    <div  ng-show="expense.type === 'Breakage' || expense.type === 'Spoilage'">
 
-                    <form class="form-horizontal" name="expenseForm" ng-submit="addSKUToList(expense)" novalidate>
-                    
+              <div  ng-show="expense.type === 'Breakage' || expense.type === 'Spoilage'">
+
+                <form class="form-horizontal" name="expenseForm" ng-submit="addSKUToList(expense)" novalidate>
+
                       <!-- <div class="form-group">
                           <label for="inputSize" class="col-md-12">
                           SKU Name</label> 
@@ -89,102 +89,102 @@
                           </div>
                         </div> -->
 
-                     <div class="form-group">
-                        <label for="select" class="col-md-12">Company</label>
-                        <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="select" class="col-md-12">Company</label>
+                          <div class="col-md-12">
                             <select class="form-control" ng-model="companySelected" ng-init="companySelected = 'Coca-Cola'">
                               <option value="Coca-Cola">Coca-Cola</option>
                               <option value="SMB">SMB</option>
                             </select>
+                          </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
-                        <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
+                          <div class="col-md-12">
                             <select class="form-control" ng-model="expense.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" ng-change="getMaxBottles(expense)">
-                                <option value="" disabled>Select SKU</option>
+                              <option value="" disabled>Select SKU</option>
                             </select>
+                          </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="select" class="col-md-3">Line</label>
-                        <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="select" class="col-md-3">Line</label>
+                          <div class="col-md-12">
                             <select class="form-control" ng-model="expense.bay" ng-options="bay.id as combineBay(bay) for bay in bays | filter: companySelected">
                               <option value="" disabled>Select Line</option>
                             </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                       Date</label>
-
-                       <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
-                       </div>
-                    </div>
-
-
-
-                      <div class="form-group">
-                          <label for="inputSkuName" class="col-md-12">
-                          Cases</label> 
-                          <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.cases" required>
-
-
                           </div>
-                      </div>
+                        </div>
 
-                      <div class="form-group">
+                        <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
-                        Extra Bottles</label> 
-                         <div class="col-md-12"><input type="number" min="0" max="{{maxBottles}}" class="form-control" placeholder="Enter no. of bottle" ng-model="expense.bottles" required>
+                           Date</label>
 
+                           <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
+                           </div>
                          </div>
-                      </div>
 
-                     
 
-                          <!-- ADD BUTTON -->
 
-                        <div class="icon-preview">
-                           <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseForm.$invalid">Add</button>
-                          <br>
-                        </div>
+                         <div class="form-group">
+                          <label for="inputSkuName" class="col-md-12">
+                            Cases</label> 
+                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.cases" required>
 
-                    </form>
-                    </div>
 
-                    <div  ng-hide="expense.type === 'Breakage' || expense.type === 'Spoilage'">
-                    <form class="form-horizontal" name="expenseOtherForm" ng-submit="addExpense(expense)" novalidate>
-                      <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                       Date</label> 
-                       <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="inputSkuName" class="col-md-12">
+                              Extra Bottles</label> 
+                              <div class="col-md-12"><input type="number" min="0" max="{{maxBottles}}" class="form-control" placeholder="Enter no. of bottle" ng-model="expense.bottles" required>
+
+                              </div>
+                            </div>
+
+
+
+                            <!-- ADD BUTTON -->
+
+                            <div class="icon-preview">
+                             <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseForm.$invalid">Add</button>
+                             <br>
+                           </div>
+
+                         </form>
                        </div>
-                    </div>
 
-                     <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                        Amount</label> 
-                        <div class="col-md-12"><input type="number" min="0"class="form-control" placeholder="Enter amount." ng-model="expense.amount" required>       
+                       <div  ng-hide="expense.type === 'Breakage' || expense.type === 'Spoilage'">
+                        <form class="form-horizontal" name="expenseOtherForm" ng-submit="addExpense(expense)" novalidate>
+                          <div class="form-group">
+                            <label for="inputSkuName" class="col-md-12">
+                             Date</label> 
+                             <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
+                             </div>
+                           </div>
+
+                           <div class="form-group">
+                            <label for="inputSkuName" class="col-md-12">
+                              Amount</label> 
+                              <div class="col-md-12"><input type="number" min="0"class="form-control" placeholder="Enter amount." ng-model="expense.amount" required>       
+                              </div>
+                            </div>
+
+                            <!-- ADD BUTTON -->
+
+                            <div class="icon-preview">
+                              <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showAddExpenseForm(false)" >Cancel</button>
+                              <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseOtherForm.$invalid">Add</button>
+
+                              <br>
+                            </div>
+                          </form>
                         </div>
-                     </div>
-
-                          <!-- ADD BUTTON -->
-
-                        <div class="icon-preview">
-                          <button type="button" class="btn btn-default btn-xs rightalign" ng-click="showAddExpenseForm(false)" >Cancel</button>
-                          <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseOtherForm.$invalid">Add</button>
-
-                          <br>
-                        </div>
-                      </form>
-                    </div>
 
 
-          </div>
+                      </div>
 
 
         <!--   <div ng-hide="!noExistingProduct">
@@ -193,154 +193,153 @@
 
         </div>
       </div>
-</div>
+    </div>
 
-  
+
 
     <!-- START OF TABLE -->
-  <div ng-class="addExpenseForm ? 'col-xs-12 col-md-8' : ''">
+    <div ng-class="addExpenseForm ? 'col-xs-12 col-md-8' : ''">
       <div class="panel panel-right">
-          <div class="panel-body" ng-show="addOtherMode">
+        <div class="panel-body" ng-show="addOtherMode">
 
-        <div ng-show="noBays">
-         <h3><strong><center>NO LINES! <small></br>Please add lines first.</small></center></strong></h3>
-        </div>
+          <div ng-show="noBays">
+           <h3><strong><center>NO LINES! <small></br>Please add lines first.</small></center></strong></h3>
+          </div>
 
-        <div ng-show="noSKU">
-         <h3><strong><center>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</center></small></strong></h3>
-        </div>
+         <div ng-show="noSKU">
+           <h3><strong><center>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</center></small></strong></h3>
+         </div>
 
-        <div ng-show="noExpenses" ng-hide="noSKU || noBays || !noExpenses">
-            <h3><strong><center>NO EXPENSES!</center></strong></h3>
+         <div ng-show="noExpenses" ng-hide="noSKU || noBays || !noExpenses">
+          <h3><strong><center>NO EXPENSES!</center></strong></h3>
         </div>
 
         <div ng-hide="noExpenses">
          <div class="form-group">
-            <label for="select" ng-class = "addExpenseForm ? 'col-md-3' : 'col-md-2'">Number of rows:</label>
-            <div ng-class = "addExpenseForm ? 'col-md-2' : 'col-md-1'">
-                <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                </select>
-            </div>
+          <label for="select" ng-class = "addExpenseForm ? 'col-md-3' : 'col-md-2'">Number of rows:</label>
+          <div ng-class = "addExpenseForm ? 'col-md-2' : 'col-md-1'">
+            <select class="form-control" ng-init="noOfRows='10'" ng-model="noOfRows" ng-show="!noExistingProduct">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
           </div>
         </div>
 
-          <br>
+        <br>
         
         <table class="table variantTable table-striped table-hover">
 
-                <thead>
-                    <tr>
-                        <th>
-                            <a href="" ng-click="sortCriteria='type'; reverseSort = !reverseSort" class="thlink">
-                             Type
-                              <span ng-show="sortCriteria == 'type'">
-                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                              </span>
-                            </a>
-                          </th>
+          <thead>
+            <tr>
+              <th>
+                <a href="" ng-click="sortCriteria='type'; reverseSort = !reverseSort" class="thlink">
+                 Type
+                 <span ng-show="sortCriteria == 'type'">
+                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                </span>
+              </a>
+            </th>
 
 
-                        <th>
-                          <a href="" ng-click="sortCriteria='date'; reverseSort = !reverseSort" class="thlink">
-                          Date
-                          <span ng-show="sortCriteria == 'date'">
-                            <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                            <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                          </span>
-                          </a>
-                        </th>
+            <th>
+              <a href="" ng-click="sortCriteria='date'; reverseSort = !reverseSort" class="thlink">
+                Date
+                <span ng-show="sortCriteria == 'date'">
+                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                </span>
+              </a>
+            </th>
 
-                        <th>
-                          <a href="" ng-click="sortCriteria='amount'; reverseSort = !reverseSort" class="thlink">
-                          Amount
-                          <span ng-show="sortCriteria == 'amount'">
-                            <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                            <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                          </span>
-                          </a>
-                        </th>
-                    
-                    </tr>
-                </thead>
+            <th>
+              <a href="" ng-click="sortCriteria='amount'; reverseSort = !reverseSort" class="thlink">
+                Amount
+                <span ng-show="sortCriteria == 'amount'">
+                  <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                  <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                </span>
+              </a>
+            </th>
 
-                <tbody>
-                    <tr dir-paginate="expense in expenses | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows">
-                      <td>{{expense.type}}</td>
-                      <td>{{expense.date}}</td>
-                      <td>{{expense.amount | currency : "₱"}}</td>
-                    </tr>
-                </tbody>
-            </table>
+          </tr>
+        </thead>
 
-            <div align="center">
-            <dir-pagination-controls
-                  max-size="7"
-                  directional-links="true"
-                  boundary-links="true"
-                  >
-            </dir-pagination-controls>
-          </div>
+        <tbody>
+          <tr dir-paginate="expense in expenses | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows">
+            <td>{{expense.type}}</td>
+            <td>{{expense.date}}</td>
+            <td>{{expense.amount | currency : "₱"}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-          </div>
-
+      <div align="center">
+        <dir-pagination-controls
+        max-size="7"
+        directional-links="true"
+        boundary-links="true"
+        >
+      </dir-pagination-controls>
     </div>
 
-    <div class="panel-body" ng-hide="addOtherMode">
-        <div class="form-group" >
-             <div class="col-md-2 pull-right"><input type="number" class="form-control" ng-model="expense.total_amount" disabled>
-            </div>
-            <legend class="col-md-4 control-label pull-right">Total Amount</legend>
-          </div>
+  </div>
 
-            <table class="table variantTable table-striped table-hover">
+</div>
 
-                <thead>
-                    <tr>
-                        <th><font size="1px">SKU Name&nbsp;</font>
-                            
+<div class="panel-body" ng-hide="addOtherMode">
+  <div class="form-group" >
+   <div class="col-md-2 pull-right"><input type="number" class="form-control" ng-model="expense.total_amount" disabled>
+   </div>
+   <legend class="col-md-4 control-label pull-right">Total Amount</legend>
+ </div>
 
-                        </th>
+ <table class="table variantTable table-striped table-hover">
 
-                        <th><font size="1px">Cases&nbsp;</font>
-                             
-                        </th>
-
-                        <th><font size="1px">Bottles&nbsp;</font>
-                            
-                        </th>
-                        <th></th>
-
-  
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="product in expense.products">
-                      <td>{{product.sku}}</td>
-                      <td>{{product.cases}}</td>
-                      <td>{{product.bottles}}</td>
-                      <td><button ng-click="deleteSKUToList($index)" class="btn btn-primary btn-xs">Delete</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="icon-preview">
-            <div class="form-group rightalign">
-              <button type="button" class="btn btn-primary" ng-disabled="!expense.products.length" ng-click="addExpense(expense)">Submit</button>  
-
-              <button type="button" class="btn btn-default" ng-click="showAddExpenseForm(false)">Cancel</button>
-            </div>
-        </div>
-        </div>
-    </div>
+  <thead>
+    <tr>
+      <th><font size="1px">SKU Name&nbsp;</font>
 
 
-      <!-- END OF TABLE -->
+      </th>
 
-     </div>
-  </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
-  <div class="snackbar-container" data-snackbar="true"></div>
+      <th><font size="1px">Cases&nbsp;</font>
+
+      </th>
+
+      <th><font size="1px">Bottles&nbsp;</font>
+
+      </th>
+      <th></th>
+
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="product in expense.products">
+      <td>{{product.sku}}</td>
+      <td>{{product.cases}}</td>
+      <td>{{product.bottles}}</td>
+      <td><button ng-click="deleteSKUToList($index)" class="btn btn-primary btn-xs">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+<div class="icon-preview">
+  <div class="form-group rightalign">
+    <button type="button" class="btn btn-primary" ng-disabled="!expense.products.length" ng-click="addExpense(expense)">Submit</button>  
+
+    <button type="button" class="btn btn-default" ng-click="showAddExpenseForm(false)">Cancel</button>
+  </div>
+</div>
+</div>
+</div>
+
+
+<!-- END OF TABLE -->
+
+</div>
+</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
+<div class="snackbar-container" data-snackbar="true"></div>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
