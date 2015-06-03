@@ -333,14 +333,6 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
   $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
   console.log($scope.userName);
 
-  while($scope.userType === undefined){
-    console.log("Set User");
-    $scope.userType =  userService.getUserType();
-    $scope.userFirstName = userService.getFirstName();
-    $scope.userLastName = userService.getLastName();
-    $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
-   }
-
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
      console.log("state change");
      console.log(userService.getAccessLevel());
