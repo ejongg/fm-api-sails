@@ -204,7 +204,7 @@ angular.module('fmApp')
         // $scope.bays.push(body);
         $scope.showAddBayForm(false);
         $scope.snackbarShow('Line Added');
-      } else if (JWR.statusCode === 200){
+      } else if (JWR.statusCode === 400){
         console.log("Error Occured");
         $scope.showErrorMessage(true,body);
       }
