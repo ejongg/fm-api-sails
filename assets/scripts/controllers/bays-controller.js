@@ -303,6 +303,7 @@ angular.module('fmApp')
       case "created": 
         console.log("SKU Created");
         $scope.skuLists.push(msg.data);
+        $scope.skuLists = $scope.sortData(data,'prod_id.brand_name');
         if($scope.noSKU === true){
           $scope.noSKU = false;
         }
@@ -313,6 +314,7 @@ angular.module('fmApp')
         console.log(msg.data);
         var index = _.findIndex($scope.skuLists,{'id': msg.data.id});
         $scope.skuLists[index] = msg.data;
+        $scope.skuLists = $scope.sortData(data,'prod_id.brand_name');
         $scope.$digest();
         break;
       case "destroyed":
@@ -321,6 +323,7 @@ angular.module('fmApp')
         console.log(msg.data[0].sku_id);
         console.log(index);
         $scope.skuLists.splice(index,1);
+        $scope.skuLists = $scope.sortData(data,'prod_id.brand_name');
         if($scope.skuLists.length === 0){
           $scope.noSKU = true;
         }
