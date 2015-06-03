@@ -20,7 +20,7 @@ module.exports = function(req, res, next){
 	};
 
 	function checkEmpties () {
-		var products = req.body.products;
+		var products = req.body.empties;
 		var notAvailableEmpties = [];
 
 		if(products.length == 0){
