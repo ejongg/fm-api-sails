@@ -7,7 +7,7 @@ angular.module('fmApp')
   $scope.bays = [];
   $scope.bayItems = [];
   $scope.products = [];
-  $scope.skuList = [];
+  $scope.skuLists = [];
 
   $scope.bay = {};
   $scope.bayEdit = {};
