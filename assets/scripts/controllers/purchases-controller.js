@@ -13,7 +13,7 @@ angular.module('fmApp')
 
   $scope.totalAmount= 0;
 
-  $scope.noBays = false;
+  $scope.noBays = true;
   $scope.noSKU = false;
   $scope.noPurchase = false;
   
@@ -53,21 +53,21 @@ angular.module('fmApp')
 
   };
 
-  var getBays = function (sku){
+  $scope.getBays = function (sku){
     console.log(sku);
     console.log("Get Bays");
-    //  $http.get(httpHost + 'bays/list/sku-lines?id =' + sku.id).success( function (data) {
-    //   if(data.length !== 0){
-    //   $scope.bays = $scope.sortData(data,'bay_name');
-    //   $scope.purchase.bay = null;          
-    //   console.log("Bays:");
-    //   console.log($scope.bays);
-    //   }else{
-    //     $scope.noBays = true;
-    //   }
-    // }).error(function (err) {
-    //   $scope.checkError(err);
-    // });
+     $http.get(httpHost + '/bays/list/sku-lines?id =' + sku.id).success( function (data) {
+      if(data.length !== 0){
+      $scope.bays = data
+      $scope.purchase.bay = $scope.bays[0];        
+      console.log("Bays:");
+      console.log($scope.bays);
+      }else{
+        $scope.noBays = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
   };
 
   var getPurchases = function (){
@@ -76,8 +76,7 @@ angular.module('fmApp')
       $scope.purchasesList = data;
       console.log("Purchases:");
       console.log($scope.purchasesList);
-      }else{
-        $scope.noPurchase = true;
+        $scope.noPurchase = false;
       }
     }).error(function (err) {
       $scope.checkError(err);
