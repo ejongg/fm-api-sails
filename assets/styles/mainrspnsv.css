@@ -1,4 +1,4 @@
-@media all and ( max-width: 680px ) {
+@media all and ( max-width: 700px ) {
 
   .withripple {
   position: relative; }
@@ -132,26 +132,30 @@ h3.panel-heading {
 }
 
 .navbar {
-  background-color: #ffa311 !important;
+  background-color: #ffffff !important;
   padding: 0px;
-  width: ;
+  width: auto;
 }
 
 .navbar-nav {
    background-color: #ffa311 !important;
-   padding: 0px;
+
+   padding-left: 100px !important;
+
 }
 
 .navbar-collapse {
   color: #202020;
   background-color: #ffa311 !important;
-  padding: 0px;
+  width: auto;
+  padding-right: 20px;
+  margin: 0px;
 }
 
 .navbar-header {
   padding-left: 50px;
   background-color: #ffa311 !important;
-  padding: 0px;
+  padding-right: 50px;
 }
 
 .navbar-left {
@@ -199,7 +203,7 @@ h3.panel-heading {
 
 .nav-tabs > li.disabled > a, .nav-tabs > li.disabled > a:hover {
   color: rgba(255, 255, 255, 0.5);
-  background-color: #aab919; }
+  background-color: red; }
 
 .fmbanner {
   background-image: url("../../images/latest_small.png");
@@ -431,13 +435,13 @@ h6 {
     } }
 
 
-@media only screen and (max-width: 767px) {
+@media all and (max-width: 1000px) {
 
 .loginbg {
-  background-color: #ffffff !important;
-  background-image: url("../../images/login bg2.png");
+  background-color: #202020 !important;
+  background-image: url("../../images/mesh bg.png");
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: top right;
   background-attachment: fixed;
   background-size: cover;
   overflow-x: hidden !important;
@@ -446,9 +450,9 @@ h6 {
 .panel-login {
   min-width: 200px;
   max-width: 410px;
-  padding: 50px;
+  margin-right: 550px;
   padding-top: 30px;
-  margin: 130px 0px 0px -50px !important;
+  float: left;
   border-radius: 25px; 
   overflow-x: hidden !important; }
 }
@@ -954,7 +958,6 @@ color: #202020;
 background-color: #eee;
 border-color: #ddd;
 }
-
 
 
 }
