@@ -19,7 +19,14 @@ module.exports = {
 			carry_weight : req.body.carry_weight
 		}
 
-		Trucks.findOne(truck)
+		var findTruck = {
+		    driver : req.body.driver.id,
+			dispatcher : req.body.dispatcher.id,
+			agent : req.body.agent.id,
+			helper : req.body.helper.id
+		};
+
+		Trucks.findOne(findTruck)
 			.then(function(foundTruck){
 				if(foundTruck){
 					return res.send("You are entering a duplicate entry");
