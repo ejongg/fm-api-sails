@@ -188,6 +188,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
           }
         }  
       })
+      .state('encoder.empties-inventory', {
+        url:'/empties-inventory',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/empties-inventory.html',
+            controller:'EmptiesInventoryCtrl'
+          }
+        }  
+      })
       .state('encoder.payments', {
         url:'/sales/payments',
         views: {
