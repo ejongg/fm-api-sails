@@ -45,13 +45,13 @@ module.exports = {
 	},
 
 	deductEmptyBottles : function (skuId, emptyBottles, bottlespercase){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 			Empties.findOne({sku_id : skuId})
 				.then(function (emptyRecord){
+
 					if(emptyBottles > bottlespercase){
 						EmptiesService.countCases(emptyBottles, bottlespercase)
 							.then(function (result){
-								console.log(result);
 								emptyRecord.bottles = emptyRecord.bottles - result.bottles;
 								emptyRecord.cases = emptyRecord.cases - result.cases;
 
@@ -59,6 +59,7 @@ module.exports = {
 									resolve();
 								});
 							})
+
 					}else{
 						emptyRecord.bottles = emptyRecord.bottles - emptyBottles;
 						emptyRecord.cases = emptyRecord.cases - 1;
