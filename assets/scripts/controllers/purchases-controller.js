@@ -109,6 +109,8 @@ angular.module('fmApp')
       $scope.showViewProducts(false);
       
     }
+    $scope.purchaseForm.$setPristine();
+    $scope.hasError = false;
     $scope.addPurchaseForm = data;
 
     if(data === false){
