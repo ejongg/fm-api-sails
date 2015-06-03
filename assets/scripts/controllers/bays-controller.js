@@ -55,7 +55,7 @@ angular.module('fmApp')
         $scope.skuLists = $scope.sortData(data,'prod_id.brand_name');
         $scope.bay.sku = null;
         console.log("SKU List:");
-        console.log($scope.skuList);
+        console.log($scope.skuLists);
       }else{
         console.log("No SKU");
         $scope.noSKU = true;
