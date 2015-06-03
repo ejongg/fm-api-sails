@@ -51,8 +51,8 @@ angular.module('fmApp')
       if(data.length !== 0){
       console.log("HAS SKU AVAILABLE");
       $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
-      $scope.expense.sku = $scope.skuList[0];
-      $scope.maxBottles = $scope.skuList[0].bottlespercase;
+      $scope.expense.sku = null;
+      // $scope.maxBottles = $scope.skuList[0].bottlespercase;
       console.log("MAX BOTTLES:" + $scope.maxBottles);
       console.log("SKU:");
       console.log($scope.skuList);
@@ -69,7 +69,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/bays/unempty').success( function (data) {
       if(data.length !== 0){
       $scope.bays = data;
-      $scope.expense.bay = $scope.bays[0].id;
+      $scope.expense.bay = null;
       console.log("Bays:");
       console.log($scope.bays);
       }else{
@@ -221,6 +221,93 @@ angular.module('fmApp')
     }); 
 
   };
+
+
+  io.socket.on('sku', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("SKU Created");
+        $scope.skuList.push(msg.data);
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
+        if($scope.noSKU === true){
+          $scope.noSKU = false;
+        }
+         $scope.expense.sku = null;
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("SKU Updated");
+        var index = _.findIndex($scope.skuList,{'id': msg.data.id});
+        $scope.skuList[index] = msg.data;
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
+        $scope.expense.sku = null;
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("SKU Deleted");
+        var index = _.findIndex($scope.skuList,{'id': msg.data[0].sku_id});
+        $scope.skuList.splice(index,1);
+        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
+        if($scope.skuList.length === 0){
+          $scope.noSKU = true;
+          if($scope.addPurchaseForm === true){
+            console.log("Close form");
+            $scope.addPurchaseForm = false;
+          }
+        }else{
+           $scope.expense.sku = null;
+        }
+        $scope.$digest();
+    }
+  });
+
+  io.socket.on('bays', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "created": 
+        console.log("Bay Created");
+        $scope.bays.push(msg.data);
+        $scope.bays = $scope.sortData($scope.bays,'bay_name');
+        if($scope.noBays === true){
+          $scope.noBays = false;
+        }
+        $scope.expense.bay = null;
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("Bay Updated");
+        var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        $scope.bays[index] = msg.data;
+        $scope.bays = $scope.sortData($scope.bays,'bay_name');
+        $scope.expense.bay = null;
+        $scope.$digest();
+        break;
+      case "destroyed":
+        console.log("Bay Deleted");
+        var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
+        $scope.bays.splice(index,1);
+        $scope.bays = $scope.sortData($scope.bays,'bay_name');
+        if($scope.bays.length === 0){
+          $scope.noBays = true;
+          if($scope.addPurchaseForm === true){
+            console.log("Close form");
+            $scope.addPurchaseForm = false;
+          }
+        }else{
+          $scope.expense.bay = null;
+        }
+        $scope.$digest();
+
+    }
+
+  });
 
 
   io.socket.on('expenses', function(msg){

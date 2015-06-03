@@ -68,16 +68,8 @@
                     <div  ng-show="expense.type === 'Breakage' || expense.type === 'Spoilage'">
 
                     <form class="form-horizontal" name="expenseForm" ng-submit="addSKUToList(expense)" novalidate>
-
-                    <div class="form-group">
-                        <label for="inputSkuName" class="col-md-12">
-                       Date</label>
-
-                       <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
-                       </div>
-                    </div>
                     
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                           <label for="inputSize" class="col-md-12">
                           SKU Name</label> 
 
@@ -95,7 +87,45 @@
                             <select class="form-control" ng-model="expense.bay" ng-options="bay.id as combineBay(bay) for bay in bays">
                             </select>
                           </div>
+                        </div> -->
+
+                     <div class="form-group">
+                        <label for="select" class="col-md-12">Company</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-model="companySelected" ng-init="companySelected = 'Coca-Cola'">
+                              <option value="Coca-Cola">Coca-Cola</option>
+                              <option value="SMB">SMB</option>
+                            </select>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-model="expense.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" ng-change="getMaxBottles(expense)">
+                                <option value="" disabled>Select SKU</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-md-3">Line</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-model="expense.bay" ng-options="bay.id as combineBay(bay) for bay in bays | filter: companySelected">
+                              <option value="" disabled>Select Line</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputSkuName" class="col-md-12">
+                       Date</label>
+
+                       <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
+                       </div>
+                    </div>
+
+
 
                       <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
