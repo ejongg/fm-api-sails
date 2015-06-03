@@ -52,7 +52,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/sku').success( function (data) {
       
       if(data.length !== 0){
-        $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
+        $scope.skuLists = $scope.sortData(data,'prod_id.brand_name');
         $scope.bay.sku = null;
         console.log("SKU List:");
         console.log($scope.skuList);

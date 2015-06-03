@@ -70,7 +70,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="bay.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                            <select class="form-control" ng-model="bay.sku" ng-options="sku as combine(sku) for sku in skuLists | filter: companySelected" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>
@@ -144,7 +144,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="bayEdit.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelectedEdit" required>
+                            <select class="form-control" ng-model="bayEdit.sku" ng-options="sku as combine(sku) for sku in skuLists | filter: companySelectedEdit" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>
