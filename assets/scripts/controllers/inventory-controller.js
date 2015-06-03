@@ -36,6 +36,20 @@ angular.module('fmApp')
 
   getInventory();
 
+   io.socket.on('inventory', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "updated":
+        console.log("Bay Updated");
+        getInventory();
+        $scope.$digest();
+    }
+
+  });
+
   $scope.pagePrint = function () {
     window.print();
   };
