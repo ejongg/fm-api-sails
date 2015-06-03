@@ -173,8 +173,8 @@ angular.module('fmApp')
       //$scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
 
-    $scope.expense.sku = $scope.skuList[0];
-    $scope.expense.bay = $scope.bays[0].id;
+    $scope.expense.sku = null;
+    $scope.expense.bay =  null;
     $scope.expense.cases = null;
     $scope.expense.bottles = null;
 
