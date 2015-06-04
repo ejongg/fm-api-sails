@@ -11,6 +11,10 @@ module.exports = {
 						foundSku.bottles = foundSku.bottles + bottles + (bottlespercase * cases);
 						foundSku.cases = foundSku.cases + cases;
 
+						if(bottles == bottlespercase){
+							foundSku.cases = foundSku.cases + 1;
+						}
+
 						foundSku.save(function (err, saved){
 							resolve();
 						});

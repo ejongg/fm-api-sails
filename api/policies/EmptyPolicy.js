@@ -22,14 +22,14 @@ module.exports = function (req, res, next){
 							resolve();
 						}else{
 							return SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
-								notAvailableEmpties.push(completeName);
+								notAvailable.push(completeName);
 								resolve();
 							})
 						}
 
 					}else{
-						SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
-							notAvailableEmpties.push(completeName);
+						SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
+							notAvailable.push(completeName);
 							resolve();
 						})
 					}
