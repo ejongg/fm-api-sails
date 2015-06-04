@@ -99,10 +99,9 @@ angular.module('fmApp')
     window.print();
   };
 
-  $scope.getMaxBottles = function (expense){
-    $scope.maxBottles = expense.sku.bottlespercase;
-    console.log(expense);
-    console.log($scope.maxBottles);
+  $scope.getMaxBottles = function (sku){
+    $scope.maxBottles = sku.bottlespercase;
+    console.log("MAX BOTTLES " + $scope.maxBottles);
   };
 
   $scope.typeChange = function (type) {
