@@ -8,15 +8,16 @@ module.exports = function(req, res, next){
 		products = [products];
 	}
 
+	console.log(products);
+
 	new Promise(function (resolve){
 		resolve(products);
 	})
 
 	.each(function (product){
 		return new Promise(function (resolve){
-			Bays.findOne({bay_name : product.bay})
+			Bays.findOne({id : product.bay})
 				.then(function (foundBay){
-
 					if(foundBay.sku_id != product.sku_id){
 
 						SkuService.getSkuCompleteName(foundBay.sku_id)

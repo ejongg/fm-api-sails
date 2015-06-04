@@ -1,5 +1,5 @@
 module.exports = function (req, res, next){
-	var product = req.body.product;
+	var product = req.body.products;
 
 	Incomplete_cases.findOne({sku_id : product.sku_id, exp_date : product.exp_date})
 		.then(function (item){
