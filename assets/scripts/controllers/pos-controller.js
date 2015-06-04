@@ -21,6 +21,7 @@ angular.module('fmApp')
   $scope.errorMessage = '';
   $scope.hasError = false;
 
+  $scope.maxBottles = 0;
 
   $scope.totalAmount = 0;
   $scope.deposit = 0;
@@ -40,6 +41,7 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.skuList = data;
         $scope.transaction.sku = $scope.skuList[0];
+        $scope.maxBottles = $scope.transaction.sku.bottlespercase;
         $scope.returns.sku = $scope.skuList[0];
         $scope.noSKU = false;
 
@@ -52,6 +54,11 @@ angular.module('fmApp')
   };
 
   getSKU();
+
+  $scope.getMaxBottles = function (sku){
+    $scope.maxBottles = sku.bottlespercase;
+    console.log("MAX BOTTLES " + $scope.maxBottles);
+  };
 
   $scope.combined = function (sku) {
     return sku.prod_id.brand_name+ ' ' + sku.sku_name + ' ' + sku.size;

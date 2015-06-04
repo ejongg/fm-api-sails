@@ -72,7 +72,7 @@
                 NO SKU AVAILABLE
               </div>
               <div ng-hide="noSKU" class="col-md-9">
-                <select  class="form-control" ng-model="transaction.sku" ng-options="sku as combined(sku) for sku in skuList">
+                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxBottles(transaction.sku)" ng-options="sku as combined(sku) for sku in skuList">
                 </select>
               </div>
             </div>
@@ -80,7 +80,7 @@
             <div class="form-group">
                 <label for="select" class="col-md-3">Extra bottles</label>
                 <div class="col-md-9">
-                <input ng-model="transaction.extraBottles" type="number"  min="0" class="form-control" placeholder="Enter number of bottles." required>
+                <input ng-model="transaction.extraBottles" type="number" max="{{maxBottles}}"  min="0" class="form-control" placeholder="Enter number of bottles." required>
                 </div>
             </div>
             
