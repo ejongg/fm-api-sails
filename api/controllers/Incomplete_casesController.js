@@ -9,7 +9,7 @@ var moment = require("moment");
 
 module.exports = {
 	assembleCase : function (req, res){
-		var product = req.body.product;
+		var product = req.body.products;
 
 		var productionDate =moment(product.exp_date, "YYYY-MM-DD").subtract(product.lifespan, 'M').format('YYYY-MM-DD');
 
