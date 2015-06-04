@@ -96,6 +96,7 @@ module.exports.routes = {
 	*/
 	'POST /purchases/add' : 'Purchases.add',
 	'GET  /purchases/details' : 'Purchases.getPurchaseDetails',
+	'POST /purchases/void' : 'Purchases.voidPurchase',
 	/* 	ADDRESS 
 		remove - removes the address from its current route
 	*/
