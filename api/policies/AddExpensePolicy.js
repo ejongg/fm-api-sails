@@ -1,6 +1,9 @@
+var Promise = require('bluebird');
 
 module.exports = function(req, res, next){
 	var type = req.body.type;
+
+	console.log(req.body);
 
 	switch(type){
 		case "Breakage":
@@ -32,30 +35,32 @@ module.exports = function(req, res, next){
 		})
 
 		.each(function (empty){
-			return EmptiesService.countBottlesAndCases(empty.sku_id).then(function (result){
+			return new Promise(function (resolve){
+				EmptiesService.countBottlesAndCases(empty.sku_id).then(function (result){
 
-				if(empty.return_empties_cases < result.cases){
+					if(empty.return_empties_cases < result.cases){
 
-					if(empty.return_empties_bottles < result.bottles){
-						resolve();
+						if(empty.return_empties_bottles < result.bottles){
+							resolve();
+
+						}else{
+							return SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
+								notAvailableEmpties.push(completeName);
+								resolve();
+							})
+
+						}
 
 					}else{
+
 						return SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
 							notAvailableEmpties.push(completeName);
 							resolve();
 						})
-
 					}
 
-				}else{
-
-					return SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
-						notAvailableEmpties.push(completeName);
-						resolve();
-					})
-				}
-
-			})
+				})
+			});
 		})
 
 		.then(function (){
