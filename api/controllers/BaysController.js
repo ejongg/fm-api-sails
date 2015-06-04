@@ -5,6 +5,8 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+ var Promise = require('bluebird');
+
 module.exports = {
 	add : function(req, res){
 		
@@ -62,16 +64,27 @@ module.exports = {
 	list : function (req, res){
 		var baysList = []; 
 
-		Bays.find()
+		Bays.find().populate('sku_id')
 			.then(function (bays){
 				return bays;
 			})
 
 			.each(function (bay){
-				return BaysService.countBayItems(bay.id).then(function (count){
-				 	bay.total_products = count;
-				 	baysList.push(bay);
-			 	})
+				return new Promise(function (resolve){
+						BaysService.countBayItems(bay.id).then(function (count){
+						 	bay.total_products = count;
+					 	})
+
+					 	.then(function (){
+					 		return SkuService.getSkuCompleteName(bay.sku_id.id);
+					 	})
+
+					 	.then(function (completeSkuName){
+					 		bay.sku_id.sku_name = completeSkuName;
+					 		baysList.push(bay);
+					 		resolve();
+					 	})
+				});
 			})
 
 			.then(function (){
