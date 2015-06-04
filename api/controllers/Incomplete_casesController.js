@@ -43,13 +43,20 @@ module.exports = {
 			})
 
 			.each(function (item){
-				return new Promise(function (resolve, reject){
-					SkuService.getProductName(item.sku_id.id)
-						.then(function (brandName){
-							item.brand_name = brandName;
-							list.push(item);
-							resolve();
-						})
+				return new Promise(function (resolve){
+					SkuService.getProductName(item.sku_id.id).then(function (brandName){
+						item.brand_name = brandName;
+					})
+
+					.then(function (){
+						return SkuService.getSkuCompleteName(item.sku_id.id);
+					})
+
+					.then(function (completeSkuName){
+						item.sku_id.sku_name = completeSkuName;
+						list.push(item);
+						resolve();
+					})
 				});
 			})
 
