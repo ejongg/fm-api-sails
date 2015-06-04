@@ -3,8 +3,6 @@ var Promise = require('bluebird');
 module.exports = function(req, res, next){
 	var type = req.body.type;
 
-	console.log(req.body);
-
 	switch(type){
 		case "Breakage":
 			checkInventory();
@@ -77,6 +75,7 @@ module.exports = function(req, res, next){
 	function checkInventory () {
 		var products = req.body.products;
 		var notAvailableProducts = [];
+		var notFoundInLine = [];
 
 		if(products.length == 0){
 			return res.send({message : 'Invalid! No products sent.'}, 400);
@@ -84,9 +83,9 @@ module.exports = function(req, res, next){
 		
 		async.each(products, function (product, cb){
 
-			Inventory.find({sku_id : product.sku_id, bay_id : product.bay_id})
+			Inventory.find({sku_id : product.sku_id, bay_id : product.bay_id, prod_date : product.prod_date})
 				.then(function (foundSku){
-					if(foundSku){
+					if(foundSku.length > 0){
 						var totalCount = 0;
 
 						_(foundSku).forEach(function (sku){
@@ -110,7 +109,21 @@ module.exports = function(req, res, next){
 						}
 
 					}else{
-						return res.send({message : product.sku_name + ' not found in Line' + product.bay_id}, 400);							
+						SkuService.getSkuCompleteName(product.sku_id)
+							.then(function (completeName){
+								return completeName;
+							})
+
+							.then(function (completeName){
+								return Bays.findOne({id : product.bay_id}).then(function (bay){
+									return [completeName, bay.bay_name];
+								})
+							})
+
+							.spread(function (completeName, bayName){
+								notFoundInLine.push({sku : completeName, prod_date : product.prod_date, line : bayName});
+								cb();
+							})						
 					}
 				});	
 
@@ -119,6 +132,10 @@ module.exports = function(req, res, next){
 
 			if(notAvailableProducts.length > 0){
 				return res.send({message : 'Insufficient stocks in Line', data : notAvailableProducts}, 400);
+
+			}else if(notFoundInLine.length > 0){
+				return res.send({message : 'Products not found in line', data : notFoundInLine}, 400);
+
 			}else{
 				next();
 			}
