@@ -316,7 +316,7 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="bay in bays | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage" num-pages="testPage" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
+                    <tr dir-paginate="bay in bays | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
                         <td>Line {{bay.bay_name}}</td>
                         <td>{{bay.sku_id.sku_name}}</td>
                         <td>{{bay.total_products}}</td>
