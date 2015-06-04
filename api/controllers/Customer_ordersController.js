@@ -87,6 +87,15 @@ module.exports = {
 			.then(function (totalAmount){
 				return res.send({products : orderList, total_amount : totalAmount, id : orderId});
 			})
+	},
+
+	cancelOrder : function (req, res){
+		var orderId = req.query.id;
+
+		Customer_orders.update({id : orderId}, {status : "Cancelled"})
+			.then(function (cancelledOrder){
+				return res.send('Order cancelled', 200);
+			})
 	}
 };
 
