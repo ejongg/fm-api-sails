@@ -29,15 +29,32 @@ module.exports = {
 		});
 	},
 
-	deduct : function(sku_id, bottlespercase, cases){
-		return new Promise(function (resolve, reject){
+	deduct : function(skuId, cases, bottles, bottlespercase){
+		return new Promise(function (resolve){
 
-			Empties.findOne({sku_id : sku_id})
+			Empties.findOne({sku_id : skuId})
 				.then(function (foundSku){
 					foundSku.cases = foundSku.cases - cases;
 					foundSku.bottles = foundSku.bottles - (bottlespercase * cases);
 
+					if(bottles > 0){
+						return EmptiesService.deductBottles(skuId, bottles);
+					}
+
 					foundSku.save(function (err, saved){
+						resolve();
+					});
+				})
+		});
+	},
+
+	deductBottles : function(skuId, bottles){
+		return new Promise(function (resolve){
+			Empties.findOne({sku_id : skuId})
+				.then(function (foundEmpty){
+					foundEmpty.bottles = foundEmpty.bottles - bottles;
+
+					foundEmpty.save(function (err, saved){
 						resolve();
 					});
 				})
