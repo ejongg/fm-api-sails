@@ -208,15 +208,11 @@
       <div class="panel panel-right">
         <div class="panel-body" ng-show="addOtherMode">
 
-          <div ng-show="noBays">
-           <h3><strong><center>NO LINES! <small></br>Please add lines first.</small></center></strong></h3>
-          </div>
-
          <div ng-show="noSKU">
            <h3><strong><center>NO SAFE KEEPING UNITS!<small></br>Please add Safe Keeping Units first.</center></small></strong></h3>
          </div>
 
-         <div ng-show="noExpenses" ng-hide="noSKU || noBays || !noExpenses">
+         <div ng-show="noExpenses" ng-hide="noSKU || !noExpenses">
           <h3><strong><center>NO EXPENSES!</center></strong></h3>
         </div>
 
