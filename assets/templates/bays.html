@@ -274,6 +274,16 @@
                         </th>
 
                         <th width="20%">
+                          <a href="" ng-click="sortCriteria='sku_id.sku_name'; reverseSort = !reverseSort" class="thlink">
+                            SKU Name
+                            <span ng-show="sortCriteria == 'sku_id.sku_name'">
+                              <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                              <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                          </a>
+                        </th>
+
+                        <th width="20%">
                           <a href="" ng-click="sortCriteria='total_products'; reverseSort = !reverseSort" class="thlink">
                             No. of cases in Line
                             <span ng-show="sortCriteria == 'total_products'">
@@ -306,8 +316,9 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="bay in bays | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
+                    <tr dir-paginate="bay in bays | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage" num-pages="testPage" ng-click="bayClicked(bay)" ng-class="bay.pile_status === 'Moving pile' ? 'movingpile' : 'fullgoods'">
                         <td>Line {{bay.bay_name}}</td>
+                        <td>{{bay.sku_id.sku_name}}</td>
                         <td>{{bay.total_products}}</td>
                         <td>{{bay.bay_limit}} cases</td>
                         <td>{{bay.pile_status}}</td>
