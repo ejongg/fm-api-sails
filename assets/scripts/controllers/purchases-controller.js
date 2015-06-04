@@ -55,9 +55,10 @@ angular.module('fmApp')
   };
 
   $scope.getBays = function (sku){
-    console.log(sku);
+    console.log(sku.id);
     console.log("Get Bays");
      $http.get(httpHost + '/bays/list/sku-lines?id =' + sku.id).success( function (data) {
+      console.log(data);
       if(data.length !== 0){
       $scope.bays = data;
       $scope.purchase.bay = $scope.bays[0];        
