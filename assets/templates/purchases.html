@@ -117,12 +117,23 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="inputEmpty" class="col-md-12">Returned Empty Cases</label>
+                        <div class="col-md-12">
+
+                            <input type="number"  name="inputEmptyBottles" min="0" class="form-control" placeholder="Enter number of empty cases." ng-model="purchase.return_empties_cases" required>
+
+                            <strong class="fbackMsg" ng-show=""> Invalid! Please enter no. of empty cases. </strong>
+                            
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label for="inputEmpty" class="col-md-12">Returned Empty Bottles</label>
                         <div class="col-md-12">
 
-                            <input type="number"  name="inputEmptyBottles" min="0" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.empty_bottles" required>
+                            <input type="number"  name="inputEmptyBottles" min="0" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.return_empties_bottles" required>
 
                             <strong class="fbackMsg" ng-show=""> Invalid! Please enter no. of empty bottles. </strong>
                             
@@ -174,6 +185,7 @@
                     <th>Production date</th>
                     <th>Cases</th>
                     <th>Empty Bottles</th>
+                    <th>Empty Cases</th>
                     <th>Cost per case</th>
                     <th>Discount per case</th>
                     <th>Amount</th>
@@ -188,7 +200,8 @@
                     <td>{{purchase.bay}}</td>
                     <td>{{purchase.prod_date}}</td>
                     <td>{{purchase.cases}}</td>
-                    <td>{{purchase.empty_bottles  | currency : "₱"}}</td>
+                    <td>{{purchase.return_empties_bottles}}</td>
+                    <td>{{purchase.return_empties_cases}}</td>
                     <td>{{purchase.costpercase | currency : "₱"}}</td>
                     <td>{{purchase.discountpercase | currency : "₱"}}</td>
                     <td>{{purchase.amount | currency : "₱"}}</td>

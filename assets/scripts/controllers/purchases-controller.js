@@ -57,7 +57,7 @@ angular.module('fmApp')
   $scope.getBays = function (sku){
     console.log(sku.id);
     console.log("Get Bays");
-     $http.get(httpHost + '/bays/list/sku-lines?id =' + sku.id).success( function (data) {
+     $http.get(httpHost + '/bays/list/sku-lines?id=' + sku.id).success( function (data) {
       console.log(data);
       if(data.length !== 0){
       $scope.bays = data;
@@ -157,7 +157,8 @@ angular.module('fmApp')
     $scope.purchase.sku = null;
     $scope.purchase.bay = null;
     $scope.purchase.cases = null;
-    $scope.purchase.empty_bottles = null;
+    $scope.purchase.return_empties_bottles = null;
+    $scope.purchase.return_empties_cases = null;
     $scope.purchase.cost = null;
     $scope.purchase.discount = null;
     $scope.purchase.prod_date = new Date();
@@ -199,8 +200,9 @@ angular.module('fmApp')
       "cases" : purchase.cases,
       "costpercase" : purchase.sku.pricepercase,
       "discountpercase" : purchase.discount,
-      "amount" : (purchase.cases * (purchase.sku.pricepercase - purchase.discount)) - (purchase.empty_bottles * purchase.sku.priceperempty),
-      "empty_bottles": purchase.empty_bottles,
+      "amount" : (purchase.cases * (purchase.sku.pricepercase - purchase.discount)) - ((purchase.return_empties_bottles * purchase.sku.priceperempty) + (purchase.return_empties_cases * purchase.sku.bottlespercase * purchase.sku.priceperempty)),
+      "return_empties_bottles": purchase.return_empties_bottles,
+      "return_empties_cases" : purchase.return_empties_cases,
       "bottlespercase": purchase.sku.bottlespercase,
       "lifespan" : purchase.sku.lifespan
     };
