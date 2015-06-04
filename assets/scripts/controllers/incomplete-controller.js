@@ -104,7 +104,7 @@ angular.module('fmApp')
 
     console.log(product);
 
-     io.socket.request($scope.socketOptions('post','/incompletes/assemble',{"Authorization": "Bearer " + authService.getToken()},{"product": product }), function (body, JWR) {
+     io.socket.request($scope.socketOptions('post','/incompletes/assemble',{"Authorization": "Bearer " + authService.getToken()},{"products": product }), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
