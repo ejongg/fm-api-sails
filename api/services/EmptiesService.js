@@ -2,7 +2,7 @@ var Promise = require('bluebird');
 
 module.exports = {
 	put : function(sku_id, bottlespercase, bottles, cases){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 
 			Empties.findOne({sku_id : sku_id})
 				.then(function (foundSku){
@@ -103,6 +103,15 @@ module.exports = {
 
 				.then(function (){
 					resolve(totalBottles);
+				})
+		});
+	},
+
+	countBottlesAndCases : function (skuId){
+		return new Promise(function (resolve){
+			Empties.findOne({sku_id : skuId})
+				.then(function (foundEmpty){
+					resolve({cases : foundEmpty.cases, bottles : foundEmpty.bottles});
 				})
 		});
 	},
