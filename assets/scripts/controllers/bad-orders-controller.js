@@ -34,7 +34,6 @@ angular.module('fmApp')
       console.log("Get Bad Orders");
       if(data.length !== 0){
         $scope.badOrdersList = data;
-        $scope.product.sku = null;
         console.log("Bad Orders:");
         console.log($scope.badOrdersList);
       }else{
@@ -48,7 +47,7 @@ angular.module('fmApp')
   $scope.getBays = function (sku){
     console.log(sku);
     console.log("Get Bays");
-     $http.get(httpHost + '/bays/list/sku-lines?id =' + sku.id).success( function (data) {
+     $http.get(httpHost + '/bays/list/sku-lines?id=' + sku.id).success( function (data) {
       if(data.length !== 0){
       $scope.bays = data;
       $scope.product.bay = $scope.bays[0];        
@@ -72,7 +71,7 @@ angular.module('fmApp')
   console.log("SKU GET");
     $http.get(httpHost + '/sku/available').success( function (data) {
       if(data.length !== 0){
-        $scope.skuList = data;
+        $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
         $scope.product.sku = null;
         console.log("SKU:");
         console.log($scope.skuList);
@@ -154,7 +153,7 @@ angular.module('fmApp')
 
   var clearForm = function () {
     $scope.badOrderForm.$setPristine();
-    $scope.product.sku = $scope.skuList[0];
+    $scope.product.sku = null;
     $scope.product.cases = null;
     $scope.product.bottles = null;
     $scope.product.reason = "";

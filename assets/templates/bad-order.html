@@ -88,7 +88,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="product.sku" ng-change="getBays(purchase.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected">
+                            <select class="form-control" ng-model="product.sku" ng-change="getBays(product.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>

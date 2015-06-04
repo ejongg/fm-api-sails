@@ -10,19 +10,21 @@ angular.module('fmApp')
 
   $scope.expense = {};
   $scope.expense.date = new Date();
+  $scope.expense.prod_date = new Date();
   $scope.expense.products = [];
   $scope.expense.total_amount = 0;
 
   $scope.expenseEdit = {};
 
   $scope.noSKU = false;
-  $scope.noBays = false;
+  $scope.noBays = true;
   $scope.noExpenses = false;
 
   $scope.addExpenseForm = false;
   $scope.addOtherMode = true;
 
   $scope.maxBottles = 0;
+  $scope.companies = ['Coca-Cola', 'SMB'];
 
   // forSorting
   $scope.sortCriteria='id';
@@ -48,12 +50,9 @@ angular.module('fmApp')
   var getSKUAvailable = function () {
      console.log("GET SKU");
     $http.get(httpHost + '/sku/available').success( function (data) {
-      console.log("SKU AVAILABLE");
       if(data.length !== 0){
-      console.log("HAS SKU AVAILABLE");
       $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
       $scope.expense.sku = null;
-      // $scope.maxBottles = $scope.skuList[0].bottlespercase;
       console.log("MAX BOTTLES:" + $scope.maxBottles);
       console.log("SKU:");
       console.log($scope.skuList);
@@ -66,13 +65,22 @@ angular.module('fmApp')
     });
   };
 
-  var getBays = function () {
-    $http.get(httpHost + '/bays/unempty').success( function (data) {
+  $scope.changeCompany = function () {
+    console.log("Company Changed");
+    $scope.expense.sku = null;
+  };
+
+   $scope.getBays = function (sku){
+    console.log(sku.id);
+    console.log("Get Bays");
+     $http.get(httpHost + '/bays/list/sku-lines?id=' + sku.id).success( function (data) {
+      console.log(data);
       if(data.length !== 0){
       $scope.bays = data;
-      $scope.expense.bay = null;
+      $scope.expense.bay = $scope.bays[0].id;        
       console.log("Bays:");
       console.log($scope.bays);
+        $scope.noBays =false;
       }else{
         $scope.noBays = true;
       }
@@ -83,7 +91,6 @@ angular.module('fmApp')
 
   getExpenses();
   getSKUAvailable();
-  getBays();
 
   $scope.pagePrint = function () {
     window.print();
@@ -153,6 +160,7 @@ angular.module('fmApp')
       "bottlespercase": expense.sku.bottlespercase,
       "sku": $scope.combine(expense.sku),
       "bay_id": expense.bay,
+      "prod_date": $scope.formatDate(expense.prod_date),
       "amount": (expense.bottles * expense.sku.priceperbottle) + (expense.cases * expense.sku.pricepercase)
     };
 

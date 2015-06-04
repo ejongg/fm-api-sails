@@ -79,7 +79,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.sku" ng-change="getBays(purchase.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected">
+                            <select class="form-control" ng-model="purchase.sku" ng-change="getBays(purchase.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>
@@ -90,7 +90,6 @@
                         
                         <div class="col-md-12" ng-hide="noBays">
                             <select class="form-control" ng-model="purchase.bay" ng-options="bay as combineBay(bay) for bay in bays | filter: companySelected">
-                              <option value="" disabled>Select Line</option>
                             </select>
                         </div>
 
