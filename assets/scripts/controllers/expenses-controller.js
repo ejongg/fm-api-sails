@@ -12,6 +12,7 @@ angular.module('fmApp')
   $scope.expense.date = new Date();
   $scope.expense.prod_date = new Date();
   $scope.expense.products = [];
+  $scope.expense.empties = [];
   $scope.expense.total_amount = 0;
 
   $scope.expenseEdit = {};
@@ -22,6 +23,8 @@ angular.module('fmApp')
 
   $scope.addExpenseForm = false;
   $scope.addOtherMode = true;
+  $scope.addBreakageMode = false;
+  $scope.addEmptiesMode = false;
 
   $scope.maxBottles = 0;
   $scope.companies = ['Coca-Cola', 'SMB'];
@@ -106,10 +109,23 @@ angular.module('fmApp')
     console.log(type);
     if(type === 'Breakage' || type === 'Spoilage'){
       $scope.addOtherMode = false;
+      $scope.addBreakageMode = true;
+      $scope.addEmptiesMode = false;
+      $scope.addEmptiesMode = false;
       $scope.expense.amount = null;
       $scope.expense.date = new Date();
+      $scope.expense.prod_date = new Date();
+    }else if(type === 'Broken Empties'){
+      $scope.addOtherMode = false;
+      $scope.addBreakageMode = false;
+      $scope.addEmptiesMode = true;
+      $scope.expense.amount;
+      $scope.expense.return_empties_cases = null;
+      $scope.expense.return_empties_bottles = null;
     }else{
       $scope.addOtherMode = true;
+      $scope.addBreakageMode = false;
+      $scope.addEmptiesMode = false;
       $scope.expense.sku = null;
       $scope.expense.bay = null;
       $scope.expense.cases = null;
@@ -118,6 +134,8 @@ angular.module('fmApp')
       $scope.expense.total_amount = 0;
       $scope.expense.products = [];
     }
+
+
 
   };
 
@@ -182,10 +200,44 @@ angular.module('fmApp')
       //$scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
     }
 
-    $scope.expense.sku = $scope.skuList[0];
+    $scope.expense.sku = null;
     $scope.expense.bay = $scope.bays[0].id;
     $scope.expense.cases = null;
     $scope.expense.bottles = null;
+
+  };
+
+
+  $scope.addBrokenList = function (expense) {
+    console.log(expense);
+    var empty = {
+      "sku": expense.sku,
+      "sku_id": expense.sku.id,
+      "bottlespercase": expense.sku.bottlespercase,
+      "return_empties_cases" : expense.return_empties_cases,
+      "return_empties_bottles" : expense.return_empties_bottles,
+      "amount" : (expense.return_empties_bottles * expense.sku.priceperempty) + (expense.return_empties_cases * expense.sku.bottlespercase * expense.sku.priceperempty)
+    };
+
+    console.log($scope.expense.empties);
+    console.log(empty.sku_id);
+
+    if( _.findIndex($scope.expense.empties,{'sku_id': empty.sku_id}) === -1 ){
+           $scope.expense.empties.push(empty);
+           $scope.expense.total_amount += empty.amount;
+           console.log($scope.expense.products);
+           console.log($scope.expense.total_amount);
+    }else{
+      var index = _.findIndex($scope.expense.empties,{'sku_id': empty.sku_id});
+      $scope.expense.empties[index].return_empties_cases += empty.return_empties_cases;
+      $scope.expense.empties[index].return_empties_bottles += empty.return_empties_bottles;
+      $scope.expense.total_amount += empty.amount;
+      //$scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);
+    }
+
+    $scope.expense.sku = null;
+    $scope.expense.return_empties_cases = null;
+    $scope.expense.return_empties_bottles = null;
 
   };
 
@@ -206,6 +258,14 @@ angular.module('fmApp')
       "products": expense.products,
       "user" : $scope.userName
       };
+    }else if(expense.type === 'Broken Empties'){
+      expenseInfo = {
+      "type": expense.type,
+      "amount": expense.total_amount,
+      "date": $scope.formatDate(expense.date),
+      "empties": expense.empties,
+      "user" : $scope.userName
+      }
     }else{
       expenseInfo = {
       "type": expense.type,

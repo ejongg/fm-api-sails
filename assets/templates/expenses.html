@@ -64,8 +64,8 @@
               </div>
               
               <div ng-show="expense.type === 'Broken Empties'">
-                <form class="form-horizontal" name="expenseForm" ng-submit="addSKUToList(expense)" novalidate>
-                  <div class="form-group">
+                <form class="form-horizontal" name="expenseEmptiesForm" ng-submit="addBrokenList(expense)" novalidate>
+                  <div class="form-group" ng-show="">
                         <label for="select" class="col-md-12">Company</label>
                         <div class="col-md-12">
                             <select class="form-control" ng-change="changeCompany()" ng-model="companySelected" ng-init="companySelected = companies[0]">
@@ -77,15 +77,24 @@
                         <div class="form-group">
                           <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                           <div class="col-md-12">
-                            <select class="form-control" ng-model="expense.sku" ng-change="getBays(expense.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" ng-change="getMaxBottles(expense)" required>
+                            <select class="form-control" ng-model="expense.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                               <option value="" disabled>Select SKU</option>
                             </select>
                           </div>
                         </div>
+
+                        <div class="form-group">
+                          <label for="inputSkuName" class="col-md-12">
+                           Date</label>
+
+                           <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
+                           </div>
+                         </div>
+
                     <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
                             Return Empty Cases</label> 
-                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.cases" required>
+                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of empty cases." ng-model="expense.return_empties_cases" required>
 
 
                             </div>
@@ -93,13 +102,13 @@
                     <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
                             Return Empty Bottles</label> 
-                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.cases" required>
+                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of empty bottles." ng-model="expense.return_empties_bottles" required>
 
 
                             </div>
                           </div>
                      <div class="icon-preview">
-                             <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseForm.$invalid">Add</button>
+                             <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseEmptiesForm.$invalid">Add</button>
                              <br>
                            </div>
                  </form>
@@ -310,7 +319,7 @@
 
 </div>
 
-<div class="panel-body" ng-hide="addOtherMode">
+<div class="panel-body" ng-show="addBreakageMode">
   <div class="form-group" >
    <div class="col-md-2 pull-right"><input type="number" class="form-control" ng-model="expense.total_amount" disabled>
    </div>
@@ -352,6 +361,56 @@
 <div class="icon-preview">
   <div class="form-group rightalign">
     <button type="button" class="btn btn-primary" ng-disabled="!expense.products.length" ng-click="addExpense(expense)">Submit</button>  
+
+    <button type="button" class="btn btn-default" ng-click="showAddExpenseForm(false)">Cancel</button>
+  </div>
+</div>
+</div>
+
+
+
+<div class="panel-body" ng-show="addEmptiesMode">
+  <div class="form-group" >
+   <div class="col-md-2 pull-right"><input type="number" class="form-control" ng-model="expense.total_amount" disabled>
+   </div>
+   <legend class="col-md-4 control-label pull-right">Total Expense</legend>
+
+ </div>
+
+ <table class="table variantTable table-striped table-hover">
+
+  <thead>
+    <tr>
+      <th><font size="1px">SKU Name&nbsp;</font>
+
+
+      </th>
+
+      <th><font size="1px">Cases&nbsp;</font>
+
+      </th>
+
+      <th><font size="1px">Bottles&nbsp;</font>
+
+      </th>
+      <th></th>
+
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="product in expense.empties">
+      <td>{{product.sku.prod_id.brand_name + " " +product.sku.sku_name+ " "+product.sku.size}}</td>
+      <td>{{product.return_empties_cases}}</td>
+      <td>{{product.return_empties_bottles}}</td>
+      <td><button ng-click="deleteSKUToList($index)" class="btn btn-primary btn-xs">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+<div class="icon-preview">
+  <div class="form-group rightalign">
+    <button type="button" class="btn btn-primary" ng-disabled="!expense.empties.length" ng-click="addExpense(expense)">Submit</button>  
 
     <button type="button" class="btn btn-default" ng-click="showAddExpenseForm(false)">Cancel</button>
   </div>
