@@ -12,7 +12,7 @@ module.exports = {
 	getInventory : function(req, res){
 		var inventory = [];
 
-		Inventory.find().populate('bay_id')
+		Inventory.find({physical_count : {'>' : 0}}).populate('bay_id')
 			.then(function searchInventory(inventoryItems){
 				return inventoryItems;
 			})
