@@ -247,6 +247,12 @@ angular.module('fmApp')
     $scope.expense.products.splice(index,1);
   };
 
+  $scope.deleteEmptiesToList = function (index){
+    console.log($scope.expense.empties[index].amount);
+    $scope.expense.total_amount -= $scope.expense.empties[index].amount;
+    $scope.expense.empties.splice(index,1);
+  };
+
   $scope.addExpense = function (expense) {
     console.log(expense);
     var expenseInfo = {};
