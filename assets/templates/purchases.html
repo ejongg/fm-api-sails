@@ -168,9 +168,9 @@
     <div class="col-md-9 ">
          <!-- User's Input table --> 
         <div class="form-group" >
-             <div class="col-md-3 pull-right">{{totalAmount  | currency:"₱"}}
-            </div>
-            <legend class="col-md-3 pull-right control-label">Total Amount</legend>
+             <legend class="col-md-2 pull-right"><u Style="border-bottom:1px solid black;">{{totalAmount  | currency:"₱"}}</u>
+            </legend>
+            <legend class="col-md-4 pull-right control-label">Total Amount</legend>
         </div>
 
         <br/>
@@ -304,7 +304,7 @@
                     <td width ="5%">{{purchaseInfo.id}}</td>
                     <td width ="25%">{{purchaseInfo.user}}</td>
                     <td width ="10s%">{{purchaseInfo.date_received}}</td>
-                    <td align="right" width ="25%">{{purchaseInfo.total_amount | currency : "₱"}}</td>
+                    <td style="text-align:right" width ="25%">{{purchaseInfo.total_amount | currency : "₱"}}</td>
                     
                 </tr>
 
@@ -345,8 +345,8 @@
                 <tr>
                     <th>SKU</th>
                     <th>Cases</th>
-                    <th>Cost Per Case (₱)</th>
-                    <th>Discount Per Case (₱)</th>
+                    <th>Cost Per Case</th>
+                    <th>Discount Per Case</th>
                 </tr>
             </thead>
 
@@ -354,8 +354,8 @@
                 <tr ng-repeat="product in purchaseProducts">
                     <td width ="15%">{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
                     <td width ="1%">{{product.cases}}</td>
-                    <td width ="10%">{{product.costpercase | currency : "₱" }}</td>
-                    <td width ="10%">{{product.discountpercase | currency : "₱"}}</td>
+                    <td style="text-align:right" width ="10%">{{product.costpercase | currency : "₱" }}</td>
+                    <td style="text-align:right" width ="10%">{{product.discountpercase | currency : "₱"}}</td>
                 </tr>
 
                 <!-- DON'T REMOVE CODE BELOW -->

@@ -137,8 +137,8 @@
             <div class="col-md-7 col-md-offset-1">
 
                  <div class="form-group" >
-                     <div class="col-md-2 pull-right">{{totalAmount | currency:"₱"}}</div>
-                    <legend class="col-md-5 pull-right control-label">Total Amount</legend>
+                     <legend class="col-md-2 pull-right"><u Style="border-bottom:1px solid black;">{{totalAmount | currency:"₱"}}</u></legend>
+                    <legend class="col-md-4 pull-right control-label">Total Amount</legend>
                 </div>
                 <br>
 
@@ -299,6 +299,7 @@
                     <tr>
                         <th>SKU</th>
                         <th>Cases</th>
+                        <th>Price Per Case</th>
                     </tr>
                 </thead>
 
@@ -306,6 +307,7 @@
                     <tr ng-repeat="product in orderProducts.products">
                         <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
                         <td>{{product.cases}}</td>
+                        <td style="text-align:right">{{product.sku_id.pricepercase | currency:"₱ "}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->
@@ -315,8 +317,8 @@
 
             <br/>
              <div class="form-group " >
-                <label for="inputAddress" class="col-md-3" style="bottom:-0px;">Total Amount</label>
-                <div class="col-md-3">{{totalAmountView | currency:"₱"}}</div>
+                <label for="inputAddress" class="col-md-10" style="bottom:-0px;">Total Amount</label>
+                <div class="col-md-2 pull right style"><u Style="border-bottom:1px solid black;">{{totalAmountView | currency:"₱"}}</u></div>
             </div>
       </div>
       <div class="modal-footer">
