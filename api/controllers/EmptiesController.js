@@ -17,6 +17,14 @@ module.exports = {
 					.then(function (completeSkuName){
 						record.sku_id.sku_name = completeSkuName;
 					})
+
+					.then(function (){
+						return SkuService.getCompanyName(record.sku_id.id);
+					})
+
+					.then(function (skuCompany){
+						record.sku_id.company = skuCompany;
+					})
 			})
 
 			.then(function (foundEmpties){

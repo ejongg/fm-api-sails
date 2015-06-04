@@ -48,7 +48,7 @@ module.exports = {
 		return new Promise(function (resolve){
 			Sku.findOne({id : skuId}).populate('prod_id')
 				.then(function (foundSku){
-					resolve(foundSku.prod_id.company + ' ' + foundSku.sku_name + ' ' + foundSku.size);
+					resolve(foundSku.prod_id.brand_name + ' ' + foundSku.sku_name + ' ' + foundSku.size);
 				})
 		});
 	},
