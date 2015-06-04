@@ -43,6 +43,15 @@
     <div class="panel panel-right">
         <div class="panel-body">
          <!-- SEARCH BAR -->
+         <div class="form-group">
+          <label for="select" ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-3' : 'col-md-2'">Company:</label>
+            <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-2'">
+                <select class="form-control" ng-init="companySelect.bay_id.bay_label = 'Coca-Cola'" ng-model="companySelect.bay_id.bay_label">
+                  <option value="Coca-Cola">Coca-Cola</option>
+                  <option value="SMB">SMB</option>
+                </select>
+            </div>
+          </div>
 
         <div class="form-group">
           <label for="select" class="col-md-2">Number of rows:</label>
@@ -125,7 +134,7 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="item in inventory | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
+                    <tr dir-paginate="item in inventory | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
                         <td width="15%">{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
                         <td width="15%">{{item.sku_name}}</td>
                         <td width="15%">{{item.exp_date}}</td>
