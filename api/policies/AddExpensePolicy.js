@@ -20,51 +20,48 @@ module.exports = function(req, res, next){
 	};
 
 	function checkEmpties () {
-		var products = req.body.empties;
+		var empties = req.body.empties;
 		var notAvailableEmpties = [];
 
-		if(products.length == 0){
-			return res.send({message : 'Invalid! No products sent.'}, 400);
+		if(empties.length == 0){
+			return res.send({message : 'Invalid! No empties sent.'}, 400);
 		}
 
 		new Promise(function (resolve){
-			resolve(products);
+			resolve(empties);
 		})
 
-		.each(function (product){
-			Empties.find({sku_id : product.sku_id})
-				.then(function (foundEmpties){
-					if(foundEmpties){
-						var totalCount = 0;
+		.each(function (empty){
+			return EmptiesService.countBottlesAndCases(empty.sku_id).then(function (result){
 
-						_(foundEmpties).forEach(function (empty){
-							totalCount = totalCount + empty.cases;
-						});
+				if(empty.return_empties_cases < result.cases){
 
-						if(product.bottles > 0){
-							product.cases  = product.cases + 1;
-						}
-
-						if(product.cases > totalCount){
-							SkuService.getSkuCompleteName(product.sku_id)
-								.then(function (skuCompleteName){
-									notAvailableProducts.push(skuCompleteName);
-									cb();
-								})
-						}else{
-							cb();
-						}
+					if(empty.return_empties_bottles < result.bottles){
+						resolve();
 
 					}else{
-						return res.send({message : product.sku_name + ' not found in Empties'}, 400);							
+						return SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
+							notAvailableEmpties.push(completeName);
+							resolve();
+						})
+
 					}
-				})
+
+				}else{
+
+					return SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
+						notAvailableEmpties.push(completeName);
+						resolve();
+					})
+				}
+
+			})
 		})
 
 		.then(function (){
 
-			if(notAvailableProducts.length > 0){
-				return res.send({message : 'Insufficient stocks in Empties', data : notAvailableProducts}, 400);
+			if(notAvailableEmpties.length > 0){
+				return res.send({message : 'Insufficient stocks in Empties', data : notAvailableEmpties}, 400);
 			}else{
 				next();
 			}
@@ -96,11 +93,13 @@ module.exports = function(req, res, next){
 						}
 
 						if(product.cases > totalCount){
+
 							SkuService.getSkuCompleteName(product.sku_id)
 								.then(function (skuCompleteName){
 									notAvailableProducts.push(skuCompleteName);
 									cb();
 								})
+
 						}else{
 							cb();
 						}
