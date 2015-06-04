@@ -65,7 +65,7 @@
               
               <div ng-show="expense.type === 'Broken Empties'">
                 <form class="form-horizontal" name="expenseEmptiesForm" ng-submit="addBrokenList(expense)" novalidate>
-                  <div class="form-group" ng-show="">
+                  <div class="form-group" ng-show="expense.empties.length === 0">
                         <label for="select" class="col-md-12">Company</label>
                         <div class="col-md-12">
                             <select class="form-control" ng-change="changeCompany()" ng-model="companySelected" ng-init="companySelected = companies[0]">
@@ -118,7 +118,7 @@
 
                 <form class="form-horizontal" name="expenseForm" ng-submit="addSKUToList(expense)" novalidate>
 
-                        <div class="form-group">
+                        <div class="form-group"  ng-show="expense.products.length === 0">
                         <label for="select" class="col-md-12">Company</label>
                         <div class="col-md-12">
                             <select class="form-control" ng-change="changeCompany()" ng-model="companySelected" ng-init="companySelected = companies[0]">
@@ -404,7 +404,7 @@
       <td>{{product.sku.prod_id.brand_name + " " +product.sku.sku_name+ " "+product.sku.size}}</td>
       <td>{{product.return_empties_cases}}</td>
       <td>{{product.return_empties_bottles}}</td>
-      <td><button ng-click="deleteSKUToList($index)" class="btn btn-primary btn-xs">Delete</button></td>
+      <td><button ng-click="deleteEmptiesToList($index)" class="btn btn-primary btn-xs">Delete</button></td>
     </tr>
   </tbody>
 </table>
