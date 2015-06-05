@@ -338,11 +338,14 @@ angular.module('fmApp')
       case "created": 
         console.log("Bay Created");
         if($scope.purchase.sku){
+          console.log("SKU Selected");
           if($scope.purchase.sku.id === msg.data.sku_id){
+            console.log("Push New Bay");
             $scope.bays.push(msg.data);
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
             $scope.purchase.bay = $scope.bays[0];
             if($scope.noBays === true){
+              console.log("There is a bay");
               $scope.noBays = false;
             }
           }
