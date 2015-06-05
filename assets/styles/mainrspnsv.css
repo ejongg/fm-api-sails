@@ -91,7 +91,6 @@ padding: 20px;
 .panel-title {
  color: white !important;
  text-align: center;
-
 }
 
 .panel-title {
@@ -99,7 +98,7 @@ padding: 20px;
 }
 
 h3.panel-heading {
-  background-color: black !important;
+  background-color: #202020 !important;
 }
 
 .container {
@@ -790,7 +789,7 @@ legend {
 .panel-heading {
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
-  background-color: #000000 !important;
+  background-color: #202020 !important;
 }
 
 
@@ -877,16 +876,19 @@ thead {
 
   color: #ffffff;
   border-bottom: 3px solid #ffffff !important;
-  background-color: #000000 !important;
+  background-color: #202020 !important;
   border: 1px solid #ffffff !important;
 
+  vertical-align: text-top !important;
   table-layout: fixed;
 }
 
 th {
   text-align: center;
+  height: 60px !important;
   width: auto;
   table-layout: fixed;
+  vertical-align: text-top !important;
 }
 
 th:first-child {
@@ -960,12 +962,12 @@ tr:hover {
 
 .rpanel{
   background: #ffffff;
-  border-left: 2px solid black; 
-  border-right: 2px solid black; 
-  border-bottom: 2px solid black;
+  border-left: 2px solid #202020; 
+  border-right: 2px solid #202020; 
+  border-bottom: 2px solid #202020;
   border-bottom-right-radius: 30px; 
   border-bottom-left-radius: 30px;
-  box-shadow: 0px 10px 15px #000000;
+  box-shadow: 0px 10px 15px #202020;
 
 }
 

@@ -105,7 +105,7 @@ padding: 20px;
 .panel-heading {
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
-  background-color: #000000 !important;
+  background-color: #202020 !important;
 }
 
 .panel-title {
@@ -113,13 +113,13 @@ padding: 20px;
 }
 .rpanel{
   background: #ffffff;
-  border-top: 2px solid black; 
-  border-left: 2px solid black; 
-  border-right: 2px solid black; 
-  border-bottom: 2px solid black;
+  border-top: 2px solid #202020; 
+  border-left: 2px solid #202020; 
+  border-right: 2px solid #202020; 
+  border-bottom: 2px solid #202020;
   border-bottom-right-radius: 20px; 
   border-bottom-left-radius: 20px;
-  box-shadow: 0px 3px 15px #000000;
+  box-shadow: 0px 3px 15px #202020;
 
 }
 
@@ -873,7 +873,6 @@ legend {
 
 table {
   table-layout: fixed !important;
-  
 }
 
 
@@ -894,16 +893,16 @@ thead {
 
   color: #ffffff;
   border-bottom: 3px solid #ffffff !important;
-  background-color: #000000 !important;
+  background-color: #202020 !important;
   border: 1px solid #ffffff !important;
 
   table-layout: fixed;
 }
 
 th {
-  text-align: center;
-  width: auto;
   table-layout: fixed;
+
+  height: 60px !important;
 }
 
 th:first-child {
@@ -1128,18 +1127,6 @@ a.arrowlink1:link, a.arrowlink1:visited, a.arrowlink1:active {
 }
 
 a.arrowlink1:hover {
-  color: #ffffff !important;
-  display: none !important;
-  background-color: #ffffff !important;
-}
-
-a.thlink:link, a.thlink:visited, a.thlink:active {
-  color: #ffffff !important;
-  display: none !important;
-  background-color: #ffffff !important;
-}
-
-a.thlink:hover {
   color: #ffffff !important;
   display: none !important;
   background-color: #ffffff !important;
