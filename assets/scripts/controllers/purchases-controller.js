@@ -351,7 +351,9 @@ angular.module('fmApp')
       case "updated":
         console.log("Bay Updated");
         if($scope.purchase.sku.id === msg.data.sku_id){
+            console.log("sku match");
             var index = _.findIndex($scope.bays,{'id': msg.data.id});
+            console.log(index);
             $scope.bays[index] = msg.data;
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
             $scope.purchase.bay = $scope.bays[0];
