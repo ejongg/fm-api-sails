@@ -224,20 +224,20 @@ angular.module('fmApp')
       'pile_status' : bay.pile_status
     }
     console.log(newBayInfo);
-    io.socket.request($scope.socketOptions('put','/bays/edit',{"Authorization": "Bearer " + authService.getToken()},newBayInfo), function (body, JWR) {
-      console.log('Sails responded with edit bay: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-         $scope.showEditOrDeleteBayForm(false);
-         $scope.snackbarShow('Line Edited');
-      } else if (JWR.statusCode === 400){
-        console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
-      } else {
-        console.log("Error!!!");
-      }
-       $scope.$digest(); 
-    });
+    // io.socket.request($scope.socketOptions('put','/bays/edit',{"Authorization": "Bearer " + authService.getToken()},newBayInfo), function (body, JWR) {
+    //   console.log('Sails responded with edit bay: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 200){
+    //      $scope.showEditOrDeleteBayForm(false);
+    //      $scope.snackbarShow('Line Edited');
+    //   } else if (JWR.statusCode === 400){
+    //     console.log("Error Occured");
+    //     $scope.showErrorMessage(true,body);
+    //   } else {
+    //     console.log("Error!!!");
+    //   }
+    //    $scope.$digest(); 
+    // });
   };
 
   $scope.deleteBay = function (bay) {

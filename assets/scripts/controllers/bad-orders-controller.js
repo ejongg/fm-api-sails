@@ -46,6 +46,7 @@ angular.module('fmApp')
 
   $scope.getBays = function (sku){
     console.log(sku);
+    console.log(sku.id);
     console.log("Get Bays");
      $http.get(httpHost + '/bays/list/sku-lines?id=' + sku.id).success( function (data) {
       if(data.length !== 0){
@@ -55,6 +56,7 @@ angular.module('fmApp')
       console.log($scope.bays);
         $scope.noBays =false;
       }else{
+        console.log("No Bays");
         $scope.noBays = true;
       }
     }).error(function (err) {
@@ -143,7 +145,7 @@ angular.module('fmApp')
     $scope.viewBadOrderDetails = data;
   };
 
-  $scope.combined = function (sku) {
+  $scope.combine = function (sku) {
     return sku.prod_id.brand_name + ' '+ sku.sku_name + ' ' + sku.size;
   }
 
