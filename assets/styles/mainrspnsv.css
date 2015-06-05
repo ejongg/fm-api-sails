@@ -808,13 +808,13 @@ legend {
 #search input[type="text"]:hover {
   background-color: #508213;
   color: #ffffff;
-    width: 150px;
+    width: 200px;
     }
 
 #search input[type="text"]:focus {
   background-color: #508213;
   color: #ffffff;
-    width: 150px;
+    width: 200px;
     }
 
 

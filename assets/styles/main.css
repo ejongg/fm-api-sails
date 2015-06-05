@@ -106,8 +106,8 @@ padding: 20px;
   border-left: 2px solid black; 
   border-right: 2px solid black; 
   border-bottom: 2px solid black;
-  border-bottom-right-radius: 30px; 
-  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 20px; 
+  border-bottom-left-radius: 20px;
   box-shadow: 0px 10px 15px #888888;
 
 }
@@ -819,7 +819,6 @@ legend {
     margin-right: 10px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
-
     transition: all 0.7s ease 0s;
 
     height: 55px;
@@ -878,7 +877,6 @@ td {
 }
 
 tr:hover, td {
-
   cursor: pointer !important;
 }
 
@@ -905,30 +903,34 @@ td:last-child {
   border-bottom: 2px solid #ffffff; 
 }
 
-table-striped{}
+table-striped{
+}
 
-table-hover {}
+table-hover {
+  background-color: #ffffff !important;
+}
 
 tr.movingpile td {
   background-color: #fe9f00 !important;
-  color: #0000000 !important;
+  color: #000000 !important;
   font-weight: bold;
   
 }
 tr.fullgoods td {
-  color: #0000000 !important;
+  color: #000000 !important;
   background-color: #89b405 !important;
   font-weight: bold;
 }
 
 tr:hover td {
-    background-color: #efefef !important;
+    background-color: #000000 !important;
     transition: 1s;
-    border-top: 2px solid #202020; 
-    border-bottom: 2px solid #202020; 
+    border-top: 0px solid #202020 !important; 
+    border-bottom: 0px solid #202020 !important;
     font-weight: bold;
     color: #000000;
 }
+
 
 .routeBox{
   background-color:#202020;
@@ -941,14 +943,12 @@ tr:hover td {
 }
 
 
-
-
 .actable{
   border-right: none;
   border-left: none;
 }
 
-.table-routes {
+tr.removehover {
   background: transparent !important;
   border: 0px !important;
   border-right: 0px solid #ffffff !important;
@@ -959,6 +959,7 @@ tr:hover td {
   margin-right: 10px !important;
   padding-right: 10px !important;
   }
+
 
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover,
 .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
@@ -994,11 +995,9 @@ p.clrred {
   text-transform: lowercase !important;
 }
 
-
 .capitalize {
     text-transform: capitalize !important;
 }
-
 
 
 
