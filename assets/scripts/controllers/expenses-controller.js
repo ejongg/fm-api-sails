@@ -111,30 +111,34 @@ angular.module('fmApp')
       $scope.addBreakageMode = true;
       $scope.addEmptiesMode = false;
       $scope.addEmptiesMode = false;
-      $scope.expense.amount = null;
       $scope.expense.date = new Date();
       $scope.expense.prod_date = new Date();
+      $scope.companySelected = $scope.companies[0];
+      $scope.expense.sku = null;
+      $scope.expense.cases = null;
+      $scope.expense.bottles = null;
+      $scope.expense.total_amount = 0;
+      $scope.expense.products = [];
+      $scope.bays = [];
+      $scope.noBays = true;
     }else if(type === 'Broken Empties'){
       $scope.addOtherMode = false;
       $scope.addBreakageMode = false;
       $scope.addEmptiesMode = true;
-      $scope.expense.amount;
+      $scope.companySelected = $scope.companies[0];
+      $scope.expense.sku = null;
+      $scope.expense.date = new Date();
       $scope.expense.return_empties_cases = null;
       $scope.expense.return_empties_bottles = null;
+      $scope.expense.total_amount = 0;
+      $scope.expense.empties = [];
     }else{
       $scope.addOtherMode = true;
       $scope.addBreakageMode = false;
       $scope.addEmptiesMode = false;
-      $scope.expense.sku = null;
-      $scope.expense.bay = null;
-      $scope.expense.cases = null;
-      $scope.expense.bottles = null;
       $scope.expense.date = new Date();
-      $scope.expense.total_amount = 0;
-      $scope.expense.products = [];
+      $scope.expense.amount = null;
     }
-
-
 
   };
 
@@ -295,49 +299,6 @@ angular.module('fmApp')
     }); 
 
   };
-
-
-  io.socket.on('sku', function(msg){
-    console.log("Message Verb: " + msg.verb);
-    console.log("Message Data :");
-    console.log(msg.data);
-    
-    switch (msg.verb) {
-      case "created": 
-        console.log("SKU Created");
-        $scope.skuList.push(msg.data);
-        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
-        if($scope.noSKU === true){
-          $scope.noSKU = false;
-        }
-         $scope.expense.sku = null;
-        $scope.$digest();
-        break;
-      case "updated":
-        console.log("SKU Updated");
-        var index = _.findIndex($scope.skuList,{'id': msg.data.id});
-        $scope.skuList[index] = msg.data;
-        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
-        $scope.expense.sku = null;
-        $scope.$digest();
-        break;
-      case "destroyed":
-        console.log("SKU Deleted");
-        var index = _.findIndex($scope.skuList,{'id': msg.data[0].sku_id});
-        $scope.skuList.splice(index,1);
-        $scope.skuList = $scope.sortData($scope.skuList,'prod_id.brand_name');
-        if($scope.skuList.length === 0){
-          $scope.noSKU = true;
-          if($scope.addPurchaseForm === true){
-            console.log("Close form");
-            $scope.addPurchaseForm = false;
-          }
-        }else{
-           $scope.expense.sku = null;
-        }
-        $scope.$digest();
-    }
-  });
 
   io.socket.on('bays', function(msg){
     console.log("Message Verb: " + msg.verb);

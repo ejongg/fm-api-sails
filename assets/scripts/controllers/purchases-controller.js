@@ -155,7 +155,6 @@ angular.module('fmApp')
   var clearForm = function () {
     $scope.purchaseForm.$setPristine();
     $scope.purchase.sku = null;
-    $scope.purchase.bay = null;
     $scope.purchase.cases = null;
     $scope.purchase.return_empties_bottles = null;
     $scope.purchase.return_empties_cases = null;
@@ -163,6 +162,8 @@ angular.module('fmApp')
     $scope.purchase.discount = null;
     $scope.purchase.prod_date = new Date();
     $scope.companySelected = $scope.companies[0];
+    $scope.bays = [];
+    $scope.noBays = true;
   };
 
   $scope.combine = function (sku){
@@ -194,6 +195,7 @@ angular.module('fmApp')
       "sku_id" : purchase.sku.id,
       "bay_id" : purchase.bay.id,
       "name" : purchase.sku.sku_name + " " + purchase.sku.size,
+      "full_name" : purchase.sku.prod_id.brand_name+" "+purchase.sku.sku_name + " " + purchase.sku.size,
       "company" : purchase.sku.prod_id.company,
       "bay" : purchase.bay.bay_name,
       "prod_date" : $scope.formatDate(purchase.prod_date),
@@ -223,6 +225,8 @@ angular.module('fmApp')
       $scope.purchases[index].cases += purchaseInfo.cases;
       $scope.purchases[index].costpercase += purchaseInfo.costpercase;
       $scope.purchases[index].discountpercase += purchaseInfo.discountpercase;
+      $scope.purchases[index].return_empties_bottles += purchaseInfo.return_empties_bottles;
+      $scope.purchases[index].return_empties_cases += purchaseInfo.return_empties_cases;
       $scope.purchases[index].amount += purchaseInfo.amount;
       $scope.totalAmount += purchaseInfo.amount;
       $scope.showItemExistingError(true,purchaseInfo.name,purchaseInfo.bay);

@@ -67,7 +67,7 @@
 
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-show="purchases.length === 0">
                         <label for="select" class="col-md-12">Company</label>
                         <div class="col-md-12">
                             <select class="form-control" ng-change="changeCompany()" ng-model="companySelected" ng-init="companySelected = companies[0]">
@@ -194,7 +194,7 @@
 
             <tbody>
                 <tr ng-repeat="purchase in purchases">
-                    <td>{{purchase.name}}</td>
+                    <td>{{purchase.full_name}}</td>
                     <td>{{purchase.company}}</td>
                     <td>{{purchase.bay}}</td>
                     <td>{{purchase.prod_date}}</td>
