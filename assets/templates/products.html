@@ -16,7 +16,7 @@
                         <li>
                             <div class="search">
                                 <form method="get" action="/search" id="search" ng-hide="addProductForm || editOrDeleteProductForm || noProducts">
-                                    <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
+                                    <input name="q" ng-model="search.brand_name" type="text" size="50" placeholder="SEARCH" />
                                 </form>
                             </div>
                         </li>
@@ -245,7 +245,7 @@
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:'Coca-Cola' | itemsPerPage: noOfRows" pagination-id="prods"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:'Coca-Cola' | filter: search | itemsPerPage: noOfRows" pagination-id="prods"  ng-click="productClicked(product)">
 
                       <td width="50%">{{product.brand_name}}</td>
 
@@ -290,7 +290,7 @@
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:'SMB' | itemsPerPage: noOfRows" pagination-id="smb"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:'SMB' | filter: search | itemsPerPage: noOfRows" pagination-id="smb"  ng-click="productClicked(product)">
 
                       <td width="50%">{{product.brand_name}}</td>
 
