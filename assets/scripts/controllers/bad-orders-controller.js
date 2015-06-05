@@ -23,6 +23,9 @@ angular.module('fmApp')
   $scope.noSKU = false;
   $scope.noEmployees = false;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   $scope.companies = ['Coca-Cola', 'SMB'];
 
   // forSorting
@@ -113,7 +116,20 @@ angular.module('fmApp')
     return employee.emp_fname + ' ' + employee.emp_lname;
   };
 
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       clearForm();
+    }
+  }
+
   $scope.showAddBadOrderForm = function (data) {
+    $scope.badOrderForm.$setPristine();
+    $scope.hasError = false;
     if($scope.viewBadOrderDetails === true){
       $scope.showViewBadOrderDetails(false);
     }
@@ -220,9 +236,13 @@ angular.module('fmApp')
       console.log('Sails responded with post bad order: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
+        $scope.snackbarShow('Bad Order Added');
         $scope.showAddBadOrderForm(false);
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
+      } 
         $scope.$digest();
-      }
     }); 
 
   };
