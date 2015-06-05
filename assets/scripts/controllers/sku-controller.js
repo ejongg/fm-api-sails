@@ -310,7 +310,7 @@ angular.module('fmApp')
         $scope.snackbarShow('SKU Deleted');
       }else if (JWR.statusCode === 500){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,"This SKU cannot be deleted.");
+        $scope.showErrorMessage(true,"Unable to delete, SKU already purchased! ");
       }
 
        $scope.$digest();

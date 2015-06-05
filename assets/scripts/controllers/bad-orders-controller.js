@@ -175,6 +175,10 @@ angular.module('fmApp')
     $scope.product.cases = null;
     $scope.product.bottles = null;
     $scope.product.reason = "";
+    $scope.companySelected = $scope.companies[0];
+    $scope.accountable = $scope.employees[0];
+    $scope.bays = [];
+    $scope.noBays = true;
   };
 
   $scope.getBadOrderDetails = function (id) {
@@ -212,6 +216,12 @@ angular.module('fmApp')
       $scope.products.push(productInfo);
       $scope.totalExpense += productInfo.expense;
     }else{
+      var index = _.findIndex($scope.products,{ 'sku_id': productInfo.sku_id, 'bay_id': productInfo.bay_id });
+      console.log(index);
+      $scope.products[index].cases += productInfo.cases;
+      $scope.products[index].bottles += productInfo.bottles;
+       $scope.products[index].expense += productInfo.expense;
+      $scope.totalExpense += productInfo.expense;
       $scope.showItemExistingError(true,productInfo.sku_name , product.bay.pile_name);
     }
 
