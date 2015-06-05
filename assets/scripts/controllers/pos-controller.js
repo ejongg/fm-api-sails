@@ -24,7 +24,7 @@ angular.module('fmApp')
   $scope.maxBottles = 0;
 
   $scope.totalAmount = 0;
-  $scope.deposit = 0;
+  $scope.deposit = null;
 
   var getSKU = function () {
     // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
