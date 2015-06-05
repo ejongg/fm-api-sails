@@ -48,7 +48,7 @@ module.exports = {
 			sku_id : req.body.sku
 		};
 
-		Bays.update({id : bayId}, bay).populate('sku_id')
+		Bays.update({id : bayId}, bay)
 			.then(function (updatedBay){
 				return updatedBay;				
 			})
@@ -56,8 +56,15 @@ module.exports = {
 			.then(function (updatedBay){
 				return BaysService.countBayItems(updatedBay[0].id).then(function (count){
 					updatedBay[0].total_products = count;
-					sails.sockets.blast('bays', {verb : 'updated', data : updatedBay[0]});
-					return res.send(200);
+					return updatedBay[0];
+				});
+			})
+
+			.then(function (updatedBay){
+				SkuService.getSkuDetails(updatedBay.sku_id).then(function (completeSku){
+					updatedBay.sku_id = completeSku;
+					sails.sockets.blast('bays', {verb : 'updated', data : updatedBay});
+					return res.send('Line updated successfully',200);
 				});
 			})
 	},

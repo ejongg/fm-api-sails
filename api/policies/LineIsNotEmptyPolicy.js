@@ -1,18 +1,20 @@
 var Promise = require('bluebird');
 
-module.exports = function(req, res){
-	var bayId = req.body.bay;
+module.exports = function(req, res, next){
+	var bayId = req.body.id;
 	var skuId = req.body.sku;
-	var skuName = '';
+	var bayLimit = req.body.bay_limit
+
+	console.log(req.body);
 
 	Bays.findOne({id : bayId})
-		.then(function (foundBay){
-			return BaysService.countBayItems(bayId);
+		.then(function (foundBay){		
+			return [BaysService.countBayItems(bayId), foundBay];
 		})
 
-		.then(function (bayItemCount){
-			if(bayItemCount > 0){
-				return res.send({message : "The line is not empty"}, 400);
+		.spread(function (bayItemCount, foundBay){
+			if(bayItemCount > 0 && foundBay.bay_limit != bayLimit || foundBay.sku_id != skuId){
+				return res.send({message : "Can't change Bay Limit or Sku. The line is not empty"}, 400);
 			}else{
 				next();
 			}
