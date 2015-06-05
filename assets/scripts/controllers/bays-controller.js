@@ -153,19 +153,21 @@ angular.module('fmApp')
       $scope.copiedBay = angular.copy(user);
       console.log($scope.copiedBay);
       $scope.bayEdit.id = $scope.copiedBay.id;
-      $scope.bayEdit.sku = $scope.copiedBay.sku_id;
       $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
       $scope.bayEdit.bay_limit = $scope.copiedBay.bay_limit;
       $scope.bayEdit.pile_status = $scope.copiedBay.pile_status;
-      $scope.companySelectedEdit = $scope.copiedBay.sku_id.company;
-      console.log($scope.bayEdit.sku);
-     
+      $scope.companySelectedEdit = $scope.copiedBay.sku_id.prod_id.company;
       $scope.bayDelete.id = $scope.copiedBay.id;
       $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;
       $scope.bayDelete.bay_limit = $scope.copiedBay.bay_limit;
       $scope.bayDelete.pile_status = $scope.copiedBay.pile_status;
-
       $scope.showEditOrDeleteBayForm(true);
+      $scope.bayEdit.sku = $scope.copiedBay.sku_id;
+      var index = _.findIndex($scope.skuLists,{ 'id': $scope.copiedBay.sku_id.id});
+      $scope.bayEdit.sku = $scope.skuLists[index];
+      console.log($scope.bayEdit.sku);
+
+    
   };
 
   var clearForm = function () {
@@ -220,7 +222,7 @@ angular.module('fmApp')
       'sku': bay.sku.id,
       'id': bay.id,
       'bay_name': bay.bay_name,
-      'bay_label': bay.sku.company,
+      'bay_label': bay.sku.prod_id.company,
       'bay_limit': bay.bay_limit,
       'pile_status' : bay.pile_status
     }

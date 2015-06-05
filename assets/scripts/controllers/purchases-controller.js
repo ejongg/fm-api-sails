@@ -352,7 +352,7 @@ angular.module('fmApp')
         console.log("Bay Updated");
         if($scope.purchase.sku.id === msg.data.sku_id){
             console.log("sku match");
-            var index = _.findIndex($scope.bays,{'id': msg.data.id});
+            var index = _.findIndex($scope.bays,{'id': msg.data[0].id});
             console.log(index);
             $scope.bays[index] = msg.data;
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
@@ -362,18 +362,6 @@ angular.module('fmApp')
         break;
       case "destroyed":
         console.log("Bay Deleted");
-        // var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
-        // $scope.bays.splice(index,1);
-        // $scope.bays = $scope.sortData($scope.bays,'bay_name');
-        // if($scope.bays.length === 0){
-        //   $scope.noBays = true;
-        //   if($scope.addPurchaseForm === true){
-        //     console.log("Close form");
-        //     $scope.addPurchaseForm = false;
-        //   }
-        // }else{
-        //   $scope.purchase.bay = null;
-        // }
         if($scope.purchase.sku.id === msg.data[0].sku_id){
             console.log("sku match");
             var index = _.findIndex($scope.bays,{'id': msg.data[0].id});
