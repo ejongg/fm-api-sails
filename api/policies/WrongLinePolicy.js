@@ -8,15 +8,13 @@ module.exports = function(req, res, next){
 		products = [products];
 	}
 
-	console.log(products);
-
 	new Promise(function (resolve){
 		resolve(products);
 	})
 
 	.each(function (product){
 		return new Promise(function (resolve){
-			Bays.findOne({id : product.bay})
+			Bays.findOne({id : product.bay_id})
 				.then(function (foundBay){
 					if(foundBay.sku_id != product.sku_id){
 

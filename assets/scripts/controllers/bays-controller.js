@@ -253,10 +253,14 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteBayForm(false);
-        $scope.snackbarShow('Bay Deleted');
+        $scope.snackbarShow('Line Deleted');
+       }else if (JWR.statusCode === 500){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
+      } 
         $scope.$digest();
-      }
-    });
+    }); 
+
   };
 
   io.socket.on('bays', function(msg){

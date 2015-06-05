@@ -174,12 +174,12 @@ angular.module('fmApp')
   };
 
   $scope.getPurchaseProducts = function (id) {
-
+    console.log("Get Purchase Prod");
    $http.get('http://localhost:1337/purchases/details?id='+ id).success(function(data){
      $scope.purchaseProducts = data;
      $scope.purchaseProducts.id = id;
      console.log($scope.purchaseProducts);
-     $scope.showViewProducts(true);
+     $scope.open($scope.purchaseProducts);
    });
     
   };
@@ -371,22 +371,41 @@ angular.module('fmApp')
         
 
 
-  $scope.open = function (bay) {
+  $scope.open = function (purchase) {
     console.log("Open Modal");
-
     var modalInstance = $modal.open({
       animation: true,
       templateUrl: 'purchaseDetailsModal.html',
-      controller: 'BayModalCtrl',
+      controller: 'PurchaseModalCtrl',
       resolve: {
-        bay: function () {
-          return bay;
+        purchase : function () {
+          return purchase;
         }
       }
     });
 
-    modalInstance.result.then(function (bay) {
-      $scope.deleteBay(bay);
+    // modalInstance.result.then(function (purchase) {
+    //   console.log(purchases.id);
+    // }, function () {
+    //   console.log("close");
+    // });
+
+    modalInstance.result.then(function (purchase) {
+      console.log(purchase.id);
+      io.socket.request($scope.socketOptions('post',' /purchases/void?id='+ purchase.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
+      console.log('Sails responded with post user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 201){
+        $scope.showAddPurchaseForm(false);
+        $scope.snackbarShow('Purchase Void');  
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        // $scope.showErrorMessage(true,body);
+      }
+
+       $scope.$digest();
+    
+      });
     }, function () {
       console.log("close");
     });
@@ -395,10 +414,11 @@ angular.module('fmApp')
 
 }])
 
-  .controller('BayModalCtrl', function ($scope, $modalInstance, bay) {
-
+  .controller('PurchaseModalCtrl', function ($scope, $modalInstance, purchase) {
+  console.log(purchase);
+  $scope.purchaseInfo = purchase;
   $scope.ok = function () {
-    $modalInstance.close(bay);
+    $modalInstance.close(purchase);
   };
 
   $scope.cancel = function () {
