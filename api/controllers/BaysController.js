@@ -159,14 +159,15 @@ module.exports = {
 					})
 
 					.then(function (){
-						SkuService.getSkuCompleteName(bay.sku_id).then(function (skuCompleteName){
-							bay.sku_id.sku_name = skuCompleteName;
+						SkuService.getCompanyName(bay.sku_id).then(function (skuCompany){
+							bay.sku_id.company = skuCompany;
+							
 						});
 					})
 
 					.then(function (){
-						SkuService.getCompanyName(bay.sku_id).then(function (skuCompany){
-							bay.sku_id.company = skuCompany;
+						SkuService.getSkuCompleteName(bay.sku_id).then(function (skuCompleteName){
+							bay.sku_id.sku_name = skuCompleteName;
 							resolve();
 						});
 					})
