@@ -364,7 +364,7 @@ angular.module('fmApp')
         console.log("Bay Deleted");
         if($scope.purchase.sku.id === msg.data[0].sku_id){
             console.log("sku match");
-            var index = _.findIndex($scope.bays,{'id': msg.data[0].id});
+            var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
             $scope.bays.splice(index,1);
             if($scope.bays.length === 0){
               $scope.noBays = true;
