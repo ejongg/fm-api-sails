@@ -374,9 +374,9 @@ angular.module('fmApp')
         // }else{
         //   $scope.purchase.bay = null;
         // }
-        if($scope.purchase.sku.id === msg.data.sku_id){
+        if($scope.purchase.sku.id === msg.data[0].sku_id){
             console.log("sku match");
-            var index = _.findIndex($scope.bays,{'id': msg.data.id});
+            var index = _.findIndex($scope.bays,{'id': msg.data[0].id});
             $scope.bays.splice(index,1);
             if($scope.bays.length === 0){
               $scope.noBays = true;
