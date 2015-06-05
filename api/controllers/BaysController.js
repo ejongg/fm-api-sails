@@ -146,9 +146,31 @@ module.exports = {
 			})
 
 			.each(function (bay){
-				return BaysService.countBayItems(bay.id).then(function (bayItemCount){
-					bay.total_products = bayItemCount;	
-				})
+				return new Promise(function (resolve){
+					BaysService.countBayItems(bay.id).then(function (bayItemCount){
+						bay.total_products = bayItemCount;	
+					})
+
+					.then(function (){
+						SkuService.getSkuDetails(bay.sku_id).then(function (skuDetails){
+							bay.sku_id = skuDetails;
+							bay.sku_id.prod_id = bay.sku_id.prod_id.id;
+						});
+					})
+
+					.then(function (){
+						SkuService.getSkuCompleteName(bay.sku_id).then(function (skuCompleteName){
+							bay.sku_id.sku_name = skuCompleteName;
+						});
+					})
+
+					.then(function (){
+						SkuService.getCompanyName(bay.sku_id).then(function (skuCompany){
+							bay.sku_id.company = skuCompany;
+							resolve();
+						});
+					})
+				});
 			})
 
 			.then(function (bays){
