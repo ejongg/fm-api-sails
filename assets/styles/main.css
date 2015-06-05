@@ -45,6 +45,16 @@ body {
 b {
   color: #000000; }
 
+u.double {
+  text-decoration-style: double;
+  border-bottom: 1px solid #000000;
+}
+
+u.doublebig {
+  text-decoration-style: double;
+  border-bottom: 2px solid #000000;
+}
+
 .rightalign {
   float: right !important; }
 

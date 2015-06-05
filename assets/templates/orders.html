@@ -137,7 +137,9 @@
             <div class="col-md-7 col-md-offset-1">
 
                  <div class="form-group" >
-                     <legend class="col-md-2 pull-right"><u Style="border-bottom:1px solid black;">{{totalAmount | currency:"₱"}}</u></legend>
+                     <legend class="col-md-2 pull-right">
+                        <u class="doublebig">{{totalAmount | currency:"₱"}}</u>
+                    </legend>
                     <legend class="col-md-4 pull-right control-label">Total Amount</legend>
                 </div>
                 <br>
@@ -318,7 +320,8 @@
             <br/>
              <div class="form-group " >
                 <label for="inputAddress" class="col-md-10" style="bottom:-0px;">Total Amount</label>
-                <div class="col-md-2 pull right style"><u Style="border-bottom:1px solid black;">{{totalAmountView | currency:"₱"}}</u></div>
+                <div class="col-md-2 pull right style">
+                    <u class="double">{{totalAmountView | currency:"₱"}}</u></div>
             </div>
       </div>
       <div class="modal-footer">
