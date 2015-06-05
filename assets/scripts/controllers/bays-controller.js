@@ -254,7 +254,7 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteBayForm(false);
         $scope.snackbarShow('Line Deleted');
-       }else if (JWR.statusCode === 5-00){
+       }else if (JWR.statusCode === 500){
         console.log("Error Occured");
         $scope.showErrorMessage(true,body);
       } 
