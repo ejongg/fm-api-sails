@@ -13,7 +13,7 @@ module.exports = function(req, res, next){
 		})
 
 		.spread(function (bayItemCount, foundBay){
-			if(bayItemCount > 0 && foundBay.bay_limit != bayLimit || foundBay.sku_id != skuId){
+			if((bayItemCount > 0 && foundBay.bay_limit != bayLimit) || (bayItemCount > 0 && foundBay.sku_id != skuId)){
 				return res.send({message : "Can't change Bay Limit or Sku. The line is not empty"}, 400);
 			}else{
 				next();
