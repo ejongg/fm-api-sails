@@ -245,7 +245,7 @@
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:'Coca-Cola' | itemsPerPage: noOfRows"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:'Coca-Cola' | itemsPerPage: noOfRows" pagination-id="prods"  ng-click="productClicked(product)">
 
                       <td width="50%">{{product.brand_name}}</td>
 
@@ -254,7 +254,19 @@
 
 
                   </tbody>
+
+                  
           </table>
+
+          <div align="center">
+            <dir-pagination-controls
+              pagination-id="prods"
+              max-size="7"
+              directional-links="true"
+              boundary-links="true"
+            >
+            </dir-pagination-controls>
+          </div>
         </div>
 
         <div ng-class = "addProductForm || editOrDeleteProductForm ? 'col-xs-12 col-md-12': 'col-md-6'">
@@ -278,7 +290,7 @@
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:'SMB' | itemsPerPage: noOfRows"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:'SMB' | itemsPerPage: noOfRows" pagination-id="smb"  ng-click="productClicked(product)">
 
                       <td width="50%">{{product.brand_name}}</td>
 
@@ -286,19 +298,22 @@
 
                   </tbody>
           </table>
+
+          <div align="center">
+            <dir-pagination-controls
+              pagination-id="smb"
+              max-size="7"
+              directional-links="true"
+              boundary-links="true"
+            >
+            </dir-pagination-controls>
+          </div>
         </div>
 
 
 
 
-          <div align="center">
-          <dir-pagination-controls
-                max-size="7"
-                directional-links="true"
-                boundary-links="true"
-                >
-          </dir-pagination-controls>
-          </div>
+          
         </div>
 
     </div> 
