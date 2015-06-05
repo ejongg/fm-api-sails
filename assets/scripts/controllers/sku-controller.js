@@ -119,6 +119,7 @@ angular.module('fmApp')
  */
   $scope.setEditSKUTab = function (data) {
     $scope.editSKUTab = data;
+    $scope.hasError = false;
     if(data === true){
       $scope.skuEdit.id = $scope.copiedSku.id;
       $scope.skuEdit.sku_name = $scope.copiedSku.sku_name;
@@ -218,7 +219,7 @@ angular.module('fmApp')
         $scope.snackbarShow('SKU Added');
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,"Sorry! Sku is already existing.");
       }
        $scope.$digest();
     });
@@ -252,7 +253,7 @@ angular.module('fmApp')
         $scope.snackbarShow('SKU Edited');
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,"Sorry! Sku is already existing.");
       }
         $scope.$digest();
     });
@@ -285,7 +286,7 @@ angular.module('fmApp')
         $scope.snackbarShow('SKU Edited');
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,"Sorry! Sku is already existing.");
       }
         $scope.$digest();
     });
@@ -309,7 +310,7 @@ angular.module('fmApp')
         $scope.snackbarShow('SKU Deleted');
       }else if (JWR.statusCode === 500){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,"This SKU cannot be deleted.");
       }
 
        $scope.$digest();
