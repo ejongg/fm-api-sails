@@ -91,19 +91,11 @@ module.exports = {
 					 	})
 
 					 	.then(function (){
-					 		return SkuService.getSkuCompleteName(bay.sku_id.id);
+					 		return SkuService.getSkuDetails(bay.sku_id.id);
 					 	})
 
-					 	.then(function (completeSkuName){
-					 		bay.sku_id.sku_name = completeSkuName;
-					 	})
-
-					 	.then(function (){
-					 		return SkuService.getCompanyName(bay.sku_id.id);
-					 	})
-
-					 	.then(function (skuCompany){
-					 		bay.sku_id.company = skuCompany;
+					 	.then(function (skuDetails){
+					 		bay.sku_id = skuDetails;
 					 		baysList.push(bay);
 					 		resolve();
 					 	})

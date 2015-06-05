@@ -39,6 +39,7 @@ module.exports = {
 		return new Promise(function (resolve, reject){
 			Sku.findOne({id : skuId}).populate('prod_id')
 				.then(function (sku){
+					delete sku.prod_id.sku;
 					resolve(sku);
 				})
 		});
