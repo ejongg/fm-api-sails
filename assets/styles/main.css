@@ -112,13 +112,14 @@ padding: 20px;
   font-weight: bold;
 }
 .rpanel{
-  background: #;
+  background: #ffffff;
+  border-top: 2px solid black; 
   border-left: 2px solid black; 
   border-right: 2px solid black; 
   border-bottom: 2px solid black;
   border-bottom-right-radius: 20px; 
   border-bottom-left-radius: 20px;
-  box-shadow: 0px 10px 15px #888888;
+  box-shadow: 0px 3px 15px #000000;
 
 }
 
@@ -382,9 +383,9 @@ h6 {
 
 .panel-login {
   width: 410px;
-  height: 405px;
+  height: 350px;
   padding: 50px;
-  padding-top: 30px;
+  padding-top: 50px;
   margin: 130px 0px 0px -50px !important;
   border-radius: 25px; }
 
@@ -872,13 +873,9 @@ legend {
 
 table {
   table-layout: fixed !important;
+  
 }
 
-thead {
-  text-transform: uppercase !important;
-  margin: 0px;
-  table-layout: fixed;
-}
 
 td {
   border-right: 1px solid #ffffff;
@@ -886,22 +883,36 @@ td {
   border-bottom: 2px solid #ffffff;
 }
 
-tr:hover, td {
+tr:hover td {
   cursor: pointer !important;
 }
 
 thead {
+  text-transform: uppercase !important;
+  margin: 0px;
+  table-layout: fixed;
+
   color: #ffffff;
-border-bottom: 3px solid #ffffff !important;
-background-color: #000000 !important;
-border: 1px solid #ffffff !important;
-  
-    table-layout: fixed;
+  border-bottom: 3px solid #ffffff !important;
+  background-color: #000000 !important;
+  border: 1px solid #ffffff !important;
+
+  table-layout: fixed;
 }
 
 th {
-      width: auto;
-      table-layout: fixed;
+  text-align: center;
+  width: auto;
+  table-layout: fixed;
+}
+
+th:first-child {
+  border-top-left-radius: 30px !important;
+}
+
+th:last-child {
+    border-top-right-radius: 30px !important;
+
 }
 
 tr:last-child{
@@ -909,35 +920,50 @@ tr:last-child{
 }
 
 td:last-child {
-  border-right: 1px solid #ffffff;
+  
   border-bottom: 2px solid #ffffff; 
+}
+
+td:first-child {
+border-right: 1px solid #ffffff;
 }
 
 table-striped{
 }
 
 table-hover {
-  background-color: #ffffff !important;
+  background-color: #202020 !important;
 }
 
 tr.movingpile td {
   background-color: #fe9f00 !important;
-  color: #000000 !important;
-  font-weight: bold;
-  
+  color: #000000 !important; 
 }
 tr.fullgoods td {
   color: #000000 !important;
   background-color: #89b405 !important;
-  font-weight: bold;
 }
 
-tr:hover td {
-    background-color: #000000 !important;
+tr.movingpile:hover td {
+  background-color: #fe9f00 !important;
+  color: #000000 !important;
+  font-weight: bold;
+  transition: 1s;
+}
+
+tr.fullgoods:hover td {
+  color: #000000 !important;
+  background-color: #89b405 !important;
+  font-weight: bold;
+  transition: 1s;
+}
+
+tr:hover {
+    background-color: transparent !important;
+    font-weight: bold;
     transition: 1s;
     border-top: 0px solid #202020 !important; 
     border-bottom: 0px solid #202020 !important;
-    font-weight: bold;
     color: #000000;
 }
 

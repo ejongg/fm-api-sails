@@ -90,6 +90,12 @@ padding: 20px;
 
 .panel-title {
  color: white !important;
+ text-align: center;
+
+}
+
+.panel-title {
+  font-weight: bold;
 }
 
 h3.panel-heading {
@@ -339,23 +345,23 @@ h6 {
   height: 30px; }
 
 .loginbg {
-  background-color: #ffffff !important;
-  background-image: url("../../images/login bg2.png");
+  background-color: #202020 !important;
+  background-image: url("../../images/mesh bg.png");
   background-repeat: no-repeat;
-  background-position: top center;
-  width: 1366px;
-  height: 768px;
+  background-position: right center;
   overflow-x: hidden !important;
-  margin: 0px 0px 0px 0px !important; }
+
+  }
 
 .panel-login {
-  width: 410px;
-  height: 405px;
-  padding: 50px;
-  padding-top: 30px;
-  margin: 130px 0px 0px -50px !important;
-  border-radius: 25px; }
-
+  background-color: #ffffff !important;
+  width: 400px !important;
+  height: 380px !important;
+  padding: 40px !important;
+  overflow-y: hidden !important;
+  float: left !important;
+  margin: 30px 50px 50px 150px !important;
+}
 
 
 /*onclick show - right panel*/
@@ -437,6 +443,7 @@ h6 {
 
 @media all and (max-width: 1000px) {
 
+/*
 .loginbg {
   background-color: #202020 !important;
   background-image: url("../../images/mesh bg.png");
@@ -455,7 +462,7 @@ h6 {
   float: left;
   border-radius: 25px; 
   overflow-x: hidden !important; }
-}
+} */
 
 
 @media screen and (max-width: 300px) {
@@ -655,7 +662,7 @@ a.arrowlink:hover {
 
 
 a.thlink:link, a.thlink:visited, a.thlink:active {
-  font-size: 9px;
+  font-size: 13px;
   color: #ffffff !important;
   cursor: pointer !important;
   background: transparent !important;
@@ -676,7 +683,7 @@ a.thlink:link, a.thlink:visited, a.thlink:active {
 }
 
 a.thlink:hover {
-  font-size: 9px;
+  font-size: 13px;
   color: #ffa311 !important;
   cursor: pointer !important;
   background: transparent;
@@ -778,9 +785,14 @@ legend {
   border-top-left-radius: 25px;
   color: #000000;
 }
+
+
 .panel-heading {
-  background-color: #202020 !important;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  background-color: #000000 !important;
 }
+
 
 .panel-title {
   font-weight: bold;
@@ -841,15 +853,12 @@ legend {
   color: #ff5722;
 }
 
+
 table {
   table-layout: fixed !important;
+  
 }
 
-thead {
-  text-transform: uppercase !important;
-  margin: 0px;
-  table-layout: fixed;
-}
 
 td {
   border-right: 1px solid #ffffff;
@@ -857,23 +866,36 @@ td {
   border-bottom: 2px solid #ffffff;
 }
 
-tr:hover, td {
-
+tr:hover td {
   cursor: pointer !important;
 }
 
 thead {
+  text-transform: uppercase !important;
+  margin: 0px;
+  table-layout: fixed;
+
   color: #ffffff;
-border-bottom: 3px solid #ffffff !important;
-background-color: #000000 !important;
-border: 1px solid #ffffff !important;
-  
-    table-layout: fixed;
+  border-bottom: 3px solid #ffffff !important;
+  background-color: #000000 !important;
+  border: 1px solid #ffffff !important;
+
+  table-layout: fixed;
 }
 
 th {
-      width: auto;
-      table-layout: fixed;
+  text-align: center;
+  width: auto;
+  table-layout: fixed;
+}
+
+th:first-child {
+  border-top-left-radius: 30px !important;
+}
+
+th:last-child {
+    border-top-right-radius: 30px !important;
+
 }
 
 tr:last-child{
@@ -885,30 +907,45 @@ td:last-child {
   border-bottom: 2px solid #ffffff; 
 }
 
-table-striped{}
+table-striped{
+}
 
-table-hover {}
+table-hover {
+  background-color: #202020 !important;
+}
 
 tr.movingpile td {
   background-color: #fe9f00 !important;
-  color: #0000000 !important;
-  font-weight: bold;
-  
+  color: #000000 !important; 
 }
 tr.fullgoods td {
-  color: #0000000 !important;
+  color: #000000 !important;
   background-color: #89b405 !important;
-  font-weight: bold;
 }
 
-tr:hover td {
-    background-color: #efefef !important;
-    transition: 1s;
-    border-top: 2px solid #202020; 
-    border-bottom: 2px solid #202020; 
+tr.movingpile:hover td {
+  background-color: #fe9f00 !important;
+  color: #000000 !important;
+  font-weight: bold;
+  transition: 1s;
+  
+}
+tr.fullgoods:hover td {
+  color: #000000 !important;
+  background-color: #89b405 !important;
+  font-weight: bold;
+  transition: 1s;
+}
+
+tr:hover {
+    background-color: transparent !important;
     font-weight: bold;
+    transition: 1s;
+    border-top: 0px solid #202020 !important; 
+    border-bottom: 0px solid #202020 !important;
     color: #000000;
 }
+
 
 .routeBox{
   background-color:#202020;
@@ -922,11 +959,14 @@ tr:hover td {
 
 
 .rpanel{
+  background: #ffffff;
   border-left: 2px solid black; 
   border-right: 2px solid black; 
   border-bottom: 2px solid black;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 30px; 
+  border-bottom-left-radius: 30px;
+  box-shadow: 0px 10px 15px #000000;
+
 }
 
 .actable{
