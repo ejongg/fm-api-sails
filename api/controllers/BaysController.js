@@ -140,7 +140,7 @@ module.exports = {
 	listSkuLines : function(req, res){
 		var skuId = req.query.id;
 
-		Bays.find({sku_id : skuId})
+		Bays.find({sku_id : skuId}).populate('sku_id')
 			.then(function (bays){
 				return bays;
 			})
@@ -152,21 +152,12 @@ module.exports = {
 					})
 
 					.then(function (){
-						SkuService.getSkuDetails(bay.sku_id).then(function (skuDetails){
-							bay.sku_id = skuDetails;
-							bay.sku_id.prod_id = bay.sku_id.prod_id.id;
-						});
+						return SkuService.getCompanyName(bay.sku_id.id);							
 					})
 
-					.then(function (){
-						SkuService.getCompanyName(bay.sku_id).then(function (skuCompany){
+					.then(function (skuCompany){
+						SkuService.getSkuCompleteName(bay.sku_id.id).then(function (skuCompleteName){
 							bay.sku_id.company = skuCompany;
-							
-						});
-					})
-
-					.then(function (){
-						SkuService.getSkuCompleteName(bay.sku_id).then(function (skuCompleteName){
 							bay.sku_id.sku_name = skuCompleteName;
 							resolve();
 						});
