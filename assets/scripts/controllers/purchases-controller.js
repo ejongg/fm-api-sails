@@ -60,7 +60,7 @@ angular.module('fmApp')
      $http.get(httpHost + '/bays/list/sku-lines?id=' + sku.id).success( function (data) {
       console.log(data);
       if(data.length !== 0){
-      $scope.bays = data;
+      $scope.bays = $scope.sortData(data,'bay_name');
       $scope.purchase.bay = $scope.bays[0];        
       console.log("Bays:");
       console.log($scope.bays);
