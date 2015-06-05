@@ -336,16 +336,12 @@ angular.module('fmApp')
     
     switch (msg.verb) {
       case "created": 
-        console.log("Bay Created");
         if($scope.purchase.sku){
-          console.log("SKU Selected");
           if($scope.purchase.sku.id === msg.data.sku_id){
-            console.log("Push New Bay");
             $scope.bays.push(msg.data);
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
             $scope.purchase.bay = $scope.bays[0];
             if($scope.noBays === true){
-              console.log("There is a bay");
               $scope.noBays = false;
             }
           }
@@ -354,10 +350,12 @@ angular.module('fmApp')
         break;
       case "updated":
         console.log("Bay Updated");
-        var index = _.findIndex($scope.bays,{'id': msg.data.id});
-        $scope.bays[index] = msg.data;
-        $scope.bays = $scope.sortData($scope.bays,'bay_name');
-        $scope.purchase.bay = null;
+        if($scope.purchase.sku.id === msg.data.sku_id){
+            var index = _.findIndex($scope.bays,{'id': msg.data.id});
+            $scope.bays[index] = msg.data;
+            $scope.bays = $scope.sortData($scope.bays,'bay_name');
+            $scope.purchase.bay = $scope.bays[0];
+        }
         $scope.$digest();
         break;
       case "destroyed":
