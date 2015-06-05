@@ -44,10 +44,11 @@ module.exports = {
 			bay_name : req.body.bay_name,
 			bay_label : req.body.bay_label,
 			bay_limit : req.body.bay_limit,
-			pile_status : req.body.pile_status
+			pile_status : req.body.pile_status,
+			sku_id : req.body.sku
 		};
 
-		Bays.update({id : bayId}, bay)
+		Bays.update({id : bayId}, bay).populate('sku_id')
 			.then(function (updatedBay){
 				return updatedBay;				
 			})
