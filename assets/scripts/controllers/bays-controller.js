@@ -152,11 +152,12 @@ angular.module('fmApp')
       $scope.copiedBay = angular.copy(user);
       console.log($scope.copiedBay);
       $scope.bayEdit.id = $scope.copiedBay.id;
-      $scope.bayEdit.sku = $scope.copiedBay.sku;
+      $scope.bayEdit.sku = $scope.copiedBay.sku_id;
       $scope.bayEdit.bay_name = $scope.copiedBay.bay_name;
       $scope.bayEdit.bay_limit = $scope.copiedBay.bay_limit;
       $scope.bayEdit.pile_status = $scope.copiedBay.pile_status;
-      $scope.companySelectedEdit = $scope.copiedBay.sku.prod_id.company;
+      $scope.companySelectedEdit = $scope.copiedBay.sku_id.company;
+      console.log($scope.bayEdit.sku);
      
       $scope.bayDelete.id = $scope.copiedBay.id;
       $scope.bayDelete.bay_name = $scope.copiedBay.bay_name;
@@ -218,24 +219,25 @@ angular.module('fmApp')
       'sku': bay.sku.id,
       'id': bay.id,
       'bay_name': bay.bay_name,
-      'bay_label': bay.sku.prod_id.company,
-      'bay_limit': bay.bay_limit
+      'bay_label': bay.sku.company,
+      'bay_limit': bay.bay_limit,
+      'pile_status' : bay.pile_status
     }
     console.log(newBayInfo);
-    // io.socket.request($scope.socketOptions('put','/bays/edit',{"Authorization": "Bearer " + authService.getToken()},newInfo), function (body, JWR) {
-    //   console.log('Sails responded with edit bay: ', body);
-    //   console.log('and with status code: ', JWR.statusCode);
-    //   if(JWR.statusCode === 200){
-    //      $scope.showEditOrDeleteBayForm(false);
-    //      $scope.snackbarShow('Line Edited');
-    //   } else if (JWR.statusCode === 400){
-    //     console.log("Error Occured");
-    //     $scope.showErrorMessage(true,body);
-    //   } else {
-    //     console.log("Error!!!");
-    //   }
-    //    $scope.$digest(); 
-    // });
+    io.socket.request($scope.socketOptions('put','/bays/edit',{"Authorization": "Bearer " + authService.getToken()},newBayInfo), function (body, JWR) {
+      console.log('Sails responded with edit bay: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+         $scope.showEditOrDeleteBayForm(false);
+         $scope.snackbarShow('Line Edited');
+      } else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body);
+      } else {
+        console.log("Error!!!");
+      }
+       $scope.$digest(); 
+    });
   };
 
   $scope.deleteBay = function (bay) {
