@@ -341,6 +341,7 @@ angular.module('fmApp')
           if($scope.purchase.sku.id === msg.data.sku_id){
             $scope.bays.push(msg.data);
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
+            $scope.purchase.bay = $scope.bays[0];
             if($scope.noBays === true){
               $scope.noBays = false;
             }
