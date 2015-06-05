@@ -53,10 +53,10 @@
 
                 </div>
 
-                <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+               <div ng-show="hasError" class="alert alert-dismissable alert-danger">
                      <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
-                     <strong>Sorry! Line is already existing.</strong>
-                </div> 
+                     <strong>{{errorMessage}}</strong>
+                </div>  
 
                     <div class="form-group">
                         <label for="select" class="col-md-12">Company</label>
@@ -120,6 +120,11 @@
 
           <form class="form-horizontal" name="editBayForm" ng-submit="editBay(bayEdit)" novalidate>
                 <fieldset>
+
+                <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+                </div> 
 
                  <div class="alert alert-warning" ng-show="(editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid) || (editBayForm.inputBayLabel.$invalid && editBayForm.inputBayLabel.$dirty) || (editBayForm.inputBayLimit.$invalid && editBayForm.inputBayLimit.$dirty)">
 
@@ -190,6 +195,11 @@
 
           <form class="form-horizontal" name="deleteBayForm" ng-submit="deleteBay(bayDelete)" novalidate>
                 <fieldset>
+
+                <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+                </div> 
                    
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Line Number</label>  
