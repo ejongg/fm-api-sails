@@ -337,12 +337,15 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         console.log("Bay Created");
-        $scope.bays.push(msg.data);
-        $scope.bays = $scope.sortData($scope.bays,'bay_name');
-        if($scope.noBays === true){
-          $scope.noBays = false;
+        if($scope.purchase.sku){
+          if($scope.purchase.sku.id === msg.data.sku_id){
+            $scope.bays.push(msg.data);
+            $scope.bays = $scope.sortData($scope.bays,'bay_name');
+            if($scope.noBays === true){
+              $scope.noBays = false;
+            }
+          }
         }
-        $scope.purchase.bay = null;
         $scope.$digest();
         break;
       case "updated":
