@@ -307,36 +307,43 @@ angular.module('fmApp')
     
     switch (msg.verb) {
       case "created": 
-        console.log("Bay Created");
-        $scope.bays.push(msg.data);
-        $scope.bays = $scope.sortData($scope.bays,'bay_name');
-        if($scope.noBays === true){
-          $scope.noBays = false;
+        if($scope.expense.sku){
+          if($scope.expense.sku.id === msg.data.sku_id){
+            $scope.bays.push(msg.data);
+            $scope.bays = $scope.sortData($scope.bays,'bay_name');
+            $scope.expense.bay = $scope.bays[0];
+            if($scope.noBays === true){
+              $scope.noBays = false;
+            }
+          }
         }
-        $scope.expense.bay = null;
         $scope.$digest();
         break;
       case "updated":
         console.log("Bay Updated");
-        var index = _.findIndex($scope.bays,{'id': msg.data.id});
-        $scope.bays[index] = msg.data;
-        $scope.bays = $scope.sortData($scope.bays,'bay_name');
-        $scope.expense.bay = null;
+        if($scope.expense.sku.id === msg.data.sku_id.id){
+            console.log("sku match");
+            var index = _.findIndex($scope.bays,{'id': msg.data.id});
+            console.log(index);
+            $scope.bays[index] = msg.data;
+            $scope.bays = $scope.sortData($scope.bays,'bay_name');
+            $scope.expense.bay = $scope.bays[0];
+        }
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Bay Deleted");
-        var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
-        $scope.bays.splice(index,1);
-        $scope.bays = $scope.sortData($scope.bays,'bay_name');
-        if($scope.bays.length === 0){
-          $scope.noBays = true;
-          if($scope.addPurchaseForm === true){
-            console.log("Close form");
-            $scope.addPurchaseForm = false;
-          }
-        }else{
-          $scope.expense.bay = null;
+        if($scope.expense.sku.id === msg.data[0].sku_id){
+            console.log("sku match");
+            var index = _.findIndex($scope.bays,{'id': msg.data[0].bay_id});
+            $scope.bays.splice(index,1);
+            if($scope.bays.length === 0){
+              $scope.noBays = true;
+            }else{
+              $scope.bays = $scope.sortData($scope.bays,'bay_name');
+              $scope.expense.bay = $scope.bays[0];
+            }
+
         }
         $scope.$digest();
 
