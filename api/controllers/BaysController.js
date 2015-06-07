@@ -74,6 +74,10 @@ module.exports = {
 					return res.send('Line updated successfully',200);
 				})
 			})
+
+			.error(function (err){
+				return res.send(err, 400);
+			})
 	},
 
 	list : function (req, res){
