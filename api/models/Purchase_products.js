@@ -22,7 +22,7 @@ module.exports = {
       defaultsTo : 0
   	},
     costpercase : {
-      type : 'integer',
+      type : 'float',
       defaultsTo : 0.00
     },
     discountpercase : {
@@ -34,8 +34,13 @@ module.exports = {
       required : true,
       defaultsTo : 0.00
     },
-    promo : {
-      type : 'integer'
+    prod_date : {
+      type : 'string',
+      required : true
+    },
+    bay_id : {
+      model : 'bays',
+      required : true
     }
   },
 
