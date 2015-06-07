@@ -261,7 +261,7 @@ angular.module('fmApp')
   };
 
   $scope.deleteRoute = function (route) {
-    io.socket.request($scope.socketOptions('delete','/routes/' + route.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
+    io.socket.request($scope.socketOptions('delete','/routes/remove?id=' + route.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete product: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -598,8 +598,7 @@ angular.module('fmApp')
         break;
       case "destroyed":
         console.log("Route Deleted");
-        console.log(msg.data[0]);
-        var index = _.findIndex($scope.routes,{'id': msg.data[0].route_id});
+        var index = _.findIndex($scope.routes,{'id': msg.data.id});
         console.log(index);
         $scope.routes.splice(index,1);
         if($scope.routes.length === 0){
