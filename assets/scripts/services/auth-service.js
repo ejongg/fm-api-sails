@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fmApp')
+angular.module('fmApp.Service',[])
 
 .factory('authService',['$http', '$window','httpHost','$log', function ($http, $window, httpHost,$log) {
 

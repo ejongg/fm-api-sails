@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirPagination','angular.snackbar','ui.bootstrap', 'ui.bootstrap.typeahead','chart.js'] )
+angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils.directives.dirPagination','angular.snackbar','ui.bootstrap', 'ui.bootstrap.typeahead','chart.js'] )
 
 .constant('httpHost','http://localhost:1337')
 .constant('_', window._)
@@ -284,9 +284,9 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
 
 .run(['$rootScope','$state','userService','authService', function ($rootScope, $state, userService,authService) {
   console.log("Run");
-  if (authService.getToken()) {
-     userService.getUser();
-  }
+  // if (authService.getToken()) {
+  //    userService.getUser();
+  // }
 }])
 
 // function isEmpty(value) {
@@ -327,11 +327,15 @@ angular.module('fmApp', ['ui.router','angular-jwt','angularUtils.directives.dirP
   function($scope,authService,$state,userService,$filter,$rootScope,snackbar){
   console.log("Main Cntroller");
   $scope.dateToday = new Date();
-  $scope.userType =  userService.getUserType();
-  $scope.userFirstName = userService.getFirstName();
-  $scope.userLastName = userService.getLastName();
-  $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
-  console.log($scope.userName);
+  userService.getUser().then(function(){
+     console.log("Get User Success");
+     $scope.userType =  userService.getUserType();
+     $scope.userFirstName = userService.getFirstName();
+     $scope.userLastName = userService.getLastName();
+     $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
+  },function(err){
+    console.log(err);
+  });
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
      console.log("state change");

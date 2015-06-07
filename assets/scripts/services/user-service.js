@@ -16,13 +16,6 @@ angular.module('fmApp')
       console.log("get user");
 	  	token = authService.getToken();
       userID = jwtHelper.decodeToken(token);
-      // $http.get('http://localhost:1337/users/' + userID ).success(function(data){
-      //   user = data;
-      //   console.log("User:");
-      //   console.log(user);
-      // }).error(function (err) {
-      //   console.log(err);
-      // });
       console.log(token);
       console.log(userID);
 
