@@ -30,7 +30,7 @@ module.exports = {
 				remainingBottles = bottlespercase - bottles;
 			}
 
-			IncompleteCasesService.add(sku.sku_id, sku.exp_date, remainingBottles)
+			IncompleteCasesService.add(sku.sku_id, sku.exp_date, sku.prod_date, remainingBottles)
 				.then(function deductCases (){
 					return InventoryService.deductCases(sku, cases, bottlespercase);
 				})
