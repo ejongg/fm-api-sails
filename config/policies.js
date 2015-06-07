@@ -83,6 +83,10 @@ module.exports.policies = {
   BaysController : {
     changeLineProduct : ['LineSameProductPolicy', 'LineIsNotEmptyPolicy'],
     edit : 'LineIsNotEmptyPolicy'
+  },
+
+  AddressController : {
+    destroy : 'DeleteAddressPolicy'
   }
 
   /***************************************************************************
