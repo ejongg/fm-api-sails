@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('BaysCtrl',['$scope','_','$http', 'httpHost', 'authService','$modal', 
-  function($scope, _, $http, httpHost, authService, $modal){
+.controller('BaysCtrl',['$scope','_','$http', 'httpHost', 'authService','$modal', '$filter', 
+  function($scope, _, $http, httpHost, authService, $modal, $filter){
   $scope.pileStatus = ["Full goods", "Moving pile"];
   $scope.bays = [];
   $scope.bayItems = [];
@@ -26,10 +26,17 @@ angular.module('fmApp')
 
   $scope.companies = ['Coca-Cola', 'SMB'];
 
-
   // forSorting
   $scope.sortCriteria = 'bay_name';
   $scope.reverseSort = false;
+
+  $scope.currentPage = 1;
+  $scope.sortedData = [];
+  $scope.sortedAndFilteredData = [];
+  $scope.companySelect='';
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index;
 
   var getBays = function () {
     console.log("Get Bays");
@@ -37,6 +44,7 @@ angular.module('fmApp')
       console.log("Bay List");
       if(data.length !== 0){
       $scope.bays = data;
+      console.log($scope.noOfRows);
       console.log("Bays:");
       console.log($scope.bays);
       }else{
@@ -98,6 +106,14 @@ angular.module('fmApp')
   getBays();
   getSKU();
   /*getBayItems();*/
+
+  var setPage = function(){
+    var comp = $scope.newlyAdded.bay_label;
+    $scope.companySelect = comp;
+    $scope.sortedAndFilteredData = $filter('filter')($scope.sortedData, $scope.companySelect);
+    $scope.index = _.findIndex($scope.sortedAndFilteredData,{'bay_name' : $scope.newlyAdded.bay_name});
+    $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
+  };
 
   $scope.showErrorMessage = function (data,msg) {
      $scope.hasError = data;
@@ -206,7 +222,10 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         // $scope.bays.push(body);
+        $scope.sortedData =  $scope.sortData($scope.bays, $scope.sortCriteria);
+        $scope.newlyAdded = bayInfo;
         $scope.showAddBayForm(false);
+        setPage();
         $scope.snackbarShow('Line Added');
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");
