@@ -85,6 +85,8 @@ angular.module('fmApp')
       console.log("Purchases:");
       console.log($scope.purchasesList);
         $scope.noPurchase = false;
+      }else{
+        $scope.noPurchase = true;
       }
     }).error(function (err) {
       $scope.checkError(err);

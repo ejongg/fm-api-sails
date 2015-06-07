@@ -46,7 +46,7 @@
         <div ng-show="noEmptiesInventory">
          <h3><strong><center>NO EMPTY BOTTLES!</center></strong></h3>
         </div>
-
+        <div ng-hide="noEmptiesInventory">
         <div class="form-group">
           <label for="select" class="col-md-2">Number of rows:</label>
             <div class="col-md-1">
@@ -117,6 +117,7 @@
                     boundary-links="true"
                 >
                 </dir-pagination-controls>    
+            </div>
             </div>
 
     <!-- END OF TABLE -->
