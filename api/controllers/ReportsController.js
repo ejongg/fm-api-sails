@@ -107,7 +107,7 @@ module.exports = {
 			function getTotalPurchases(cb){
 				var totalPurchases = 0;
 
-				Purchases.find({date_received : date})
+				Purchases.find({date_received : date, status : {'!' : 'Void'}})
 					.then(function (purchases){
 						return purchases;	
 					})
@@ -195,7 +195,36 @@ module.exports = {
 						dssr.empties = totalAmount;
 						cb();
 					});
-			}
+			}/*,
+
+			function getTopCustomers(cb){
+				var topCustomers = [];
+				Customers.find().populate('orders').then(function (customers){
+					return customers;
+				})
+
+				.each(function (customer){
+					return new Promise(function (resolve){
+						new Promise(function (resolve){
+							resolve(topCustomers);
+						})
+
+						.each(function (topCustomer){
+							if(topCustomer.order_count < customer.order_count){
+								topCustomer = customer;
+								topCustomers.push(topCustomer);
+								resolve();
+							}else{
+								resolve();
+							}
+						})
+					});
+				})
+
+				.then(function (){
+					console.log(topCustomers);
+				})
+			}*/
 		],
 
 		function(err){
