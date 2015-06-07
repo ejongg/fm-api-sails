@@ -296,6 +296,16 @@
                         </a>
                     </th>
 
+                    <th style="text-align: right">
+                        <a href="" ng-click="sortCriteria='status'; reverseSort = !reverseSort" class="thlink">
+                            Status
+                            <span ng-show="sortCriteria == 'status'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                            </span>
+                        </a>
+                    </th>
+
                 </tr>
             </thead>
 
@@ -305,7 +315,7 @@
                     <td width ="25%">{{purchaseInfo.user}}</td>
                     <td width ="10s%">{{purchaseInfo.date_received}}</td>
                     <td style="text-align:right" width ="25%">{{purchaseInfo.total_amount | currency : "₱"}}</td>
-                    
+                    <td style="text-align:right" width ="25%">{{purchaseInfo.status}}</td>
                 </tr>
 
             </tbody>
@@ -360,9 +370,17 @@
 
             </tbody>
         </table>
+        <div ng-show="voidMode">
+          <form name="voidForm" ng-submit="ok(void)" novalidate>
+          <input type="text" class="form-control" placeholder="Enter username." ng-model="void.username" required>
+          <input type="password" class="form-control" placeholder="Enter password." ng-model="void.password" required>
+          <button type="submit" class="btn btn-primary" ng-disabled="voidForm.$invalid">Submit</button>
+          <button type="button" class="btn btn-default" ng-click="voidMode = false">Cancel</button>
+          </form>
+        </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">Void</button>
+            <button class="btn btn-primary"  ng-disabled="voidMode" ng-click="voidMode = true">Void</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
       </div>
