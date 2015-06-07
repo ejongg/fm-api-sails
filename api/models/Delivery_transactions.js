@@ -16,13 +16,13 @@ module.exports = {
       columnName: 'delivery_id'
     },
   	total_amount : {
-  		type : 'integer',
+  		type : 'float',
   		required : true,
-      defaultsTo : 0
+      defaultsTo : 0.00
   	},
   	paid_amount : {
-  		type : 'integer',
-      defaultsTo : 0
+  		type : 'float',
+      defaultsTo : 0.00
   	},
   	delivery_date : {
   		type : 'string',

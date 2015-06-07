@@ -32,16 +32,16 @@ module.exports = {
   		type : 'string',
   		required : true,
       defaultsTo : 'Pending',
-      enum : ['Pending', 'Delivered', 'To be delivered', 'Cancelled']
+      enum : ['Pending', 'Delivered', 'To be delivered', 'Cancelled', 'Assigned for delivery']
   	},
   	user : {
   		type : 'string',
   		required : true
   	},
     total_amount : {
-      type : 'integer',
+      type : 'float',
       required : true,
-      defaultsTo : 0
+      defaultsTo : 0.00
     },
     delivery_id : {
       model : "delivery_transactions"

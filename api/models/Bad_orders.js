@@ -16,7 +16,7 @@ module.exports = {
       columnName: 'bad_order_id'
     },
   	expense : {
-  		type : 'integer',
+  		type : 'float',
   		required : true
   	},
   	date : {

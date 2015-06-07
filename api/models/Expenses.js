@@ -16,20 +16,20 @@ module.exports = {
   	  columnName: 'expense_id'
   	},
   	type : {
-	  type : 'string',
-	  required : true
+	    type : 'string',
+	    required : true
   	},
   	amount : {
-	  type : 'integer',
-	  required : true
+	    type : 'float',
+	    required : true
   	},
   	date : {
-	  type : 'string',
-	  required : true
+	    type : 'string',
+	    required : true
   	},
   	user : {
-	  type : 'string',
-	  required : true
+	    type : 'string',
+	    required : true
   	}
   }
 };
