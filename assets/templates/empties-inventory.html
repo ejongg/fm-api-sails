@@ -11,7 +11,7 @@
     </div>
 
     <div class="pageheader-right">
-        <div class="form-group">
+        <div class="form-group" ng-hide="noEmptiesInventory">
             <ul class="nav nav-tabs col-md-12">
                         <li>
                             <div class="search">
@@ -46,6 +46,7 @@
         <div ng-show="noEmptiesInventory">
          <h3><strong><center>NO EMPTY BOTTLES!</center></strong></h3>
         </div>
+
         <div ng-hide="noEmptiesInventory">
         <div class="form-group">
           <label for="select" class="col-md-2">Number of rows:</label>

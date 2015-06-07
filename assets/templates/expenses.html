@@ -15,7 +15,7 @@
       <ul class="nav nav-tabs col-md-12">
         <li>
           <div class="search">
-            <form method="get" action="/search" id="search">
+            <form method="get" action="/search" id="search" ng-hide="noSKU || noExpenses">
               <input name="q" type="text" size="50" placeholder="SEARCH" ng-hide=""/>
             </form>
           </div>
@@ -26,7 +26,7 @@
 
           </li>
           <li>
-            <a ng-click="pagePrint()">
+            <a ng-click="pagePrint()" ng-hide="noSKU || noExpenses">
               <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
             </li>
           </ul>
