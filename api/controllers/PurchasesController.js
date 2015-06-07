@@ -32,7 +32,7 @@ module.exports = {
 				sails.sockets.blast('empties', {verb : 'updated'});
 				sails.sockets.blast('inventory', {verb : 'updated'});
 				sails.sockets.blast('purchases', {verb : 'created', data : purchase});
-				return res.send(201);
+				return res.send('Purchases added' ,201);
 			});
 	},
 
@@ -59,7 +59,8 @@ module.exports = {
 	},
 
 	voidPurchase : function (req, res){
-		var purchaseId = req.query.id;
+		var purchaseId = req.body.purchase;
+		var user = req.body.user;
 
 		Purchase_products.find({purchase_id : purchaseId}).populate('sku_id')
 			.then(function (products){
@@ -67,16 +68,27 @@ module.exports = {
 			})
 
 			.each(function (product){
-				return InventoryService.deduct(product.sku_id.id, product.bottles, product.cases, product.sku_id.bottlespercase);
+				return InventoryService.deductSpecificProduct(product.sku_id.id, product.bottles, product.cases, product.sku_id.bottlespercase, product.bay_id, product.prod_date);
 			})
 
 			.then(function (){
 				return Purchases.update({id : purchaseId}, {status : "Void"});
 			})
 
-			.then(function (voidedPurchase){
-				sails.sockets.blast('purchase', {verb : 'void', data : voidedPurchase});
-				return res.send("Purchase now voided", 200);
+			.then(function (voidPurchase){
+
+				var voidDetails = {
+					purchase_id : voidPurchase.id,
+					date : moment().format('YYYY-MM-DD'),
+					user : user
+				};
+
+				return Void_purchases.create(voidDetails);
+			})
+
+			.then(function (){
+				sails.sockets.blast('inventory', {verb : 'updated'});
+				return res.send("Purchase now void", 200);
 			})
 	}
 };
