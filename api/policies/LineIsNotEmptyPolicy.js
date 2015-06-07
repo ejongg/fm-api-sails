@@ -3,9 +3,7 @@ var Promise = require('bluebird');
 module.exports = function(req, res, next){
 	var bayId = req.body.id;
 	var skuId = req.body.sku;
-	var bayLimit = req.body.bay_limit
-
-	console.log(req.body);
+	var bayLimit = req.body.bay_limit;
 
 	Bays.findOne({id : bayId})
 		.then(function (foundBay){		
