@@ -20,7 +20,9 @@ module.exports = {
 							cases : product.cases,
 							costpercase : product.costpercase,
 							discountpercase : product.discountpercase,
-							amount : product.amount
+							amount : product.amount,
+							prod_date : product.prod_date,
+							bay_id : product.bay_id
 						};
 
 						Purchase_products.create(purchaseProduct)
