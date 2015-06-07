@@ -36,27 +36,46 @@ module.exports = {
 	deduct : function(skuId, cases, bottles, bottlespercase){
 		return new Promise(function (resolve){
 
-			Empties.findOne({sku_id : skuId})
-				.then(function (foundSku){
-					foundSku.cases = foundSku.cases - cases;
-					foundSku.bottles = foundSku.bottles - (bottlespercase * cases);
+			EmptiesService.deductCases(skuId, cases, bottlespercase)
+				.then(function (){
 
 					if(bottles > 0){
-						return EmptiesService.deductBottles(skuId, bottles);
+						return EmptiesService.deductBottles(skuId, bottles, bottlespercase);
 					}
 
-					foundSku.save(function (err, saved){
-						resolve();
-					});
+				})
+
+				.then(function (){
+					resolve();
 				})
 		});
 	},
 
-	deductBottles : function(skuId, bottles){
+	deductCases : function(skuId, cases, bottlespercase){
+		return new Promise(function (resolve){
+			Empties.findOne({sku_id : skuId}).then(function (foundEmpty){
+				remainingCases = foundEmpty.cases - cases;
+				remainingBottles = foundEmpty.bottles - (bottlespercase * cases);
+				
+
+				return Empties.update({id : foundEmpty.id},{cases : remainingCases, bottles : remainingBottles});
+			})
+
+			.then(function (){
+				resolve();
+			})
+		});
+	},
+
+	deductBottles : function(skuId, bottles, bottlespercase){
 		return new Promise(function (resolve){
 			Empties.findOne({sku_id : skuId})
 				.then(function (foundEmpty){
 					foundEmpty.bottles = foundEmpty.bottles - bottles;
+
+					if(foundEmpty.cases * bottlespercase > foundEmpty.bottles){
+						foundEmpty.cases = foundEmpty.cases - 1;
+					}
 
 					foundEmpty.save(function (err, saved){
 						resolve();

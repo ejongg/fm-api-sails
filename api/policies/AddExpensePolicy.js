@@ -36,9 +36,9 @@ module.exports = function(req, res, next){
 			return new Promise(function (resolve){
 				EmptiesService.countBottlesAndCases(empty.sku_id).then(function (result){
 
-					if(empty.return_empties_cases < result.cases){
+					if(empty.return_empties_cases <= result.cases){
 
-						if(empty.return_empties_bottles < result.bottles){
+						if(empty.return_empties_bottles <= result.bottles - (empty.return_empties_cases * empty.bottlespercase)){
 							resolve();
 
 						}else{

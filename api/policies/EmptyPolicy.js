@@ -10,25 +10,25 @@ module.exports = function (req, res, next){
 	})
 
 	.each(function (product){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 
 			if(product.return_empties_cases > 0 || product.return_empties_bottles > 0){
 
 				return EmptiesService.countBottlesAndCases(product.sku_id).then(function (result){
 
-					if(product.return_empties_cases < result.cases){
+					if(product.return_empties_cases <= result.cases){
 
-						if(product.return_empties_bottles < result.bottles){
+						if(product.return_empties_bottles <= result.bottles - (product.return_empties_cases * product.bottlespercase)){
 							resolve();
 						}else{
-							return SkuService.getSkuCompleteName(empty.sku_id).then(function (completeName){
+							return SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
 								notAvailable.push(completeName);
 								resolve();
 							})
 						}
 
 					}else{
-						SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
+						return SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
 							notAvailable.push(completeName);
 							resolve();
 						})
