@@ -19,6 +19,10 @@ module.exports = {
   		model : 'sku',
   		required : true
   	},
+    prod_date : {
+      type : 'string',
+      required : true
+    },
   	exp_date : {
   		type : 'string',
   		required : true
