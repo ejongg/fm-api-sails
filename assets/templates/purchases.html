@@ -310,7 +310,7 @@
             </thead>
 
             <tbody>
-                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id)">
+                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id,purchaseInfo.status)">
                     <td width ="5%">{{purchaseInfo.id}}</td>
                     <td width ="25%">{{purchaseInfo.user}}</td>
                     <td width ="10s%">{{purchaseInfo.date_received}}</td>
@@ -361,7 +361,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="product in purchaseInfo">
+                <tr ng-repeat="product in purchaseInfo.products">
                     <td width ="15%">{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
                     <td width ="1%">{{product.cases}}</td>
                     <td style="text-align:right" width ="10%">{{product.costpercase | currency : "₱" }}</td>
@@ -380,7 +380,7 @@
         </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary"  ng-disabled="voidMode" ng-click="voidMode = true">Void</button>
+            <button class="btn btn-primary" ng-hide="purchaseInfo.status === 'Void'" ng-disabled="voidMode" ng-click="voidMode = true">Void</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
       </div>

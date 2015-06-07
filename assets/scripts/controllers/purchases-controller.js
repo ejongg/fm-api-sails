@@ -177,11 +177,12 @@ angular.module('fmApp')
     return bay.bay_name + ' ' + bay.bay_label;
   };
 
-  $scope.getPurchaseProducts = function (id) {
+  $scope.getPurchaseProducts = function (id,status) {
     console.log("Get Purchase Prod");
    $http.get('http://localhost:1337/purchases/details?id='+ id).success(function(data){
-     $scope.purchaseProducts = data;
+     $scope.purchaseProducts.products = data;
      $scope.purchaseProducts.id = id;
+     $scope.purchaseProducts.status = status;
      console.log($scope.purchaseProducts);
      $scope.open($scope.purchaseProducts);
    });
@@ -432,6 +433,7 @@ angular.module('fmApp')
   .controller('PurchaseModalCtrl', function ($scope, $modalInstance, purchase) {
   $scope.voidMode = false;
   $scope.purchaseInfo = purchase;
+  console.log($scope.purchaseInfo);
 
   $scope.ok = function (cred) {
     var voidInfo = {

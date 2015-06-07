@@ -294,7 +294,6 @@
    <div class="modal-dialog" >
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="showViewProducts(false)"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Order #{{orderProducts.id}}</h4> 
       </div>
       <div class="modal-body">
@@ -335,7 +334,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary"  ng-disabled="cancelMode" ng-click="cancelMode = true">Cancel Order</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="showViewProducts(false)">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="cancel()">Close</button>
       </div>
     </div>
   </div>
