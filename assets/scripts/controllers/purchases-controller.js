@@ -403,19 +403,18 @@ angular.module('fmApp')
     //   console.log("close");
     // });
 
-    modalInstance.result.then(function (purchase) {
-      console.log(purchase.id);
-      io.socket.request($scope.socketOptions('post',' /purchases/void?id='+ purchase.id,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
+    modalInstance.result.then(function (voidInfo) {
+      console.log(voidInfo);
+
+      io.socket.request($scope.socketOptions('post','  /purchases/void',{"Authorization": "Bearer " + authService.getToken()}, voidInfo), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-        $scope.showAddPurchaseForm(false);
         $scope.snackbarShow('Purchase Void');  
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        // $scope.showErrorMessage(true,body);
+        $scope.snackbarShow('Purchase Void Error');  
       }
-
        $scope.$digest();
     
       });
@@ -428,10 +427,16 @@ angular.module('fmApp')
 }])
 
   .controller('PurchaseModalCtrl', function ($scope, $modalInstance, purchase) {
-  console.log(purchase);
+  $scope.voidMode = false;
   $scope.purchaseInfo = purchase;
-  $scope.ok = function () {
-    $modalInstance.close(purchase);
+
+  $scope.ok = function (cred) {
+    var voidInfo = {
+      "purchase_id": purchase.id,
+      "username": cred.username,
+      "password": cred.password
+    }
+    $modalInstance.close(voidInfo);
   };
 
   $scope.cancel = function () {
