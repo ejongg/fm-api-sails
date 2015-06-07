@@ -63,7 +63,8 @@ module.exports.policies = {
   },
 
   PurchasesController : {
-    add : ['EmptyPolicy', 'LineLimitPolicy', 'WrongLinePolicy']
+    add : ['EmptyPolicy', 'LineLimitPolicy', 'WrongLinePolicy'],
+    voidPurchase : ['VoidPurchaseCredentialsPolicy', 'VoidEnoughSpecificProductPolicy']
   },
 
   Load_inController : {

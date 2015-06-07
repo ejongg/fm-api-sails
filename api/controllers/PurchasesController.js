@@ -59,8 +59,8 @@ module.exports = {
 	},
 
 	voidPurchase : function (req, res){
-		var purchaseId = req.body.purchase;
-		var user = req.body.user;
+		var purchaseId = req.body.purchase_id;
+		var username = req.body.username;
 
 		Purchase_products.find({purchase_id : purchaseId}).populate('sku_id')
 			.then(function (products){
@@ -76,14 +76,24 @@ module.exports = {
 			})
 
 			.then(function (voidPurchase){
+				return new Promise(function (resolve){
 
-				var voidDetails = {
-					purchase_id : voidPurchase.id,
-					date : moment().format('YYYY-MM-DD'),
-					user : user
-				};
+					Users.findOne({username : username}).then(function (foundUser){
 
-				return Void_purchases.create(voidDetails);
+						var voidDetails = {
+							purchase_id : voidPurchase[0].id,
+							date : moment().format('YYYY-MM-DD'),
+							user : foundUser.firstname + ' ' + foundUser.lastname
+						};
+
+						return Void_purchases.create(voidDetails);
+
+					})
+
+					.then(function (){
+						resolve();
+					})
+				});
 			})
 
 			.then(function (){
