@@ -81,7 +81,8 @@ module.exports.policies = {
   },
 
   BaysController : {
-    changeLineProduct : ['LineSameProductPolicy', 'LineIsNotEmptyPolicy']
+    changeLineProduct : ['LineSameProductPolicy', 'LineIsNotEmptyPolicy'],
+    edit : 'LineIsNotEmptyPolicy'
   }
 
   /***************************************************************************
