@@ -37,7 +37,7 @@ module.exports = {
 	list : function(req, res){
 		var ordersWithProducts = [];
 
-		Customer_orders.find({delivery_id : null}).populate('customer_id')
+		Customer_orders.find({delivery_id : null, status : {'like' : 'Pending'}}).populate('customer_id')
 			.then(function getOrders(orders){
 
 				async.each(orders, function(order, cb){
@@ -90,10 +90,18 @@ module.exports = {
 	},
 
 	cancelOrder : function (req, res){
-		var orderId = req.query.id;
+		var orderId = req.body.order;
+		var user = req.body.user;
 
 		Customer_orders.update({id : orderId}, {status : "Cancelled"})
-			.then(function (cancelledOrder){
+			.then(function (order){
+				var cancelledOrder = {
+					order_id : order.id,
+					date : moment().format('YYYY-MM-DD'),
+					user : user
+				};
+
+
 				return res.send('Order cancelled', 200);
 			})
 	}
