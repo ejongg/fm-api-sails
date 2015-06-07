@@ -31,12 +31,12 @@ angular.module('fmApp')
   $scope.reverseSort = false;
 
   $scope.currentPage = 1;
-  $scope.sortedData = [];
-  $scope.sortedAndFilteredData = [];
+  $scope.filteredData = [];
+  $scope.filteredAndSortedData = [];
   $scope.companySelect='';
   $scope.noOfRows = 0;
   $scope.newlyAdded = {};
-  $scope.index;
+  $scope.index = 0;
 
   var getBays = function () {
     console.log("Get Bays");
@@ -108,11 +108,34 @@ angular.module('fmApp')
   /*getBayItems();*/
 
   var setPage = function(){
+
     var comp = $scope.newlyAdded.bay_label;
+    var name = $scope.newlyAdded.bay_name;
+    console.log("company:");
+    console.log(comp);
+
     $scope.companySelect = comp;
-    $scope.sortedAndFilteredData = $filter('filter')($scope.sortedData, $scope.companySelect);
-    $scope.index = _.findIndex($scope.sortedAndFilteredData,{'bay_name' : $scope.newlyAdded.bay_name});
+
+    $scope.filteredData = $filter('filter')($scope.bays, comp);
+    $scope.filteredAndSortedData =  $scope.sortData($scope.filteredData, 'bay_name');
+   
+    console.log("FILTEREDDD");
+    console.log($scope.filteredData); //debugging purposes. to be deleted.
+
+    console.log($scope.filteredAndSortedData);
+    console.log("COMPANY :");
+
+    console.log($scope.newlyAdded);
+
+    console.log(comp);
+    console.log("name");
+    console.log(name);
+    console.log("no of rows");
+    console.log($scope.noOfRows);
+    $scope.index = _.findIndex($scope.filteredAndSortedData,{'bay_name' : name});
     $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+    console.log("INDEX: " + $scope.index);
   };
 
   $scope.showErrorMessage = function (data,msg) {
@@ -212,7 +235,7 @@ angular.module('fmApp')
   $scope.addBay = function (bay) {
     var bayInfo  = {
       'sku': bay.sku.id,
-      'bay_name': bay.bay_name,
+      'bay_name': parseInt(bay.bay_name),
       'bay_label': bay.sku.prod_id.company,
       'bay_limit': bay.bay_limit
     }
@@ -222,10 +245,11 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         // $scope.bays.push(body);
-        $scope.sortedData =  $scope.sortData($scope.bays, $scope.sortCriteria);
         $scope.newlyAdded = bayInfo;
-        $scope.showAddBayForm(false);
+        console.log("NEW: "+ bayInfo.bay_name); //debugging purposes. to be deleted.
         setPage();
+
+        $scope.showAddBayForm(false);
         $scope.snackbarShow('Line Added');
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");

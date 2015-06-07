@@ -15,7 +15,7 @@ module.exports = {
       columnName: 'bay_id'
     },
   	bay_name : {
-  		type : 'string',
+  		type : 'integer',
   		required : true,
       unique : true
   	},
