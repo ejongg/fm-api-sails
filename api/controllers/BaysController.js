@@ -27,8 +27,15 @@ module.exports = {
 				BaysService.countBayItems(bay.id)
 					.then(function (count){
 						bay.total_products = count;
-						sails.sockets.blast('bays', {verb : 'created', data : bay});
-						return res.send(201);
+					})
+
+					.then(function (){
+						SkuService.getSkuDetails(bay.sku_id).then(function (completeSku){
+							bay.sku_id = completeSku;
+							sails.sockets.blast('bays', {verb : 'created', data : bay});
+							return res.send(201);	
+						})
+						
 					})
 			})
 
@@ -63,16 +70,9 @@ module.exports = {
 			.then(function (updatedBay){
 				return SkuService.getSkuDetails(updatedBay.sku_id).then(function (completeSku){
 					updatedBay.sku_id = completeSku;
-					return updatedBay;
-				});
-			})
-
-			.then(function (updatedBay){
-				SkuService.getSkuCompleteName(updatedBay.sku_id.id).then(function (completeSkuName){
-					updatedBay.sku_id.sku_name = completeSkuName;
 					sails.sockets.blast('bays', {verb : 'updated', data : updatedBay});
 					return res.send('Line updated successfully',200);
-				})
+				});
 			})
 
 			.error(function (err){
