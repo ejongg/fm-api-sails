@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService', function($scope, _, $http, httpHost, authService,userService){
+.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService','$modal', 
+  function($scope, _, $http, httpHost, authService,userService,$modal){
   $scope.distanceRatings = [1,2,3,4,5];
   $scope.skuList = [];
   $scope.ordersList = [];
@@ -132,12 +133,13 @@ angular.module('fmApp')
 
     $http.get(httpHost + '/customer-orders/details?id=' + order_id).success( function (data) {  
       console.log(data);
-      console.log(data.total_amount);
-      $scope.orderProducts.products = data.products;
-      console.log("Order Products");
-      $scope.totalAmountView = data.total_amount;
-      $scope.showViewProducts(true);
-      $scope.orderProducts.order_id = data.id;
+    //   console.log(data.total_amount);
+    //   $scope.orderProducts.products = data.products;
+    //   console.log("Order Products");
+    //   $scope.totalAmountView = data.total_amount;
+    //   $scope.showViewProducts(true);
+    //   $scope.orderProducts.order_id = data.id;
+      $scope.open(data);
     }).error(function (err) {
       console.log(err);
     });
@@ -322,5 +324,63 @@ angular.module('fmApp')
   });  
 
 
-}]);
+   $scope.open = function (order) {
+    console.log("Open Modal");
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'orderDetailsModal.html',
+      controller: 'OrderModalCtrl',
+      resolve: {
+        order : function () {
+          return order;
+        }
+      }
+    });
+
+
+    modalInstance.result.then(function (cancelInfo) {
+      console.log(cancelInfo);
+
+      io.socket.request($scope.socketOptions('post','/customer-orders/cancel',{"Authorization": "Bearer " + authService.getToken()}, cancelInfo), function (body, JWR) {
+      console.log('Sails responded with post user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 201){
+        $scope.snackbarShow('Order Cancelled');  
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.snackbarShow('Order Cancel Error');  
+      }
+       $scope.$digest();
+    
+      });
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
+}])
+
+.controller('OrderModalCtrl', function ($scope, $modalInstance, order) {
+  $scope.cancelMode = false;
+  $scope.orderProducts = order;
+  console.log($scope.orderProducts);
+
+  $scope.ok = function (cred) {
+    var cancelInfo = {
+      "order_id": order.id,
+      "username": cred.username,
+      "password": cred.password
+    }
+    $modalInstance.close(cancelInfo);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+
+
+
 

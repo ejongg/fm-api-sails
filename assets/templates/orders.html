@@ -287,13 +287,15 @@
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
 
+<div class="snackbar-container" data-snackbar="true"></div>
+</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-show="viewProducts">
-  <div class="modal-dialog" >
+<script type="text/ng-template" id="orderDetailsModal.html">
+   <div class="modal-dialog" >
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="showViewProducts(false)"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Order #{{orderProducts.order_id + " "  + orderProducts.order_id.customer_id }}</h4> 
+        <h4 class="modal-title">Order #{{orderProducts.id}}</h4> 
       </div>
       <div class="modal-body">
        <table class="table table-striped table-hover ">
@@ -312,7 +314,6 @@
                         <td style="text-align:right">{{product.sku_id.pricepercase | currency:"₱ "}}</td>
                     </tr>
 
-                    <!-- DON'T REMOVE CODE BELOW -->
 
                 </tbody>
             </table>
@@ -321,14 +322,21 @@
              <div class="form-group " >
                 <label for="inputAddress" class="col-md-10" style="bottom:-0px;">Total Amount</label>
                 <div class="col-md-2 pull right style">
-                    <u class="double">{{totalAmountView | currency:"₱"}}</u></div>
+                    <u class="double">{{orderProducts.total_amount| currency:"₱"}}</u></div>
             </div>
+      <div ng-show="cancelMode">
+          <form name="cancelForm" ng-submit="ok(cancel)" novalidate>
+          <input type="text" class="form-control" placeholder="Enter username." ng-model="cancel.username" required>
+          <input type="password" class="form-control" placeholder="Enter password." ng-model="cancel.password" required>
+          <button type="submit" class="btn btn-primary" ng-disabled="cancelForm.$invalid">Submit</button>
+          <button type="button" class="btn btn-default" ng-click="cancelMode = false">Cancel</button>
+          </form>
+      </div>
       </div>
       <div class="modal-footer">
+        <button class="btn btn-primary"  ng-disabled="cancelMode" ng-click="cancelMode = true">Cancel Order</button>
         <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="showViewProducts(false)">Close</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div class="snackbar-container" data-snackbar="true"></div>
-</div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
+    </div>
+  </div>
+</script>

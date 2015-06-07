@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('PurchasesCtrl',['$scope','_','$http','$filter','httpHost','authService', '$modal', function($scope, _, $http, $filter,httpHost,authService, $modal){
+.controller('PurchasesCtrl',['$scope','_','$http','$filter','httpHost','authService', '$modal', 
+  function($scope, _, $http, $filter,httpHost,authService, $modal){
   $scope.purchasesList = [];
   $scope.skuList = [];
   $scope.bays = [];
@@ -278,13 +279,20 @@ angular.module('fmApp')
     console.log("Message Data :");
     console.log(msg.data);
 
-    if(msg.verb === 'created'){
-      console.log("Purchase Created");
-      $scope.purchasesList.push(msg.data);
-      if($scope.noPurchase === true){
+    switch (msg.verb) {
+      case "created": 
+        console.log("Purchase Created");
+        $scope.purchasesList.push(msg.data);
+        if($scope.noPurchase === true){
           $scope.noPurchase = false;
-      }
-      $scope.$digest();
+        }
+        $scope.$digest();
+        break;
+      case "updated":
+        console.log("SKU Updated");
+        var index = _.findIndex($scope.purchasesList,{'id': msg.data.id});
+        $scope.purchasesList[index] = msg.data;
+        $scope.$digest();
     }
 
   });
@@ -397,11 +405,6 @@ angular.module('fmApp')
       }
     });
 
-    // modalInstance.result.then(function (purchase) {
-    //   console.log(purchases.id);
-    // }, function () {
-    //   console.log("close");
-    // });
 
     modalInstance.result.then(function (voidInfo) {
       console.log(voidInfo);
