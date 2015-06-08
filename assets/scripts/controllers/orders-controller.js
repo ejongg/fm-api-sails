@@ -28,11 +28,13 @@ angular.module('fmApp')
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
   
+  $scope.companies = ['Coca-Cola', 'SMB'];
+
   var getSKU = function () {
     $http.get(httpHost + '/sku').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
-        $scope.order.sku = $scope.skuList[0];
+        $scope.order.sku = null;
         console.log("SKU:");
         console.log($scope.skuList);
       }else{
@@ -114,19 +116,20 @@ angular.module('fmApp')
 
   }
 
-  $scope.combined = function (sku) {
+  $scope.combine = function (sku) {
     return sku.prod_id.brand_name + ' ' + sku.sku_name + ' ' + sku.size  ;
 }
 
   var clearForm = function () {
     $scope.orderForm.$setPristine();
     $scope.order.distance_rating = $scope.distanceRatings[0];
-    $scope.order.sku = $scope.skuList[0];
+    $scope.order.sku = null;
     $scope.order.address = $scope.addresses[0].address_name;
     $scope.order.cases = null;
     $scope.order.establishment = '';
     $scope.order.owner = '';
-    $scope.order.cokeagent_name = '';        
+    $scope.order.cokeagent_name = ''; 
+    $scope.companySelected = $scope.companies[0]       
   };
 
   $scope.getOrderProducts = function (order_id,status) {
