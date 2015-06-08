@@ -129,7 +129,7 @@ angular.module('fmApp')
     $scope.order.cokeagent_name = '';        
   };
 
-  $scope.getOrderProducts = function (order_id) {
+  $scope.getOrderProducts = function (order_id,status) {
 
     $http.get(httpHost + '/customer-orders/details?id=' + order_id).success( function (data) {  
       console.log(data);
@@ -139,6 +139,7 @@ angular.module('fmApp')
     //   $scope.totalAmountView = data.total_amount;
     //   $scope.showViewProducts(true);
     //   $scope.orderProducts.order_id = data.id;
+     data.status = status;
       $scope.open(data);
     }).error(function (err) {
       console.log(err);
