@@ -551,7 +551,7 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="sku in skuLists | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="skuClicked(sku)">
+                    <tr dir-paginate="sku in skuLists | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage" ng-click="skuClicked(sku)">
                       <td width ="30%">{{sku.prod_id.brand_name +" " + sku.sku_name}}</td>
                       <td width ="10%">{{sku.size}}</td>
                       <td width ="5%">{{sku.lifespan}}</td>

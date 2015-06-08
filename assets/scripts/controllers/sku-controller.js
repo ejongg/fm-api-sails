@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('SKUCtrl',['$scope','_','authService','httpHost','$http', '$modal', 
-  function($scope, _, authService, httpHost,$http, $modal){
+.controller('SKUCtrl',['$scope','_','$filter','authService','httpHost','$http', '$modal', 
+  function($scope, _,$filter, authService, httpHost,$http, $modal){
 	$scope.products = [];
   $scope.skuLists = [];
 	$scope.existingCompany = [];
@@ -25,9 +25,55 @@ angular.module('fmApp')
   $scope.hasError = false;
 
   // forSorting
-  $scope.sortCriteria = 'id';
+  $scope.sortCriteria = ['prod_id.brand_name', 'sku_name'];
   $scope.reverseSort = false;
 
+  $scope.currentPage = 1;
+
+  var setPage = function(){
+    var name = $scope.newlyAdded.sku_name;
+    var id = $scope.newlyAdded.id;
+    var prod_id = _.result(_.find($scope.skuLists, {'id': id }), 'prod_id');
+    var comp = prod_id.company;
+
+    console.log("NEWLY ADDED:");
+    console.log($scope.newlyAdded);
+
+    console.log("SKU NAME:");
+    console.log(name);
+
+    console.log("COMPANY:");
+    console.log(comp);
+
+    $scope.companySelect = comp;
+
+    $scope.filteredData = $filter('filter')($scope.skuLists, comp);
+
+    $scope.filteredAndSortedData =  $scope.sortData($scope.filteredData, ['prod_id.brand_name', 'sku_name']);
+   
+    console.log("FILTERED DATA");
+    console.log($scope.filteredData); //debugging purposes. to be deleted.
+
+    console.log("FILTERED AND SORTED");
+    console.log($scope.filteredAndSortedData);
+
+    console.log("NO OF ROWS");
+    console.log($scope.noOfRows);
+
+    $scope.index = _.findIndex($scope.filteredAndSortedData,{'id' : id});
+    console.log("INDEX: " + $scope.index);
+    
+    if($scope.index < 1){
+      $scope.currentPage  = 1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
+      console.log("index < 1");
+      console.log($scope.currentPage);
+    }
+
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+    
+  };
 
   var getProducts = function (){  
     $http.get(httpHost + '/products').success( function (data) {
@@ -216,6 +262,8 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if (JWR.statusCode === 201) {
         $scope.showAddSkuForm(false);
+        $scope.newlyAdded = body;
+        setPage();
         $scope.snackbarShow('SKU Added');
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
