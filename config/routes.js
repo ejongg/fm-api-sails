@@ -54,6 +54,7 @@ module.exports.routes = {
 	'GET  /customer-orders/list' : 'Customer_orders.list',
 	'GET  /customer-orders/details' : 'Customer_orders.getOrderDetails',
 	'POST /customer-orders/cancel' : 'Customer_orders.cancelOrder',
+	'GET  /customer-orders/list-cancelled' : 'Customer_orders.listCancelledOrders',
 
 	/* DELIVERY
 
@@ -99,6 +100,8 @@ module.exports.routes = {
 	'POST /purchases/add' : 'Purchases.add',
 	'GET  /purchases/details' : 'Purchases.getPurchaseDetails',
 	'POST /purchases/void' : 'Purchases.voidPurchase',
+	'GET  /purchases/list-void' : 'Purchases.listVoidPurchases',
+
 	/* 	ADDRESS 
 		remove - removes the address from its current route
 	*/

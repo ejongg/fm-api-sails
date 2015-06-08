@@ -100,6 +100,13 @@ module.exports = {
 				sails.sockets.blast('inventory', {verb : 'updated'});
 				return res.send("Purchase now void", 200);
 			})
+	},
+
+	listVoidPurchases : function (req, res){
+		Purchases.find({status : {'like' : 'Void'}})
+			.then(function (foundPurchases){
+				return res.send(foundPurchases);
+			})
 	}
 };
 
