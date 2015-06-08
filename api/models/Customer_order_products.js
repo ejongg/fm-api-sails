@@ -20,7 +20,10 @@ module.exports = {
   		type : 'integer',
   		required : true,
       defaultsTo : 0
-  	}
+  	},
+    prod_date : {
+      type : 'string'
+    }
   },
 
   afterUpdate : function(order_product, next){

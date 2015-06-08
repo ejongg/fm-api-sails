@@ -89,20 +89,77 @@ module.exports = {
 			})
 	},
 
+	listCancelledOrders : function (req, res){
+		Customer_orders.find({status : {'like' : 'Cancelled'}}).populate('customer_id')
+			.then(function (foundOrders){
+				return res.send(foundOrders);
+			})
+	},
+
 	cancelOrder : function (req, res){
-		var orderId = req.body.order;
-		var user = req.body.user;
+		var orderId = req.body.order_id;
+		var username = req.body.username;
 
 		Customer_orders.update({id : orderId}, {status : "Cancelled"})
+
 			.then(function (order){
-				var cancelledOrder = {
-					order_id : order.id,
-					date : moment().format('YYYY-MM-DD'),
-					user : user
-				};
+				return new Promise(function (resolve){
+					sails.sockets.blast('customer_orders', {verb : 'cancelled', data : order});
+
+					Users.findOne({username : username}).then(function (foundUser){
+
+						var cancelledOrder = {
+							order_id : order[0].id,
+							date : moment().format('YYYY-MM-DD'),
+							user : foundUser.firstname + ' ' + foundUser.lastname
+						};
 
 
-				return res.send('Order cancelled', 200);
+						return Cancelled_orders.create(cancelledOrder);
+					})
+
+					.then(function (){
+						resolve();
+					})
+				});
+			})
+
+			.then(function (){
+				return Customer_order_products.find({order_id : orderId});
+			})
+
+			.each(function (product){
+				return new Promise(function (resolve){
+					SkuService.getCompanyName(product.sku_id).then(function (skuCompany){
+						if(skuCompany == 'SMB'){
+							
+							BaysService.findMovingPile(product.sku_id, function(err, result){
+								if(err) return res.send({message : "An error has occured"}, 400);
+
+								if(typeof result == 'number'){
+
+									SkuService.getSkuDetails(product.sku_id).then(function (sku){
+										return InventoryService.put(product.sku_id, product.cases, sku.bottlespercase, result, product.prod_date, sku.lifespan);
+									})
+
+									.then(function (){
+										resolve();
+									})
+								}
+
+							});
+
+						}else{
+							resolve();
+						}
+						
+					});
+				});
+			})
+
+			.then(function (){
+				sails.sockets.blast('inventory', {verb : "updated"});
+				return res.send({message : "Order cancelled"}, 200);
 			})
 	}
 };
