@@ -325,14 +325,19 @@ angular.module('fmApp')
     if(msg.verb === 'updated'){
       
        console.log("SKU Updated");
-       //  if($scope.product.sku.id === msg.data.sku_id.id){
-       //      console.log("sku match");
-       //      var index = _.findIndex($scope.bays,{'id': msg.data.id});
-       //      console.log(index);
-       //      $scope.bays[index] = msg.data;
-       //      $scope.bays = $scope.sortData($scope.bays,'bay_name');
-       //      $scope.product.bay = $scope.bays[0];
-       //  }
+        // if($scope.product.sku.id === msg.data.sku_id.id){
+        //     console.log("sku match");
+        //     var index = _.findIndex($scope.bays,{'id': msg.data.id});
+        //     console.log(index);
+        //     $scope.bays[index] = msg.data;
+        //     $scope.bays = $scope.sortData($scope.bays,'bay_name');
+        //     $scope.product.bay = $scope.bays[0];
+        // }
+        if(_.findIndex($scope.skuList,{'id': msg.data.id}) !== 0){
+           var index =  _.findIndex($scope.skuList,{'id': msg.data.id});
+           $scope.skuList[i] = msg.data;
+           $scope.$digest();                         
+        }
     }
 
   });
@@ -396,7 +401,7 @@ io.socket.on('inventory', function(msg){
     switch (msg.verb) {
       case "updated":
         console.log("Bay Updated");
-        getBays();
+        $scope.getBays();
         getSKU();
         // var index = _.findIndex($scope.bays,{'id': msg.data.id});
         // $scope.bays[index] = msg.data;
