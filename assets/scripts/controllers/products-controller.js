@@ -26,6 +26,16 @@ angular.module('fmApp')
   $scope.sortCriteria = 'id';
   $scope.reverseSort = false;
 
+  $scope.cokePage = 1;
+  $scope.smbPage = 1;  
+  $scope.cokefilteredData = [];
+  $scope.smbfilteredData = [];
+  //$scope.filteredAndSortedData = [];
+  //$scope.companySelect='';
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
+
 
   var getProducts = function () {
     $http.get(httpHost + '/products').success( function (data) {
@@ -41,6 +51,48 @@ angular.module('fmApp')
     }).error(function (err) {
         $scope.checkError(err);
     });
+  };
+
+  var setPage = function(){
+    console.log("NEW PRODUCT:");
+    console.log($scope.newlyAdded);
+
+    var comp = $scope.newlyAdded.company;
+    var name = $scope.newlyAdded.brand_name;
+    console.log("company:");
+    console.log(comp);
+    console.log("name");
+    console.log(name);
+
+    //$scope.companySelect = comp;
+
+    $scope.filteredData = $filter('filter')($scope.products, comp);
+    $scope.filteredAndSortedData =  $scope.sortData($scope.filteredData, 'brand_name');
+    $scope.index = _.findIndex($scope.filteredAndSortedData,{'brand_name' : name});
+
+    if(comp == "SMB"){
+      $scope.smbPage = Math.ceil($scope.index/$scope.noOfRows);
+    }else{
+      $scope.cokePage = Math.ceil($scope.index/$scope.noOfRows);
+    }
+    
+   
+    console.log("FILTEREDDD");
+    console.log($scope.filteredData); //debugging purposes. to be deleted.
+
+    console.log($scope.filteredAndSortedData);
+    console.log("COMPANY :");
+
+    console.log($scope.newlyAdded);
+
+    console.log(comp);
+   
+    console.log("no of rows");
+    console.log($scope.noOfRows);
+    //$scope.index = _.findIndex($scope.filteredAndSortedData,{'bay_name' : name});
+    //$scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+    console.log("INDEX: " + $scope.index);
   };
 
   getProducts();
@@ -123,6 +175,10 @@ angular.module('fmApp')
 
       if(JWR.statusCode === 201){
         $scope.showAddProductForm(false);
+        console.log("PRODUCTTT:");
+        console.log(product);
+        $scope.newlyAdded = body;
+        setPage();
         $scope.snackbarShow('Product Created');
       }else if (JWR.statusCode === 400){
         console.log("Product already exist");

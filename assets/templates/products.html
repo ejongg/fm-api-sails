@@ -245,7 +245,7 @@
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:'Coca-Cola' | filter: search | itemsPerPage: noOfRows" pagination-id="prods"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:'Coca-Cola' | filter: search | itemsPerPage: noOfRows" pagination-id="prods" current-page="cokePage"  ng-click="productClicked(product)">
 
                       <td width="50%">{{product.brand_name}}</td>
 
@@ -290,7 +290,7 @@
                   <tbody>
 
 
-                    <tr dir-paginate="product in products | filter:'SMB' | filter: search | itemsPerPage: noOfRows" pagination-id="smb"  ng-click="productClicked(product)">
+                    <tr dir-paginate="product in products | filter:'SMB' | filter: search | itemsPerPage: noOfRows" current-page="smbPage" pagination-id="smb"  ng-click="productClicked(product)">
 
                       <td width="50%">{{product.brand_name}}</td>
 
