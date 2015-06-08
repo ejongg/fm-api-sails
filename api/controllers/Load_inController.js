@@ -13,19 +13,30 @@ module.exports = {
 		var products = req.body.products;
 		var loadoutId = req.body.loadout;
 		var loadinNo = req.body.loadin_no;
-		var customerId = req.body.customer;
+		var customerId = req.body.customer_id;
 
-		Load_out.findOne({id : loadoutId})
-			.then(function (loadout){
-				return LoadOutService.changeStatus(loadout);
-			})
-
-			.then(function (){
+		Load_out.update({id : loadoutId}, {status : "Complete"})
+			.then(function (updatedLoadout){
+				sails.sockets.blast('loadout', {verb : "updated", data : updatedLoadout});
 				return DeliveryService.completeDeliveries(loadoutId);
 			})
 
 			.then(function (){
 				return LoadInService.createLoadin(loadinNo, loadoutId, customerId, products);
+			})
+
+			.then(function (){
+				return res.send("Load in successful", 200);
+			})
+	},
+
+	noLoadin : function (req, res){
+		var loadoutId = req.body.loadout;
+
+		Load_out.update({id : loadoutId}, {status : "Complete"})
+			.then(function (updatedLoadout){
+				sails.sockets.blast('loadout', {verb : "updated", data : updatedLoadout});
+				return DeliveryService.completeDeliveries(loadoutId);
 			})
 
 			.then(function (){

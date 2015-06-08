@@ -70,29 +70,13 @@ module.exports = {
 				})
 
 				.each(function (delivery){
-					return DeliveryService.changeStatus(delivery);						
+					return Delivery_transactions.update({id : delivery.id}, {status : "Complete"});						
 				})
 
 				.then(function (){
 					resolve();
 				})
 		});
-	},
-
-	changeStatus : function (delivery){
-		return new Promise(function (resolve){
-
-			OrderService.completeOrders(delivery.id)
-				.then(function (){
-
-					delivery.status = "Complete";
-
-					delivery.save(function (err, saved){
-						resolve();
-					});
-
-				})
-		});	
 	},
 
 	assignEmpties : function (deliveryId, returnId){

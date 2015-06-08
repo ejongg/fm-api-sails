@@ -45,16 +45,6 @@ module.exports = {
 		});
 	},
 
-	changeStatus : function (loadout){
-		return new Promise(function (resolve){
-			loadout.status = "Complete";
-
-			loadout.save(function (err, saved){
-				resolve();
-			});
-		});
-	},
-
 	countTransactions : function (loadoutId){
 		return new Promise(function (resolve){
 
