@@ -37,7 +37,8 @@ module.exports = {
 			var orderProduct = {
 				order_id : orderId,
 				sku_id : product.sku_id,
-				cases : product.cases
+				cases : product.cases,
+				prod_date : product.prod_date
 			};
 
 			Customer_order_products.create(orderProduct)
