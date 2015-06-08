@@ -10,7 +10,7 @@ module.exports = function(req, res, next){
 		if(foundUser){
 
 			if(foundUser.type != 'admin'){
-				return res.send({message : "User not authorized to void purchases"}, 400);
+				return res.send({message : "User not authorized"}, 400);
 			}
 
 			bcrypt.compare(password, foundUser.password, function(err, match){

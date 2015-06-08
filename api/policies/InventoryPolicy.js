@@ -8,7 +8,7 @@ module.exports = function(req, res, next){
 	
 	async.each(products, function (product, cb){
 
-		BaysService.findMovingPile(product.sku_id, function(err, bayResult){
+		BaysService.findMovingPile(product.sku_id, function (err, bayResult){
 			if(typeof bayResult == 'number'){
 
 				Inventory.find({sku_id : product.sku_id, bay_id : bayResult})

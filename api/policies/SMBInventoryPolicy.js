@@ -15,7 +15,7 @@ module.exports = function(req, res, next){
 					BaysService.findMovingPile(order.sku_id, function(err, bayResult){
 						if(typeof bayResult == 'number'){
 
-							Inventory.find({sku_id : order.sku_id, bay_id : bayResult})
+							Inventory.find({sku_id : order.sku_id, bay_id : bayResult}).sort('exp_date ASC')
 								.then(function (foundSku){
 
 									if(foundSku){
@@ -37,6 +37,7 @@ module.exports = function(req, res, next){
 												})
 											
 										}else{
+											order.prod_date = foundSku[0].prod_date;
 											resolve();
 										}
 

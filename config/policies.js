@@ -55,7 +55,8 @@ module.exports.policies = {
   },
 
   Customer_ordersController : {
-    add : 'SMBInventoryPolicy'
+    add : 'SMBInventoryPolicy',
+    cancelOrder : ['MustBeAdminPolicy','OrderInLoadoutPolicy','CancelOrderPolicy']
   },
 
   ExpensesController : {
@@ -64,7 +65,7 @@ module.exports.policies = {
 
   PurchasesController : {
     add : ['EmptyPolicy', 'LineLimitPolicy', 'WrongLinePolicy'],
-    voidPurchase : ['VoidPurchaseCredentialsPolicy', 'VoidEnoughSpecificProductPolicy']
+    voidPurchase : ['MustBeAdminPolicy', 'VoidEnoughSpecificProductPolicy']
   },
 
   Load_inController : {
