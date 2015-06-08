@@ -133,7 +133,11 @@ angular.module('fmApp')
     console.log("no of rows");
     console.log($scope.noOfRows);
     $scope.index = _.findIndex($scope.filteredAndSortedData,{'bay_name' : name});
-    $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
+    if($scope.index < 1){
+      $scope.currentPage =  1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows)
+    }
     console.log("CURRENT PAGE: " + $scope.currentPage);
     console.log("INDEX: " + $scope.index);
   };
