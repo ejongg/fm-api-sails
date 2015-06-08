@@ -123,6 +123,28 @@ module.exports = {
 			})
 	},
 
+	getInProgressLoadouts : function (req, res){
+		var loadoutList = [];
+
+		Load_out.find({status : {'like' : 'In progress'}})
+			.then(function(loadouts){
+				return loadouts;
+			})
+
+			.each(function (loadout){
+				return new Promise(function (resolve, reject){
+					LoadOutService.getDetails(loadout).then(function (detailedLoadout){
+						loadoutList.push(detailedLoadout);
+						resolve();
+					})
+				});
+			})
+
+			.then(function (){
+				return res.send(loadoutList);
+			})
+	},
+
 	list : function(req, res){
 		var loadoutList = [];
 

@@ -92,6 +92,7 @@ module.exports.routes = {
 	'POST /load-out/add' : 'Load_out.add',
 	'POST /load-out/confirm' : 'Load_out.confirm',
 	'GET  /load-out/list' : 'Load_out.list',
+	'GET  /load-out/list-in-progress' : 'Load_out.getInProgressLoadouts',
 	'GET  /load-out/products' : 'Load_out.getLoadOutProducts',
 
 	/* 	PURCHASES 
