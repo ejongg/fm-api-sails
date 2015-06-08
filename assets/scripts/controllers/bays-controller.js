@@ -257,7 +257,7 @@ angular.module('fmApp')
         $scope.snackbarShow('Line Added');
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true, "Sorry! Line is already existing!");
+        $scope.showErrorMessage(true, "The line " + body.invalidAttributes.bay_name_UNIQUE[0].value + " is already existing.");
       }
 
        $scope.$digest(); 
@@ -282,7 +282,7 @@ angular.module('fmApp')
          $scope.snackbarShow('Line Edited');
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true, "Sorry! Line is already existing!");
+        $scope.showErrorMessage(true, "Unable to edit the Line limit or sku. The line is not empty.");
       } else {
         console.log("Error!!!");
       }
@@ -306,7 +306,7 @@ angular.module('fmApp')
         $scope.snackbarShow('Line Deleted');
        }else if (JWR.statusCode === 500){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,"Unable to delete, Line is not empty!");
+        $scope.showErrorMessage(true,"Unable to delete. The line is not empty.");
       } 
         $scope.$digest();
     }); 

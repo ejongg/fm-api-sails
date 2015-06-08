@@ -266,7 +266,7 @@ angular.module('fmApp')
         
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,body.message);
       }
 
        $scope.$digest();

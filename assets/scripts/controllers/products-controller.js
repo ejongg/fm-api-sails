@@ -189,7 +189,7 @@ angular.module('fmApp')
         $scope.snackbarShow('Product Created');
       }else if (JWR.statusCode === 400){
         console.log("Product already exist");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true, "The product " + body.invalidAttributes.prod_name_UNIQUE[0].value + " is already existing.");
       }else{
         console.log("Error!!!");
       }
@@ -207,7 +207,7 @@ angular.module('fmApp')
         $scope.snackbarShow('Product Edited');
       }else if(JWR.statusCode === 400){
         console.log("Product already exist");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true, "The product " + body.invalidAttributes.prod_name_UNIQUE[0].value + " is already existing.");
       }else{
         console.log("Error!!!");
       }
@@ -225,6 +225,9 @@ angular.module('fmApp')
         $scope.showEditOrDeleteProductForm(false);
         $scope.snackbarShow('Product Deleted');
         $scope.$digest();
+      }else if(JWR.statusCode === 500){
+        console.log("Cant be deleted");
+        $scope.showErrorMessage(true, "Unable to delete the product.");
       }
     });
   };

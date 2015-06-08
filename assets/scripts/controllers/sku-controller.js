@@ -1,3 +1,4 @@
+
 'use strict';
 
 angular.module('fmApp')
@@ -267,7 +268,7 @@ angular.module('fmApp')
         $scope.snackbarShow('SKU Added');
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
-        $scope.showErrorMessage(true,"Sorry! Sku is already existing.");
+        $scope.showErrorMessage(true,"The sku is already existing.");
       }
        $scope.$digest();
     });
@@ -301,7 +302,7 @@ angular.module('fmApp')
         $scope.snackbarShow('SKU Edited');
       }else if(JWR.statusCode === 400){
         console.log("SKU already exist");
-        $scope.showErrorMessage(true,"Sorry! Sku is already existing.");
+        $scope.showErrorMessage(true, "The sku is already existing.");
       }
         $scope.$digest();
     });

@@ -29,6 +29,9 @@ angular.module('fmApp')
   $scope.maxBottles = 0;
   $scope.companies = ['Coca-Cola', 'SMB'];
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   // forSorting
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
@@ -141,6 +144,16 @@ angular.module('fmApp')
     }
 
   };
+
+  $scope.showErrorMessage = function (data,msg) {
+       $scope.hasError = data;
+       console.log($scope.hasError);
+      if(data === true){
+         console.log(data);
+         console.log(msg);
+         $scope.errorMessage = msg;
+      }
+    }
 
   $scope.showAddExpenseForm = function (data) {
     $scope.addExpenseForm = data;
@@ -294,8 +307,11 @@ angular.module('fmApp')
         $scope.showAddExpenseForm(false);
         $scope.snackbarShow('Expense Added');
         $scope.expense.total_amount = 0;
-        $scope.$digest();
-      }
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body.message);
+      } 
+          $scope.$digest();
     }); 
 
   };
