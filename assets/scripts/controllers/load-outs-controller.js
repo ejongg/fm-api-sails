@@ -321,7 +321,7 @@ angular.module('fmApp')
           $scope.noCustomerOrdersAvailable =false;
         }
         
-        var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout_id});
+        var index = _.findIndex($scope.loadOuts,{'id': msg.data.loadout_id.id});
         console.log(index);
         // console.log($scope.loadOuts[index].transactions);
         var transIndex = _.findIndex($scope.loadOuts[index].transactions,{'id': msg.data.delivery_id});
