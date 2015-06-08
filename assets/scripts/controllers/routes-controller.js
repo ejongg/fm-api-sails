@@ -54,6 +54,9 @@ angular.module('fmApp')
 
   $scope.sortCriteria = 'id';
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
 
   var getAdresses = function () {
     $http.get(httpHost + '/address').success( function (data) {
@@ -106,6 +109,17 @@ angular.module('fmApp')
   $scope.pagePrint = function () {
     window.print();
   };
+
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       
+    }
+  }
 
   $scope.showAddAddressForm = function (data) {
     if($scope.editAddressForm === true) {
@@ -204,8 +218,12 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showAddAddressForm(false);
-        $scope.$digest();
+        
+      } else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true, "The address " + body.invalidAttributes.address_name[0].value + " is already existing.");
       }
+      $scope.$digest();
     });  
   };
 
@@ -216,8 +234,12 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditAddressForm(false);
-        $scope.$digest(); 
+         
+      } else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true, "The address " + body.invalidAttributes.address_name[0].value + " is already existing.");
       }
+      $scope.$digest();
     });
     console.log(address);
   };
