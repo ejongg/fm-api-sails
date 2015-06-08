@@ -73,7 +73,7 @@ module.exports = {
 
 		Load_out.findOne({id : loadoutId})
 			.then(function (loadout){
-				return new Promise(function (resolve, reject){
+				return new Promise(function (resolve){
 					loadout.status = "In progress";
 
 					loadout.save(function (err, saved){
@@ -126,23 +126,17 @@ module.exports = {
 	list : function(req, res){
 		var loadoutList = [];
 
-		Load_out.find()
+		Load_out.find({status : {'like' : 'Pending'}})
 			.then(function(loadouts){
 				return loadouts;
 			})
 
 			.each(function (loadout){
 				return new Promise(function (resolve, reject){
-					if(loadout.status == "Complete"){
+					LoadOutService.getDetails(loadout).then(function (detailedLoadout){
+						loadoutList.push(detailedLoadout);
 						resolve();
-					}else{
-						LoadOutService.getDetails(loadout)
-							.then(function (detailedLoadout){
-								loadoutList.push(detailedLoadout);
-								resolve();
-							})
-					}
-					
+					})
 				});
 			})
 
