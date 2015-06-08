@@ -11,29 +11,38 @@ module.exports = function (req, res, next){
 
 	.each(function (product){
 		return new Promise(function (resolve){
-
+			
 			if(product.return_empties_cases > 0 || product.return_empties_bottles > 0){
-
+				
 				return EmptiesService.countBottlesAndCases(product.sku_id).then(function (result){
+					
+					if(result == -1){
 
-					if(product.return_empties_cases <= result.cases){
-
-						if(product.return_empties_bottles <= result.bottles - (product.return_empties_cases * product.bottlespercase)){
+						/* If product is not found in empties table */
+						return SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
+							notAvailable.push(completeName);
 							resolve();
+						});
+
+					}else{
+						if(product.return_empties_cases <= result.cases){
+
+							if(product.return_empties_bottles <= result.bottles - (product.return_empties_cases * product.bottlespercase)){
+								resolve();
+							}else{
+								return SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
+									notAvailable.push(completeName);
+									resolve();
+								})
+							}
+
 						}else{
 							return SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
 								notAvailable.push(completeName);
 								resolve();
 							})
 						}
-
-					}else{
-						return SkuService.getSkuCompleteName(product.sku_id).then(function (completeName){
-							notAvailable.push(completeName);
-							resolve();
-						})
 					}
-
 				})
 
 			}else{

@@ -134,7 +134,12 @@ module.exports = {
 		return new Promise(function (resolve){
 			Empties.findOne({sku_id : skuId})
 				.then(function (foundEmpty){
-					resolve({cases : foundEmpty.cases, bottles : foundEmpty.bottles});
+					if(foundEmpty){
+						resolve({cases : foundEmpty.cases, bottles : foundEmpty.bottles});	
+					}else{
+						resolve(-1);
+					}
+					
 				})
 		});
 	},
