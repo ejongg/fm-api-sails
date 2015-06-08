@@ -377,7 +377,6 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "updated":
         getSKUAvailable();
-        $scope.getBays();
         $scope.$digest();
     }
 

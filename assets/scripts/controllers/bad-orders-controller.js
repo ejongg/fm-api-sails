@@ -334,6 +334,7 @@ angular.module('fmApp')
         //     $scope.product.bay = $scope.bays[0];
         // }
         if(_.findIndex($scope.skuList,{'id': msg.data.id}) !== 0){
+          console.log("In SKU");
            var index =  _.findIndex($scope.skuList,{'id': msg.data.id});
            $scope.skuList[i] = msg.data;
            $scope.$digest();                         
@@ -401,7 +402,6 @@ io.socket.on('inventory', function(msg){
     switch (msg.verb) {
       case "updated":
         console.log("Bay Updated");
-        $scope.getBays();
         getSKU();
         // var index = _.findIndex($scope.bays,{'id': msg.data.id});
         // $scope.bays[index] = msg.data;
