@@ -317,6 +317,26 @@ angular.module('fmApp')
 
   });
 
+  io.socket.on('sku', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    if(msg.verb === 'updated'){
+      
+       console.log("SKU Updated");
+       //  if($scope.product.sku.id === msg.data.sku_id.id){
+       //      console.log("sku match");
+       //      var index = _.findIndex($scope.bays,{'id': msg.data.id});
+       //      console.log(index);
+       //      $scope.bays[index] = msg.data;
+       //      $scope.bays = $scope.sortData($scope.bays,'bay_name');
+       //      $scope.product.bay = $scope.bays[0];
+       //  }
+    }
+
+  });
+
   io.socket.on('bays', function(msg){
     console.log("Message Verb: " + msg.verb);
     console.log("Message Data :");

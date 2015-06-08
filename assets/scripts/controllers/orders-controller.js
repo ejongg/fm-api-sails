@@ -81,6 +81,15 @@ angular.module('fmApp')
   getSKU();
   getAddresses();
 
+  $scope.changeCompany = function (company) {
+    console.log(company);
+    if(company === 'SMB'){
+      $scope.order.sku = null;
+    }else{
+      $scope.order.sku = null;
+    }
+  };
+
   $scope.pagePrint = function () {
     window.print();
   };
