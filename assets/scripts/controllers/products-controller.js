@@ -72,11 +72,18 @@ angular.module('fmApp')
 
     if(comp == "SMB"){
       $scope.smbPage = Math.ceil($scope.index/$scope.noOfRows);
+      if($scope.smbPage < 1){
+        $scope.smbPage = 1;
+        console.log($scope.smbPage);
+      }
     }else{
       $scope.cokePage = Math.ceil($scope.index/$scope.noOfRows);
+      if($scope.cokePage < 1){
+        $scope.cokePage = 1;
+        console.log($scope.smbPage);
+      }
     }
     
-   
     console.log("FILTEREDDD");
     console.log($scope.filteredData); //debugging purposes. to be deleted.
 
@@ -91,7 +98,7 @@ angular.module('fmApp')
     console.log($scope.noOfRows);
     //$scope.index = _.findIndex($scope.filteredAndSortedData,{'bay_name' : name});
     //$scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
-    console.log("CURRENT PAGE: " + $scope.currentPage);
+    //console.log("CURRENT PAGE: " + $scope.currentPage);
     console.log("INDEX: " + $scope.index);
   };
 
