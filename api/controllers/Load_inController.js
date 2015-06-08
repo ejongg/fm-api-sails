@@ -14,11 +14,12 @@ module.exports = {
 		var loadoutId = req.body.loadout;
 		var loadinNo = req.body.loadin_no;
 		var customerId = req.body.customer_id;
+		var deliveryId = req.body.delivery;
 
 		Load_out.update({id : loadoutId}, {status : "Complete"})
 			.then(function (updatedLoadout){
 				sails.sockets.blast('loadout', {verb : "updated", data : updatedLoadout});
-				return DeliveryService.completeDeliveries(loadoutId);
+				return Delivery_transactions.update({id : deliveryId});
 			})
 
 			.then(function (){
@@ -32,15 +33,17 @@ module.exports = {
 
 	noLoadin : function (req, res){
 		var loadoutId = req.body.loadout;
+		var deliveryId = req.body.delivery;
 
 		Load_out.update({id : loadoutId}, {status : "Complete"})
+
 			.then(function (updatedLoadout){
 				sails.sockets.blast('loadout', {verb : "updated", data : updatedLoadout});
-				return DeliveryService.completeDeliveries(loadoutId);
+				return Delivery_transactions.update({id : deliveryId});
 			})
 
 			.then(function (){
-				return res.send("Load in successful", 200);
+				return res.send("Delivery marked complete", 200);
 			})
 	}
 };

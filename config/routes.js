@@ -83,6 +83,7 @@ module.exports.routes = {
 		add - for creating load ins
 	*/
 	'POST /load-in/add' : 'Load_in.add',
+	'POST /load-in/no-loadin' : 'Load_in.noLoadin',
 
 	/* 	LOAD OUT 
 		add - for creating load outs
