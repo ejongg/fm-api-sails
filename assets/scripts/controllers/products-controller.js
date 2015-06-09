@@ -68,7 +68,7 @@ angular.module('fmApp')
 
     $scope.filteredData = $filter('filter')($scope.products, comp);
     $scope.filteredAndSortedData =  $scope.sortData($scope.filteredData, 'brand_name');
-    $scope.index = _.findIndex($scope.filteredAndSortedData,{'brand_name' : name});
+    $scope.index = (_.findIndex($scope.filteredAndSortedData,{'brand_name' : name}))+1;
 
     if(comp == "SMB"){
       $scope.smbPage = Math.ceil($scope.index/$scope.noOfRows);
