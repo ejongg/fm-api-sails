@@ -74,8 +74,11 @@ angular.module('fmApp')
   };
 
   var getAdressesAvailable = function () {
-    $http.get(httpHost + '/address/list').success( function (data) {
+    $http.get(httpHost + '/address/list?company=' + $scope.route.company).success( function (data) {
       if(data.length !== 0){
+        console.log("ROUTEEEE");
+        console.log($scope.route.company);
+
         $scope.addressesAvailable = $scope.sortData(data,'address_name');
         $scope.addressAvailableList = $scope.addressesAvailable[0];
         $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
@@ -104,7 +107,7 @@ angular.module('fmApp')
   };
 
   getAdresses();
-  getAdressesAvailable();
+  
   getRoutes();
 
   $scope.pagePrint = function () {
@@ -162,6 +165,7 @@ angular.module('fmApp')
   };
 
   $scope.showAddRouteBox = function (data){
+    getAdressesAvailable();
     if($scope.editIndex !== -1){
       $scope.editIndex = -1;
     }

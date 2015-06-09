@@ -150,7 +150,7 @@ angular.module('fmApp')
     $scope.itemExistingError = data;
 
     if(data === true){
-      $scope.itemExisting = item + " is already added.";
+      $scope.itemExisting = item + " has been added to the existing entry.";
     }else{
       $scope.itemExisting= '';
     }

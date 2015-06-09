@@ -88,6 +88,7 @@
                     <td colspan="2">
                         <div class="col-md-10">
                             <input type="text" class="form-control" ng-model="address.address_name" required>
+                            {{address.address_name}}
                           </div>
                     </td>
                   </tr>
@@ -442,7 +443,8 @@
                <label class="control-label">Address:</label>
                <br>
 
-               <div class="col-md-offset-1" ng-repeat="address in routeInfo.address" > - {{address.address_name }} &nbsp; </div>
+               <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address"> - {{address.address_name }} &nbsp; </div>
+               <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address"> - {{address.address_name }} &nbsp; </div>
 
 
                 <div class="form-group pull-right" style="margin-bottom: -5px;">

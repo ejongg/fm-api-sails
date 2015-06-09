@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                       <div class="alert alert-dismissable alert-danger" ng-show="itemExistingError">
+                       <div class="alert alert-dismissable alert-success" ng-show="itemExistingError">
                       <button type="button" class="close" ng-click="showItemExistingError(false)">×</button>
                       <strong>{{itemExisting}}</strong>
                     </div> 
@@ -421,12 +421,20 @@
                 <div class="col-md-2 pull right style">
                     <u class="double">{{orderProducts.total_amount| currency:"₱"}}</u></div>
             </div>
-      <div ng-show="cancelMode">
-          <form name="cancelForm" ng-submit="ok(cancel)" novalidate>
-          <input type="text" class="form-control" placeholder="Enter username." ng-model="cancel.username" required>
-          <input type="password" class="form-control" placeholder="Enter password." ng-model="cancel.password" required>
-          <button type="submit" class="btn btn-primary" ng-disabled="cancelForm.$invalid">Submit</button>
-          <button type="button" class="btn btn-default" ng-click="closeForm()">Cancel</button>
+
+            <br/>
+            <div class="form-group col-md-12" align="center" ng-show="cancelMode">
+            <form name="cancelForm" ng-submit="ok(cancel)" novalidate>
+            <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter username." ng-model="cancel.username" required>
+            </div>
+            <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Enter password." ng-model="cancel.password" required>
+            </div>
+            <div class="form-group">
+                        <button type="submit" class="btn btn-primary" ng-disabled="cancelForm.$invalid">Submit</button>
+                <button type="button" class="btn btn-default" ng-click="closeForm()">Cancel</button>
+            </div>
           </form>
       </div>
       </div>
