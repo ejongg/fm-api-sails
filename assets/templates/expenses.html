@@ -114,6 +114,12 @@
 
                             </div>
                           </div>
+
+                  <div class="alert alert-dismissable alert-success" ng-show="itemExistingError">
+                    <button type="button" class="close" ng-click="showItemExistingError(false)">×</button>
+                    <strong>{{itemExisting}}</strong>
+                  </div>
+                  
                      <div class="icon-preview">
                              <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseEmptiesForm.$invalid">Add</button>
                              <br>

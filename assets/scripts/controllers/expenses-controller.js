@@ -31,6 +31,8 @@ angular.module('fmApp')
 
   $scope.errorMessage = '';
   $scope.hasError = false;
+  $scope.itemExistingError = false;
+  $scope.itemExisting = '';
 
   // forSorting
   $scope.sortCriteria='id';
@@ -154,6 +156,17 @@ angular.module('fmApp')
          $scope.errorMessage = msg;
       }
     }
+
+  $scope.showItemExistingError = function (data, sku) {
+    $scope.itemExistingError = data;
+
+    if(data === true){
+      $scope.itemExisting = sku + " has been added to the existing entry.";
+    }else{
+      $scope.itemExisting= '';
+    }
+
+  }
 
   $scope.showAddExpenseForm = function (data) {
     $scope.addExpenseForm = data;

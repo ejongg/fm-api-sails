@@ -150,7 +150,7 @@
                         </div>
                     </div>
 
-                    <div class="alert alert-dismissable alert-danger" ng-show="itemExistingError">
+                    <div class="alert alert-dismissable alert-success" ng-show="itemExistingError">
                       <button type="button" class="close" ng-click="showItemExistingError(false)">×</button>
                       <strong>{{itemExisting}}</strong>
                   </div> 
@@ -349,6 +349,7 @@
         <div class="modal-header">
         <h4 class="modal-title">Purchase No. {{purchaseInfo.id}}</h4> 
         </div>
+
         <div class="modal-body">
             <table class="table table-striped table-hover ">
             <thead>
@@ -370,15 +371,23 @@
 
             </tbody>
         </table>
-        <div ng-show="voidMode">
-          <form name="voidForm" ng-submit="ok(voids)" novalidate>
-          <input type="text" class="form-control" placeholder="Enter username." ng-model="voids.username" required>
-          <input type="password" class="form-control" placeholder="Enter password." ng-model="voids.password" required>
-          <button type="submit" class="btn btn-primary" ng-disabled="voidForm.$invalid">Submit</button>
-          <button type="button" class="btn btn-default" ng-click="closeForm()">Cancel</button>
-          </form>
+
+            <div class="form-group col-md-12" align="center" ng-show="voidMode">
+              <form name="voidForm" ng-submit="ok(voids)" novalidate>
+               <div class="form-group" >
+                  <input type="text" class="form-control" placeholder="Enter username." ng-model="voids.username" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" placeholder="Enter password." ng-model="voids.password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" ng-disabled="voidForm.$invalid">Submit</button>
+                    <button type="button" class="btn btn-default" ng-click="closeForm()">Cancel</button>
+                </div>
+              </form>
+            </div>
         </div>
-        </div>
+
         <div class="modal-footer">
             <button class="btn btn-primary" ng-hide="purchaseInfo.status === 'Void'" ng-disabled="voidMode" ng-click="voidMode = true">Void</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>

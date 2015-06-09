@@ -172,7 +172,7 @@ angular.module('fmApp')
     $scope.itemExistingError = data;
 
     if(data === true){
-      $scope.itemExisting = sku + " in bay" + bay + " is already added.";
+      $scope.itemExisting = sku + " has been added to the existing entry.";
     }else{
       $scope.itemExisting= '';
     }
