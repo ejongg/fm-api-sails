@@ -38,7 +38,15 @@ module.exports = {
 				}, function(err){
 					if(err) return res.send(err);
 
-					Routes.findOne({route_name : routeName}).populate('address')
+					var comp = null;
+
+					if(company == "Coca-Cola"){
+						comp = 'coke_address';
+					}else{
+						comp = 'smb_address';
+					}
+
+					Routes.findOne({route_name : routeName}).populate(comp)
 						.then(function (createdRoute){
 							
 							if(flag == "add"){
