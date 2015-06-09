@@ -172,6 +172,8 @@ angular.module('fmApp')
       console.log($scope.addOtherMode);
       if($scope.addOtherMode === false){
          $scope.addOtherMode = true;
+         $scope.addBreakageMode = false;
+         $scope.addEmptiesMode = false;
       }
       
     }
