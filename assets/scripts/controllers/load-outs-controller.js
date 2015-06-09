@@ -138,6 +138,10 @@ angular.module('fmApp')
     return "Truck " + index;
   };
 
+  $scope.loadOutName = function (loadOut){
+    return loadOut.id + " " + loadOut.customer_id.establishment_name;
+  }
+
   $scope.addAvailableCustomer = function (data,index){
     console.log("Dropped");
     console.log(data);
