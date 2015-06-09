@@ -31,7 +31,8 @@ module.exports.policies = {
   UsersController : {
     login : 'alreadyLoggedIn', 
     mobileLogin : 'alreadyLoggedIn',
-    create : 'disableTokenAuth'
+    create : 'disableTokenAuth',
+    resetPassword : 'MustBeAdminPolicy'
   },
 
   Warehouse_transactionsController : {
@@ -84,7 +85,7 @@ module.exports.policies = {
 
   BaysController : {
     changeLineProduct : ['LineSameProductPolicy', 'LineIsNotEmptyPolicy'],
-    edit : 'LineIsNotEmptyPolicy'
+    edit : ['LineIsNotEmptyPolicy', 'OneMovingPilePolicy']
   },
 
   AddressController : {
