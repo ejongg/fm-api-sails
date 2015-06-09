@@ -66,6 +66,15 @@ module.exports = {
 			})
 	},
 
+	getCompleteLoadouts : function (req, res){
+		var date = req.query.date;
+
+		Load_out.find({date_created : date, status : "Complete"})
+			.then(function (loadout){
+				return res.send(loadout);
+			})
+	},
+
 	confirm : function(req, res){
 		var loadoutId = req.body.loadout_id;
 		var truck = req.body.truck_id;
