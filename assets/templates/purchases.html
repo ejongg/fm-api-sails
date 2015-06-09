@@ -371,11 +371,11 @@
             </tbody>
         </table>
         <div ng-show="voidMode">
-          <form name="voidForm" ng-submit="ok(void)" novalidate>
-          <input type="text" class="form-control" placeholder="Enter username." ng-model="void.username" required>
-          <input type="password" class="form-control" placeholder="Enter password." ng-model="void.password" required>
+          <form name="voidForm" ng-submit="ok(voids)" novalidate>
+          <input type="text" class="form-control" placeholder="Enter username." ng-model="voids.username" required>
+          <input type="password" class="form-control" placeholder="Enter password." ng-model="voids.password" required>
           <button type="submit" class="btn btn-primary" ng-disabled="voidForm.$invalid">Submit</button>
-          <button type="button" class="btn btn-default" ng-click="voidMode = false">Cancel</button>
+          <button type="button" class="btn btn-default" ng-click="closeForm()">Cancel</button>
           </form>
         </div>
         </div>
