@@ -102,30 +102,36 @@ module.exports = {
 
 			.each(function (product){
 				return new Promise(function (resolve){
-					Inventory.find({sku_id : product.sku_id, bay_id : product.bay_id}).sort('exp_date ASC')
-						.then(function (items){
-							var index = 0;
-							var remainingCases = product.cases;
+					if(product.company == "SMB"){
+						Inventory.find({sku_id : product.sku_id, bay_id : product.bay_id}).sort('exp_date ASC')
+							.then(function (items){
+								var index = 0;
+								var remainingCases = product.cases;
 
-							do{
-								if(remainingCases <= items[index].physical_count){
-									var prod = _.clone(product);
-									prod.cases = remainingCases;
-									prod.prod_date = items[index].prod_date;
-									finalProducts.push(prod);
-									remainingCases = 0;
-									resolve();
-								}else{
-									var prod = _.clone(product);
-									prod.cases = items[index].physical_count;
-									prod.prod_date = items[index].prod_date;
-									finalProducts.push(prod);
-									remainingCases = remainingCases - items[index].physical_count;
-									index++;
-								}
+								do{
+									if(remainingCases <= items[index].physical_count){
+										var prod = _.clone(product);
+										prod.cases = remainingCases;
+										prod.prod_date = items[index].prod_date;
+										finalProducts.push(prod);
+										remainingCases = 0;
+										resolve();
+									}else{
+										var prod = _.clone(product);
+										prod.cases = items[index].physical_count;
+										prod.prod_date = items[index].prod_date;
+										finalProducts.push(prod);
+										remainingCases = remainingCases - items[index].physical_count;
+										index++;
+									}
 
-							}while(remainingCases > 0);
-						})
+								}while(remainingCases > 0);
+							})
+					}else{
+						finalProducts.push(product);
+						resolve(finalProducts);
+					}
+					
 				});
 				
 			})

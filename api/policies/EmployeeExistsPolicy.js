@@ -6,8 +6,6 @@ module.exports = function(req, res, next){
 			office : req.body.office,	
 		};
 
-	console.log("Hello");
-
 	Employees.findOne(findEmployee)
 		.then(function (foundEmployee){
 			if(foundEmployee){

@@ -37,6 +37,7 @@ module.exports = function(req, res, next){
 												})
 											
 										}else{
+											order.company = company;
 											order.bay_id = bayResult;
 											resolve();
 										}
