@@ -129,7 +129,7 @@ angular.module('fmApp')
           
       }else if (JWR.statusCode === 400){
         console.log("User already exist");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,"The username " + body.invalidAttributes.username_UNIQUE[0].value + " is already existing.");
       }
       $scope.$digest();
     });   

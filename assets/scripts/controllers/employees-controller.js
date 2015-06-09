@@ -173,7 +173,7 @@ angular.module('fmApp')
         console.log("201");
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,"Employee is already existing.");
       }
        $scope.$digest(); 
     });   
@@ -193,7 +193,7 @@ angular.module('fmApp')
         $scope.snackbarShow('Employee Edited');  
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,"Employee is already existing.");
       }
        $scope.$digest(); 
     });
