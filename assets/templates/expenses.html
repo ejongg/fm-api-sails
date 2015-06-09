@@ -307,7 +307,7 @@
         </thead>
 
         <tbody>
-          <tr dir-paginate="expense in expenses | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows">
+          <tr dir-paginate="expense in expenses | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage">
             <td>{{expense.type}}</td>
             <td>{{expense.date}}</td>
             <td align="right">{{expense.amount | currency : "₱"}}</td>

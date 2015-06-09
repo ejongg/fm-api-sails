@@ -35,9 +35,44 @@ angular.module('fmApp')
   $scope.itemExisting = '';
 
   // forSorting
-  $scope.sortCriteria='id';
+  $scope.sortCriteria='type';
   $scope.reverseSort = false;
 
+  $scope.currentPage = 1;
+  $scope.filteredAndSortedData = [];
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
+
+  var setPage = function(){
+    console.log("NEWLY ADDED");
+    console.log($scope.newlyAdded);
+  
+    var expenseId = $scope.newlyAdded.id;
+    console.log("ID");
+    console.log(expenseId);
+
+    console.log("EXPENSES");
+    console.log($scope.expenses);
+
+    $scope.filteredAndSortedData =  $scope.sortData($scope.expenses, 'type');
+   
+    console.log($scope.filteredAndSortedData);
+
+    console.log("no of rows");
+    console.log($scope.noOfRows);
+
+    $scope.index = _.findIndex($scope.filteredAndSortedData,{'id' : expenseId});
+    console.log("INDEX: " + $scope.index);
+
+    if($scope.index < 1){
+      $scope.currentPage =  1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows)
+    }
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+    console.log("INDEX: " + $scope.index);
+  };
   
   var getExpenses = function () {
     console.log("GET EXPENSES");
@@ -53,7 +88,7 @@ angular.module('fmApp')
     }).error(function (err) {
       $scope.checkError(err);
     });
-  }; 
+  };
 
   var getSKUAvailable = function () {
      console.log("GET SKU");
@@ -408,6 +443,8 @@ angular.module('fmApp')
 
     if(msg.verb === 'created'){
       $scope.expenses.push(msg.data);
+      $scope.newlyAdded = msg.data; 
+      setPage();
       if($scope.noExpenses === true){
         $scope.noExpenses = false;
       }
