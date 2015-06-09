@@ -18,20 +18,22 @@ module.exports = {
 		var supplierAgent = req.body.supplieragent_name;
 		var user = req.body.user;
 
-		CustomerService.createCustomer(customer)
-			.then(function (resultCustomer){
-				sails.sockets.blast('customers',  {verb : "created", data : resultCustomer});
-				return CustomerOrderService.createOrder(amount, resultCustomer.id, supplierAgent, user, orders);
-			})
+		if(customer){
+			CustomerService.createCustomer(customer)
+				.then(function (resultCustomer){
+					sails.sockets.blast('customers',  {verb : "created", data : resultCustomer});
+					return CustomerOrderService.createOrder(amount, resultCustomer.id, supplierAgent, user, orders);
+				})
 
-			.then(function (createdOrder){
-				return Customer_orders.findOne({id : createdOrder.id}).populate('customer_id');
-			})
+				.then(function (createdOrder){
+					return Customer_orders.findOne({id : createdOrder.id}).populate('customer_id');
+				})
 
-			.then(function (foundCustomerOrder){
-				sails.sockets.blast('customer_orders', {verb : "created", data : foundCustomerOrder});
-				return res.send("Order recorded", 201);
-			})	
+				.then(function (foundCustomerOrder){
+					sails.sockets.blast('customer_orders', {verb : "created", data : foundCustomerOrder});
+					return res.send("Order recorded", 201);
+				})	
+		}
 	},
 
 	list : function(req, res){
