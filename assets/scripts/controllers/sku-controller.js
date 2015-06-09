@@ -30,6 +30,13 @@ angular.module('fmApp')
   $scope.reverseSort = false;
 
   $scope.currentPage = 1;
+  $scope.filteredData = [];
+  $scope.filteredAndSortedData = [];
+  $scope.companySelect='';
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
+  //$scope.currentPage = 1;
 
   var setPage = function(){
     var name = $scope.newlyAdded.sku_name;
