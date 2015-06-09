@@ -36,10 +36,9 @@ module.exports = {
 		var deliveryId = req.body.delivery;
 
 		Load_out.update({id : loadoutId}, {status : "Complete"})
-
 			.then(function (updatedLoadout){
 				sails.sockets.blast('loadout', {verb : "updated", data : updatedLoadout});
-				return Delivery_transactions.update({id : deliveryId});
+				return Delivery_transactions.update({id : deliveryId}, {status : "Complete"});
 			})
 
 			.then(function (){

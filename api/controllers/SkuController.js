@@ -35,6 +35,25 @@ module.exports = {
 			})
 	},
 
+	getCompanyProducts : function (req ,res){
+		var company = req.query.company;
+		var list = [];
+
+		Sku.find().populate('prod_id').then(function (skus){
+			return skus;
+		})
+
+		.each(function (sku){
+			if(sku.prod_id.company == company){
+				list.push(sku);
+			}
+		})
+
+		.then(function (){
+			return res.send(list);
+		})
+	},
+
 	availableSkuWithMovingPile : function(req, res){
 		var available = [];
 

@@ -122,7 +122,8 @@ module.exports.routes = {
 	*/
 	'GET /sku/available' : 'Sku.available',
 	'PUT /sku/edit' : 'Sku.edit',
-	'GET /sku/available-with-moving-pile' : 'Sku.availableSkuWithMovingPile', 
+	'GET /sku/available-with-moving-pile' : 'Sku.availableSkuWithMovingPile',
+	'GET /sku/company-products' : 'Sku.getCompanyProducts', 
 
 	/* 	TRUCKS 
 		add - for creating trucks
