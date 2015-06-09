@@ -359,6 +359,11 @@
 
             <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
 
+            <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+                  </div>
+
               <div class="alert alert-dismissable alert-danger" ng-show="existingAddressInRouteError">
                 <button type="button" class="close" ng-click="showExistingAddressInRouteError(false)">×</button>
                 <strong>

@@ -283,6 +283,9 @@ angular.module('fmApp')
          $scope.showAddRouteBox(false);
          $scope.snackbarShow('Route Added');
          $scope.$digest();
+      } else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true, body.message);
       }
     }); 
   };
