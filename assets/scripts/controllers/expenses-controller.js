@@ -368,6 +368,24 @@ angular.module('fmApp')
   });
 
 
+  io.socket.on('sku', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+
+    if(msg.verb === 'updated'){   
+       console.log("SKU Updated");
+        if(_.findIndex($scope.skuList,{'id': msg.data.id}) !== 0){
+          console.log("In SKU");
+           var index =  _.findIndex($scope.skuList,{'id': msg.data.id});
+           $scope.skuList[i] = msg.data;
+           $scope.$digest();                         
+        }
+    }
+
+  });
+
+
   io.socket.on('expenses', function(msg){
     console.log("Message Verb: " + msg.verb);
     console.log("Message Data :");

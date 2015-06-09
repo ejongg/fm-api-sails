@@ -322,17 +322,8 @@ angular.module('fmApp')
     console.log("Message Data :");
     console.log(msg.data);
 
-    if(msg.verb === 'updated'){
-      
+    if(msg.verb === 'updated'){   
        console.log("SKU Updated");
-        // if($scope.product.sku.id === msg.data.sku_id.id){
-        //     console.log("sku match");
-        //     var index = _.findIndex($scope.bays,{'id': msg.data.id});
-        //     console.log(index);
-        //     $scope.bays[index] = msg.data;
-        //     $scope.bays = $scope.sortData($scope.bays,'bay_name');
-        //     $scope.product.bay = $scope.bays[0];
-        // }
         if(_.findIndex($scope.skuList,{'id': msg.data.id}) !== 0){
           console.log("In SKU");
            var index =  _.findIndex($scope.skuList,{'id': msg.data.id});
