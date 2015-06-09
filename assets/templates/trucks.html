@@ -73,14 +73,14 @@
                     </div>
 
                     <div class="form-group">
-                        <div ng-show="noDSP" class=" col-md-9">No Delivery Sales Personnel</div>
-                        <div ng-hide="noDSP">
+                        <div>
                         <label for="inpuDPName" class="col-md-9">Delivery Sales Personnel</label>
-                        <div class="col-md-12">
+                        <div class="col-md-12" ng-hide="noDSP">
                         <select class="form-control" id="selectType" ng-model="truck.agent" 
                         ng-options="agent as fullName(agent) for agent in employeeDeliverySalesPersonnel">
                         </select>
                         </div>
+                        <div ng-show="noDSP" class=" col-md-12">No Delivery Sales Personnel</div>
                         </div>
                     </div>
 
@@ -257,6 +257,7 @@
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 </div>
+ <div class="snackbar-container" data-snackbar="true"></div>
 </div>
 
 
