@@ -47,13 +47,14 @@
 
             <div class="col-md-4">
            <h4><i class="mdi-content-add-circle"></i> ADD CUSTOMER ORDER </h4>
-         
-                        <label for="select" class="col-md-4">Company</label>
-                     
-                            <select class="form-control" ng-change="changeCompany(companySelected)" ng-model="companySelected" ng-init="companySelected = companies[0]">
+                       
+                        <div ng-hide="orders.length !== 0">
+                        <label for="select">Company</label>
+                          
+                            <select class="form-control" ng-change="changeCompany(companySelected)" ng-change="changeCompany(company)" ng-model="companySelected" ng-init="companySelected = companies[0]">
                               <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
                             </select>
-                      
+                         </div>
            
            <div ng-show="companySelected === 'Coca-Cola'">
             <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
@@ -193,15 +194,17 @@
                         </div>
                     </div>
 
-
                     <hr style="margin-top:50px; border-top: 3px solid #202020;">
 
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
-                        <div class="col-md-12">
+                        <div class="col-md-12" ng-hide="noSKU">
                             <select class="form-control" ng-model="order.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
+                        </div>
+                        <div class="col-md-12" ng-show="noSKU">
+                          NO SKU AVAILABLE
                         </div>
                     </div>
 
@@ -293,7 +296,7 @@
         </div>
 
     <!-- START OF TABLE --> 
-            <div class="form-group" ng-hide= "noOrders">
+            <div class="form-group" ng-hide= "noOrders || noSKU">
               <label for="select" class="col-md-2">Number of rows:</label>
                 <div class="col-md-1">
                     <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
