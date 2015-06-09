@@ -43,24 +43,28 @@ module.exports = {
 
 					Beginning_inventory.findOne(inventoryDate)
 					 .then(function (result){
-
 					 	if(result){
 					 		dssr.beginning_inventory = result.count;	
 					 		cb();
 					 	}else{
 					 		InventoryService.countInventory()
 					 			.then(function (totalCount){
-					 				var beginningInventory = {
-					 					month : moment().format("MMMM") ,
-					 					year : moment().format("YYYY") ,
-					 					count : totalCount 
-					 				};
+					 				if(totalCount > 0){
+					 					var beginningInventory = {
+					 						month : moment().format("MMMM") ,
+					 						year : moment().format("YYYY") ,
+					 						count : totalCount 
+					 					};
 
-					 				Beginning_inventory.create(beginningInventory)
-					 					.then(function (newBeginningInventory){
-					 						dssr.beginning_inventory = totalCount;
-					 						cb();
-					 					})
+					 					Beginning_inventory.create(beginningInventory)
+					 						.then(function (newBeginningInventory){
+					 							dssr.beginning_inventory = totalCount;
+					 							cb();
+					 						})
+				 					}else{
+				 						dssr.beginning_inventory = totalCount;
+				 					}
+					 				
 					 			})
 					 	}					 	
 					 })
