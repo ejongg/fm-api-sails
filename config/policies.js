@@ -88,6 +88,7 @@ module.exports.policies = {
   },
 
   AddressController : {
+    create : 'UniqueAddressPolicy',
     destroy : 'DeleteAddressPolicy'
   }
 
