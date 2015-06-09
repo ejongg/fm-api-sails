@@ -52,7 +52,7 @@
               &nbsp;DELETE&nbsp;</a>
         </li>
         <li class="pull-right">
-          <div class="search" ng-hide="noAddresses || noRoutes">
+          <div class="search" ng-hide="noAddresses">
             <form method="get" action="/search" id="search">
               <input name="q" ng-model="search.$" type="text" size="50" placeholder="SEARCH" />
             </form>
@@ -168,6 +168,10 @@
                   <h4><i class="mdi-image-edit"></i> EDIT ADDRESS </h4>
 
    <form name="addressEditForm" novalidate>
+                  <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+                  </div>
 
                    <tr>
                     <td><label>Address:</label></td>
@@ -490,6 +494,8 @@
          
   </div>
    
+   <div class="snackbar-container" data-snackbar="true"></div>
+
 </div>
 
 <!-- Modal -->

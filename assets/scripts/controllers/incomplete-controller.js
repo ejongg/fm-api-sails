@@ -111,7 +111,7 @@ angular.module('fmApp')
         $scope.showIncForm(false);
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true, "Insufficient bottles to complete a case.");
       }
 
        $scope.$digest();

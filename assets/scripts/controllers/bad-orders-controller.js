@@ -250,7 +250,7 @@ angular.module('fmApp')
         $scope.showAddBadOrderForm(false);
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true, "Insufficient stocks in line.");
       } 
         $scope.$digest();
     }); 

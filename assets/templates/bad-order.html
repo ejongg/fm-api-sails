@@ -57,7 +57,7 @@
 
                  <div ng-show="hasError" class="alert alert-dismissable alert-danger">
                      <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
-                     <strong>Insufficient stocks in line.</strong>
+                     <strong>{{errorMessage}}</strong>
                 </div> 
 
                 <!-- <div class="form-group">
@@ -110,7 +110,7 @@
                         </div>
 
                          <div class="col-md-12" ng-show="noBays">
-                            No Bay Available
+                            No Line Available
                         </div>
                     </div>
 

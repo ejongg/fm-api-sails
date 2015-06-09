@@ -122,6 +122,8 @@ angular.module('fmApp')
   }
 
   $scope.showAddAddressForm = function (data) {
+    $scope.addressForm.$setPristine();
+    $scope.hasError = false;
     if($scope.editAddressForm === true) {
        $scope.showEditAddressForm(false);
     }
@@ -141,6 +143,8 @@ angular.module('fmApp')
   };
 
   $scope.showEditAddressForm = function (data) {
+    $scope.addressForm.$setPristine();
+    $scope.hasError = false;
     if($scope.addAddressForm === true){
       $scope.showAddAdressForm(false);
     }
@@ -218,7 +222,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showAddAddressForm(false);
-        
+        $scope.snackbarShow('Address Added');
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");
         $scope.showErrorMessage(true, "The address " + body.invalidAttributes.address_name[0].value + " is already existing.");
@@ -234,7 +238,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditAddressForm(false);
-         
+        $scope.snackbarShow('Address Edited');
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");
         $scope.showErrorMessage(true, "The address " + body.invalidAttributes.address_name[0].value + " is already existing.");
@@ -250,6 +254,7 @@ angular.module('fmApp')
       console.log('Sails responded with delete employee: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){ 
+        $scope.snackbarShow('Address Deleted');
       }
     }); 
   };
@@ -270,6 +275,7 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
          $scope.route.address= [];
          $scope.showAddRouteBox(false);
+         $scope.snackbarShow('Route Added');
          $scope.$digest();
       }
     }); 
@@ -288,6 +294,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         console.log("Delete LoadOut");
+        $scope.snackbarShow('Route Deleted');
         $scope.$digest();
       }
     });

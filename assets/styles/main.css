@@ -98,8 +98,7 @@ padding: 20px;
 
 .panel-title {
  color: white !important;
- text-align: center;
-
+ text-align: left;
 }
 
 .panel-heading {
