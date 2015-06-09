@@ -44,7 +44,17 @@ module.exports = {
 	},
 
 	getList : function (req, res){
-		Address.find({route_id : null})
+		var company = req.query.company;
+
+		var query = null;
+
+		if(company == 'Coca-Cola'){
+			query = {coke_route : null};
+		}else{
+			query = {smb_route : null};
+		}
+
+		Address.find(query)
 			.then(function (addresses){
 				return res.send(addresses);
 			});
