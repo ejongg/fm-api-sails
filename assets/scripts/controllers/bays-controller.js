@@ -169,6 +169,7 @@ angular.module('fmApp')
       $scope.editOrDeleteBayForm = data;
        $scope.bayForm.$setPristine();
        $scope.hasError = false;
+       $scope.editBayTab = true;
   };
 
   $scope.setEditBayTab = function (data) {
