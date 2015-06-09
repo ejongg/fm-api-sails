@@ -26,10 +26,43 @@ angular.module('fmApp')
   $scope.noAddresses = false;
 
   // forSorting
-  $scope.sortCriteria='id';
+  $scope.sortCriteria='customer_id.establishment_name';
   $scope.reverseSort = false;
   
   $scope.companies = ['Coca-Cola', 'SMB'];
+
+  $scope.currentPage = 1;
+  //$scope.filteredData = [];
+  $scope.filteredAndSortedData = [];
+  //$scope.companySelect='';
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
+
+  var setPage = function(){
+    console.log("NEW ADDED:");
+    console.log($scope.newlyAdded);
+
+    var custId = $scope.newlyAdded.id;
+   
+    $scope.sortCriteria = 'customer_id.establishment_name';
+    $scope.filteredAndSortedData =  $scope.sortData($scope.ordersList, 'customer_id.establishment_name');
+   
+    console.log($scope.filteredAndSortedData);
+
+    console.log("NO OF ROWS");
+    console.log($scope.noOfRows);
+
+    $scope.index = (_.findIndex($scope.filteredAndSortedData,{'id' : custId}))+1;
+    if($scope.index < 1){
+      $scope.currentPage =  1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows)
+    }
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+    console.log("INDEX: " + $scope.index);
+  };
+
 
   var getSKU = function () {
     $http.get(httpHost + '/sku/company-products?company=Coca-Cola').success( function (data) {
@@ -363,6 +396,8 @@ angular.module('fmApp')
         console.log("Customer Order Created");
         console.log(msg.data);
         $scope.ordersList.push(msg.data);
+        $scope.newlyAdded = msg.data;
+        setPage();
         console.log($scope.ordersList);
         if($scope.noOrders === true) {
           $scope.noOrders = false;

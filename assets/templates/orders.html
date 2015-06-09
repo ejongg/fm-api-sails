@@ -357,7 +357,7 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="order in ordersList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getOrderProducts(order.id,order.status)" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
+                    <tr dir-paginate="order in ordersList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getOrderProducts(order.id,order.status)" current-page="currentPage" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
                         <td>{{order.customer_id.establishment_name}}</td>
                         <td>{{order.date_received}}</td>
                         <td>{{order.supplieragent_name}}</td>
