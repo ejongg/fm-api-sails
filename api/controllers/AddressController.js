@@ -35,7 +35,7 @@ module.exports = {
 		Address.update({id : address.id}, address)
 			.then(function (updatedAddress){
 				sails.sockets.blast("address", {verb : "updated", data : updatedAddress});
-				return res.send(200);
+				return res.send("Address updated",200);
 			})
 
 			.catch(function(err){
