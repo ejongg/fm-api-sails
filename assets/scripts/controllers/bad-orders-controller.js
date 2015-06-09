@@ -32,6 +32,31 @@ angular.module('fmApp')
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
 
+  $scope.currentPage = 1;
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
+
+  var setPage = function(){
+    $scope.sortCriteria = 'id';
+
+    console.log("NO OF ROWS");
+    console.log($scope.noOfRows);
+
+    $scope.index = ($scope.badOrdersList.length);
+    console.log("INDEX:" + $scope.index);
+    console.log($scope.index);
+    
+    if($scope.index < 1){
+      $scope.currentPage  = 1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
+      console.log("index > 1");
+      console.log($scope.currentPage);
+    }
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+  };
+
   var getBadOrderList = function () {
     $http.get(httpHost + '/bad_orders').success( function (data) {
       console.log("Get Bad Orders");
@@ -46,6 +71,7 @@ angular.module('fmApp')
       $scope.checkError(err);
     });
   };
+
 
   $scope.getBays = function (sku){
     console.log(sku);
@@ -248,6 +274,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.snackbarShow('Bad Order Added');
+        setPage();
         $scope.showAddBadOrderForm(false);
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
