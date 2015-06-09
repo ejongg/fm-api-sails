@@ -182,7 +182,8 @@ angular.module('fmApp')
   };
 
   $scope.getBadOrderDetails = function (id) {
-   $http.get(httpHost + '/bad_order_details?where={"bad_order_id" :'+ id +'}').success( function (data) {
+   $http.get(httpHost + '/bad-order-details/products?id='+ id).success( function (data) {
+
      $scope.badOrderDetails = data;
      console.log(data);
      $scope.showViewBadOrderDetails(true);

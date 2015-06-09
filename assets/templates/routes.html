@@ -251,7 +251,7 @@
 
 
         <div ng-hide="noAddresses">
-             <br><br>
+             
 
           <table class="table table-striped table-hover" ng-hide="noAddresses">
             <div class="form-group">
@@ -365,6 +365,16 @@
              </div> 
 
              <br>
+
+              <div class="form-group">
+                        <label for="select" class="col-md-3">Company:</label>
+                        <div class="col-md-7">
+                            <select class="form-control" ng-change="changeCompany()" ng-model="route.company" ng-init="companySelected = companies[0]">
+                              <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
               <div class="form-group">
                 <label class="col-md-3">Route:</label>
                 <div class="col-md-7">
@@ -372,8 +382,7 @@
                 </div>
               </div>
                 <br>
-                <br>
-
+                
                 <div>
                   <label class="col-md-3">Available Route:</label>
 
@@ -411,9 +420,18 @@
 
 <!--  HIDE FOR PRINTER   -->
 </div>
+<br>
+         <div class="form-group">
+          <label for="select" ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-3' : 'col-md-2'">Company:</label>
+            <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-3'">
+                <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect">
+                  <option value="Coca-Cola">Coca-Cola</option>
+                  <option value="SMB">SMB</option>
+                </select>
+            </div>
+          </div>
 
-    <br><br>
-      <!-- routesbox -->
+     <br>     
     <div dir-paginate="routeInfo in routes |filter : searchRoute | itemsPerPage:2" pagination-id="routesPagination">
       <div class="panel-primary" >
           <div class="panel-heading">
@@ -424,7 +442,7 @@
                <label class="control-label">Address:</label>
                <br>
 
-               <div class="col-md-offset-1" ng-repeat="address in routeInfo.address" > - {{address.address_name}} &nbsp; </div>
+               <div class="col-md-offset-1" ng-repeat="address in routeInfo.address" > - {{address.address_name }} &nbsp; </div>
 
 
                 <div class="form-group pull-right" style="margin-bottom: -5px;">

@@ -34,6 +34,7 @@ module.exports.routes = {
 	*/
 	'POST /bad-orders/add' : 'Bad_orders.add',
 	'GET  /bad-orders/details' : 'Bad_orders.getBadOrderProducts',
+	'GET /bad-order-details/products' : 'Bad_order_details.getProducts',
 
 	/* 	BAYS 
 		add - for creating bays
@@ -120,7 +121,8 @@ module.exports.routes = {
 		available - for listing products in inventory that has total count > 0
 	*/
 	'GET /sku/available' : 'Sku.available',
-	'PUT /sku/edit' : 'Sku.edit', 
+	'PUT /sku/edit' : 'Sku.edit',
+	'GET /sku/available-with-moving-pile' : 'Sku.availableSkuWithMovingPile', 
 
 	/* 	TRUCKS 
 		add - for creating trucks

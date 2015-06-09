@@ -467,9 +467,9 @@
                 <thead>
                     <tr>
                         <th>
-                          <a href="" ng-click="sortCriteria='prod_id.brand_name'; reverseSort = !reverseSort" class="thlink">
+                          <a href="" ng-click="sortCriteria=['prod_id.brand_name', 'sku_name']; reverseSort = !reverseSort; isSortedByArray = true" class="thlink">
                              Brand Name
-                              <span ng-show="sortCriteria == 'prod_id.brand_name'">
+                              <span ng-show="isSortedByArray">
                                 <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                 <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
                               </span>
@@ -478,7 +478,7 @@
 
 
                         <th>
-                            <a href="" ng-click="sortCriteria='size'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria='size'; reverseSort = !reverseSort; isSortedByArray = false" class="thlink">
                                 Size
                                 <span ng-show="sortCriteria == 'size'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -488,7 +488,7 @@
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortCriteria='lifespan'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria='lifespan'; reverseSort = !reverseSort; isSortedByArray = false" class="thlink">
                                 Lifespan (months)
                                 <span ng-show="sortCriteria == 'lifespan'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -498,9 +498,9 @@
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortCriteria='lifespan'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria='weightpercase'; reverseSort = !reverseSort; isSortedByArray = false" class="thlink">
                                 Weight Per Case
-                                <span ng-show="sortCriteria == 'lifespan'">
+                                <span ng-show="sortCriteria == 'weightpercase'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                     <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
                                 </span>
@@ -508,7 +508,7 @@
                         </th>
 
                          <th>
-                            <a href="" ng-click="sortCriteria='bottlespercase'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria='bottlespercase'; reverseSort = !reverseSort; isSortedByArray = false" class="thlink">
                                 Bottles Per Case
                                 <span ng-show="sortCriteria == 'bottlespercase'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -518,7 +518,7 @@
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortCriteria='priceperbottle'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria='priceperbottle'; reverseSort = !reverseSort; isSortedByArray = false" class="thlink">
                                 Price Per Bottle
                                 <span ng-show="sortCriteria == 'priceperbottle'" style="text-align: right">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -528,7 +528,7 @@
                         </th>
 
                         <th>
-                            <a href="" ng-click="sortCriteria='pricepercase'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria='pricepercase'; reverseSort = !reverseSort; isSortedByArray = false" class="thlink">
                                 Price Per Case
                                 <span ng-show="sortCriteria == 'pricepercase'" style="text-align: right">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -538,7 +538,7 @@
                         </th>
 
                          <th>
-                            <a href="" ng-click="sortCriteria='priceperempty'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria='priceperempty'; reverseSort = !reverseSort; isSortedByArray = false" class="thlink">
                                 Price Per Empty
                                 <span ng-show="sortCriteria == 'priceperempty'" style="text-align: right">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>

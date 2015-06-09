@@ -35,6 +35,47 @@ module.exports = {
 			})
 	},
 
+	availableSkuWithMovingPile : function(req, res){
+		var available = [];
+
+		Inventory.find().populate('sku_id')
+			.then(function getAvailableSkus(inventoryItems){
+				return inventoryItems; 				
+			})
+
+			.each(function (item){
+				return new Promise(function (resolve, reject){
+					if(item.physical_count > 0 && _.findIndex(available, {id : item.sku_id.id}) == -1){
+						
+						Sku.findOne({id : item.sku_id.id}).populate('prod_id')
+							.then(function (sku){
+								return sku;
+							})
+
+							.then(function (sku){
+
+								Bays.findOne({sku_id : sku.id, pile_status : "Moving pile"}).then(function (found){
+									if(found){
+										available.push(sku);
+										resolve();	
+									}else{
+										resolve();
+									}
+											
+								})
+								
+							})
+					}else{
+						resolve();
+					}
+				})
+			})
+
+			.then(function (){
+				return res.send(available);
+			})	
+	},
+
 	edit : function (req, res){
 		var sku = req.body;
 
