@@ -70,7 +70,7 @@ angular.module('fmApp')
     console.log("NO OF ROWS");
     console.log($scope.noOfRows);
 
-    $scope.index = _.findIndex($scope.filteredAndSortedData,{'id' : id});
+    $scope.index = (_.findIndex($scope.filteredAndSortedData,{'id' : id}))+1;
     console.log("INDEX: " + $scope.index);
     
     if($scope.index < 1){
