@@ -56,7 +56,8 @@ angular.module('fmApp')
     $scope.companySelect = comp;
 
     $scope.filteredData = $filter('filter')($scope.skuLists, comp);
-
+    
+    $scope.sortCriteria = ['prod_id.brand_name', 'sku_name'];
     $scope.filteredAndSortedData =  $scope.sortData($scope.filteredData, ['prod_id.brand_name', 'sku_name']);
    
     console.log("FILTERED DATA");

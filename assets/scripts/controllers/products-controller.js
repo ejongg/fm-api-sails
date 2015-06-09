@@ -23,7 +23,7 @@ angular.module('fmApp')
   $scope.hasError = false;
 
   //forSorting. Default is set to id
-  $scope.sortCriteria = 'id';
+  $scope.sortCriteria = 'brand_name';
   $scope.reverseSort = false;
 
   $scope.cokePage = 1;
