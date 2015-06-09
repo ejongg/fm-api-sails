@@ -17,16 +17,19 @@ module.exports = {
   	},
   	route_name : {
   		type : 'string',
-  		required : true,
-      unique : true
+  		required : true
   	},
     company : {
       type : 'string',
       required : true
     },
-    address : {
+    coke_address : {
       collection : 'address',
-      via : 'route_id'
+      via : 'coke_route'
+    },
+    smb_address : {
+      collection : 'address',
+      via : 'smb_route'
     }
   },
 

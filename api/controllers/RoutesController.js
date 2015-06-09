@@ -17,7 +17,15 @@ module.exports = {
 			.then(function (route){
 
 				async.each(addressList, function (address, cb){
-					Address.update({id : address.id}, {route_id : route.id})
+					var addressRoute;
+
+					if(company == 'Coca-Cola'){
+						addressRoute = {coke_route : route.id};
+					}else{
+						addressRoute = {smb_route : route.id};
+					}
+
+					Address.update({id : address.id}, addressRoute)
 						.then(function (updatedAddress){
 							updatedAddressList.push(updatedAddress);
 							cb();

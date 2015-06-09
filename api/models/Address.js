@@ -23,7 +23,10 @@ module.exports = {
   		type : 'string',
   		required : true
   	},
-    route_id : {
+    coke_route : {
+      model : 'routes'
+    },
+    smb_route : {
       model : 'routes'
     }
   },
