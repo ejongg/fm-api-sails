@@ -326,7 +326,8 @@ angular.module('fmApp')
           $scope.noBays = false;
         }
         $scope.bays.push(msg.data);
-        $scope.bayItems.push(msg.bayitem);
+        // $scope.bayItems.push(msg.bayitem);
+        console.log($scope.bays.length);
         $scope.showAddBayForm(false);
         $scope.$digest();
         break;
