@@ -17,6 +17,7 @@ angular.module('fmApp')
   $scope.addRouteBox = false;
   $scope.editRouteBox = false;
 
+  $scope.companies = ['Coca-Cola', 'SMB'];
 
   $scope.editIndex = -1;
 
