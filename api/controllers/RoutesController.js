@@ -68,7 +68,7 @@ module.exports = {
 	remove : function(req, res){
 		var routeId = req.query.id;
 
-		Routes.findOne({id : routeId}).populate('address')
+		Routes.findOne({id : routeId}).populateAll()
 			.then(function (foundRoute){
 
 				Routes.destroy({id : routeId})
