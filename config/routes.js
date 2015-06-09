@@ -34,6 +34,7 @@ module.exports.routes = {
 	*/
 	'POST /bad-orders/add' : 'Bad_orders.add',
 	'GET  /bad-orders/details' : 'Bad_orders.getBadOrderProducts',
+	'GET /bad-order-details/products' : 'Bad_order_details.getProducts',
 
 	/* 	BAYS 
 		add - for creating bays
