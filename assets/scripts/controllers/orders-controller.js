@@ -5,6 +5,7 @@ angular.module('fmApp')
   function($scope, _, $http, httpHost, authService,userService,$modal){
   $scope.distanceRatings = [1,2,3,4,5];
   $scope.skuList = [];
+  $scope.skuListMovingPile = [];
   $scope.ordersList = [];
   $scope.addresses = [];
   $scope.orders = [];
@@ -31,11 +32,27 @@ angular.module('fmApp')
   $scope.companies = ['Coca-Cola', 'SMB'];
 
   var getSKU = function () {
-    $http.get(httpHost + '/sku').success( function (data) {
+    $http.get(httpHost + '/sku/company-products?company = Coca-Cola').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
         $scope.order.sku = null;
         console.log("SKU:");
+        console.log($scope.skuList);
+      }else{
+        $scope.noSKU = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+
+  };
+
+  var getSKUMovingPile = function () {
+    $http.get(httpHost + '/sku/available-with-moving-pile').success( function (data) {
+      if(data.length !== 0){
+        $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
+        $scope.order.sku = null;
+        console.log("SKU Moving:");
         console.log($scope.skuList);
       }else{
         $scope.noSKU = true;
@@ -79,7 +96,16 @@ angular.module('fmApp')
   
   getOrders();
   getSKU();
+  // getSKUMovingPile();
   getAddresses();
+
+  $scope.changeCompany = function (company) {
+    if(company === 'Coca-Cola'){
+      getSKU();
+    }else{
+      getSKUMovingPile();
+    }
+  };
 
   $scope.changeCompany = function (company) {
     console.log(company);
@@ -219,16 +245,16 @@ angular.module('fmApp')
     console.log(final_order);
 
     //io.socket.post('/customer_orders/add', {order : final_order});
-    io.socket.request($scope.socketOptions('post','/customer_orders/add',{"Authorization": "Bearer " + authService.getToken()},final_order), function (body, JWR) {
-      console.log('Sails responded with post user: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
-       console.log("close form");
-       $scope.showAddOrderForm(false);
-       $scope.snackbarShow('Order Added');
-       $scope.$digest();
-      }
-    });  
+    // io.socket.request($scope.socketOptions('post','/customer_orders/add',{"Authorization": "Bearer " + authService.getToken()},final_order), function (body, JWR) {
+    //   console.log('Sails responded with post user: ', body);
+    //   console.log('and with status code: ', JWR.statusCode);
+    //   if(JWR.statusCode === 201){
+    //    console.log("close form");
+    //    $scope.showAddOrderForm(false);
+    //    $scope.snackbarShow('Order Added');
+    //    $scope.$digest();
+    //   }
+    // });  
 
   };
 
