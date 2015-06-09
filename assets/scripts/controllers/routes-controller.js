@@ -176,6 +176,7 @@ angular.module('fmApp')
         $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
         $scope.addressAvailableList = $scope.addressesAvailable[0];
         $scope.noAddressesAvailable = false;
+        $scope.route.company = $scope.companies[0]
       }
     }
   };
@@ -638,6 +639,20 @@ angular.module('fmApp')
           $scope.noRoutes = true;
         }
         $scope.$digest();
+
+        if(msg.data.address.length !== 0){
+          console.log("Adress");
+          for (var i = 0; i < msg.data.address.length; i++) {
+            console.log("ADD");
+            $scope.addressesAvailable.push(msg.data.address[i]);
+          }
+           $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+            $scope.addressAvailableList = $scope.addressesAvailable[0];
+            $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+            if($scope.noAddressesAvailable === true){
+              $scope.noAddressesAvailable = false;
+            }
+        }
     }
 
   });

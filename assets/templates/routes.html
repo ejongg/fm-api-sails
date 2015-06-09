@@ -369,7 +369,7 @@
               <div class="form-group">
                         <label for="select" class="col-md-3">Company:</label>
                         <div class="col-md-7">
-                            <select class="form-control" ng-change="changeCompany()" ng-model="route.company" ng-init="companySelected = companies[0]">
+                            <select class="form-control" ng-change="changeCompany()" ng-model="route.company" ng-init="route.company = companies[0]">
                               <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
                             </select>
                         </div>
