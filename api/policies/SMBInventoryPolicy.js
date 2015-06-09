@@ -37,7 +37,7 @@ module.exports = function(req, res, next){
 												})
 											
 										}else{
-											order.prod_date = foundSku[0].prod_date;
+											order.bay_id = bayResult;
 											resolve();
 										}
 

@@ -20,6 +20,10 @@ module.exports = {
 						resolve(orders);
 					})
 
+					.then(function (products){
+						return CustomerOrderService.assignProdDate(products);
+					})
+
 					.each(function (product){
 						return CustomerOrderService.createOrderProducts(product, createdOrder.id);
 					})
@@ -69,7 +73,7 @@ module.exports = {
 		});
 	},
 
-	getTotalAmount : function(products){
+	getTotalAmount : function (products){
 		return new Promise(function (resolve){
 			var totalAmount = 0;
 
@@ -83,6 +87,51 @@ module.exports = {
 
 			.then(function (){
 				resolve(totalAmount);
+			})
+
+		});
+	},
+
+	assignProdDate : function (products){
+		var finalProducts = [];
+		return new Promise(function (resolve){
+			
+			new Promise(function (resolve){
+				resolve(products);
+			})
+
+			.each(function (product){
+				return new Promise(function (resolve){
+					Inventory.find({sku_id : product.sku_id, bay_id : product.bay_id}).sort('exp_date ASC')
+						.then(function (items){
+							var index = 0;
+							var remainingCases = product.cases;
+
+							do{
+								if(remainingCases <= items[index].physical_count){
+									var prod = _.clone(product);
+									prod.cases = remainingCases;
+									prod.prod_date = items[index].prod_date;
+									finalProducts.push(prod);
+									remainingCases = 0;
+									resolve();
+								}else{
+									var prod = _.clone(product);
+									prod.cases = items[index].physical_count;
+									prod.prod_date = items[index].prod_date;
+									finalProducts.push(prod);
+									remainingCases = remainingCases - items[index].physical_count;
+									index++;
+								}
+
+							}while(remainingCases > 0);
+						})
+				});
+				
+			})
+
+			.then(function (){
+				resolve(finalProducts);
 			})
 
 		});
