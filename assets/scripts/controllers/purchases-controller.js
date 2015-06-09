@@ -34,6 +34,9 @@ angular.module('fmApp')
   $scope.maxBottle = 0;
 
   $scope.currentPage = 1;
+  //$scope.filteredData = [];
+  $scope.filteredAndSortedData = [];
+  //$scope.companySelect='';
   $scope.noOfRows = 0;
   $scope.newlyAdded = {};
   $scope.index = 0;
@@ -99,6 +102,9 @@ angular.module('fmApp')
 
   var setPage = function(){
     $scope.sortCriteria = 'id';
+    
+    console.log("FILTERED AND SORTED");
+    console.log($scope.filteredAndSortedData);
 
     console.log("NO OF ROWS");
     console.log($scope.noOfRows);
