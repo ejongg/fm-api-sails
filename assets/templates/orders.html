@@ -338,13 +338,13 @@
           <input type="text" class="form-control" placeholder="Enter username." ng-model="cancel.username" required>
           <input type="password" class="form-control" placeholder="Enter password." ng-model="cancel.password" required>
           <button type="submit" class="btn btn-primary" ng-disabled="cancelForm.$invalid">Submit</button>
-          <button type="button" class="btn btn-default" ng-click="cancelMode = false">Cancel</button>
+          <button type="button" class="btn btn-default" ng-click="closeForm()">Cancel</button>
           </form>
       </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary"  ng-hide="orderProducts.status === 'Delivered' || orderProducts.status === 'Cancelled'" ng-disabled="cancelMode" ng-click="cancelMode = true">Cancel Order</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="cancel()">Close</button>
+        <button class="btn btn-default" ng-click="closeModal()">Close</button>
       </div>
     </div>
   </div>

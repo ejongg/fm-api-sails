@@ -357,7 +357,7 @@ angular.module('fmApp')
       io.socket.request($scope.socketOptions('post','/customer-orders/cancel',{"Authorization": "Bearer " + authService.getToken()}, cancelInfo), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
+      if(JWR.statusCode === 200){
         $scope.snackbarShow('Order Cancelled');  
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
@@ -377,7 +377,14 @@ angular.module('fmApp')
 .controller('OrderModalCtrl', function ($scope, $modalInstance, order) {
   $scope.cancelMode = false;
   $scope.orderProducts = order;
+  $scope.cancel = {};
   console.log($scope.orderProducts);
+  
+  $scope.closeForm = function () {
+    console.log("Close Form");
+    $scope.cancelMode = false;
+    $scope.cancel = {};
+  }
 
   $scope.ok = function (cred) {
     var cancelInfo = {
@@ -388,9 +395,9 @@ angular.module('fmApp')
     $modalInstance.close(cancelInfo);
   };
 
-  $scope.cancel = function () {
+  $scope.closeModal = function () {
     $modalInstance.dismiss('cancel');
-  };
+  }
 });
 
 

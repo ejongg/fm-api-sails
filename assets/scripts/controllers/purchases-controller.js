@@ -446,7 +446,7 @@ angular.module('fmApp')
       io.socket.request($scope.socketOptions('post','  /purchases/void',{"Authorization": "Bearer " + authService.getToken()}, voidInfo), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
+      if(JWR.statusCode === 200){
         $scope.snackbarShow('Purchase Void');  
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
@@ -466,7 +466,14 @@ angular.module('fmApp')
   .controller('PurchaseModalCtrl', function ($scope, $modalInstance, purchase) {
   $scope.voidMode = false;
   $scope.purchaseInfo = purchase;
+  $scope.voids = {};
   console.log($scope.purchaseInfo);
+
+  $scope.closeForm = function () {
+    console.log("Close form");
+    $scope.voidMode = false;
+    $scope.voids = {};
+  }
 
   $scope.ok = function (cred) {
     var voidInfo = {

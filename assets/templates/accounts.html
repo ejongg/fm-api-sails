@@ -141,7 +141,7 @@
 
             <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <a ng-click="openResetPwModal()"> <i class="mdi-editor-mode-edit"/>&nbsp; Reset Password</a>
+                            <a ng-click="openResetPwModal(resetId)"> <i class="mdi-editor-mode-edit"/>&nbsp; Reset Password</a>
                         </li>
                         <li>
                             <a ng-click="setResetPasswordTab(false)"><i class="mdi-action-delete"/>&nbsp; Delete Account</a>
@@ -283,8 +283,19 @@
         <div class="modal-body">
             <p>Are you sure you want to reset the password of this account?</p>
         </div>
+        <div ng-show="hasReturn">
+          {{returnMsg}} <button ng-click="closeMsg()">X</button>
+        </div>
+        <div ng-show="resetMode && hasReturn === false">
+          <form name="resetForm" ng-submit="ok(reset)" novalidate>
+          <input type="text" class="form-control" placeholder="Enter username." ng-model="reset.username" required>
+          <input type="password" class="form-control" placeholder="Enter password." ng-model="reset.password" required>
+          <button type="submit" class="btn btn-primary" ng-disabled="resetForm.$invalid">Submit</button>
+          <button type="button" class="btn btn-default" ng-click="closeForm()">Cancel</button>
+          </form>
+        </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">Yes</button>
+            <button class="btn btn-primary" ng-click="resetMode = true" ng-hide="hasReturn">Yes</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>
       </div>

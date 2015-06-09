@@ -24,6 +24,8 @@ angular.module('fmApp')
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
 
+  $scope.resetId = null;
+
   $scope.showErrorMessage = function (data,msg) {
     $scope.hasError = data;
     console.log($scope.hasError);
@@ -80,10 +82,14 @@ angular.module('fmApp')
 
 	$scope.showEditOrDeleteUserForm = function (data) {
       $scope.editOrDeleteUserForm = data;
+      if(data === false){
+        $scope.resetId = null;
+      }
 	};
 
     
     $scope.userClicked = function (user) {
+      $scope.resetId = user.id;
       if($scope.addUserForm === true){
         $scope.showAddUserForm(false);
       }
@@ -235,7 +241,6 @@ angular.module('fmApp')
   };
 
   $scope.openResetPwModal = function (account) {
-    console.log("Open Reset Password Modal");
 
     var modalInstance = $modal.open({
       animation: true,
@@ -249,8 +254,8 @@ angular.module('fmApp')
     });
 
     modalInstance.result.then(function (account) {
-      $scope.deleteUser(account);
-    }, function () {
+      console.log(account);
+     }, function () {
       console.log("close");
     });
 
@@ -259,7 +264,7 @@ angular.module('fmApp')
 
 }])
 
-    .controller('AccountModalCtrl', function ($scope, $modalInstance, account) {
+.controller('AccountModalCtrl', function ($scope, $modalInstance, account) {
 
   $scope.ok = function () {
     $modalInstance.close(account);
@@ -270,11 +275,60 @@ angular.module('fmApp')
   };
 })
 
-    .controller('resetPwordModalCtrl', function ($scope, $modalInstance, account) {
+.controller('resetPwordModalCtrl', function ($scope, $modalInstance, account,authService) {
+  $scope.resetMode = false;
+  $scope.returnMsg = '';
+  $scope.hasReturn = false;
+  $scope.reset = {};
+  
+  $scope.closeMsg = function () {
+    $scope.resetMode = false;
+    $scope.returnMsg = '';
+    $scope.hasReturn = false;
+  }
 
-  $scope.ok = function () {
-    $modalInstance.close(routeInfo);
+  $scope.closeForm = function () {
+    $scope.resetMode = false;
+    $scope.reset = {};
+  }
+
+  $scope.socketOptions = function (method,url,headers,params) {
+    return {
+      method: method,
+      url: url,
+      headers: headers,
+      params: params
+    };
   };
+
+  $scope.ok = function (user) {
+    var resetInfo = {
+      "user": account,
+      "username": user.username,
+      "password": user.password
+    };
+
+    io.socket.request($scope.socketOptions('post','/users/resetpassword',{"Authorization": "Bearer " + authService.getToken()}, resetInfo), function (body, JWR) {
+      console.log('Sails responded with post user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $scope.returnMsg = body;
+        $scope.hasReturn = true;
+        $scope.closeForm();
+      }else if (JWR.statusCode === 400){
+        $scope.returnMsg = body; 
+        $scope.hasReturn = true;
+      }
+       $scope.$digest();
+    
+    });
+
+    
+  };
+
+  $scope.close = function () {
+    $modalInstance.close(); 
+  }
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
