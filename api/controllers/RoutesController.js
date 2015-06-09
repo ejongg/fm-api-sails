@@ -9,10 +9,11 @@ module.exports = {
 	add : function(req, res){
 		var routeName = req.body.route_name;
 		var addressList = req.body.address;
+		var company = req.body.company;
 		var flag = req.body.flag;
 		var updatedAddressList = [];
 
-		Routes.findOrCreate({route_name : routeName}, {route_name : routeName})
+		Routes.findOrCreate({route_name : routeName, company : company}, {route_name : routeName, company : company})
 			.then(function (route){
 
 				async.each(addressList, function (address, cb){

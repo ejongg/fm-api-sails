@@ -20,6 +20,10 @@ module.exports = {
   		required : true,
       unique : true
   	},
+    company : {
+      type : 'string',
+      required : true
+    },
     address : {
       collection : 'address',
       via : 'route_id'
