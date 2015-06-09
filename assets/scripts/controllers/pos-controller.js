@@ -24,6 +24,8 @@ angular.module('fmApp')
   $scope.maxBottles = 0;
   $scope.maxReturnedBottles = 0;
 
+  $scope.maxDeposit =  0;
+
   $scope.totalAmount = 0;
   $scope.deposit = null;
 
@@ -44,7 +46,7 @@ angular.module('fmApp')
         $scope.transaction.sku = $scope.skuList[0];
         $scope.maxBottles = $scope.transaction.sku.bottlespercase;
         $scope.maxReturnedsBottles = $scope.transaction.sku.bottlespercase;
-        $scope.returns.sku = $scope.skuList[0];
+        $scope.returns.sku = null;
         $scope.noSKU = false;
 
         console.log("Available SKU:");
@@ -64,9 +66,12 @@ angular.module('fmApp')
 
   $scope.getMaxReturnedBottles = function (returns){
     console.log("RETURNED:");
-    console.log(returns);
+    if(returns !== null){
+       console.log(returns);
     $scope.maxReturnedBottles = returns.bottlespercase;
     console.log("MAX RETURNED BOTTLES " + $scope.maxReturnedBottles);
+    }
+
   };
 
   $scope.combined = function (sku) {

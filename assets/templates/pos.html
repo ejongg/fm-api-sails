@@ -97,6 +97,29 @@
                  <input ng-model="transaction.discount" type="number" min="0" step="0.01" class="form-control" placeholder="Enter discount per case." required>
                  </div>
             </div>
+      <hr>
+      RETURN
+      <div class="form-group">
+        <label for="select" class="col-md-3">Deposit</label>
+        <div class="col-md-9">
+          <input ng-model="transaction.deposit" type="number" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
+        </div>
+      </div>
+
+
+        <div class="form-group">
+          <label for="select" class="col-md-3">Extra Bottles</label>
+          <div class="col-md-9">
+            <input ng-model="transaction.return_extraBottles" type="number" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="select" class="col-md-3">Cases</label>
+          <div class="col-md-9">
+            <input ng-model="transaction.return_cases" type="number" min="0" class="form-control" placeholder="Enter number of cases." required>
+          </div>
+        </div>
 
             <button class="btn btn-primary pull-right" ng-disabled="transactionForm.$invalid">Add</button><br><br><br>
 
@@ -135,17 +158,17 @@
 </div>
 </div>
 
-<hr>
+<div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' || deposit === null " class="btn btn-primary btn-lg pull-right">Done</div>
 
-<div class="panel">
+<!-- <div class="panel">
 
 <hr>
 
 
 <br/>
-<br/>
+<br/> -->
 
-
+<!-- 
   <h2>RETURNED ITEMS</h2><hr>
 
   <div class="row content-view">
@@ -169,7 +192,9 @@
             NO SKU AVAILABLE
           </div>
           <div ng-hide="noSKU" class="col-md-9">
-            <select  class="form-control" ng-model="returns.sku" ng-change="getMaxReturnedBottles(returns.sku)" ng-options="sku as combined(sku) for sku in skuList"> </select>
+            <select  class="form-control" ng-model="returns.sku" ng-change="getMaxReturnedBottles(returns.sku)" ng-options="sku as combined(sku) for sku in skuList">
+               <option value="" >None</option>
+             </select>
           </div>
            </div>
 
@@ -177,13 +202,13 @@
       <div class="form-group">
         <label for="select" class="col-md-3">Deposit</label>
         <div class="col-md-9">
-          <input ng-model="deposit" type="number" min="1" class="form-control" placeholder="Enter deposit (₱).">
+          <input ng-model="deposit" type="number"  class="form-control" placeholder="Enter deposit (₱).">
         </div>
       </div>
 
 
         <div class="form-group">
-          <label for="select" class="col-md-3">Bottles</label>
+          <label for="select" class="col-md-3">Extra Bottles</label>
           <div class="col-md-9">
             <input ng-model="returns.bottles" type="number" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
           </div>
@@ -229,7 +254,7 @@
 <br/>
 
 
- <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' || deposit === null " class="btn btn-primary btn-lg pull-right">Done</div>
+ <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' || deposit === null " class="btn btn-primary btn-lg pull-right">Done</div> -->
 
 <div class="snackbar-container" data-snackbar="true"></div>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
