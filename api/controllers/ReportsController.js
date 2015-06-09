@@ -9,6 +9,9 @@ module.exports = {
 		var dssr = {};
 		var date = req.query.date;
 
+		var start = req.query.start;
+		var end = req.query.end;
+
 		if(!date){
 			date = moment().format("YYYY-MM-DD");
 		}
@@ -106,8 +109,13 @@ module.exports = {
 
 			function getTotalPurchases(cb){
 				var totalPurchases = 0;
+				var query = {date_received : date, status : {'!' : 'Void'}};
 
-				Purchases.find({date_received : date, status : {'!' : 'Void'}})
+				if(start != null && end != null){
+					query = {date_received : {'>=' : start, '<=' : end}, status : {'!' : 'Void'}}
+				}
+
+				Purchases.find(query)
 					.then(function (purchases){
 						return purchases;	
 					})
@@ -124,8 +132,13 @@ module.exports = {
 
 			function getSTT(cb){
 				var totalAmount = 0;
+				var query = {delivery_date : date};
 
-				Delivery_transactions.find({delivery_date : date})
+				if(start != null && end != null){
+					query = {delivery_date : {'>=' : start, '<=' : end}};
+				}
+
+				Delivery_transactions.find(query)
 					.then(function (deliveries){
 						return deliveries;
 					})
@@ -152,8 +165,13 @@ module.exports = {
 
 			function getTotalExpenses(cb){
 				var totalExpenses = 0;
+				var query = {date : date};
 
-				Expenses.find({date : date})
+				if(start != null && end != null){
+					query = {date : {'>=' : start, '<=' : end}};
+				}
+
+				Expenses.find(query)
 					.then(function (expenseRecords){
 						return expenseRecords;
 					})
@@ -170,8 +188,13 @@ module.exports = {
 
 			function getEmpties(cb){
 				var totalAmount = 0;
+				var query = {return_date : date};
 
-				Returns.find({return_date : date}).populate("products")
+				if(start != null && end != null){
+					query = {return_date : {'>=' : start, '<=' : end}};
+				}
+
+				Returns.find(query).populate("products")
 					.then(function (returns){
 						return returns;
 					})
@@ -195,36 +218,7 @@ module.exports = {
 						dssr.empties = totalAmount;
 						cb();
 					});
-			}/*,
-
-			function getTopCustomers(cb){
-				var topCustomers = [];
-				Customers.find().populate('orders').then(function (customers){
-					return customers;
-				})
-
-				.each(function (customer){
-					return new Promise(function (resolve){
-						new Promise(function (resolve){
-							resolve(topCustomers);
-						})
-
-						.each(function (topCustomer){
-							if(topCustomer.order_count < customer.order_count){
-								topCustomer = customer;
-								topCustomers.push(topCustomer);
-								resolve();
-							}else{
-								resolve();
-							}
-						})
-					});
-				})
-
-				.then(function (){
-					console.log(topCustomers);
-				})
-			}*/
+			}
 		],
 
 		function(err){
