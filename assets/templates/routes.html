@@ -421,7 +421,7 @@
 <!--  HIDE FOR PRINTER   -->
 </div>
 <br>
-         <div class="form-group">
+         <div class="form-group" ng-hide="noRoutes">
           <label for="select" ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-3' : 'col-md-2'">Company:</label>
             <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-3'">
                 <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect">
@@ -435,7 +435,7 @@
     <div dir-paginate="routeInfo in routes |filter : searchRoute | itemsPerPage:2" pagination-id="routesPagination">
       <div class="panel-primary" >
           <div class="panel-heading">
-              <h3 class="panel-title">Route {{routeInfo.route_name}}</h3>
+              <h3 class="panel-title">Route {{routeInfo.route_name + " " + routeInfo.company}}</h3>
           </div>
 
           <div class="rpanel panel-body" ng-hide="editIndex === $index">
