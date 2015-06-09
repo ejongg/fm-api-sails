@@ -37,6 +37,10 @@ angular.module('fmApp')
 
   $scope.showPayForm = function (data) {
     $scope.payForm = data;
+    if(data === false){
+      $scope.payment.payment_date = new Date();
+      $scope.payment.paiad_amount = 0;
+    }
   };
 
   $scope.showSummaryForm = function (data) {
@@ -47,9 +51,11 @@ angular.module('fmApp')
     if (data.payment_date === 'Unpaid') {
       $scope.payment.delivery_id = data.id;
       $scope.showPayForm(true);
+      $scope.showSummaryForm(false);
     }else {
       $scope.summary = data;
       $scope.showSummaryForm(true);
+      $scope.showPayForm(false);
     }
   };
 
@@ -67,6 +73,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showPayForm(false);
+        $scope.snackbarShow('Payment Added');
         $scope.$digest();
       }
     });  

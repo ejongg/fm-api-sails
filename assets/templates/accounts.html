@@ -141,50 +141,12 @@
 
             <ul class="nav nav-tabs col-md-12">
                         <li>
-                            <a data-toggle="modal" data-target="#myModal" bs-modal="modal"> <i class="mdi-editor-mode-edit"/>&nbsp; Reset Password</a>
+                            <a ng-click="openResetPwModal()"> <i class="mdi-editor-mode-edit"/>&nbsp; Reset Password</a>
                         </li>
                         <li>
                             <a ng-click="setResetPasswordTab(false)"><i class="mdi-action-delete"/>&nbsp; Delete Account</a>
                         </li>
                     </ul>
-
-
-            <div class="panel-body" ng-show="resetPasswordTab">
-                <h4><i class="mdi-action-delete"></i> RESET PASSWORD </h4>
-
-                   <form class="form-horizontal" name="resetPasswordForm" ng-submit="" novalidate>
-                    <fieldset>
-
-                        <div class="form-group">
-                            <label for="inputUsername" class="col-md-2 control-label">Username</label>  
-                            <div class="col-md-12"><input type="text" class="form-control" id="inputUsername" placeholder="Enter username." ng-model="userDelete.username" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputFirstName" class="col-md-4">Name</label>
-                            <div class="col-md-12"><input type="text" class="form-control" id="inputFirstName" placeholder="Enter first name." ng-model="userDelete.firstname" disabled>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="inputFirstName" class="col-md-6">Temporary Password</label>
-
-                            <div class="col-md-12"><input type="text" class="form-control" ng-model="" disabled>
-                            </div>
-                        </div>
-            
-
-                        <div class="form-group rightalign">
-                            <button type="submit" class="btn btn-primary">Reset</button>
-
-                            <button type="submit" class="btn btn-primary">Done</button>
-                            <button type="button" class="btn btn-default" ng-click="showEditOrDeleteUserForm(false)">Cancel</button> 
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
 
             <div class="panel-body" ng-hide="resetPasswordTab">
               <h4><i class="mdi-action-delete"></i> DELETE ACCOUNT </h4>
@@ -294,25 +256,6 @@
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" >
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="showViewProducts(false)"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Reset Password</h4> 
-      </div>
-      <div class="modal-body">
-            Are you sure you want to reset the password of this account?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 
 <!-- Modal -->
 <script type="text/ng-template" id="accountModalDelete.html">
@@ -330,4 +273,21 @@
         </div>
       </div>
 </script>
+
+<script type="text/ng-template" id="resetPwordModal.html">
+      <div class="modal-dialog">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Reset Password</h4> 
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to reset the password of this account?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">Yes</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+      </div>
+</script>
+
 

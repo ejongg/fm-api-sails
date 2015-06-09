@@ -234,6 +234,28 @@ angular.module('fmApp')
 
   };
 
+  $scope.openResetPwModal = function (account) {
+    console.log("Open Reset Password Modal");
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'resetPwordModal.html',
+      controller: 'resetPwordModalCtrl',
+      resolve: {
+        account: function () {
+          return account;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (account) {
+      $scope.deleteUser(account);
+    }, function () {
+      console.log("close");
+    });
+
+  };
+
 
 }])
 
@@ -246,4 +268,16 @@ angular.module('fmApp')
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
+})
+
+    .controller('resetPwordModalCtrl', function ($scope, $modalInstance, account) {
+
+  $scope.ok = function () {
+    $modalInstance.close(routeInfo);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 });
+
