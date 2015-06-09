@@ -68,7 +68,7 @@
                   NO CUSTOMER ORDERS, ADD FIRST!
                 </div>
                 <div class="col-md-6" ng-hide="noCustomerOrdersAvailable">
-                  <select class="form-control" ng-model="ordersAvailableList" ng-options="orderAvailable as orderAvailable.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
+                  <select class="form-control" ng-model="ordersAvailableList" ng-options="orderAvailable as loadOutName(orderAvailable) for orderAvailable in customerOrdersAvailable">
                   </select>
                 </div>
                   
@@ -78,7 +78,7 @@
               <br>
               <br>
               
-              <div class = "form-group" ng-hide="noTrucks">
+              <div class = "form-group">
                 <label class="col-md-2  control-label">Truck:</label>
 
                 <div class = "col-md-8"  ng-hide="noTrucks">
@@ -111,7 +111,7 @@
               <br><br><br>
               <div class="routeBox" > <br>
 
-               <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="orderInAddLoudOut in loadOut.orders" class="btn btn-xs btn-danger"  ng-click="deleteAvailableCustomer(orderInAddLoudOut)"> {{orderInAddLoudOut.customer_id.establishment_name}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
+               <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="orderInAddLoudOut in loadOut.orders" class="btn btn-xs btn-danger"  ng-click="deleteAvailableCustomer(orderInAddLoudOut)"> {{loadOutName(orderInAddLoudOut)}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
                 </div>
              </div>
 
@@ -152,7 +152,7 @@
 
              <div class="form-group">
               <label class="control-label">Establishment Name:</label>
-                <div class = "col-md-offset-1" ng-repeat="customerOrder in loadOut.transactions"> {{customerOrder.customer_id.establishment_name}}
+                <div class = "col-md-offset-1" ng-repeat="customerOrder in loadOut.transactions"> {{customerOrder.order_id+" "+customerOrder.customer_id.establishment_name}}
                 </div>
 
                 <div class="form-group pull-right" style="margin-bottom: -5px;">
@@ -172,7 +172,7 @@
               <div class="form-group" ng-hide="noCustomerOrdersAvailable">
 
                 <div class="col-md-8">
-                  <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as orderAvailable.customer_id.establishment_name for orderAvailable in customerOrdersAvailable">
+                  <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as orderName(orderAvailable) for orderAvailable in customerOrdersAvailable">
                   </select>
                 </div>
                 
@@ -181,7 +181,7 @@
               <div class="form-group">
               <label class="col-md-12 control-label">Establishment Name:</label>
                 <div class="col-md-12 col-md-offset-1">
-                <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="customerOrder in loadOut.transactions" class="btn btn-xs btn-danger"  ng-click="open(loadOut,customerOrder)"> {{customerOrder.customer_id.establishment_name}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
+                <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="customerOrder in loadOut.transactions" class="btn btn-xs btn-danger"  ng-click="open(loadOut,customerOrder)"> {{orderName(customerOrder)}}&nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong> </button>  &nbsp;
                 </div>
               </div>
 

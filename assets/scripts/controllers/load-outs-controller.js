@@ -138,6 +138,14 @@ angular.module('fmApp')
     return "Truck " + index;
   };
 
+  $scope.loadOutName = function (loadOut){
+    return loadOut.id + " " + loadOut.customer_id.establishment_name;
+  }
+
+  $scope.orderName = function (loadOut){
+    return loadOut.order_id + " " + loadOut.customer_id.establishment_name;
+  }
+
   $scope.addAvailableCustomer = function (data,index){
     console.log("Dropped");
     console.log(data);
@@ -329,6 +337,7 @@ angular.module('fmApp')
         if($scope.loadOuts[index].transactions.length === 0){
           $scope.loadOuts.splice(index,1);
           $scope.editIndex = -1;
+          $scope.noLoadOut = true;
         }
         // var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
         // console.log(orderDeleted[0]);
