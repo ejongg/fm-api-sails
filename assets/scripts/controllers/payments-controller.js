@@ -35,12 +35,19 @@ angular.module('fmApp')
   
   getDeliveryTransactions();
 
+  var clearForm = function () {
+    $scope.payment.payment_date = new Date();
+      $scope.payment.paiad_amount = 0;     
+  };
+
   $scope.showPayForm = function (data) {
     $scope.payForm = data;
     if(data === false){
       $scope.payment.payment_date = new Date();
       $scope.payment.paiad_amount = 0;
+       clearForm();
     }
+
   };
 
   $scope.showSummaryForm = function (data) {
