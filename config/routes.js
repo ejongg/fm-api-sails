@@ -121,7 +121,8 @@ module.exports.routes = {
 		available - for listing products in inventory that has total count > 0
 	*/
 	'GET /sku/available' : 'Sku.available',
-	'PUT /sku/edit' : 'Sku.edit', 
+	'PUT /sku/edit' : 'Sku.edit',
+	'GET /sku/available-with-moving-pile' : 'Sku.availableSkuWithMovingPile', 
 
 	/* 	TRUCKS 
 		add - for creating trucks
