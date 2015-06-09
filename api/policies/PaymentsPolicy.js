@@ -9,7 +9,7 @@ module.exports = function(req, res, next){
 
 			if(totalAmount > transaction.total_amount){
 				var shortage = transaction.total_amount - transaction.paid_amount;
-				return res.send("Invalid! The transaction is only " + shortage + " short", 400);
+				return res.send({message : "Invalid! The transaction is only " + shortage + " short", data : shortage}, 400);
 			}else{
 				next();
 			}

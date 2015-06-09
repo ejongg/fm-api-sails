@@ -76,7 +76,7 @@ module.exports = {
 
 		Delivery_transactions.findOne({id : deliveryId})
 			.then(function (transaction){
-				return new Promise(function (resolve, reject){
+				return new Promise(function (resolve){
 					transaction.paid_amount = transaction.paid_amount + paidAmount;
 
 					if(transaction.paid_amount == transaction.total_amount){
@@ -85,11 +85,24 @@ module.exports = {
 
 					transaction.save(function (err, result){
 						sails.sockets.blast("delivery_transactions", {verb : "paid", data : result});
-						return res.send(200);
+						resolve(transaction.customer_id);
 					});
 
 				});
 				
+			})
+
+			.then(function (customerId){
+				var paymentDetails = {
+					customer_id  : customerId,
+					delivery_id : deliveryId,
+					amount : paidAmount,
+					date : paymentDate
+				};
+
+				Payments.create(paymentDetails).then(function (createdPayment){
+					return res.send("Payment successful", 200);
+				});
 			})
 	},
 
