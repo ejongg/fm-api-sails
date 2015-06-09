@@ -73,6 +73,25 @@ angular.module('fmApp')
     });
   };
 
+  $scope.getAdressesAvailable = function () {
+    $http.get(httpHost + '/address/list?company=' + $scope.route.company).success( function (data) {
+      if(data.length !== 0){
+        console.log("ROUTEEEE");
+        console.log($scope.route.company);
+
+        $scope.addressesAvailable = $scope.sortData(data,'address_name');
+        $scope.addressAvailableList = $scope.addressesAvailable[0];
+        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+        console.log("Addresses Available:");
+        console.log($scope.addressesAvailable);
+      }else{
+        $scope.noAddressesAvailable = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
+
   var getAdressesAvailable = function () {
     $http.get(httpHost + '/address/list?company=' + $scope.route.company).success( function (data) {
       if(data.length !== 0){
