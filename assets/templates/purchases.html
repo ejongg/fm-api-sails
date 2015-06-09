@@ -310,7 +310,7 @@
             </thead>
 
             <tbody>
-                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getPurchaseProducts(purchaseInfo.id,purchaseInfo.status)">
+                <tr dir-paginate="purchaseInfo in purchasesList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage" ng-click="getPurchaseProducts(purchaseInfo.id,purchaseInfo.status)">
                     <td width ="5%">{{purchaseInfo.id}}</td>
                     <td width ="25%">{{purchaseInfo.user}}</td>
                     <td width ="10s%">{{purchaseInfo.date_received}}</td>

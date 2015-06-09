@@ -18,7 +18,6 @@ angular.module('fmApp')
   $scope.noSKU = false;
   $scope.noPurchase = false;
   
-
   $scope.itemExistingError = false;
   $scope.itemExisting = '';
   $scope.addPurchaseForm = false;
@@ -28,12 +27,19 @@ angular.module('fmApp')
   $scope.hasError = false;
   $scope.companies = ['Coca-Cola', 'SMB'];
 
-
   // forSorting
   $scope.sortCriteria = 'id';
   $scope.reverseSort = false;
 
-  $scope.maxBottle = 12;
+  $scope.maxBottle = 0;
+
+  $scope.currentPage = 1;
+  //$scope.filteredData = [];
+  $scope.filteredAndSortedData = [];
+  //$scope.companySelect='';
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
 
   
   
@@ -93,6 +99,30 @@ angular.module('fmApp')
       $scope.checkError(err);
     });
   }
+
+  var setPage = function(){
+    $scope.sortCriteria = 'id';
+    
+    console.log("FILTERED AND SORTED");
+    console.log($scope.filteredAndSortedData);
+
+    console.log("NO OF ROWS");
+    console.log($scope.noOfRows);
+
+    $scope.index = ($scope.purchasesList.length);
+    console.log("INDEX:" + $scope.index);
+    console.log($scope.index);
+    
+    if($scope.index < 1){
+      $scope.currentPage  = 1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows);
+      console.log("index > 1");
+      console.log($scope.currentPage);
+    }
+
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+  };
   
   getPurchases();
   getSKU();
@@ -261,6 +291,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         $scope.showAddPurchaseForm(false);
+        
         $scope.snackbarShow('Purchase Added');
         $scope.totalAmount = 0;
         
@@ -284,6 +315,8 @@ angular.module('fmApp')
       case "created": 
         console.log("Purchase Created");
         $scope.purchasesList.push(msg.data);
+        $scope.newlyAdded = msg.data;
+        setPage();
         if($scope.noPurchase === true){
           $scope.noPurchase = false;
         }
