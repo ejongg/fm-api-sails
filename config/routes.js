@@ -109,9 +109,10 @@ module.exports.routes = {
 	/* 	ADDRESS 
 		remove - removes the address from its current route
 	*/
-	'GET /address/list' : 'Address.getList',
-	'PUT /address/edit' : 'Address.edit',
+	'GET  /address/list' : 'Address.getList',
+	'PUT  /address/edit' : 'Address.edit',
 	'POST /address/remove' : 'Address.remove',
+	'GET  /address/list-all' : 'Address.listAll',
 
 	/* 	ROUTES 
 		add - for creating routes

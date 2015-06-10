@@ -58,6 +58,13 @@ module.exports = {
 			.then(function (addresses){
 				return res.send(addresses);
 			});
+	},
+
+	listAll : function (req, res){
+
+		Address.find().then(function (addresses){
+			return res.send(addresses);
+		})
 	}
 };
 
