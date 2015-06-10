@@ -11,21 +11,41 @@ module.exports = {
 		var addressId = req.body.address;
 		var route = req.body.route;
 
-		Address.update({id : addressId}, {route_id : null})
-			.then(function (updatedAddress){
-				
+		Routes.findOne({id : route})
+			.then(function (foundRoute){
+				return foundRoute.company;
+			})
+
+			.then(function (company){
+				var obj = null;
+
+				if(company == 'SMB'){
+					obj = {smb_route : null};
+				}else{
+					obj = {coke_route : null};
+				}
+
+				return [Address.update({id : addressId}, obj), company];
+			})
+
+			.spread(function (updatedAddress, company){
+
 				var data = {
 					address : updatedAddress,
 					route : route
 				};
 
-				RoutesService.checkIfEmpty(route)
+				RoutesService.checkIfEmpty(route, company)
 					.then(function (){
 						sails.sockets.blast("address", {verb : "removed", data : data});
 						return res.send("Address removed from route " + route, 200);
 					})
+
 			})
 
+			.error(function (err){
+				return res.send(err);
+			})
 		
 	},
 

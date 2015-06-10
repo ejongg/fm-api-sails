@@ -1,9 +1,17 @@
 var Promise = require('bluebird');
 
 module.exports = {
-	checkIfEmpty : function(routeId){
+	checkIfEmpty : function(routeId, company){
 		return new Promise(function (resolve){
-			Address.find({route_id : routeId})
+			var obj = null;
+
+			if(company == 'SMB'){
+				obj = {smb_route : routeId};
+			}else{
+				obj = {coke_route : routeId};
+			}
+
+			Address.find(obj)
 				.then(function (addressList){					
 					if(addressList.length == 0){
 						return Routes.destroy({id : routeId});
