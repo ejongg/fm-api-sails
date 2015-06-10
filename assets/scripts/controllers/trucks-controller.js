@@ -204,7 +204,7 @@ angular.module('fmApp')
         "dispatcher": truck.dispatcher,
         "driver": truck.driver,
         "helper": truck.helper,
-        "route": truck.route.route_name,
+        "route": truck.route.id,
         "carry_weight": 0
       };
 

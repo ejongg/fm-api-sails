@@ -31,9 +31,10 @@ angular.module('fmApp')
 
   $scope.sortCriteria = '';
   
-  var getCustomerOrdersAvailable = function () {
-    $http.get(httpHost + '/customer-orders/list').success( function (data) {
-
+  $scope.getCustomerOrdersAvailable = function (truck) {
+    console.log("Get Customer");
+    console.log(truck.route);
+    $http.get(httpHost + '/customer-orders/list?route='+ truck.route).success( function (data) {
       if(data.length !== 0){
          $scope.customerOrdersAvailable = $scope.sortData(data,'customer_id.establishment_name');
          $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
@@ -41,6 +42,7 @@ angular.module('fmApp')
         console.log("Customer Orders Available:");
         console.log($scope.customerOrdersAvailable);
       }else{
+        console.log("No Customer");
         $scope.noCustomerOrdersAvailable = true;
       }
 
@@ -55,6 +57,7 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.trucks = data;
         $scope.loadOut.truck = $scope.trucks[0];
+        $scope.getCustomerOrdersAvailable($scope.loadOut.truck);
         console.log("Trucks:");
         console.log($scope.trucks);
       }else{
@@ -80,7 +83,6 @@ angular.module('fmApp')
     });
   };
 
-  getCustomerOrdersAvailable();
   getLoadOuts();
   getTrucks();
 
