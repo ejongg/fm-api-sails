@@ -91,6 +91,7 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.products = $scope.sortData(data,'brand_name');
         $scope.sku.brand_name = $scope.products[0].brand_name;
+        $scope.selectBrand($scope.sku.brand_name);
         console.log("Products:");
         console.log($scope.products);
       }else{
@@ -169,6 +170,13 @@ angular.module('fmApp')
       }
     }
   }
+
+  $scope.selectBrand = function (brand) {
+    console.log(brand);
+    var index = _.findIndex($scope.products,{'brand_name': brand});
+    $scope .companySelect = $scope.products[index].company;
+    
+  };
  
  /*
  If go back to edit it will reset the form
