@@ -19,29 +19,7 @@ module.exports = {
 			carry_weight : req.body.carry_weight
 		}
 
-		var findTruck = {
-		    driver : req.body.driver.id,
-			dispatcher : req.body.dispatcher.id,
-			agent : req.body.agent.id,
-			helper : req.body.helper.id
-		};
-
-		Trucks.findOne(findTruck)
-			.then(function(foundTruck){
-				if(foundTruck){
-					return res.send("You are entering a duplicate entry");
-				}
-			})
-
-			.then(function (){
-				return new Promise(function (resolve, reject){
-					Trucks.create(truck)
-						.then(function(createdTruck){
-							resolve(createdTruck);
-						});
-					});				
-			})
-
+		Trucks.create(truck)
 			.then(function (createdTruck){
 				return new Promise(function (resolve, reject){
 					EmployeeService.assign([truck.driver, truck.dispatcher, truck.agent, truck.helper], createdTruck.id)

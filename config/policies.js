@@ -90,12 +90,15 @@ module.exports.policies = {
 
   AddressController : {
     create : 'UniqueAddressPolicy',
-    edit : 'UniqueAddressPolicy',
     destroy : 'DeleteAddressPolicy'
   },
 
   RoutesController : {
     add : 'UniqueRoutePolicy'
+  },
+
+  TrucksController : {
+    add : ['AddTruckPolicy', 'OneTruckOneRoutePolicy']
   }
 
   /***************************************************************************
