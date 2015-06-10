@@ -117,7 +117,7 @@ module.exports = {
 
 		ReturnsService.createReturns(returns, deposit)
 			.then(function (returnId){
-				return DeliveryService.assignEmpties(deliveryId, returnId);
+				return Delivery_transactions.update({id : deliveryId}, {returns_id : returnId});
 			})
 
 			.then(function (updatedDelivery){
