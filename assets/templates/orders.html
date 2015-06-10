@@ -269,7 +269,7 @@
 
             <div class="icon-preview" >
                 <div class="form-group rightalign" style="bottom:-100px;">
-              <button type="button" class="btn btn-primary" ng-disabled="!orders.length" ng-click="submitOrders()">Submit</button>  
+              <button type="button" class="btn btn-primary" ng-disabled="!orders.length || order.establishment == null || order.owner ==  null || order.cokeagent_name == null " ng-click="submitOrders()">Submit</button>  
               <button type="button" class="btn btn-default" ng-click="showAddOrderForm(false)">Cancel</button>
                </div>
 
