@@ -25,6 +25,7 @@ angular.module('fmApp')
   $scope.loadOut.user = '';
   $scope.loadOut.delivery_date = todayDayFormatted;
   $scope.loadOut.flag = "add";
+  $scope.dateFilter = new Date();
 
   $scope.ordersAvailableList = {};
   $scope.ordersAvailableListEdit = {};
@@ -69,8 +70,8 @@ angular.module('fmApp')
     });
   }
 
-  var getLoadOuts = function () {
-    $http.get(httpHost + '/load_out/list').success( function (data) {
+  var getLoadOuts = function (date) {
+    $http.get(httpHost + '/load_out/list?date=' + $scope.formatDate(date)).success( function (data) {
       if(data.length !== 0){
         $scope.loadOuts = data;
         console.log("Load Out:");
@@ -83,11 +84,20 @@ angular.module('fmApp')
     });
   };
 
-  getLoadOuts();
+
+
+  getLoadOuts($scope.dateFilter);
   getTrucks();
 
   $scope.pagePrint = function () {
     window.print();
+  };
+
+  $scope.dateChange = function (date) {
+    console.log(date);
+    $scope.loadOuts = [];
+    $scope.noLoadOut = false;
+    getLoadOuts(date);
   };
   
   $scope.setEditLoadOut = function (index) {
