@@ -31,8 +31,13 @@ angular.module('fmApp')
   $scope.hasError = false;
 
   // forSorting
-  $scope.sortCriteria='id';
+  $scope.sortCriteria='emp_fname';
   $scope.reverseSort = false;
+
+  $scope.currentPage = 1;
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
 
 	var getEmployees = function () {
     $http.get(httpHost + '/employees').success( function (data) {
@@ -47,6 +52,29 @@ angular.module('fmApp')
       $scope.checkError(err);
     });
 	};
+
+  var setPage = function(){
+
+    console.log("NEWLY ADDED");
+    console.log($scope.newlyAdded);
+    var empID = $scope.newlyAdded.id;
+    
+    $scope.sortCriteria = 'emp_fname'
+    $scope.filteredAndSortedData =  $scope.sortData($scope.employees, 'emp_fname');
+   
+    console.log($scope.filteredAndSortedData);
+
+    console.log("NO OF ROWS");
+    console.log($scope.noOfRows);
+    $scope.index = (_.findIndex($scope.filteredAndSortedData,{'id' : empID}))+1;
+    if($scope.index < 1){
+      $scope.currentPage =  1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows)
+    }
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+    console.log("INDEX: " + $scope.index);
+  };
 
   getEmployees();
 
@@ -190,6 +218,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.showEditOrDeleteEmployeeForm(false);
+
         $scope.snackbarShow('Employee Edited');  
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
@@ -220,6 +249,12 @@ angular.module('fmApp')
       case "created": 
         console.log("Employee Created");
         $scope.employees.push(msg.data);
+        console.log("EMPLYOEEE");
+        console.log(msg.data);
+        $scope.newlyAdded = msg.data;
+        console.log("BAGOOO");
+        console.log($scope.newlyAdded);
+        setPage();
         if($scope.noEmployees === true){
           $scope.noEmployees = false;
         }
