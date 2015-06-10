@@ -24,10 +24,6 @@ module.exports = {
 		
 		ReturnsService.createReturns(returns, deposit)
 			.then(function (returnId){
-				return returnId;
-			})
-
-			.then(function warehouseSalesHandler(returnId){
 				return WarehouseServices.createWarehouseTransaction(customer, amount, returnId, user, products);
 			})
 
