@@ -99,13 +99,6 @@
             </div>
       <hr>
       RETURN
-      <div class="form-group">
-        <label for="select" class="col-md-3">Deposit</label>
-        <div class="col-md-9">
-          <input ng-model="transaction.deposit" type="number" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
-        </div>
-      </div>
-
 
         <div class="form-group">
           <label for="select" class="col-md-3">Extra Bottles</label>
@@ -120,6 +113,14 @@
             <input ng-model="transaction.return_cases" type="number" min="0" class="form-control" placeholder="Enter number of cases." required>
           </div>
         </div>
+
+        <hr>
+      <div class="form-group">
+        <label for="select" class="col-md-3">Deposit</label>
+        <div class="col-md-9">
+          <input ng-model="transaction.deposit" type="number" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
+        </div>
+      </div>
 
             <button class="btn btn-primary pull-right" ng-disabled="transactionForm.$invalid">Add</button><br><br><br>
 
@@ -153,12 +154,34 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        RETURN
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                  <th>Sku name&nbsp;</th>
+                  <th>Brand&nbsp;</th>
+                  <th>Extra Bottles&nbsp;</th>
+                  <th>Cases&nbsp;</th>
+                  <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in returnsItems">
+                    <td>{{item.sku_name}}</td>
+                    <td>{{item.brand_name}}</td>
+                    <td>{{item.bottles}}</td>
+                    <td>{{item.cases}}</td>
+                    <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>
 </div>
 
-<div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' || deposit === null " class="btn btn-primary btn-lg pull-right">Done</div>
+<div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' " class="btn btn-primary btn-lg pull-right">Done</div>
 
 <!-- <div class="panel">
 

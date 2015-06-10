@@ -266,7 +266,7 @@ angular.module('fmApp')
   };
 
   $scope.submitOrders = function () {
-    if($scope.order.cokeagent_name === undefined){
+    if($scope.order.cokeagent_name === ""){
       $scope.order.cokeagent_name = $scope.userName;
     }
 

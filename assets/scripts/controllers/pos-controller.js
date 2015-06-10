@@ -124,11 +124,10 @@ angular.module('fmApp')
     $scope.transaction.extraBottles = null;
     $scope.transaction.cases = null;
     $scope.transaction.discount = null;
+    $scope.transaction.return_extraBottles = null;
+    $scope.transaction.return_cases = null;
     
-    $scope.deposit = null;
-    $scope.returns.sku = $scope.skuList[0];
-    $scope.returns.bottles = null;
-    $scope.returns.cases = null;
+    $scope.transaction.deposit = null;
 
     $scope.transactionItems = [];
     $scope.returnsItems = [];
@@ -140,13 +139,10 @@ angular.module('fmApp')
     $scope.transaction.extraBottles = null;
     $scope.transaction.cases = null;
     $scope.transaction.discount = null;
+    $scope.transaction.return_extraBottles = null;
+    $scope.transaction.return_cases = null;
   };
 
-  var clearReturnForm = function () {
-    $scope.returns.sku = $scope.skuList[0];
-    $scope.returns.bottles = null;
-    $scope.returns.cases = null;
-  };
 
   $scope.addTransactionItem = function (item) {
     if($scope.itemExistingTransactionError === true){
@@ -166,16 +162,29 @@ angular.module('fmApp')
       "amount" : (item.extraBottles * item.sku.priceperbottle) + (item.cases * item.sku.pricepercase)
     };
 
+    var returnInfo = {
+      "sku_id" : item.sku.id,
+      "sku_name" : item.sku.sku_name + " " + item.sku.size,
+      "brand_name" : item.sku.prod_id.brand_name,
+      "bottles" : item.return_extraBottles,
+      "cases" : item.return_cases,
+      "bottlespercase" : item.sku.bottlespercase
+    };
+
      console.log("Add Transaction Item");
      console.log(itemInfo);
+     console.log(returnInfo);
 
      if( _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id }) === -1 ){
       $scope.transactionItems.push(itemInfo);
+      $scope.returnsItems.push(returnInfo);
       $scope.totalAmount += itemInfo.amount ;
     }else{
       var index = _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id });
       $scope.transactionItems[index].bottles += itemInfo.bottles;
       $scope.transactionItems[index].cases += itemInfo.cases;
+      $scope.returnsItems[index].bottles += returnInfo.return_extraBottles;
+      $scope.returnsItems[index].cases += returnInfo.return_cases;
       $scope.showItemExistingTransactionError(true,itemInfo.sku_name);
     }
 
@@ -186,34 +195,7 @@ angular.module('fmApp')
   $scope.deleteTransactionItem= function (index) {
     $scope.totalAmount -= $scope.transactionItems[index].amount;
     $scope.transactionItems.splice(index,1);
-  };
-
-  $scope.addReturns = function (returns) {
-    if($scope.itemExistingReturnsError === true){
-     $scope.showItemExistingReturnsError(false);
-    }
-
-   var returnInfo = {
-     "sku_id" : returns.sku.id,
-     "sku_name" : returns.sku.sku_name + " " + returns.sku.size,
-     "brand_name" : returns.sku.prod_id.brand_name,
-     "bottles" : returns.bottles,
-     "cases" : returns.cases,
-     "bottlespercase" : returns.sku.bottlespercase
-   };
-
-    if( _.findIndex($scope.returnsItems,{ 'sku_id': returnInfo.sku_id }) === -1 ){
-      $scope.returnsItems.push(returnInfo);
-    }else{
-      var index = _.findIndex($scope.returnsItems,{ 'sku_id': returnInfo.sku_id });
-      $scope.returnsItems[index].bottles += returnInfo.bottles;
-      $scope.returnsItems[index].cases += returnInfo.cases;
-      $scope.returnsItems[index].deposit += returnInfo.deposit;
-      $scope.showItemExistingReturnsError(true,returnInfo.sku_name);
-    }
-
-    clearReturnForm();
-            
+    $scope.returnsItems.splice(index,1);
   };
 
   $scope.deleteReturnsItem= function (index) {
@@ -226,21 +208,10 @@ angular.module('fmApp')
       "returns" : $scope.returnsItems,
       "customer_name" : $scope.customerName,
       "total_amount" : $scope.totalAmount,
-      "deposit" : $scope.deposit,
+      "deposit" : $scope.transaction.deposit,
       "user" : $scope.userName
     };
             
-    // io.socket.post('/warehouse_transactions/add', transaction, function(response){
-    //     if(response.code == 1){
-    //         $scope.alert = "alert alert-success alert-dismissible";
-    //     }else{
-    //         $scope.alert = "alert alert-danger alert-dismissible";
-    //     }
-                
-    //     $scope.message = response.message;
-    //     $scope.show_alert = true;
-    //     $scope.$digest();
-    // });
     console.log(transaction);  
     io.socket.request($scope.socketOptions('post','/warehouse_transactions/add',{"Authorization": "Bearer " + authService.getToken()},transaction), function (body, JWR) {
       console.log('Sails responded with post bad order: ', body);
