@@ -13,6 +13,10 @@ angular.module('fmApp')
   $scope.order = {};
   $scope.order.address = '';
   $scope.totalAmount = 0;
+  $scope.today = new Date();
+
+  console.log($scope.today.getHours());
+  console.log($scope.today.getMinutes());
 
   $scope.itemExistingError = false;
   $scope.itemExisting = '';

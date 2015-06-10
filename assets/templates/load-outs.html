@@ -82,7 +82,8 @@
                 <label class="col-md-2  control-label">Truck:</label>
 
                 <div class = "col-md-8"  ng-hide="noTrucks">
-                   <select class="form-control" ng-model="loadOut.truck" ng-options=" truck as truckName(truck) for truck in trucks" 
+                   <select class="form-control" ng-model="loadOut.truck" ng-change="$scope.getCustomerOrdersAvailable(loadOut.truck)" 
+                   ng-options=" truck as truckName(truck) for truck in trucks" 
                 ng-change="dropdownChange(loadOut.truck)" required>
                   </select>
                 </div>
