@@ -492,12 +492,9 @@ angular.module('fmApp')
 
   };
 
-  $scope.addAvaiableAddressEdit = function (data, routeIndex, name, company){
+  $scope.addAvaiableAddressEdit = function (data, routeIndex, route){
     console.log("Dropped");
     console.log(data);
-    console.log(name);
-    console.log("COMPANY");
-    console.log(company);
     
     console.log("Find Index");
      var index = _.findIndex( $scope.addressesAvailable,{'id': data.id});
@@ -515,8 +512,9 @@ angular.module('fmApp')
     $scope.addressAvailableListEdit =  $scope.addressesAvailable[0];
 
     var newAddress = {
-    "route_name": name,
-    "company" : company,
+    "route_id" : route.id, 
+    "route_name": route.route_name,
+    "company" : route.company,
     "address": currentAddress,
     "flag": "edit"
     };
