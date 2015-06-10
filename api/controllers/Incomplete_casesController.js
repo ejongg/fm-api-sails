@@ -13,7 +13,7 @@ module.exports = {
 
 		var productionDate =moment(product.exp_date, "YYYY-MM-DD").subtract(product.lifespan, 'M').format('YYYY-MM-DD');
 
-		InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay, productionDate, product.lifespan)	
+		InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay_id, productionDate, product.lifespan)	
 			.then(function (){
 
 				return new Promise(function (resolve, reject){

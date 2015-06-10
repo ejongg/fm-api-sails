@@ -97,7 +97,7 @@ angular.module('fmApp')
     "sku_id":  inc.sku_id.id,
     "cases": inc.cases,
     "bottlespercase": inc.sku_id.bottlespercase,
-    "bay": inc.bay.id,
+    "bay_id": inc.bay.id,
     "lifespan": inc.sku_id.lifespan,
     "exp_date": inc.exp_date 
     };
