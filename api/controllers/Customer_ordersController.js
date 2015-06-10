@@ -37,32 +37,86 @@ module.exports = {
 	},
 
 	list : function(req, res){
-		var ordersWithProducts = [];
+		var routeId = req.query.route;
+		
+		function getRouteAddress(){
+			return new Promise(function (resolve){
+				var addressList = [];
 
-		Customer_orders.find({delivery_id : null, status : {'like' : 'Pending'}}).populate('customer_id')
-			.then(function getOrders(orders){
+				Routes.findOne({id : routeId}).then(function (foundRoute){
+					var query = null;
 
-				async.each(orders, function(order, cb){
+					if(foundRoute.company == 'SMB'){
+						query = {smb_route : foundRoute.id};
+					}else{
+						query = {coke_route : foundRoute.id};
+					}
 
-					Customer_order_products.find({order_id : order.id}).populate('sku_id')
-						.then(function getProducts(products){
-							order.productslist = products;
-							ordersWithProducts.push(order);
-							cb();							
-						});					
+					return Address.find(query);
+				})
 
-				}, function(err){
-					if(err)
-						console.log(err);
+				.then(function (address){
+					return address;
+				})
 
-					return res.send(ordersWithProducts);
-				});
+				.each(function (address){
+					addressList.push(address.address_name);
+				})
 
-			}, 
+				.then(function (){
+					resolve(addressList);
+				})
+			})
+		};
+		
+		getRouteAddress().then(function (addressList){
+			var ordersList = [];
+			var finalList = [];
 
-			function(err){
-				console.log(err);
-			});
+			Customer_orders.find({delivery_id : null, status : {'like' : 'Pending'}}).populate('customer_id')
+				.then(function getOrders(orders){
+					return orders;
+				})
+
+				.each(function (order){
+					if(addressList.indexOf(order.customer_id.address) != -1){
+						ordersList.push(order);
+					}
+				})
+
+				.then(function (){
+					return ordersList;
+				})
+
+				.each(function (order){
+					var productsList = [];
+					return new Promise(function (resolve){
+
+						Customer_order_products.find({order_id : order.id})
+							.then(function (products){
+								return products;
+							})
+
+							.each(function (product){
+								return SkuService.getSkuDetails(product.sku_id).then(function (skuDetails){
+									product.sku_id = skuDetails;
+									productsList.push(product);
+								});
+							})
+
+							.then(function (){
+								order.productslist = productsList;
+								finalList.push(order);
+								resolve();
+							})
+
+					});
+				})
+
+				.then(function (){
+					return res.send(finalList);
+				})
+		})
 	},
 
 	getOrderDetails : function(req, res){
