@@ -98,18 +98,39 @@
 <!--PANEL: RIGHT -->
 
 
+
 <div class="panel panel-right col-md-9">
-    <div class="panel-body">
-          <div class="panel-heading">
-              <h3 class="panel-title"> Daily Sales Stock Report (DSSR) </h3>
-          </div>
-      <canvas id="bar" class="chart chart-bar" data="data"
-      labels="labels"></canvas> 
 
-    <!-- END OF TABLE -->
-    
+  <div class="form-group">
+    <label class="col-md-4">Start Date</label> 
+    <div class="col-md-12">
+    <input type="date" name="start" class="form-control" max="" ng-model="startDate" required>
+    </div>
+  </div>
 
-</div>
+  <div class="form-group">
+    <label class="col-md-4">End Date</label> 
+    <div class="col-md-12">
+    <input type="date" name="end" class="form-control" max="" ng-model="endDate" required>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+      <button class="btn btn-xs btn-default" type="button" ng-click="dssrGet()" ng-hide="noAddressesAvailable">ADD</button>
+  </div>
+  
+  <div class="panel-body">
+
+    <div class="panel-heading">
+        <h3 class="panel-title"> Daily Sales Stock Report (DSSR) </h3>
+    </div>
+    <canvas id="bar" class="chart chart-bar" data="data"
+    labels="labels"></canvas> 
+
+  <!-- END OF TABLE -->
+  
+
+  </div>
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->

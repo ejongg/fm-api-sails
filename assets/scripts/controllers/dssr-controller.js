@@ -10,14 +10,20 @@ angular.module('fmApp')
   $scope.empties = 0;
   $scope.income = 0;
   $scope.stt = 0;
+  $scope.startDate = '';
+  $scope.endDate = '';
 
   $scope.labels = ['Purchases', 'Expenses', 'Empties', 'Income', 'Sales to Trade'];
   $scope.series = ['DSSR'];
 
+  $scope.dssrGet = function () {
+    getDSSR();
+  };
+
  
  
   var getDSSR = function () {
-    $http.get(httpHost + '/reports/dssr').success( function (data) {
+    $http.get(httpHost + '/reports/dssr?start='+$scope.startDate+'&'+'end='+$scope.endDate ).success( function (data) {
       $scope.beginning_inventory = data.beginning_inventory;
       $scope.ending_inventory = data.ending_inventory;
       $scope.purchases = data.purchases;
@@ -35,6 +41,7 @@ angular.module('fmApp')
       console.log(err);
     });
   };
+
 
   getDSSR();
 
