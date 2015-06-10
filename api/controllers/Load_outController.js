@@ -134,8 +134,9 @@ module.exports = {
 
 	getInProgressLoadouts : function (req, res){
 		var loadoutList = [];
+		var date = req.query.date;
 
-		Load_out.find({status : {'like' : 'In progress'}})
+		Load_out.find({date_created : date, date_created : date, status : {'like' : 'In progress'}})
 			.then(function(loadouts){
 				return loadouts;
 			})
@@ -156,8 +157,13 @@ module.exports = {
 
 	list : function(req, res){
 		var loadoutList = [];
+		var date = req.query.date;
 
-		Load_out.find({status : {'like' : 'Pending'}})
+		if(!date){
+			date = moment().format('YYYY-MM-DD');
+		}
+
+		Load_out.find({date_created : date, status : {'like' : 'Pending'}})
 			.then(function(loadouts){
 				return loadouts;
 			})
