@@ -483,7 +483,9 @@
             </div>
 
           <label class="col-md-12">Address:</label>
-                   <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="address in routeInfo.address" class="btn btn-xs btn-danger" ng-click="deleteAddressInRoute(routeInfo.id,address)"> {{address.address_name}} &nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong>
+                   <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="address in routeInfo.coke_address" class="btn btn-xs btn-danger" ng-click="deleteAddressInRoute(routeInfo.id,address)"> {{address.address_name}} &nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong>
+                   </button> &nbsp;
+                   <button  style = "padding: 4px; padding-left:8px; margin: 4px 4px;" ng-repeat="address in routeInfo.smb_address" class="btn btn-xs btn-danger" ng-click="deleteAddressInRoute(routeInfo.id,address)"> {{address.address_name}} &nbsp; &nbsp; <strong><i class="mdi-navigation-cancel"/></strong>
                    </button> &nbsp;
                   
               <br>
