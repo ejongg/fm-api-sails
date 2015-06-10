@@ -118,7 +118,7 @@ angular.module('fmApp')
       $scope.user.type= $scope.types[0];
     }; 
 
-    var setPage = function(){
+  var setPage = function(){
 
     console.log("NEWLY ADDED");
     $scope.newlyAdded;
