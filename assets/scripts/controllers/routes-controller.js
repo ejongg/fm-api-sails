@@ -60,7 +60,7 @@ angular.module('fmApp')
 
 
   var getAdresses = function () {
-    $http.get(httpHost + '/address').success( function (data) {
+    $http.get(httpHost + '/address/list-all').success( function (data) {
       if(data.length !== 0){
         $scope.addresses = data;    
         console.log("Addresses:");
