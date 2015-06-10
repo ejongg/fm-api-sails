@@ -23,7 +23,7 @@ angular.module('fmApp')
  
  
   var getDSSR = function () {
-    $http.get(httpHost + '/reports/dssr?start='+$scope.startDate+'&'+'end='+$scope.endDate ).success( function (data) {
+    $http.get(httpHost + '/reports/dssr?start='+$scope.startDate+'&'+'end='+$scope.endDate).success( function (data) {
       $scope.beginning_inventory = data.beginning_inventory;
       $scope.ending_inventory = data.ending_inventory;
       $scope.purchases = data.purchases;
