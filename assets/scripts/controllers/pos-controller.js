@@ -16,7 +16,7 @@ angular.module('fmApp')
   $scope.postResult = false;
   $scope.postResultMessage = '';
 
-  $scope.noSKU = true;
+  $scope.noSKU = false;
 
   $scope.errorMessage = '';
   $scope.hasError = false;
@@ -40,17 +40,18 @@ angular.module('fmApp')
     //     $scope.$digest();
     //   }
     // });
-    $http.get(httpHost + '/sku/available').success( function (data) {
+    $http.get(httpHost + '/sku/available-with-moving-pile').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = data;
         $scope.transaction.sku = $scope.skuList[0];
         $scope.maxBottles = $scope.transaction.sku.bottlespercase;
         $scope.maxReturnedsBottles = $scope.transaction.sku.bottlespercase;
         $scope.returns.sku = null;
-        $scope.noSKU = false;
 
         console.log("Available SKU:");
         console.log($scope.skuList);
+      }else{
+        $scope.noSKU = true;
       }
     }).error(function (err) {
       console.log(err);
