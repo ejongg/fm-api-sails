@@ -438,7 +438,7 @@
           </div>
 
      <br>     
-    <div dir-paginate="routeInfo in routes |filter : searchRoute | itemsPerPage:2" pagination-id="routesPagination">
+    <div dir-paginate="routeInfo in routes |filter : searchRoute | filter:companySelect | itemsPerPage:2" pagination-id="routesPagination">
       <div class="panel-primary" >
           <div class="panel-heading">
               <h3 class="panel-title">Route {{routeInfo.route_name + " " + routeInfo.company}}</h3>
