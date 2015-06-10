@@ -28,6 +28,8 @@ module.exports = {
 			})
 
 			.then(function (createdTransaction){
+				sails.sockets.blast('empties', {verb : 'updated'});
+				sails.sockets.blast('incomplete_cases', {verb : 'updated'});
 				sails.sockets.blast('inventory', {verb : 'updated'});
 				sails.sockets.blast('warehouse_transactions', {verb : 'created', data : createdTransaction});
 				return res.json({code : 1, message : 'Transaction completed'}, 200);	
