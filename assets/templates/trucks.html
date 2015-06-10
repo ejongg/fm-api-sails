@@ -102,7 +102,7 @@
                         <label for="inputRoute" class="col-md-6">Route</label> 
                         <div class="col-md-12">
                         <select class="form-control" id="selectType" ng-model="truck.route" 
-                        ng-options="route as route.route_name for route in routes">
+                        ng-options="route as combine(route) for route in routes">
                         </select>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <p>Checker: {{truck.dispatcher.emp_fname+ " " +truck.dispatcher.emp_lname}}</p>
                         <p>Delivery Sales Personnel: {{truck.agent.emp_fname+ " " +truck.agent.emp_lname}}</p>
                         <p>Delivery Helper: {{truck.helper.emp_fname+ " "+truck.helper.emp_lname}}</p>
-                        <p>Route: {{truck.route}}</p>
+                        <p>Route:dasda {{truck.route}}</p>
                     </div>
 
                     <div ng-show="editIndex === $index">
@@ -202,7 +202,7 @@
                                 <td ng-show="noRoute">No Routes</td>
                                 <td ng-hide="noRoute">
                                    <select class="form-control" id="selectType" ng-model="truckEdit.route" 
-                                   ng-options="route as route.route_name for route in routes">
+                                   ng-options="route as combine(route) for route in routes" required>
                                     </select>
                                 </td>
                             </tr>

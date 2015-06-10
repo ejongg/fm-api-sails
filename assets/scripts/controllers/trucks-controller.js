@@ -138,6 +138,10 @@ angular.module('fmApp')
   getDeliverySalesPersonel();
   getDeliveryHelper();
   getRoutes();
+
+   $scope.combine = function (route){
+    return route.route_name + ' ' + route.company;
+  };
   
 
    $scope.showErrorMessage = function (data,msg) {
@@ -161,6 +165,8 @@ angular.module('fmApp')
         clearForm();
       }
   };
+
+
   
   var clearForm = function () {
     $scope.truck.route = $scope.routes[0];
