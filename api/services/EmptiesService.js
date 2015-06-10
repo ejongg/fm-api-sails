@@ -27,7 +27,12 @@ module.exports = {
 							cases : cases
 						};
 
-						return Empties.create(empty);
+						if(bottles > 0 || cases > 0){
+							return Empties.create(empty);	
+						}else{
+							resolve();
+						}
+						
 					}
 				})
 		});
