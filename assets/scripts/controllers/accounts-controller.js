@@ -21,8 +21,13 @@ angular.module('fmApp')
   $scope.hasError = false;
 
   //for sorting
-  $scope.sortCriteria='id';
+  $scope.sortCriteria='username';
   $scope.reverseSort = false;
+
+  $scope.currentPage = 1;
+  $scope.noOfRows = 0;
+  $scope.newlyAdded = {};
+  $scope.index = 0;
 
   $scope.resetId = null;
 
@@ -51,7 +56,7 @@ angular.module('fmApp')
     });
 	};
 
-    var getEmployees = function () {
+  var getEmployees = function () {
     $http.get(httpHost + '/employees').success( function (data) {
       if(data.length !== 0){
         $scope.employees =  $scope.sortData(data,'emp_fname');
@@ -88,21 +93,21 @@ angular.module('fmApp')
 	};
 
     
-    $scope.userClicked = function (user) {
-      $scope.resetId = user.id;
-      if($scope.addUserForm === true){
-        $scope.showAddUserForm(false);
-      }
-      $scope.copiedUser = angular.copy(user);
-      $scope.userDelete.id = $scope.copiedUser.id;
-      $scope.userDelete.username = $scope.copiedUser.username;
-      $scope.userDelete.password = $scope.copiedUser.password;
-      $scope.userDelete.firstname = $scope.copiedUser.firstname;
-      $scope.userDelete.lastname = $scope.copiedUser.lastname;
-      $scope.userDelete.type = $scope.copiedUser.type;
+  $scope.userClicked = function (user) {
+    $scope.resetId = user.id;
+    if($scope.addUserForm === true){
+      $scope.showAddUserForm(false);
+    }
+    $scope.copiedUser = angular.copy(user);
+    $scope.userDelete.id = $scope.copiedUser.id;
+    $scope.userDelete.username = $scope.copiedUser.username;
+    $scope.userDelete.password = $scope.copiedUser.password;
+    $scope.userDelete.firstname = $scope.copiedUser.firstname;
+    $scope.userDelete.lastname = $scope.copiedUser.lastname;
+    $scope.userDelete.type = $scope.copiedUser.type;
 
-      $scope.showEditOrDeleteUserForm(true);
-    };
+    $scope.showEditOrDeleteUserForm(true);
+  };
 
     var clearForm = function () {
       $scope.userForm.$setPristine();
@@ -112,6 +117,32 @@ angular.module('fmApp')
       $scope.user.password = '';
       $scope.user.type= $scope.types[0];
     }; 
+
+    var setPage = function(){
+
+    console.log("NEWLY ADDED");
+    $scope.newlyAdded;
+    var username = $scope.newlyAdded.username;
+    console.log("USERNAME");
+    console.log(username);
+    
+    $scope.sortCriteria = 'username'
+    $scope.filteredAndSortedData =  $scope.sortData($scope.users, 'username');
+   
+    console.log($scope.filteredAndSortedData);
+    console.log("COMPANY :");
+
+    console.log("NO OF ROWS");
+    console.log($scope.noOfRows);
+    $scope.index = (_.findIndex($scope.filteredAndSortedData,{'username' : username}))+1;
+    if($scope.index < 1){
+      $scope.currentPage =  1;
+    }else{
+      $scope.currentPage = Math.ceil($scope.index/$scope.noOfRows)
+    }
+    console.log("CURRENT PAGE: " + $scope.currentPage);
+    console.log("INDEX: " + $scope.index);
+  };
 
   $scope.fullName = function (emp) {
     return emp.emp_fname + ' ' + emp.emp_lname;
@@ -161,6 +192,8 @@ angular.module('fmApp')
       case "created": 
         console.log("User Created");
         $scope.users.push(msg.data);
+        $scope.newlyAdded = msg.data;
+        setPage();
         $scope.$digest();
         break;
       case "destroyed":
