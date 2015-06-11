@@ -28,7 +28,7 @@ angular.module('fmApp')
   $scope.noAddresses = false;
 
   // forSorting
-  $scope.sortCriteria='customer_id.establishment_name';
+  $scope.sortCriteria='';
   $scope.reverseSort = false;
   
   $scope.companies = ['Coca-Cola', 'SMB'];
