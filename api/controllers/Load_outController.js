@@ -53,6 +53,7 @@ module.exports = {
 			.then(function (resultLoadout){
 
 				LoadOutService.getDetails(resultLoadout).then(function (detailedLoadout){
+
 					return new Promise(function (resolve){
 						Trucks.findOne({id : detailedLoadout.truck_id}).populateAll()
 							.then(function (foundTruck){
@@ -182,10 +183,19 @@ module.exports = {
 			})
 
 			.each(function (loadout){
-				return new Promise(function (resolve, reject){
+				return new Promise(function (resolve){
 					LoadOutService.getDetails(loadout).then(function (detailedLoadout){
-						loadoutList.push(detailedLoadout);
-						resolve();
+						return detailedLoadout;
+					})
+
+					.then(function (detailedLoadout){
+						
+						Trucks.findOne({id : loadout.truck_id}).populateAll()
+							.then(function (foundTruck){
+								detailedLoadout.truck_id = foundTruck;
+								loadoutList.push(detailedLoadout);
+								resolve();
+							});
 					})
 				});
 			})
