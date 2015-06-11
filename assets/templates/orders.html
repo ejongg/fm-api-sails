@@ -57,6 +57,10 @@
                          </div>
            
            <div ng-show="companySelected === 'Coca-Cola'">
+            <div ng-show="!currentHour">
+                Can't Add Coca-Cola Orders Yet
+            </div>
+            <div ng-hide="!currentHour">
             <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
                 <fieldset>
 
@@ -143,6 +147,7 @@
 
                 </fieldset>
             </form>
+            </div>
             </div>
 
             <div ng-show="companySelected === 'SMB'">

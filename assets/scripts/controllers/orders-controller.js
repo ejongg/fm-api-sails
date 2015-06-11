@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService','$modal', 
-  function($scope, _, $http, httpHost, authService,userService,$modal){
+.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService','$modal','$interval', 
+  function($scope, _, $http, httpHost, authService,userService,$modal,$interval){
   $scope.distanceRatings = [1,2,3,4,5];
   $scope.skuList = [];
   $scope.skuListMovingPile = [];
@@ -13,10 +13,8 @@ angular.module('fmApp')
   $scope.order = {};
   $scope.order.address = '';
   $scope.totalAmount = 0;
-  $scope.today = new Date();
-
-  console.log($scope.today.getHours());
-  console.log($scope.today.getMinutes());
+  var today = new Date();
+  $scope.currentHour = 0;
 
   $scope.itemExistingError = false;
   $scope.itemExisting = '';
@@ -163,11 +161,46 @@ angular.module('fmApp')
     window.print();
   };
 
+  $scope.hours = today.getHours();
+  $scope.minutes = today.getMinutes();
+  $scope.seconds = today.getSeconds();
+  
+
+  $interval(function () {
+    console.log("TIck");
+    $scope.seconds++;
+    if($scope.seconds === 60){
+      $scope.minutes++;
+      $scope.seconds=0;
+      if($scope.minutes === 60){
+        $scope.hours++;
+        $scope.minutes=0;
+        checkTime($scope.hours);
+      }
+    }
+  },1000);
+
+  var checkTime = function (hr) {
+    console.log("Check Time");
+    if(hr >= 15 && hr <= 18){
+        console.log("OK");
+        $scope.currentHour = true;
+        }else{
+          console.log("Nope");
+        $scope.currentHour = false;
+        }
+  }
+
+
   $scope.showAddOrderForm = function (data) {
     if($scope.viewProducts === true){
       $scope.showViewProducts(false);
     }
     $scope.addOrderForm = data;
+    if(data === true){
+      console.log("Show Form");
+      checkTime($scope.hours);
+    }
     if(data === false){
       clearForm();
       $scope.orders = [];
