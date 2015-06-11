@@ -441,7 +441,11 @@ angular.module('fmApp')
         }
         break;
       case "cancelled":
-        console.log("cancelled");  
+        console.log("cancelled");
+        console.log(msg.data.id);  
+        var index = _.findIndex($scope.ordersList,{'id': msg.data.id});
+        console.log(index);
+        $scope.ordersList[index] = msg.data;
         $scope.$digest();
     }
 
