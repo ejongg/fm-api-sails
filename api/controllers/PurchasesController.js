@@ -62,9 +62,31 @@ module.exports = {
 		var purchaseId = req.body.purchase_id;
 		var username = req.body.username;
 
-		Purchase_products.find({purchase_id : purchaseId}).populate('sku_id')
-			.then(function (products){
-				return products;
+		Purchases.update({id : purchaseId}, {status : "Void"})
+			.then(function (voidPurchase){
+				return [voidPurchase[0], Users.findOne({username : username})];
+			})
+
+			.spread(function (voidPurchase, user){
+				var voidDetails = {
+					purchase_id : voidPurchase.id,
+					date : moment().format('YYYY-MM-DD'),
+					user : user.firstname + ' ' + user.lastname
+				};
+
+				return [voidPurchase, Void_purchases.create(voidDetails)];
+			})
+
+			.spread(function (voidPurchase){
+				return EmptiesService.findEmptyRecords(purchaseId, voidPurchase.date_received,'purchase');
+			})
+
+			.each(function (product){
+				return EmptiesService.put(product.sku_id.id, product.sku_id.bottlespercase, product.bottles, product.cases);
+			})
+
+			.then(function (){
+				return Purchase_products.find({purchase_id : purchaseId}).populate('sku_id')
 			})
 
 			.each(function (product){
@@ -72,31 +94,7 @@ module.exports = {
 			})
 
 			.then(function (){
-				return Purchases.update({id : purchaseId}, {status : "Void"});
-			})
-
-			.then(function (voidPurchase){
-				return new Promise(function (resolve){
-
-					Users.findOne({username : username}).then(function (foundUser){
-
-						var voidDetails = {
-							purchase_id : voidPurchase[0].id,
-							date : moment().format('YYYY-MM-DD'),
-							user : foundUser.firstname + ' ' + foundUser.lastname
-						};
-
-						return Void_purchases.create(voidDetails);
-
-					})
-
-					.then(function (){
-						resolve();
-					})
-				});
-			})
-
-			.then(function (){
+				sails.sockets.blast('empties', {verb : 'updated'});
 				sails.sockets.blast('inventory', {verb : 'updated'});
 				return res.send("Purchase now void", 200);
 			})

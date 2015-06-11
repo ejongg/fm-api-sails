@@ -1,6 +1,24 @@
 var Promise = require('bluebird');
 
 module.exports = {
+
+	findEmptyRecords : function(id, date, model){
+		return new Promise(function (resolve){
+			var query = null;
+
+			if(model == 'purchase'){
+				query = {purchase_id : id, date : date};
+			}else{
+				query = {returns_id : id, date : date};
+			}
+
+			Empty_records.find(query).populate('sku_id')
+				.then(function (foundSkus){
+					resolve(foundSkus);
+				})
+		});
+	},
+
 	put : function(sku_id, bottlespercase, bottles, cases){
 		return new Promise(function (resolve){
 
