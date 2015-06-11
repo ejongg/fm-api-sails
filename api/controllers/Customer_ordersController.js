@@ -157,7 +157,6 @@ module.exports = {
 		var username = req.body.username;
 
 		Customer_orders.update({id : orderId}, {status : "Cancelled"})
-
 			.then(function (order){
 				return new Promise(function (resolve){
 					Users.findOne({username : username}).then(function (foundUser){
@@ -212,9 +211,11 @@ module.exports = {
 			})
 
 			.then(function (){
-				sails.sockets.blast('customer_orders', {verb : 'cancelled', data : order});
-				sails.sockets.blast('inventory', {verb : "updated"});
-				return res.send({message : "Order cancelled"}, 200);
+				Customer_orders.findOne({id : orderId}).populate('customer_id').then(function (foundOrder){
+					sails.sockets.blast('customer_orders', {verb : 'cancelled', data : foundOrder});
+					sails.sockets.blast('inventory', {verb : "updated"});
+					return res.send({message : "Order cancelled"}, 200);
+				})
 			})
 	}
 };
