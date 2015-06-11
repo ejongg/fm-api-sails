@@ -2,10 +2,10 @@ var Promise = require("bluebird");
 
 module.exports = {
 	getDetails : function (loadout){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 			var total_amount = 0;
 
-			Delivery_transactions.find({loadout_id : loadout.id}).populate("customer_id")
+			Delivery_transactions.find({loadout_id : loadout.id}).populate('customer_id', 'truck_id')
 				.then(function (transactions){
 					loadout.transactions = transactions;
 					return transactions;
