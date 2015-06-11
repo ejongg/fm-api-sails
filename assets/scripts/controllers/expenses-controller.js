@@ -374,10 +374,10 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         if($scope.expense.sku){
-          if($scope.expense.sku.id === msg.data.sku_id){
+          if($scope.expense.sku.id === msg.data.sku_id.id){
             $scope.bays.push(msg.data);
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
-            $scope.expense.bay = $scope.bays[0];
+            $scope.expense.bay = $scope.bays[0].id;
             if($scope.noBays === true){
               $scope.noBays = false;
             }
@@ -393,7 +393,7 @@ angular.module('fmApp')
             console.log(index);
             $scope.bays[index] = msg.data;
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
-            $scope.expense.bay = $scope.bays[0];
+            $scope.expense.bay = $scope.bays[0].id;
         }
         $scope.$digest();
         break;
@@ -407,7 +407,7 @@ angular.module('fmApp')
               $scope.noBays = true;
             }else{
               $scope.bays = $scope.sortData($scope.bays,'bay_name');
-              $scope.expense.bay = $scope.bays[0];
+              $scope.expense.bay = $scope.bays[0].id;
             }
 
         }

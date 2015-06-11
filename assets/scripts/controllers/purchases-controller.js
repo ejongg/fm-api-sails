@@ -375,7 +375,7 @@ angular.module('fmApp')
     switch (msg.verb) {
       case "created": 
         if($scope.purchase.sku){
-          if($scope.purchase.sku.id === msg.data.sku_id){
+          if($scope.purchase.sku.id === msg.data.sku_id.id){
             $scope.bays.push(msg.data);
             $scope.bays = $scope.sortData($scope.bays,'bay_name');
             $scope.purchase.bay = $scope.bays[0];

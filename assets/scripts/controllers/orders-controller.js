@@ -439,6 +439,9 @@ angular.module('fmApp')
         if($scope.noOrders === true) {
           $scope.noOrders = false;
         }
+        break;
+      case "cancelled":
+        console.log("cancelled");  
         $scope.$digest();
     }
 
