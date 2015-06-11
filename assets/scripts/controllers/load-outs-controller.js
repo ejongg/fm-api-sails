@@ -86,7 +86,7 @@ angular.module('fmApp')
 
 
 
-  getLoadOuts($scope.dateFilter);
+  getLoadOuts(todayDayFormatted);
   getTrucks();
 
   $scope.pagePrint = function () {
@@ -100,11 +100,12 @@ angular.module('fmApp')
     getLoadOuts(date);
   };
   
-  $scope.setEditLoadOut = function (index) {
+  $scope.setEditLoadOut = function (index,loadOut) {
     if($scope.addLoadOutBox === true){
       $scope.showAddLoadOutBox(false);
     }
     $scope.editIndex = index;
+    console.log(loadOut);
   };
 
   $scope.showAddLoadOutBox = function (data){
