@@ -172,7 +172,7 @@
               <div class="form-group" ng-hide="noCustomerOrdersAvailable">
 
                 <div class="col-md-8">
-                  <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as orderName(orderAvailable) for orderAvailable in customerOrdersAvailable">
+                  <select class="form-control" ng-model="ordersAvailableListEdit" ng-options="orderAvailable as loadOutName(orderAvailable) for orderAvailable in customerOrdersAvailable">
                   </select>
                 </div>
                 

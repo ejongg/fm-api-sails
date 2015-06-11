@@ -39,6 +39,24 @@ angular.module('fmApp')
       if(data.length !== 0){
          $scope.customerOrdersAvailable = $scope.sortData(data,'customer_id.establishment_name');
          $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
+        console.log("Customer Orders Available:");
+        console.log($scope.customerOrdersAvailable);
+      }else{
+        console.log("No Customer");
+        $scope.noCustomerOrdersAvailable = true;
+      }
+
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
+
+  var getCustomerOrdersAvailableEdit = function (truck) {
+    console.log("Get Customer");
+    console.log(truck.route);
+    $http.get(httpHost + '/customer-orders/list?route='+ truck.route).success( function (data) {
+      if(data.length !== 0){
+         $scope.customerOrdersAvailable = $scope.sortData(data,'customer_id.establishment_name');
          $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
         console.log($scope.customerOrdersAvailable);
@@ -103,6 +121,7 @@ angular.module('fmApp')
   $scope.setEditLoadOut = function (index,loadOut) {
     if($scope.addLoadOutBox === true){
       $scope.showAddLoadOutBox(false);
+      getCustomerOrdersAvailableEdit(loadOut.truck_id);
     }
     $scope.editIndex = index;
     console.log(loadOut);
@@ -140,7 +159,7 @@ angular.module('fmApp')
   };
 
   $scope.getTruckNumber = function (truck_id) {
-    var index = _.findIndex($scope.trucks, {'id': truck_id});
+    var index = _.findIndex($scope.trucks, {'id': truck_id.id});
     index += 1;
     return "Truck " + index;
   };
@@ -230,7 +249,7 @@ angular.module('fmApp')
     "loadout_no": loadout_no,
     "loadout_id": loadout_id,
     "orders": data,
-    "truck_id": truck_id,
+    "truck_id": truck_id.id,
     "flag": "edit"
     };
 
