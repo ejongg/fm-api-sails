@@ -29,8 +29,6 @@ module.exports = {
 			truck_id : truckId
 		};
 
-		var createdLoadout;
-
 		Load_out.findOrCreate(loadout, loadout)
 			.then(function (resultLoadout){
 				return resultLoadout;
@@ -53,17 +51,32 @@ module.exports = {
 			})
 
 			.then(function (resultLoadout){
-				LoadOutService.getDetails(resultLoadout)
-					.then(function(detailedLoadout){
-						if(flag == "add"){
-							sails.sockets.blast("loadout", {verb : "created", data : detailedLoadout});
-							return res.send("Loadout successfully created", 200);	
-						}else{
-							sails.sockets.blast("loadout", {verb : "updated", data : detailedLoadout});
-							return res.send("Loadout successfully updated", 200);	
-						}	
-					})	
+
+				LoadOutService.getDetails(resultLoadout).then(function (detailedLoadout){
+					return new Promise(function (resolve){
+						Trucks.findOne({id : detailedLoadout.truck_id}).populateAll()
+							.then(function (foundTruck){
+								detailedLoadout.truck_id = foundTruck;
+							})
+
+							.then(function (){
+								resolve(detailedLoadout);
+							})
+					});									
+				})
+
+				.then(function (detailedLoadout){
+					if(flag == "add"){
+						sails.sockets.blast("loadout", {verb : "created", data : detailedLoadout});
+						return res.send("Loadout successfully created", 200);	
+					}else{
+						sails.sockets.blast("loadout", {verb : "updated", data : detailedLoadout});
+						return res.send("Loadout successfully updated", 200);	
+					}
+				})	
 			})
+
+			
 	},
 
 	getCompleteLoadouts : function (req, res){

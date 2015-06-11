@@ -5,7 +5,7 @@ module.exports = {
 		return new Promise(function (resolve){
 			var total_amount = 0;
 
-			Delivery_transactions.find({loadout_id : loadout.id}).populate('customer_id', 'truck_id')
+			Delivery_transactions.find({loadout_id : loadout.id}).populate('customer_id')
 				.then(function (transactions){
 					loadout.transactions = transactions;
 					return transactions;
