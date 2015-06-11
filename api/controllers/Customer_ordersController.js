@@ -160,8 +160,6 @@ module.exports = {
 
 			.then(function (order){
 				return new Promise(function (resolve){
-					sails.sockets.blast('customer_orders', {verb : 'cancelled', data : order});
-
 					Users.findOne({username : username}).then(function (foundUser){
 
 						var cancelledOrder = {
@@ -214,6 +212,7 @@ module.exports = {
 			})
 
 			.then(function (){
+				sails.sockets.blast('customer_orders', {verb : 'cancelled', data : order});
 				sails.sockets.blast('inventory', {verb : "updated"});
 				return res.send({message : "Order cancelled"}, 200);
 			})
