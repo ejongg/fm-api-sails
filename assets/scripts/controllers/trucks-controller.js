@@ -290,7 +290,7 @@ angular.module('fmApp')
       console.log(editInfo);
       console.log(truck.id);
 
-    io.socket.request($scope.socketOptions('put','/trucks/' + truck.id,{"Authorization": "Bearer " + authService.getToken()},editInfo), function (body, JWR) {
+    io.socket.request($scope.socketOptions('put','/trucks/edit' + truck.id,{"Authorization": "Bearer " + authService.getToken()},editInfo), function (body, JWR) {
       console.log('Sails responded with edit truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
