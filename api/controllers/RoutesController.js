@@ -84,6 +84,46 @@ module.exports = {
 						return res.send(destroyedRoute);
 					})
 			})
+	},
+
+	listUnassigned : function (req, res){
+		
+		findAssignedRoutes().then(function (assignedRoutes){
+			var finalList = [];
+
+			Routes.find().populateAll().then(function (foundRoutes){
+				return foundRoutes;
+			})
+
+			.each(function (route){
+				if(assignedRoutes.indexOf(route.id) == -1){
+					finalList.push(route);
+				}
+			})
+
+			.then(function (){
+				return res.send(finalList);
+			})
+
+		});
+
+		function findAssignedRoutes(){
+			return new Promise(function (resolve){
+				var assignedRoutes = [];
+
+				Trucks.find().then(function (foundTrucks){
+					return foundTrucks;
+				})
+
+				.each(function (truck){
+					assignedRoutes.push(truck.route);
+				})
+
+				.then(function (){
+					resolve(assignedRoutes);
+				})
+			});
+		}
 	} 
 };
 

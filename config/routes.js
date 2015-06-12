@@ -118,6 +118,7 @@ module.exports.routes = {
 		add - for creating routes
 	*/
 	'POST /routes/add' : 'Routes.add',
+	'GET  /routes/unassigned' : 'Routes.listUnassigned',
 
 	/* 	SKU 
 		available - for listing products in inventory that has total count > 0
