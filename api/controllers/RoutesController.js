@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing routes
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+var Promise = require('bluebird');
 
 module.exports = {
 	add : function(req, res){
@@ -11,12 +12,47 @@ module.exports = {
 		var addressList = req.body.address;
 		var company = req.body.company;
 		var flag = req.body.flag;
-		var updatedAddressList = [];
 
-		Routes.findOrCreate({route_name : routeName, company : company}, {route_name : routeName, company : company})
-			.then(function (route){
+		var query = {
+			route_name : routeName, 
+			company : company
+		};
 
-				async.each(addressList, function (address, cb){
+		Routes.findOrCreate(query, query).then(function (route){
+			return updateAddresses(route);
+		})
+
+		.then(function (route){
+		
+			var comp = null;
+
+			if(company == "Coca-Cola"){
+				comp = 'coke_address';
+			}else{
+				comp = 'smb_address';
+			}
+
+			return Routes.findOne({id : route.id}).populate(comp);
+		})
+
+		.then(function (foundRoute){
+			if(flag == 'add'){
+				sails.sockets.blast('routes', {verb : 'created', data : foundRoute});	
+			}else{
+				sails.sockets.blast('routes', {verb : 'updated', data : foundRoute});	
+			}
+
+			return res.send('Success', 200);
+		})
+
+		function updateAddresses(route){
+			return new Promise(function (resolve){
+
+				new Promise(function (resolve){
+					resolve(addressList);
+				})
+
+				.each(function (address){
 					var addressRoute;
 
 					if(company == 'Coca-Cola'){
@@ -25,44 +61,15 @@ module.exports = {
 						addressRoute = {smb_route : route.id};
 					}
 
-					Address.update({id : address.id}, addressRoute)
-						.then(function (updatedAddress){
-							updatedAddressList.push(updatedAddress);
-							cb();
-						},
+					return Address.update({id : address.id}, addressRoute);
+				})
 
-						function(err){
-							cb(err);
-						});
+				.then(function (){
+					resolve(route);
+				})
 
-				}, function(err){
-					if(err) return res.send(err);
-
-					var comp = null;
-
-					if(company == "Coca-Cola"){
-						comp = 'coke_address';
-					}else{
-						comp = 'smb_address';
-					}
-
-					Routes.findOne({route_name : routeName}).populate(comp)
-						.then(function (createdRoute){
-							
-							if(flag == "add"){
-								sails.sockets.blast('routes', {verb : 'created', data : createdRoute});	
-							}else if(flag == "edit"){
-								sails.sockets.blast('routes', {verb : 'updated', data : createdRoute});	
-							}
-							
-							return res.send("Route created successfully");
-						});
-				});
-			})
-
-			.catch(function(err){
-				return res.send(err);
 			});
+		};
 	},
 
 	remove : function(req, res){

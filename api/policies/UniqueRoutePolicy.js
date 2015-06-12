@@ -3,10 +3,12 @@ var Promise = require('bluebird');
 module.exports = function (req, res, next){
 	var routeName = req.body.route_name;
 	var company = req.body.company;
+	var routeId = req.body.route_id;
 
-	Routes.findOne({route_name : routeName, company : company})
-		.then(function (foundRoute){
-
+	if(routeId){
+		next();
+	}else{
+		Routes.findOne({route_name : routeName, company : company}).then(function (foundRoute){
 			if(foundRoute){
 				var data = {
 					route_name : routeName,
@@ -18,4 +20,5 @@ module.exports = function (req, res, next){
 				next();
 			}
 		})
+	}
 };
