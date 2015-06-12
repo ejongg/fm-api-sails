@@ -30,11 +30,18 @@ module.exports = {
 			})
 
 			.then(function (createdTruck){
-				Trucks.findOne({id : createdTruck.id}).populateAll()
-					.then(function (newTruck){
-						sails.sockets.blast('trucks', {verb : 'created', data : newTruck});
-						return res.send(201);
+				Trucks.findOne({id : createdTruck.id}).populateAll().then(function (foundTruck){
+
+					Routes.findOne({id : foundTruck.route}).populateAll().then(function (foundRoute){
+						foundTruck.route = foundRoute;
 					})
+
+					.then(function (){
+						sails.sockets.blast('trucks', {verb : 'created', data : foundTruck});
+						return res.send("Truck successfully created", 200);
+					})
+
+				})
 			})
 
 			.catch(function(err){
