@@ -286,8 +286,6 @@ angular.module('fmApp')
       //   "route": truck.route.id,
       //   "carry_weight": truck.carry_weight
       // };
-
-      console.log(editInfo);
       console.log(truck.id);
 
     io.socket.request($scope.socketOptions('post','/trucks/edit',{"Authorization": "Bearer " + authService.getToken()},truck), function (body, JWR) {
