@@ -96,6 +96,27 @@ module.exports = {
 			.then(function (trucks){
 				return res.send(trucks);
 			});
+	},
+
+	remove : function (req, res){
+		var truckId = req.query.id;
+
+		Trucks.findOne({id : truckId}).populateAll().then(function (foundTruck){
+
+			Routes.findOne({id : foundTruck.route}).populateAll()
+				.then(function (foundRoute){
+					foundTruck.route = foundRoute;
+				})
+
+				.then(function (){
+					return Trucks.destroy({id : truckId});
+				})
+
+				.then(function (){
+					sails.sockets.blast('trucks', {verb : 'destroyed', data : foundTruck});
+					return res.send("Truck successfully deleted", 200);
+				})
+		})
 	}
 };
 

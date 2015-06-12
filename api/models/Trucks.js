@@ -49,11 +49,6 @@ module.exports = {
         return false;
       }
     }
-  },
-
-  afterDestroy : function(truck, next){
-    sails.sockets.blast('trucks', {verb : 'destroyed', data : truck});
-    next();
   }
 };
 
