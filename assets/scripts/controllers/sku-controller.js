@@ -174,8 +174,7 @@ angular.module('fmApp')
   $scope.selectBrand = function (brand) {
     console.log(brand);
     var index = _.findIndex($scope.products,{'brand_name': brand});
-    $scope .companySelect = $scope.products[index].company;
-    
+    $scope.companySelect = $scope.products[index].company;  
   };
  
  /*

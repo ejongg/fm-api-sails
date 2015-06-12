@@ -13,6 +13,12 @@ angular.module('fmApp')
   $scope.employeeDeliveryHelper = [];
   $scope.routes = [];
 
+  $scope.employeeDriversEdit = [];
+  $scope.employeeCheckersEdit = [];
+  $scope.employeeDeliverySalesPersonnelEdit = [];
+  $scope.employeeDeliveryHelperEdit = [];
+  $scope.routesEdit = [];
+
   $scope.errorMessage = '';
   $scope.hasError = false;
 
@@ -26,7 +32,7 @@ angular.module('fmApp')
   $scope.addTruckForm = false;
 
   var getTrucks = function () {
-  $http.get(httpHost + '/trucks').success( function (data) {
+  $http.get(httpHost + '/trucks/list').success( function (data) {
      console.log("Trucks");
       if(data.length !== 0){
         $scope.trucks = data; 
@@ -42,10 +48,10 @@ angular.module('fmApp')
   };
 
   var getRoutes = function () {
-    $http.get(httpHost + '/routes').success(function(data){
+    $http.get(httpHost + '/routes/unassigned').success(function(data){
 
      if (data.length !== 0){
-        $scope.routes = data;
+        $scope.routes = $scope.sortData(data,'route_name');
         $scope.truck.route = $scope.routes[0];
         $scope.truckEdit.route = $scope.routes[0];
         console.log("Routes");
@@ -188,6 +194,26 @@ angular.module('fmApp')
     if(index !== -1){
       $scope.truckEdit.carry_weight = angular.copy(truck.carry_weight);
       $scope.truckEdit.id = angular.copy(truck.id);
+      
+
+      $scope.employeeDriversEdit = angular.copy($scope.employeeDrivers);
+      $scope.employeeCheckersEdit = angular.copy($scope.employeeCheckers);
+      $scope.employeeDeliverySalesPersonnelEdit = angular.copy($scope.employeeDeliverySalesPersonnel);
+      $scope.employeeDeliveryHelperEdit = angular.copy($scope.employeeDeliveryHelper);
+      $scope.routesEdit = angular.copy($scope.routes);
+
+      $scope.employeeDriversEdit.unshift(truck.driver);
+      $scope.employeeCheckersEdit.unshift(truck.dispatcher);
+      $scope.employeeDeliverySalesPersonnelEdit.unshift(truck.agent);
+      $scope.employeeDeliveryHelperEdit.unshift(truck.helper);
+      $scope.routesEdit.unshift(truck.route);
+
+      $scope.truckEdit.driver = truck.driver;
+      $scope.truckEdit.dispatcher = truck.dispatcher;
+      $scope.truckEdit.agent = truck.agent;
+      $scope.truckEdit.helper = truck.helper;
+      $scope.truckEdit.route = truck.route;
+
       $scope.editIndex = index;
     }else{
       $scope.editIndex = -1;
@@ -213,8 +239,36 @@ angular.module('fmApp')
       io.socket.request($scope.socketOptions('post','/trucks/add',{"Authorization": "Bearer " + authService.getToken()},truckInfo), function (body, JWR) {
       console.log('Sails responded with post truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 201){
+      if(JWR.statusCode === 200){
         $scope.showAddTruckForm(false);
+        var indexDriver = _.findIndex($scope.employeeDrivers, {'id' : truck.driver.id});
+        $scope.employeeDrivers.splice(indexDriver,1);
+        $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers ,'emp_fname');
+        $scope.truck.driver = $scope.employeeDrivers[0];
+
+        var indexDispatcher = _.findIndex($scope.employeeCheckers, {'id' : truck.dispatcher.id});
+        $scope.employeeCheckers.splice(indexDriver,1);
+        $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
+        $scope.truck.dispatcher = $scope.employeeCheckers[0];
+       
+
+        var indexAgent = _.findIndex($scope.employeeDeliverySalesPersonnel, {'id' : truck.agent.id});
+        $scope.employeeDeliverySalesPersonnel.splice(indexAgent,1);
+        $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
+        $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+     
+
+        var indexHelper = _.findIndex($scope.employeeDeliveryHelper, {'id' : truck.helper.id});
+        $scope.employeeDeliveryHelper.splice(indexHelper,1);
+        $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
+        $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+  
+
+        var indexRoute = _.findIndex($scope.routes, {'id' : truck.route.id});
+        $scope.routes.splice(indexRoute,1);
+        $scope.routes = $scope.sortData($scope.routes,'route_name');
+        $scope.truck.route = $scope.routes[0];
+
         $scope.$digest();
       }
       });  
@@ -248,7 +302,7 @@ angular.module('fmApp')
 
   $scope.deleteTruck = function (truckId) {
   
-    io.socket.request($scope.socketOptions('delete','/trucks/' + truckId,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
+    io.socket.request($scope.socketOptions('delete','/trucks/remove?id=' + truckId,{"Authorization": "Bearer " + authService.getToken()}), function (body, JWR) {
       console.log('Sails responded with delete user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
@@ -287,10 +341,38 @@ angular.module('fmApp')
         break;
       case "destroyed":
         console.log("Truck Deleted");
-        console.log(msg.data);
-        var index = _.findIndex($scope.trucks, {id : msg.data[0].truck_id});
+        var index = _.findIndex($scope.trucks, {id : msg.data.id});
         console.log(index);
-        $scope.trucks.splice(index,1);   
+        $scope.trucks.splice(index,1);
+
+        $scope.employeeDrivers.push(msg.data.driver);
+        $scope.employeeCheckers.push(msg.data.dispatcher);
+        $scope.employeeDeliverySalesPersonnel.push(msg.data.agent);
+        $scope.employeeDeliveryHelper.push(msg.data.helper);
+        $scope.routes.push(msg.data.route);
+
+
+        $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers ,'emp_fname');
+        $scope.truck.driver = $scope.employeeDrivers[0];
+        $scope.truckEdit.driver = $scope.employeeDrivers[0];
+
+    
+        $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
+        $scope.truck.dispatcher = $scope.employeeCheckers[0];
+        $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+
+        $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
+        $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+        $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+
+        $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
+        $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+        $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+        
+        $scope.routes = $scope.sortData($scope.routes,'route_name');
+        $scope.truck.route = $scope.routes[0];
+        $scope.truckEdit.route = $scope.routes[0];
+
         if($scope.trucks.length === 0){
           $scope.noTrucks = true;
         }

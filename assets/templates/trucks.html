@@ -148,10 +148,11 @@
                         <p>Checker: {{truck.dispatcher.emp_fname+ " " +truck.dispatcher.emp_lname}}</p>
                         <p>Delivery Sales Personnel: {{truck.agent.emp_fname+ " " +truck.agent.emp_lname}}</p>
                         <p>Delivery Helper: {{truck.helper.emp_fname+ " "+truck.helper.emp_lname}}</p>
-                        <p>Route:dasda {{truck.route}}</p>
+                        <p>Route:{{truck.route.route_name + " " +truck.route.company}}</p>
                     </div>
 
                     <div ng-show="editIndex === $index">
+
                         <form name="editTruckForm" novalidate>
 
 
@@ -161,7 +162,7 @@
                                 <td ng-show="noTruckDriver">No Truck Driver</td>
                                 <td ng-hide="noTruckDriver">
                                  <select class="form-control" id="selectType" ng-model="truckEdit.driver" 
-                                 ng-options="driver as fullName(driver) for driver in employeeDrivers">
+                                 ng-options="driver as fullName(driver) for driver in employeeDriversEdit">
                                  </select>
                                 </td>
                             </tr>
@@ -172,7 +173,7 @@
                                 <td ng-show="noChecker">No Checker</td>
                                 <td ng-hide="noChecker">
                                 <select class="form-control" id="selectType" ng-model="truckEdit.dispatcher" 
-                                 ng-options="checker as fullName(checker) for checker in employeeCheckers">
+                                 ng-options="checker as fullName(checker) for checker in employeeCheckersEdit">
                                  </select>
                                  </td>
                             </tr>
@@ -182,7 +183,7 @@
                                 <td ng-show="noDSP">No Delivery Sales Personnel</td>
                                 <td ng-hide="noDSP">
                                 <select class="form-control" id="selectType" ng-model="truckEdit.agent" 
-                                 ng-options="dsp as fullName(dsp) for dsp in employeeDeliverySalesPersonnel">
+                                 ng-options="dsp as fullName(dsp) for dsp in employeeDeliverySalesPersonnelEdit">
                                  </select>
                                 </td>
                             </tr>
@@ -192,7 +193,7 @@
                                 <td ng-show="noDH">No Delivery Helper</td>
                                 <td ng-hide="noDH">
                                 <select class="form-control" id="selectType" ng-model="truckEdit.helper" 
-                                 ng-options="helper as fullName(helper) for helper in employeeDeliveryHelper">
+                                 ng-options="helper as fullName(helper) for helper in employeeDeliveryHelperEdit">
                                  </select>
                                 </td>
                             </tr>
@@ -202,7 +203,7 @@
                                 <td ng-show="noRoute">No Routes</td>
                                 <td ng-hide="noRoute">
                                    <select class="form-control" id="selectType" ng-model="truckEdit.route" 
-                                   ng-options="route as combine(route) for route in routes" required>
+                                   ng-options="route as combine(route) for route in routesEdit" required>
                                     </select>
                                 </td>
                             </tr>
