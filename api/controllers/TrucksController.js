@@ -50,46 +50,105 @@ module.exports = {
 	},
 
 	edit : function(req ,res){
-		var truck;
+		var truckId = req.body.id;
+		var dispatcherId = req.body.dispatcher.id;
+		var driverId = req.body.driver.id;
+		var agentId = req.body.agent.id;
+		var helperId = req.body.helper.id;
+		var routeId = req.body.route.id;
+		var toReplace = [];
+		var toBeReplaced = [];
+		
+		Trucks.findOne({id : truckId}).then(function (foundTruck){
+			var newEmployees = [dispatcherId, driverId, agentId, helperId];
+			var prevEmployees = [foundTruck.dispatcher, foundTruck.driver, foundTruck.agent, foundTruck.helper];
+			
+			var updateQuery = {
+				route : routeId
+			};
 
-		Trucks.update({id : truck.id}, truck)
-			.then(function (updatedTruck){
-				
-				Trucks.findOne({id : updatedTruck.id}).populateAll()
-					.then(function (foundTruck){
+			for(var i = 0; i < newEmployees.length; i++){
+				if(newEmployees[i] != prevEmployees[i]){
+					switch(i){
+						case 0: 
+							updateQuery.dispatcher = newEmployees[i];
+							toReplace.push(newEmployees[i]);
+							toBeReplaced.push(prevEmployees[i]);
+							break;
+						case 1:
+							updateQuery.driver = newEmployees[i];
+							toReplace.push(newEmployees[i]);
+							toBeReplaced.push(prevEmployees[i]);
+							break;
+						case 2:
+							updateQuery.agent = newEmployees[i];
+							toReplace.push(newEmployees[i]);
+							toBeReplaced.push(prevEmployees[i]);
+							break;
+						case 3:
+							updateQuery.helper = newEmployees[i];
+							toReplace.push(newEmployees[i]);
+							toBeReplaced.push(prevEmployees[i]);
+							break;
+					}
+				}
+			}
 
-						Routes.findOne({id : foundTruck.route}).populateAll().then(function (foundRoute){
-							foundTruck.route = foundRoute;
-						})
+			return Trucks.update({id : truckId}, updateQuery);
+		})
 
-						.then(function (){
-							sails.sockets.blast("trucks", {verb : "updated", data : foundTruck});
-						})
-						
+		.then(function (){
+			if(toBeReplaced.length > 0){
+				return new Promise(function (resolve){
+
+					new Promise(function (resolve){
+						resolve(toBeReplaced);
 					})
-			})
 
-			.then(function (){
-				return new Promise(function (resolve, reject){
-					Employees.findOne({id : prevEmp})
-						.then(function (foundEmp){
-							resolve(foundEmp);	
-						})
-				})				
-			})
+					.each(function (employeeId){
+						return Employees.update({id : employeeId}, {truck_id : null});
+					})
 
-			.then(function (foundEmp){
-				foundEmp.truck_id = null;
-
-				foundEmp.save(function (err, saved){
-					sails.sockets.blast("employees", {verb : "updated", data : saved});
-					return res.send("Truck successfully updated", 200);		
+					.then(function (){
+						resolve();
+					})
 				});
-			})
+			}
+		})
 
-			.catch(function(err){
-				return res.send(err);
+		.then(function (){
+			if(toReplace.length > 0){
+				return new Promise(function (resolve){
+
+					new Promise(function (resolve){
+						resolve(toReplace);
+					})
+
+					.each(function (employeeId){
+						return Employees.update({id : employeeId}, {truck_id : truckId});
+					})
+
+					.then(function (){
+						resolve();
+					})
+				});
+			}
+		})
+
+		.then(function (){
+
+			Trucks.findOne({id : truckId}).populateAll().then(function (foundTruck){
+				Routes.findOne({id : routeId}).populateAll().then(function (foundRoutes){
+					foundTruck.route = foundRoutes;
+				})
+
+				.then(function (){
+					sails.sockets.blast('trucks', {verb : "updated", data : foundTruck});
+					return res.send("Truck updated successfully", 200);
+				})
 			});
+
+		})
 	},
 
 	list : function (req, res){
