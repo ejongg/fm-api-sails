@@ -84,8 +84,8 @@ module.exports = {
 			})
 
 			.each(function (truck){
-				return new Promise(function (resolve, reject){
-					Routes.findOne({id : truck.route})
+				return new Promise(function (resolve){
+					Routes.findOne({id : truck.route}).populateAll()
 						.then(function (route){
 							truck.route = route;
 							resolve();
