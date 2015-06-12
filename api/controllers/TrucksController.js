@@ -57,7 +57,15 @@ module.exports = {
 				
 				Trucks.findOne({id : updatedTruck.id}).populateAll()
 					.then(function (foundTruck){
-						sails.sockets.blast("trucks", {verb : "updated", data : foundTruck});
+
+						Routes.findOne({id : foundTruck.route}).populateAll().then(function (foundRoute){
+							foundTruck.route = foundRoute;
+						})
+
+						.then(function (){
+							sails.sockets.blast("trucks", {verb : "updated", data : foundTruck});
+						})
+						
 					})
 			})
 
@@ -75,7 +83,7 @@ module.exports = {
 
 				foundEmp.save(function (err, saved){
 					sails.sockets.blast("employees", {verb : "updated", data : saved});
-					return res.send(200);		
+					return res.send("Truck successfully updated", 200);		
 				});
 			})
 
