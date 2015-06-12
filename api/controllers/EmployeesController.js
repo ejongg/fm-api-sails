@@ -85,17 +85,18 @@ module.exports = {
 
 	listForEdit : function (req, res){
 		var truckId = req.query.truck;
-
+		var position = req.query.position;
+		
 		var list = [];
 
-		Employees.find({truck_id : null}).sort('emp_fname ASC')
+		Employees.find({truck_id : null, position : position}).sort('emp_fname ASC')
 			.then(function (unassigned){
 				list = unassigned;
 			})
 
 			.then(function (){
 				return new Promise(function (resolve, reject){
-					Employees.find({truck_id : truckId})
+					Employees.find({truck_id : truckId, position : position})
 						.then(function (currentEmployees){
 							return currentEmployees;
 						})
