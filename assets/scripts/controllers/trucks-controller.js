@@ -279,11 +279,11 @@ angular.module('fmApp')
       console.log("Edit Truck");
       console.log(truck);
       var editInfo = {
-        "agent": truck.agent,
-        "dispatcher": truck.dispatcher,
-        "driver": truck.driver,
-        "helper": truck.helper,
-        "route": truck.route.route_name,
+        "agent": truck.agent.id,
+        "dispatcher": truck.dispatcher.id,
+        "driver": truck.driver.id,
+        "helper": truck.helper.id,
+        "route": truck.route.id,
         "carry_weight": truck.carry_weight
       };
 
