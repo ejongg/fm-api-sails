@@ -141,6 +141,7 @@ module.exports = {
 
 		.then(function (){
 			var replacedEmployees = [];
+			var newEmployees = [];
 
 			Trucks.findOne({id : truckId}).populateAll().then(function (foundTruck){
 				Routes.findOne({id : routeId}).populateAll().then(function (foundRoutes){
@@ -162,6 +163,20 @@ module.exports = {
 				})
 
 				.then(function (){
+					return toReplace;
+				})
+
+				.each(function (employeeId){
+					return new Promise(function (resolve){
+						Employees.findOne({id : employeeId}).populateAll()
+							.then(function (foundEmployee){
+								newEmployees.push(foundEmployee);
+								resolve();
+							})
+					});
+				})
+
+				.then(function (){
 					if(replacedRoute != null){
 						return new Promise(function (resolve){
 							Routes.findOne({id : replacedRoute}).populateAll()
@@ -173,13 +188,12 @@ module.exports = {
 				})
 
 				.then(function (foundRoute){
-					var data = {employees : replacedEmployees};
+					var data = {prev_employees : replacedEmployees, new_employees : newEmployees};
 
 					if(foundRoute){
 						data.route = foundRoute;
 					}
 
-					console.log(data);
 					sails.sockets.blast('trucks', {verb : "replaced", data : data});
 					sails.sockets.blast('trucks', {verb : "updated", data : foundTruck});
 					return res.send("Truck updated successfully", 200);
