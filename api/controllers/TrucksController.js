@@ -58,6 +58,7 @@ module.exports = {
 		var routeId = req.body.route.id;
 		var toReplace = [];
 		var toBeReplaced = [];
+		var replacedRoute = null;
 		
 		Trucks.findOne({id : truckId}).then(function (foundTruck){
 			var newEmployees = [dispatcherId, driverId, agentId, helperId];
@@ -66,6 +67,10 @@ module.exports = {
 			var updateQuery = {
 				route : routeId
 			};
+
+			if(routeId != foundTruck.route){
+				replacedRoute = foundTruck.route;
+			}
 
 			for(var i = 0; i < newEmployees.length; i++){
 				if(newEmployees[i] != prevEmployees[i]){
@@ -157,7 +162,25 @@ module.exports = {
 				})
 
 				.then(function (){
-					sails.sockets.blast('trucks', {verb : "replaced", data : replacedEmployees});
+					if(replacedRoute != null){
+						return new Promise(function (resolve){
+							Routes.findOne({id : replacedRoute}).populateAll()
+								.then(function (foundRoute){
+									resolve(foundRoute);
+								})
+						});
+					}
+				})
+
+				.then(function (foundRoute){
+					var data = {employees : replacedEmployees};
+
+					if(foundRoute){
+						data.route = foundRoute;
+					}
+
+					console.log(data);
+					sails.sockets.blast('trucks', {verb : "replaced", data : data});
 					sails.sockets.blast('trucks', {verb : "updated", data : foundTruck});
 					return res.send("Truck updated successfully", 200);
 				})
