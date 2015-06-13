@@ -100,7 +100,6 @@ module.exports = {
 		.then(function (){
 			if(toBeReplaced.length > 0){
 				return new Promise(function (resolve){
-
 					new Promise(function (resolve){
 						resolve(toBeReplaced);
 					})
@@ -136,6 +135,7 @@ module.exports = {
 		})
 
 		.then(function (){
+			var replacedEmployees = [];
 
 			Trucks.findOne({id : truckId}).populateAll().then(function (foundTruck){
 				Routes.findOne({id : routeId}).populateAll().then(function (foundRoutes){
@@ -143,6 +143,21 @@ module.exports = {
 				})
 
 				.then(function (){
+					return toBeReplaced;
+				})
+
+				.each(function (employeeId){
+					return new Promise(function (resolve){
+						Employees.findOne({id : employeeId}).populateAll()
+							.then(function (foundEmployee){
+								replacedEmployees.push(foundEmployee);
+								resolve();
+							})
+					});
+				})
+
+				.then(function (){
+					sails.sockets.blast('trucks', {verb : "replaced", data : replacedEmployees});
 					sails.sockets.blast('trucks', {verb : "updated", data : foundTruck});
 					return res.send("Truck updated successfully", 200);
 				})
