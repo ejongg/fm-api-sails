@@ -283,7 +283,7 @@ angular.module('fmApp')
          $scope.snackbarShow('Line Edited');
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true, "Unable to edit the Line limit or sku. The line is not empty.");
+        $scope.showErrorMessage(true, body.message);
       } else {
         console.log("Error!!!");
       }
