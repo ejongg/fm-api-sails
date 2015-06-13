@@ -12,6 +12,8 @@ angular.module('fmApp')
   $scope.stt = 0;
   $scope.startDate = new Date();
   $scope.endDate = new Date();
+  $scope.start = $scope.formatDate($scope.startDate);
+  $scope.end = $scope.formatDate($scope.endDate);
 
   $scope.labels = ['Purchases', 'Expenses', 'Empties', 'Income', 'Sales to Trade'];
   $scope.series = ['DSSR'];
@@ -23,7 +25,7 @@ angular.module('fmApp')
  
  
   var getDSSR = function () {
-    $http.get(httpHost + '/reports/dssr?start='+$scope.formatDate($scope.startDate)+'&'+'end='+$scope.formatDate($scope.endDate)).success( function (data) {
+    $http.get(httpHost + '/reports/dssr?start='+$scope.start+'&'+'end='+$scope.end).success( function (data) {
       console.log("START DATE");
       console.log($scope.formatDate($scope.startDate));
       console.log($scope.formatDate($scope.endDate));
