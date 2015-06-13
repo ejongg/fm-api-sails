@@ -10,8 +10,10 @@ angular.module('fmApp')
   $scope.empties = 0;
   $scope.income = 0;
   $scope.stt = 0;
+
   $scope.startDate = new Date();
   $scope.endDate = new Date();
+
   $scope.start = new Date();
   $scope.end = new Date();
 
@@ -25,12 +27,14 @@ angular.module('fmApp')
  
  
   var getDSSR = function () {
+    console.log("startDate");
+    console.log($scope.startDate);
+    console.log($scope.endDate);
+
     $scope.start = $scope.formatDate($scope.startDate);
     $scope.end = $scope.formatDate($scope.endDate);
     $http.get(httpHost + '/reports/dssr?start='+$scope.start+'&'+'end='+$scope.end).success( function (data) {
-      console.log("START DATE");
-      console.log($scope.start);
-      console.log($scope.end);
+
       $scope.beginning_inventory = data.beginning_inventory;
       $scope.ending_inventory = data.ending_inventory;
       $scope.purchases = data.purchases;
