@@ -142,6 +142,8 @@ module.exports = {
 		.then(function (){
 			var replacedEmployees = [];
 			var newEmployees = [];
+			var prevRoute = null;
+			var newRoute = null;
 
 			Trucks.findOne({id : truckId}).populateAll().then(function (foundTruck){
 				Routes.findOne({id : routeId}).populateAll().then(function (foundRoutes){
@@ -181,17 +183,36 @@ module.exports = {
 						return new Promise(function (resolve){
 							Routes.findOne({id : replacedRoute}).populateAll()
 								.then(function (foundRoute){
-									resolve(foundRoute);
+									prevRoute = foundRoute;
+									resolve();
 								})
 						});
 					}
 				})
 
-				.then(function (foundRoute){
-					var data = {prev_employees : replacedEmployees, new_employees : newEmployees};
+				.then(function (){
+					if(replacedRoute != null){
+						return new Promise(function (resolve){
+							Routes.findOne({id : routeId}).populateAll()
+								.then(function (foundRoute){
+									newRoute = foundRoute;
+									resolve();
+								})
+						});
+					}
+				})
 
-					if(foundRoute){
-						data.route = foundRoute;
+				.then(function (){
+					var data = {};
+
+					if(prevRoute && newRoute){
+						data.prev_route = prevRoute;
+						data.new_route = newRoute;
+					}
+
+					if(replacedEmployees.length > 0 && newEmployees.length > 0){
+						data.prev_employees = replacedEmployees;
+						data.new_employees = newEmployees;
 					}
 
 					sails.sockets.blast('trucks', {verb : "replaced", data : data});
