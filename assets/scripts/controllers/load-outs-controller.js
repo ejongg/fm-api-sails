@@ -41,6 +41,7 @@ angular.module('fmApp')
          $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
         console.log($scope.customerOrdersAvailable);
+        $scope.noCustomerOrdersAvailable = false;
       }else{
         console.log("No Customer");
         $scope.noCustomerOrdersAvailable = true;

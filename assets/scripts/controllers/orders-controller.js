@@ -70,7 +70,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/sku/company-products?company=Coca-Cola').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
-        $scope.order.sku = null;
+        $scope.order.sku = $scope.skuList[0];
         console.log("SKU:");
         console.log($scope.skuList);
       }else{
@@ -149,11 +149,9 @@ angular.module('fmApp')
     if(company === 'SMB'){
       console.log('SMB');
       getSKUMovingPile();
-      $scope.order.sku = null;
     }else{
       console.log('COke');
       getSKU();
-      $scope.order.sku = null;
     }
   };
 
@@ -294,7 +292,7 @@ angular.module('fmApp')
     }
 
     $scope.order.cases = null;
-    $scope.order.sku = $scope.skuList[0];
+    $scope.order.sku = null;
   };
 
   $scope.deleteOrder = function (index) {
