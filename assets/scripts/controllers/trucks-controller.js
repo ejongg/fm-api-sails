@@ -53,7 +53,7 @@ angular.module('fmApp')
      if (data.length !== 0){
         $scope.routes = $scope.sortData(data,'route_name');
         $scope.truck.route = $scope.routes[0];
-        $scope.truckEdit.route = $scope.routes[0];
+        // $scope.truckEdit.route = $scope.routes[0];
         console.log("Routes");
         console.log($scope.routes);
      }else{
@@ -322,6 +322,7 @@ angular.module('fmApp')
     console.log(msg.data);
 
     switch (msg.verb) {
+
       case "created": 
         console.log("Truck Created");
         $scope.trucks.push(msg.data);
@@ -336,6 +337,87 @@ angular.module('fmApp')
         console.log(index);
         $scope.trucks[index] = msg.data;
         $scope.$digest();
+        break;
+      case "replaced": 
+        console.log("Truck Created");
+        
+        if(msg.data.prev_employees != null){
+        for(var i = 0; i < msg.data.prev_employees.length ; i++){
+        console.log(msg.data.prev_employees[i]);
+
+
+          switch(msg.data.prev_employees[i].position){
+            case "Driver":
+            $scope.employeeDrivers.push(msg.data.prev_employees[i]); 
+            break;
+            case "Checker":
+            $scope.employeeCheckers.push(msg.data.prev_employees[i]); 
+            break;
+            case "Delivery Sales Personnel":
+            $scope.employeeDeliverySalesPersonnel.push(msg.data.prev_employees[i]);
+            break;
+            case "Delivery Helper":
+            $scope.employeeDeliveryHelper.push(msg.data.prev_employees[i]);
+            
+          }
+
+        }
+        }
+        
+        if(msg.data.new_employees != null){
+        for(var i = 0; i < msg.data.new_employees.length ; i++){
+        console.log(msg.data.new_employees[i]);
+
+          
+          switch(msg.data.new_employees[i].position){
+            case "Driver":
+            index = _.findIndex($scope.employeeDrivers,{'id': msg.data.new_employees[i].id});
+            console.log(index);
+            $scope.employeeDrivers.splice(index,1);    
+            break;
+            case "Checker":
+            index = _.findIndex($scope.employeeCheckers,{'id': msg.data.new_employees[i].id});
+            console.log(index);
+            $scope.employeeCheckers.splice(index,1);
+            break;
+            case "Delivery Sales Personnel":
+            index = _.findIndex($scope.employeeDeliverySalesPersonnel,{'id': msg.data.new_employees[i].id});
+            console.log(index);
+            $scope.employeeDeliverySalesPersonnel.splice(index,1);
+            break;
+            case "Delivery Helper":
+             index = _.findIndex($scope.employeeDeliveryHelper,{'id': msg.data.new_employees[i].id});
+            console.log(index);
+            $scope.employeeDeliveryHelper.splice(index,1);
+          }
+
+
+        }
+       }
+
+       if(msg.data.prev_route != null){
+          $scope.routes.push(msg.data.prev_route); 
+          $scope.routes = $scope.sortData($scope.routes,'route_name');
+          $scope.truck.route = $scope.routes[0];
+       }
+
+       if(msg.data.new_route != null){
+          index = _.findIndex($scope.routes,{'id': msg.data.new_route.id});
+         console.log(index);
+         $scope.routes.splice(index,1);
+          $scope.routes = $scope.sortData($scope.routes,'route_name');
+          $scope.truck.route = $scope.routes[0];
+       }
+       
+         $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers ,'emp_fname');
+         $scope.truck.driver = $scope.employeeDrivers[0];
+         $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
+         $scope.truck.dispatcher = $scope.employeeCheckers[0];
+         $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
+         $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
+         $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
+         $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+
         break;
       case "destroyed":
         console.log("Truck Deleted");
@@ -352,24 +434,24 @@ angular.module('fmApp')
 
         $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers ,'emp_fname');
         $scope.truck.driver = $scope.employeeDrivers[0];
-        $scope.truckEdit.driver = $scope.employeeDrivers[0];
+        // $scope.truckEdit.driver = $scope.employeeDrivers[0];
 
     
         $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
         $scope.truck.dispatcher = $scope.employeeCheckers[0];
-        $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+        //$scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
 
         $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
         $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
-        $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+        //$scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
 
         $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
         $scope.truck.helper = $scope.employeeDeliveryHelper[0];
-        $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+        //$scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
         
         $scope.routes = $scope.sortData($scope.routes,'route_name');
         $scope.truck.route = $scope.routes[0];
-        $scope.truckEdit.route = $scope.routes[0];
+        //$scope.truckEdit.route = $scope.routes[0];
 
         if($scope.trucks.length === 0){
           $scope.noTrucks = true;
@@ -393,7 +475,12 @@ angular.module('fmApp')
             $scope.employeeDrivers.push(msg.data);
             $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers,'emp_fname');
             $scope.truck.driver = $scope.employeeDrivers[0];
-            $scope.truckEdit.driver = $scope.employeeDrivers[0];
+
+            if($scope.employeeDriversEdit.length !== 0){
+              $scope.employeeDriversEdit.push(msg.data);
+            }
+
+            //$scope.truckEdit.driver = $scope.employeeDrivers[0];
             if($scope.noTruckDriver === true){
               $scope.noTruckDriver = false;
             }
@@ -402,7 +489,11 @@ angular.module('fmApp')
             $scope.employeeCheckers.push(msg.data);
             $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
             $scope.truck.dispatcher = $scope.employeeCheckers[0];
-            $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+            //$scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+            if($scope.employeeCheckersEdit.length !== 0){
+              $scope.employeeCheckersEdit.push(msg.data);
+            }
+
             if($scope.noChecker === true){
               $scope.noChecker = false;
             }
@@ -411,7 +502,11 @@ angular.module('fmApp')
             $scope.employeeDeliverySalesPersonnel.push(msg.data);
             $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
             $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
-            $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+            //$scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+            if($scope.employeeDeliverySalesPersonnelEdit.length !== 0){
+               $scope.employeeDeliverySalesPersonnelEdit.push(msg.data);
+            }
+
             if($scope.noDSP === true){
               $scope.noDSP = false;
             }
@@ -420,7 +515,11 @@ angular.module('fmApp')
             $scope.employeeDeliveryHelper.push(msg.data);
             $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
             $scope.truck.helper = $scope.employeeDeliveryHelper[0];
-            $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+            //$scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+             if($scope.employeeDeliveryHelperEdit.length !== 0){
+               $scope.employeeDeliveryHelperEdit.push(msg.data);
+            }
+
             if($scope.noDH === true){
               $scope.noDH = false;
             }
@@ -430,36 +529,57 @@ angular.module('fmApp')
       case "updated":
         console.log("Employee Updated");
         var index = 0;
+        var indexEdit = 0;
         switch (msg.data.position){
           case "Driver":
             index = _.findIndex($scope.employeeDrivers,{'id': msg.data.id});
             $scope.employeeDrivers[index] = msg.data;
             $scope.truck.driver = $scope.employeeDrivers[0];
-            $scope.truckEdit.driver = $scope.employeeDrivers[0];
+
+            if($scope.employeeDriversEdit.length !== 0){
+              indexEdit = _.findIndex($scope.employeeDriversEdit,{'id': msg.data.id});
+              $scope.employeeDriversEdit[index] = msg.data;
+            }
+            //$scope.truckEdit.driver = $scope.employeeDrivers[0];
           break;
           case "Checker":
             index = _.findIndex($scope.employeeCheckers,{'id': msg.data.id});
             $scope.employeeCheckers[index] = msg.data;
             $scope.truck.dispatcher = $scope.employeeCheckers[0];
-            $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+            //$scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+
+            if($scope.employeeCheckersEdit.length !== 0){
+              indexEdit = _.findIndex($scope.employeeCheckersEdit,{'id': msg.data.id});
+              $scope.employeeCheckersEdit[index] = msg.data;
+            }
           break;
           case "Delivery Sales Personnel":
             index = _.findIndex($scope.employeeDeliverySalesPersonnel,{'id': msg.data.id});
             $scope.employeeDeliverySalesPersonnel[index] = msg.data;
             $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
-            $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+            //$scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+            if($scope.employeeDeliverySalesPersonnelEdit.length !== 0){
+              indexEdit = _.findIndex($scope.employeeDeliverySalesPersonnelEdit,{'id': msg.data.id});
+              $scope.employeeDeliverySalesPersonnelEdit[index] = msg.data;
+            }
           break;
           case "Delivery Helper":
             index = _.findIndex($scope.employeeDeliveryHelper,{'id': msg.data.id});
             $scope.employeeDeliveryHelper[index] = msg.data;
             $scope.truck.helper = $scope.employeeDeliveryHelper[0];
-            $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+            //$scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+            if($scope.employeeDeliveryHelperEdit.length !== 0){
+              indexEdit = _.findIndex($scope.employeeDeliveryHelperEdit,{'id': msg.data.id});
+              $scope.employeeDeliveryHelperEdit[index] = msg.data;
+            }
+
         }
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Employee Deleted");
         var index = 0;
+        var indexEdit = 0;
         switch (msg.data[0].position){
           case "Driver":
             index = _.findIndex($scope.employeeDrivers,{'id': msg.data[0].emp_id});
@@ -467,7 +587,13 @@ angular.module('fmApp')
             $scope.employeeDrivers.splice(index,1);
             $scope.employeeDrivers = $scope.sortData($scope.employeeDrivers,'emp_fname');
             $scope.truck.driver = $scope.employeeDrivers[0];
-            $scope.truckEdit.driver = $scope.employeeDrivers[0];
+            //$scope.truckEdit.driver = $scope.employeeDrivers[0];
+            if($scope.employeeDriversEdit.length !== 0){
+              indexEdit = _.findIndex($scope.employeeDriversEdit,{'id':  msg.data[0].emp_id});
+              console.log(indexEdit);
+              $scope.employeeDriversEdit.splice(indexEdit,1);
+            }
+            
             if($scope.employeeDrivers.length === 0){
               $scope.noTruckDriver = true;
             }
@@ -478,7 +604,13 @@ angular.module('fmApp')
             $scope.employeeCheckers.splice(index,1);
             $scope.employeeCheckers = $scope.sortData($scope.employeeCheckers,'emp_fname');
             $scope.truck.dispatcher = $scope.employeeCheckers[0];
-            $scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+            //$scope.truckEdit.dispatcher = $scope.employeeCheckers[0];
+            
+            if($scope.employeeCheckersEdit.length !== 0){
+               indexEdit = _.findIndex($scope.employeeCheckersEdit,{'id':  msg.data[0].emp_id});
+               $scope.employeeCheckersEdit.splice(indexEdit,1);
+            }
+
             if($scope.employeeCheckers.length === 0){
               $scope.noChecker = true;
             }
@@ -489,7 +621,13 @@ angular.module('fmApp')
             $scope.employeeDeliverySalesPersonnel.splice(index,1);
             $scope.employeeDeliverySalesPersonnel = $scope.sortData($scope.employeeDeliverySalesPersonnel,'emp_fname');
             $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
-            $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+           // $scope.truckEdit.agent = $scope.employeeDeliverySalesPersonnel[0];
+
+            if($scope.employeeDeliverySalesPersonnelEdit.length !== 0){
+              indexEdit = _.findIndex($scope.employeeDeliverySalesPersonnelEdit,{'id': msg.data[0].emp_id});
+              $scope.employeeDeliverySalesPersonnelEdit.splice(indexEdit,1);
+            }
+
             if($scope.employeeDeliverySalesPersonnel.length === 0){
               $scope.noDSP = true;
             }
@@ -500,7 +638,12 @@ angular.module('fmApp')
             $scope.employeeDeliveryHelper.splice(index,1);
             $scope.employeeDeliveryHelper = $scope.sortData($scope.employeeDeliveryHelper,'emp_fname');
             $scope.truck.helper = $scope.employeeDeliveryHelper[0];
-            $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+           // $scope.truckEdit.helper = $scope.employeeDeliveryHelper[0];
+            if($scope.employeeDeliveryHelperEdit.length !== 0){
+              indexEdit = _.findIndex($scope.employeeDeliveryHelperEdit,{'id':  msg.data[0].emp_id});
+              $scope.employeeDeliveryHelperEdit.splice(indexEdit,1);
+            }
+
             if($scope.employeeDeliveryHelper.length === 0){
               $scope.noDH = true;
             }
@@ -521,6 +664,7 @@ angular.module('fmApp')
         if($scope.noRoute === true){
           $scope.noRoute = false;
         }
+        $scope.routesEdit.push(msg.data);
         $scope.$digest();
         break;
       case "updated": 
@@ -528,14 +672,22 @@ angular.module('fmApp')
         var index = _.findIndex($scope.routes,{'id': msg.data.id});
         console.log(index);
         $scope.routes[index] = msg.data;   
+
         $scope.$digest();
         break;
       case "destroyed":
         console.log("Route Deleted");
         console.log(msg.data[0]);
-        var index = _.findIndex($scope.routes,{'id': msg.data[0].route_id});
+        var index = _.findIndex($scope.routes,{'id': msg.data.route_id});
         console.log(index);
         $scope.routes.splice(index,1);
+
+        if($scope.routesEdit.length !== 0){
+          var indexEdit = _.findIndex($scope.routesEdit,{'id': msg.data.route_id});
+          console.log(indexEdit);
+          $scope.routesEdit.splice(indexEdit,1);
+        }
+
         if($scope.routes.length === 0){
           $scope.noRoutes = true;
         }
