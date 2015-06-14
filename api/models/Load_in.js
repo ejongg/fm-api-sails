@@ -32,8 +32,8 @@ module.exports = {
   		model : "load_out",
   		required : true
   	},
-    customer_id : {
-      model : "customers",
+    delivery_id : {
+      model : "delivery_transactions",
       required : true
     }
   },
