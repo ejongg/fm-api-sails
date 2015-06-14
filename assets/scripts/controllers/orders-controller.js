@@ -173,20 +173,28 @@ angular.module('fmApp')
   getSMBInventory();
 
   $scope.changeCompany = function (company) {
-    $scope.orderForm.$setPristine();
-    $scope.order.distance_rating = $scope.distanceRatings[0];
-    $scope.order.sku = null;
-    $scope.order.address = $scope.addresses[0].address_name;
-    $scope.order.cases = null;
-    $scope.order.establishment = '';
-    $scope.order.owner = '';
-    $scope.order.cokeagent_name = ''; 
     
     console.log(company);
     if(company === 'SMB'){
+      $scope.orderForm.$setPristine();
+      $scope.order.distance_rating = $scope.distanceRatings[0];
+      $scope.order.sku = null;
+      $scope.order.address = $scope.addresses[0].address_name;
+      $scope.order.cases = null;
+      $scope.order.establishment = '';
+      $scope.order.owner = '';
+      $scope.order.cokeagent_name = ''; 
       console.log('SMB');
       getSKUMovingPile();
     }else{
+      $scope.cokeOrderForm.$setPristine();
+      $scope.cokeOrderForm.distance_rating = $scope.distanceRatings[0];
+      $scope.cokeOrderForm.sku = null;
+      $scope.cokeOrderForm.address = $scope.addresses[0].address_name;
+      $scope.cokeOrderForm.cases = null;
+      $scope.cokeOrderForm.establishment = '';
+      $scope.cokeOrderForm.owner = '';
+      $scope.cokeOrderForm.cokeagent_name = ''; 
       console.log('COke');
       getSKU();
     }
