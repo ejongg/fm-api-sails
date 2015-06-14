@@ -26,7 +26,7 @@ module.exports = {
 	},
 
 	deductInInventory : function (product){
-		return new Promise(function (resolve ,reject){
+		return new Promise(function (resolve){
 
 			SkuService.getCompanyName(product.sku_id.id)
 				.then(function (company){

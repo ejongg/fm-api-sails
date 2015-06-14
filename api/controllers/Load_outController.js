@@ -53,7 +53,6 @@ module.exports = {
 			.then(function (resultLoadout){
 
 				LoadOutService.getDetails(resultLoadout).then(function (detailedLoadout){
-
 					return new Promise(function (resolve){
 						Trucks.findOne({id : detailedLoadout.truck_id}).populateAll()
 							.then(function (foundTruck){
@@ -92,53 +91,24 @@ module.exports = {
 	confirm : function(req, res){
 		var loadoutId = req.body.loadout_id;
 		var truck = req.body.truck_id;
-		var delivery_date = req.body.delivery_date;
+		var deliveryDate = req.body.delivery_date;
 
-		Load_out.findOne({id : loadoutId})
-			.then(function (loadout){
+		Load_out.update({id : loadoutId}, {status : "In progress"})
+			.then(function (updatedLoadout){
 				return new Promise(function (resolve){
-					loadout.status = "In progress";
-
-					loadout.save(function (err, saved){
-						LoadOutService.getDetails(loadout)
-							.then(function (detailedLoadout){
-								sails.sockets.blast("loadout", {verb : "confirmed", data : detailedLoadout});
-								resolve();
-							})
-					});
+					LoadOutService.getDetails(updatedLoadout).then(function (detailedLoadout){
+						sails.sockets.blast("loadout", {verb : "confirmed", data : detailedLoadout});
+						resolve();
+					})
 				});
-
 			})
 
 			.then(function (){
-				return Delivery_transactions.find({truck_id : truck, status : "To be delivered", delivery_date : delivery_date});
+				return Delivery_transactions.find({loadout_id : loadoutId, status : "To be delivered", delivery_date : deliveryDate});
 			})
 
 			.each(function (transaction){
-				return new Promise(function (resolve, reject){
-					Delivery_products.find({dtrans_id : transaction.id}).populate('sku_id')
-						.then(function getDeliveryProducts(products){
-							return products;
-						})
-
-						.each(function (product){
-							return LoadOutService.deductInInventory(product);
-						})
-
-						.then(function (){
-							resolve();
-						})
-				});
-			})
-
-			.each(function (transaction){
-				return new Promise(function (resolve, reject){
-					transaction.status = "On delivery";
-
-					transaction.save(function(err, saved){
-						resolve();
-					});
-				});
+				return Delivery_transactions.update({id : transaction.id}, {status : "On delivery"});
 			})
 
 			.then(function (){
@@ -190,7 +160,7 @@ module.exports = {
 
 					.then(function (detailedLoadout){
 						
-						Trucks.findOne({id : loadout.truck_id}).populateAll()
+						Trucks.findOne({id : loadout.truck_id})
 							.then(function (foundTruck){
 								detailedLoadout.truck_id = foundTruck;
 								loadoutList.push(detailedLoadout);
