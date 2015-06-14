@@ -79,7 +79,10 @@ module.exports = {
 
 			.then(function (){
 				if(notComplete.length == 0){
-					return Load_out.update({id : loadoutId}, {status : "Complete"});
+					return Load_out.update({id : loadoutId}, {status : "Complete"})
+						.then(function (updatedLoadout){
+							sails.sockets.blast('loadout', {verb : "completed", data : updatedLoadout});
+						})
 				}
 			})
 
