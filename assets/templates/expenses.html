@@ -145,7 +145,7 @@
                           <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                           <div ng-show="noSKU" class="col-md-12"> No purchased SKU </div>
                           <div ng-hide="noSKU" class="col-md-12">
-                            <select class="form-control" ng-model="expense.sku" ng-change="getBays(expense.sku) || getMaxBottles(expense.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                            <select class="form-control" ng-model="expense.sku" ng-change="getBays(expense.sku);getMaxBottles(expense.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                               <option value="" disabled>Select SKU</option>
                             </select>
                           </div>
