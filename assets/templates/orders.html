@@ -203,7 +203,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12" ng-hide="noSKU">
-                            <select class="form-control" ng-model="order.sku" ng-options="sku as combine(sku) for sku in skuList | filter:companySelected" required>
+                            <select class="form-control" ng-model="order.sku" ng-change="getSkuInventoryCount(order.sku)" ng-options="sku as combine(sku) for sku in skuList | filter:companySelected" required>
                                 <option value="">Select SKU</option>
                             </select>
                         </div>
@@ -214,9 +214,9 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" class="form-control" placeholder="Enter number of cases." name="orderCases" ng-model="order.cases" required>
+                        <div class="col-md-12"><input type="number" min="1" max="{{count}}" class="form-control" placeholder="Enter number of cases." name="orderCases" ng-model="order.cases" required>
 
-                        <strong class="fbackMsg" ng-show="orderForm.orderCases.$dirty && orderForm.orderCases.$invalid"> Invalid! Please input cases and numbers only. </strong>
+                        <strong class="fbackMsg" ng-show="orderForm.orderCases.$dirty && orderForm.orderCases.$invalid"> Enter numbers only. ({{count}}) available in inventory</strong>
                         </div>
                     </div>
 

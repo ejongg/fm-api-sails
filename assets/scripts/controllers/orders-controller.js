@@ -1,9 +1,15 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService','$modal','$interval', 
-  function($scope, _, $http, httpHost, authService,userService,$modal,$interval){
+.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService','$modal','$interval', '$filter',
+  function($scope, _, $http, httpHost, authService,userService,$modal,$interval,$filter){
   $scope.distanceRatings = [1,2,3,4,5];
+
+  $scope.inventory = [];
+  $scope.smbInventory = [];
+  $scope.noInventory = false;
+  $scope.count = 0;
+
   $scope.skuList = [];
   $scope.skuListMovingPile = [];
   $scope.ordersList = [];
@@ -65,10 +71,39 @@ angular.module('fmApp')
     console.log("INDEX: " + $scope.index);
   };
 
+  var getSMBInventory = function () {
+    $http.get(httpHost + '/inventory/getInventory').success( function (data) {
+      if(data.length !== 0){
+        $scope.inventory = data;
+        $scope.smbInventory = $filter('filter')($scope.inventory, {company: 'SMB'});
+        
+        if($scope.smbInventory==0){
+          $scope.noSKU = true;
+        }
+
+      }else{
+        $scope.noInventory = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
+
+  $scope.getSkuInventoryCount = function (sku) {
+    var id = sku.id;
+    //$scope.count = _.find($scope.smbInventory, { 'sku_id': id}, 'physical_count');
+    $scope.count = _.result(_.find($scope.smbInventory, 'sku_id', id), 'physical_count');
+    console.log("SKU");
+    console.log(sku);
+    console.log("COUNT");
+    console.log($scope.count);
+  };
+
 
   var getSKU = function () {
     $http.get(httpHost + '/sku/company-products?company=Coca-Cola').success( function (data) {
       if(data.length !== 0){
+        $scope.noSKU = false;
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
         $scope.order.sku = $scope.skuList[0];
         console.log("SKU:");
@@ -85,6 +120,7 @@ angular.module('fmApp')
   var getSKUMovingPile = function () {
     $http.get(httpHost + '/sku/available-with-moving-pile').success( function (data) {
       if(data.length !== 0){
+        $scope.noSKU = false;
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
         $scope.order.sku = null;
         console.log("SKU Moving:");
@@ -134,6 +170,7 @@ angular.module('fmApp')
   getSKU();
   // getSKUMovingPile();
   getAddresses();
+  getSMBInventory();
 
   $scope.changeCompany = function (company) {
     $scope.orderForm.$setPristine();
