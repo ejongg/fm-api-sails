@@ -21,7 +21,7 @@ module.exports = function (req, res, next){
 
 	.then(function (){
 		if(unavailableLines.length > 0){
-			return res.send({message : "Some lines can't accomodate more products: ", data : unavailableLines}, 400);
+			return res.send({message : "Some lines can't accomodate more products", data : unavailableLines}, 400);
 		}else{
 			next();
 		}

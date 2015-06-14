@@ -96,7 +96,7 @@ module.exports = {
 
 					Bays.findOne({id : bayId})
 						.then(function (foundBay){
-							if((bayItemsCount + cases) < foundBay.bay_limit){
+							if((bayItemsCount + cases) <= foundBay.bay_limit){
 								resolve(true);
 							}else{
 								resolve(false);
