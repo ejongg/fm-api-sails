@@ -15,6 +15,7 @@ module.exports = {
 
 		BadOrdersService.createBadOrder(expense, accountable, products)
 			.then(function (createdBadOrder){
+				sails.sockets.blast('incomplete_cases', {verb : 'updated'});
 				sails.sockets.blast('inventory', {verb : 'updated'});
 				sails.sockets.blast('bad_orders', {verb : "created", data : createdBadOrder});
 				return res.send("Bad order recorded", 201);

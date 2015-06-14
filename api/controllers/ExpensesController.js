@@ -107,6 +107,7 @@ module.exports = {
 				.then(function (){
 					Expenses.findOne({id : expenseId})
 						.then(function (expense){
+							sails.sockets.blast('incomplete_cases', {verb : 'updated'});
 							sails.sockets.blast('inventory', {verb : 'updated'});
 							sails.sockets.blast("expenses", {verb : "created", data : expense});
 							return res.send(201);
