@@ -81,8 +81,22 @@ module.exports = {
 
 	getCompleteLoadouts : function (req, res){
 		var date = req.query.date;
+		var truckId = req.query.truck;
 
-		Load_out.find({date_created : date, status : "Complete"})
+		var query = {
+			date_created : date, 
+			status : "Complete"
+		};
+
+		if(truckId){
+			query = {
+				date_created : date,
+				truck_id : truckId, 
+				status : "Complete"
+			};
+		}
+
+		Load_out.find(query)
 			.then(function (loadout){
 				return res.send(loadout);
 			})
@@ -119,8 +133,9 @@ module.exports = {
 	getInProgressLoadouts : function (req, res){
 		var loadoutList = [];
 		var date = req.query.date;
+		var truckId = req.query.truck;
 
-		Load_out.find({date_created : date, date_created : date, status : {'like' : 'In progress'}})
+		Load_out.find({date_created : date, truck_id : truckId, status : {'like' : 'In progress'}})
 			.then(function(loadouts){
 				return loadouts;
 			})
@@ -142,12 +157,26 @@ module.exports = {
 	list : function(req, res){
 		var loadoutList = [];
 		var date = req.query.date;
+		var truckId = req.query.truck;
 
 		if(!date){
 			date = moment().format('YYYY-MM-DD');
 		}
 
-		Load_out.find({date_created : date, status : {'like' : 'Pending'}})
+		var query = {
+			date_created : date,
+			status : {'like' : 'Pending'}
+		};
+
+		if(truckId){
+			query = {
+				date_created : date, 
+				truck_id : truckId, 
+				status : {'like' : 'Pending'}
+			};
+		}
+
+		Load_out.find(query)
 			.then(function(loadouts){
 				return loadouts;
 			})
