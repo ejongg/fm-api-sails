@@ -119,7 +119,7 @@
 
                         <th>
                             <a href="" ng-click="sortCriteria='physical_count'; reverseSort = !reverseSort" class="thlink">
-                                Physical Count (Cases)
+                                Cases
                                 <span ng-show="sortCriteria == 'physical_count'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                     <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
@@ -127,15 +127,6 @@
                             </a>
                         </th>
 
-                        <th>
-                            <a href="" ng-click="sortCriteria='logical_count'; reverseSort = !reverseSort" class="thlink">
-                                Logical Count (Cases)
-                                <span ng-show="sortCriteria == 'logical_count'">
-                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                                </span>
-                            </a>
-                        </th>
                     </tr>
                 </thead>
 
@@ -146,7 +137,6 @@
                         <td width="15%">{{item.exp_date}}</td>
                         <td width="5%">{{item.age}}</td>
                         <td width="15%">{{item.physical_count}}</td>
-                        <td width="15%">{{item.logical_count}}</td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->

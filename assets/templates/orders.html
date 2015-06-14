@@ -58,7 +58,7 @@
            
            <div ng-show="companySelected === 'Coca-Cola'">
             <div ng-show="!currentHour">
-                Can't Add Coca-Cola Orders Yet
+                <h3><strong><center>Can't Add Coca-Cola Orders Yet<small></br>You can only add starting from 3pm to 6pm.</center></small></strong></h3> 
             </div>
             <div ng-hide="!currentHour">
             <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
@@ -259,7 +259,7 @@
                     <tr ng-repeat="order in orders">
                         <td>{{order.listName}}</td>
                         <td>{{order.cases}}</td>
-                        <td><button class="btn-primary btn-xs btn-xxs" ng-click="deleteOrder($index)">Delete</button></td>
+                        <td><button class="btn btn-primary btn-xs" ng-click="deleteOrder($index)"><i class="mdi-action-delete"/> </button></td>
                     </tr>
 
                     <!-- DON'T REMOVE CODE BELOW -->
