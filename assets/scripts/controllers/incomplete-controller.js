@@ -119,5 +119,20 @@ angular.module('fmApp')
     }); 
 
   };
+
+  io.socket.on('incompletes', function(msg){
+    console.log("Message Verb: " + msg.verb);
+    console.log("Message Data :");
+    console.log(msg.data);
+    
+    switch (msg.verb) {
+      case "updated":
+        console.log("IC Updated");
+        getIncompleteCases();
+        $scope.$digest();
+    }
+
+  });
+
   
 }]);
