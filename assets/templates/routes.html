@@ -460,8 +460,8 @@
             <tbody ng-hide="editIndex === $index">
               <tr >
                 <td><b>Mon & Thur</b></td>
-                <td><b>Tue & Fr</b></td>
-                <td><b>Fri & Sat</b></td>
+                <td><b>Tue & i</b></td>
+                <td><b>Wed & Sat</b></td>
               </tr>
 
 
@@ -472,8 +472,8 @@
                 </td>
 
                 <td class="routesText">
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address | filter:TF"> + {{address.address_name }} &nbsp; </div>
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address | filter:TF"> + {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address | filter:TF"> - {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address | filter:TF"> - {{address.address_name }} &nbsp; </div>
                 </td>
 
                 <td class="routesText">
@@ -540,9 +540,6 @@
         <br>
         <br>
 
-      </div>
-
-
  <div align="center">
     <dir-pagination-controls
         pagination-id="routesPagination"
@@ -552,6 +549,9 @@
     >
     </dir-pagination-controls>    
   </div>
+      </div>
+
+
 
 
 
