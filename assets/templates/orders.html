@@ -438,7 +438,7 @@
           </form>
       </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" ng-hide="cancelMode">
         <button class="btn btn-primary"  ng-hide="orderProducts.status === 'Delivered' || orderProducts.status === 'Cancelled'" ng-disabled="cancelMode" ng-click="cancelMode = true">Cancel Order</button>
         <button class="btn btn-default" ng-click="closeModal()">Close</button>
       </div>

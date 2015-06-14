@@ -388,7 +388,7 @@
             </div>
         </div>
 
-        <div class="modal-footer">
+        <div class="modal-footer" ng-hide="voidMode">
             <button class="btn btn-primary" ng-hide="purchaseInfo.status === 'Void'" ng-disabled="voidMode" ng-click="voidMode = true">Void</button>
             <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div>

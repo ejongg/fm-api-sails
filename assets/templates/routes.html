@@ -438,29 +438,60 @@
           </div>
 
      <br>     
-    <div dir-paginate="routeInfo in routes |filter : searchRoute | filter:companySelect | itemsPerPage:2" pagination-id="routesPagination">
+
+
+ <div dir-paginate="routeInfo in routes |filter : searchRoute | filter:companySelect | itemsPerPage:2" pagination-id="routesPagination">
       <div class="panel-primary" >
-          <div class="panel-heading">
-              <h3 class="panel-title">Route {{routeInfo.route_name + " " + routeInfo.company}}</h3>
-          </div>
+  <table class="table table-striped" ng-hide="noRoutes" >
+            <thead>
 
-          <div class="rpanel panel-body" ng-hide="editIndex === $index">
-               <label class="control-label">Address:</label>
-               <br>
+              <tr>
+                <th>Route {{routeInfo.route_name + " " + routeInfo.company}}</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+    
+            <tbody ng-hide="editIndex === $index">
+              <tr >
+                <td><b>Mon & Thur</td>
+                <td><b>Tue & Wed</td>
+                <td><b>Fri & Sat</td>
+              </tr>
 
-               <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address"> - {{address.address_name }} &nbsp; </div>
-               <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address"> - {{address.address_name }} &nbsp; </div>
 
+              <tr>
+                <td class="routesText">
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address"> - {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address "> - {{address.address_name }} &nbsp; </div>
+                </td>
+
+                <td class="routesText">
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address"> + {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address"> + {{address.address_name }} &nbsp; </div>
+                </td>
+
+                <td class="routesText">
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address "> - {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address"> - {{address.address_name }} &nbsp; </div>
+                </td> 
+              </tr>
+            </tbody>
+          </table>
+       
 
                 <div class="form-group pull-right" style="margin-bottom: -5px;">
-                     <br>
                   <button class="btn btn-xs btn-primary" ng-click="setEditRoute($index)" ng-hide="editIndex === $index">EDIT</button>
                 <button class="btn btn-xs btn-default" ng-click="openRoute(routeInfo)" ng-hide="editIndex === $index">DELETE</button>
+                <br><br><br><br>
+
                 </div>
+
           </div>
 
          
-      
+
+       
 
           <!-- edit route -->
           <div class="rpanel panel-body" ng-show="editIndex === $index">
