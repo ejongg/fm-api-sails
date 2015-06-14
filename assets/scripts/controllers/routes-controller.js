@@ -55,6 +55,10 @@ angular.module('fmApp')
 
   $scope.sortCriteria = 'id';
 
+  $scope.MTH = "monday,thursday";
+  $scope.TF = "tuesday,friday";
+  $scope.WS = "wednesday,saturday";
+  
   $scope.errorMessage = '';
   $scope.hasError = false;
 

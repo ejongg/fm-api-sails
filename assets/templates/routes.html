@@ -436,12 +436,17 @@
                 </select>
             </div>
           </div>
-
      <br>     
 
 
  <div dir-paginate="routeInfo in routes |filter : searchRoute | filter:companySelect | itemsPerPage:2" pagination-id="routesPagination">
       <div class="panel-primary" >
+
+      <input type="hidden" ng-model="MTH.days">
+      <input type="hidden" ng-model="TF.days">
+      <input type="hidden" ng-model="WS.days">
+
+
   <table class="table table-striped" ng-hide="noRoutes" >
             <thead>
 
@@ -454,30 +459,32 @@
     
             <tbody ng-hide="editIndex === $index">
               <tr >
-                <td><b>Mon & Thur</td>
-                <td><b>Tue & Wed</td>
-                <td><b>Fri & Sat</td>
+                <td><b>Mon & Thur</b></td>
+                <td><b>Tue & Fr</b></td>
+                <td><b>Fri & Sat</b></td>
               </tr>
 
 
               <tr>
                 <td class="routesText">
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address"> - {{address.address_name }} &nbsp; </div>
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address "> - {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address | filter:MTH"> - {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address | filter:MTH"> - {{address.address_name }} &nbsp; </div>
                 </td>
 
                 <td class="routesText">
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address"> + {{address.address_name }} &nbsp; </div>
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address"> + {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address | filter:TF"> + {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address | filter:TF"> + {{address.address_name }} &nbsp; </div>
                 </td>
 
                 <td class="routesText">
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address "> - {{address.address_name }} &nbsp; </div>
-                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address"> - {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.coke_address | filter:WS"> - {{address.address_name }} &nbsp; </div>
+                  <div class="col-md-offset-1" ng-repeat="address in routeInfo.smb_address | filter:WS"> - {{address.address_name }} &nbsp; </div>
                 </td> 
               </tr>
             </tbody>
           </table>
+
+
        
 
                 <div class="form-group pull-right" style="margin-bottom: -5px;">
