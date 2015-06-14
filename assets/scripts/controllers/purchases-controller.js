@@ -38,6 +38,9 @@ angular.module('fmApp')
   $scope.newlyAdded = {};
   $scope.index = 0;
 
+  $scope.bayLimit = 0;
+  $scope.totalProducts = 0;
+
   
   
   var getSKU = function () {
@@ -58,6 +61,15 @@ angular.module('fmApp')
 
   };
 
+  $scope.getCasesInLine = function(bay){
+    console.log("BAY");
+    console.log(bay);
+    $scope.bayLimit = bay.bay_limit;
+    $scope.totalProducts = bay.total_products;
+    console.log($scope.bayLimit);
+    console.log($scope.totalProducts);
+  };
+
   $scope.getBays = function (sku){
     console.log(sku.id);
     console.log("Get Bays");
@@ -65,7 +77,11 @@ angular.module('fmApp')
       console.log(data);
       if(data.length !== 0){
       $scope.bays = $scope.sortData(data,'bay_name');
-      $scope.purchase.bay = $scope.bays[0];        
+      $scope.purchase.bay = $scope.bays[0];
+      $scope.bayLimit = $scope.bays[0].bay_limit;
+      $scope.totalProducts = $scope.bays[0].total_products;
+      console.log($scope.bayLimit);
+      console.log($scope.totalProducts);      
       console.log("Bays:");
       console.log($scope.bays);
         $scope.noBays =false;

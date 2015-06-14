@@ -89,7 +89,7 @@
                         <label for="select" class="col-md-3">Line</label>
                         
                         <div class="col-md-12" ng-hide="noBays">
-                            <select class="form-control" ng-model="purchase.bay" ng-options="bay as combineBay(bay) for bay in bays | filter: companySelected">
+                            <select class="form-control" ng-model="purchase.bay" ng-change="getCasesInLine(purchase.bay)" ng-options="bay as combineBay(bay) for bay in bays | filter: companySelected">
                             </select>
                         </div>
 
@@ -109,9 +109,9 @@
                         <label for="inputCases" class="col-md-2">Cases</label>
                         <div class="col-md-12">
 
-                            <input type="number"  name="inputCases" min="1" class="form-control" placeholder="Enter number of cases." ng-model="purchase.cases" required>
+                            <input type="number"  name="inputCases" min="1" max="{{bayLimit-totalProducts}}" class="form-control" placeholder="Enter number of cases." ng-model="purchase.cases" required>
 
-                            <strong class="fbackMsg" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid"> Invalid! Please input cases and numbers only. </strong>
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid">Input numbers only.<br>Limit:{{bayLimit}}<br>Products in Line:{{totalProducts}}<br>Remaining capacity:{{bayLimit-totalProducts}}</strong>
                             
                         </div>
                     </div>
