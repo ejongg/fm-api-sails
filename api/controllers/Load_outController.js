@@ -208,45 +208,41 @@ module.exports = {
 		var loadoutId = req.query.id;
 		var productList = [];
 
-		Delivery_transactions.find({loadout_id : loadoutId}).populateAll()
+		Delivery_transactions.find({loadout_id : loadoutId}).populate('products').populate('customer_id')
 			.then(function (transactions){
 				return transactions;
 			})
 
 			.each(function (transaction){
-				return new Promise(function (resolve, reject){
-					_(transaction.products).forEach(function (product){
-
-						Sku.findOne({id : product.sku_id})
-							.then(function (foundProduct){
-
-								return SkuService.getProductName(foundProduct.id)
-									.then(function (brandName){
-										foundProduct.brand_name = brandName;
-										product.sku_id = foundProduct;
-									})
-
-									.then(function (){
-										return SkuService.getCompanyName(foundProduct.id);
-									})
-
-									.then(function (company){
-										product.sku_id.company = company;
-									})
-							})
-
-							.then(function (){
-								productList.push(product);
-								resolve();
-							})
-						
-					});
-				})
+				return getProducts(transaction);
 			})
 
 			.then(function (){
 				return res.send(productList); 
 			})
+
+		function getProducts(transaction){
+			return new Promise(function (resolve){
+
+				new Promise(function (resolve){
+					resolve(transaction.products);
+				})
+
+				.each(function (product){
+					return new Promise(function (resolve){
+						SkuService.getSkuDetails(product.sku_id).then(function (detailedProduct){
+							productList.push(detailedProduct);
+							resolve();
+						})
+					});	
+				})
+
+				.then(function (){
+					resolve();
+				})
+
+			});
+		};
 	}
 };
 
