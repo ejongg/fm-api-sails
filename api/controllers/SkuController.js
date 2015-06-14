@@ -56,6 +56,7 @@ module.exports = {
 
 	availableSkuWithMovingPile : function(req, res){
 		var available = [];
+		var company = req.query.company;
 
 		Inventory.find().populate('sku_id')
 			.then(function getAvailableSkus(inventoryItems){
@@ -74,7 +75,7 @@ module.exports = {
 							.then(function (sku){
 
 								Bays.findOne({sku_id : sku.id, pile_status : "Moving pile"}).then(function (found){
-									if(found){
+									if(found && found.bay_label == company){
 										available.push(sku);
 										resolve();	
 									}else{
@@ -92,7 +93,8 @@ module.exports = {
 
 			.then(function (){
 				return res.send(available);
-			})	
+			})
+
 	},
 
 	edit : function (req, res){
