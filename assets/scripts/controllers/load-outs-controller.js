@@ -122,10 +122,12 @@ angular.module('fmApp')
   $scope.setEditLoadOut = function (index,loadOut) {
     if($scope.addLoadOutBox === true){
       $scope.showAddLoadOutBox(false);
+    }
+    if(loadOut != null){
       getCustomerOrdersAvailableEdit(loadOut.truck_id);
     }
+    
     $scope.editIndex = index;
-    console.log(loadOut);
   };
 
   $scope.showAddLoadOutBox = function (data){
@@ -370,7 +372,10 @@ angular.module('fmApp')
         if($scope.loadOuts[index].transactions.length === 0){
           $scope.loadOuts.splice(index,1);
           $scope.editIndex = -1;
+          if($scope.loadOuts.length === 0){
+
           $scope.noLoadOut = true;
+          }
         }
         // var orderDeleted = _.pullAt($scope.loadOuts[index].transactions,transIndex);
         // console.log(orderDeleted[0]);
