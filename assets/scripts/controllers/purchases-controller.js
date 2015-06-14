@@ -444,7 +444,7 @@ angular.module('fmApp')
         $scope.snackbarShow('Purchase Void');  
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.snackbarShow('Purchase Void Error');  
+        $scope.showErrorMessage(true,body.message);
       }
        $scope.$digest();
     
@@ -475,7 +475,7 @@ angular.module('fmApp')
       "username": cred.username,
       "password": cred.password
     }
-    $modalInstance.close(voidInfo);
+    $modalInstance.open(voidInfo);
   };
 
   $scope.cancel = function () {
