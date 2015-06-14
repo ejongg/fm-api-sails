@@ -15,18 +15,45 @@ module.exports = {
 		var loadinNo = req.body.loadin_no;
 		var customerId = req.body.customer_id;
 		var deliveryId = req.body.delivery;
+		var totalAmount = req.body.total_amount;
+		var notComplete = [];
 
-		Load_out.update({id : loadoutId}, {status : "Complete"})
-			.then(function (updatedLoadout){
-				sails.sockets.blast('loadout', {verb : "updated", data : updatedLoadout});
-				return Delivery_transactions.update({id : deliveryId});
+		Delivery_transactions.update({id : deliveryId}, {status : "Complete"})
+			.then(function (){
+				return LoadInService.createLoadin(loadinNo, loadoutId, deliveryId, products);
 			})
 
 			.then(function (){
-				return LoadInService.createLoadin(loadinNo, loadoutId, customerId, products);
+				return new Promise(function (resolve){
+					Delivery_transactions.findOne({id : deliveryId}).then(function (foundDelivery){
+						var newAmount = foundDelivery.total_amount - totalAmount;
+						return Delivery_transactions.update({id : deliveryId}, {total_amount : newAmount});
+					})
+
+					.then(function (){
+						resolve();
+					})
+				});
 			})
 
 			.then(function (){
+				return Delivery_transactions.find({loadout_id : loadoutId});
+			})
+
+			.each(function (delivery){
+				if(delivery.status != "Complete"){
+					notComplete.push(delivery);
+				}
+			})
+
+			.then(function (){
+				if(notComplete.length == 0){
+					return Load_out.update({id : loadoutId}, {status : "Complete"});
+				}
+			})
+
+			.then(function (){
+				sails.sockets.blast("inventory", {verb : "updated"});
 				return res.send("Load in successful", 200);
 			})
 	},
@@ -34,11 +61,23 @@ module.exports = {
 	noLoadin : function (req, res){
 		var loadoutId = req.body.loadout;
 		var deliveryId = req.body.delivery;
+		var notComplete = [];
 
-		Load_out.update({id : loadoutId}, {status : "Complete"})
-			.then(function (updatedLoadout){
-				sails.sockets.blast('loadout', {verb : "updated", data : updatedLoadout});
-				return Delivery_transactions.update({id : deliveryId}, {status : "Complete"});
+		Delivery_transactions.update({id : deliveryId}, {status : "Complete"})
+			.then(function (){
+				return Delivery_transactions.find({loadout_id : loadoutId});
+			})
+
+			.each(function (delivery){
+				if(delivery.status != "Complete"){
+					notComplete.push(delivery);
+				}
+			})
+
+			.then(function (){
+				if(notComplete.length == 0){
+					return Load_out.update({id : loadoutId}, {status : "Complete"});
+				}
 			})
 
 			.then(function (){
