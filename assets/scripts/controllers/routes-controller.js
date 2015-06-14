@@ -621,14 +621,21 @@ angular.module('fmApp')
         break;
       case "removed":
         console.log("Address Removed");
-       // console.log(msg.data.route);
-        //console.log(msg.data.address.id);
-        var routeIndex =  _.findIndex($scope.routes,{'id': msg.data.route});
+        var routeIndex =  _.findIndex($scope.routes,{'id': msg.data.route.id});
         console.log(routeIndex);
         console.log($scope.routes[routeIndex]);
-        var addressIndex =  _.findIndex($scope.routes[routeIndex].address,{'id': msg.data.address[0].id});
-        console.log(addressIndex);
-        $scope.routes[routeIndex].address.splice(addressIndex,1);
+        var addressIndex = 0;
+
+        if(msg.data.route.company === 'Coca-Cola'){
+          addressIndex =  _.findIndex($scope.routes[routeIndex].coke_address,{'id': msg.data.address[0].id});
+          console.log(addressIndex);
+          $scope.routes[routeIndex].coke_address.splice(addressIndex,1);
+        }else{
+          addressIndex =  _.findIndex($scope.routes[routeIndex].smb_address,{'id': msg.data.address[0].id});
+          console.log(addressIndex);
+          $scope.routes[routeIndex].smb_address.splice(addressIndex,1);
+        }
+
         $scope.addressesAvailable.push(msg.data.address[0]);
         $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
         $scope.addressAvailableList = $scope.addressesAvailable[0];
