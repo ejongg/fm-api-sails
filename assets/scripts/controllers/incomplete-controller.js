@@ -120,7 +120,7 @@ angular.module('fmApp')
 
   };
 
-  io.socket.on('incompletes', function(msg){
+  io.socket.on('incomplete_cases', function(msg){
     console.log("Message Verb: " + msg.verb);
     console.log("Message Data :");
     console.log(msg.data);
