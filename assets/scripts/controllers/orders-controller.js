@@ -313,6 +313,8 @@ angular.module('fmApp')
       $scope.showItemExistingError(false);
     }
     $scope.orderForm.$setPristine();
+    $scope.cokeOrderForm.$setPristine();
+
     var orderInfo = {
       "sku_id" : order.sku.id,
       "sku" : order.sku.sku_name + " " + order.sku.size,
