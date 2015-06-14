@@ -29,21 +29,24 @@ module.exports = {
 			})
 
 			.spread(function (updatedAddress, company){
-
-				var data = {
-					address : updatedAddress,
-					route : route
-				};
-
 				RoutesService.checkIfEmpty(route, company)
 					.then(function (){
+						return Routes.findOne({id : route});						
+					})
+
+					.then(function (foundRoute){
+						var data = {
+							address : updatedAddress,
+							route : route
+						};
+
 						sails.sockets.blast("address", {verb : "removed", data : data});
 						return res.send("Address removed from route " + route, 200);
 					})
 
 			})
 
-			.error(function (err){
+			.catch(function (err){
 				return res.send(err);
 			})
 		
