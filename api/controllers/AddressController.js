@@ -37,7 +37,7 @@ module.exports = {
 					.then(function (foundRoute){
 						var data = {
 							address : updatedAddress,
-							route : route
+							route : foundRoute
 						};
 
 						sails.sockets.blast("address", {verb : "removed", data : data});
