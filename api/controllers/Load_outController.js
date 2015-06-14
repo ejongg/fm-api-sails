@@ -231,6 +231,7 @@ module.exports = {
 				.each(function (product){
 					return new Promise(function (resolve){
 						SkuService.getSkuDetails(product.sku_id).then(function (detailedProduct){
+							detailedProduct.prod_date = product.prod_date;
 							productList.push(detailedProduct);
 							resolve();
 						})

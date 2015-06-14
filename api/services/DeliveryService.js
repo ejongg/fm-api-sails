@@ -8,7 +8,8 @@ module.exports = {
 			var orderProduct = {
 				dtrans_id : deliveryId,
 				sku_id : product.sku_id,
-				cases : product.cases
+				cases : product.cases,
+				prod_date : product.prod_date
 			};
 
 			Delivery_products.create(orderProduct)
