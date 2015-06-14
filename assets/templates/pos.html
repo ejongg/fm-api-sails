@@ -85,8 +85,11 @@
 
             <div class="form-group">
                 <label for="select" class="col-md-3">Extra bottles</label>
+
                 <div class="col-md-9">
-                <input ng-model="transaction.extraBottles" type="number" max="{{maxBottles}}"  min="0" class="form-control" placeholder="Enter number of bottles." required>
+                  <input ng-model="transaction.extraBottles" name="extraBottles" type="number" max="{{maxReturnedBottles}}"  min="0" class="form-control" placeholder="Enter number of bottles." required>
+
+                  <strong class="fbackMsg" ng-show="transactionForm.extraBottles.$dirty && transactionForm.extraBottles.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
                 </div>
             </div>
             
@@ -111,7 +114,9 @@
         <div class="form-group">
           <label for="select" class="col-md-3">Extra Bottles</label>
           <div class="col-md-9">
-            <input ng-model="transaction.return_extraBottles" type="number" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
+            <input ng-model="transaction.return_extraBottles" name="maxReturnedBot" type="number" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
+
+            <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.maxReturnedBot.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
           </div>
         </div>
         

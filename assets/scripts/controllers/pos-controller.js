@@ -45,7 +45,7 @@ angular.module('fmApp')
         $scope.skuList = data;
         $scope.transaction.sku = $scope.skuList[0];
         $scope.maxBottles = $scope.transaction.sku.bottlespercase;
-        $scope.maxReturnedsBottles = $scope.transaction.sku.bottlespercase;
+        $scope.maxReturnedBottles = $scope.transaction.sku.bottlespercase;
         $scope.returns.sku = null;
 
         console.log("Available SKU:");
