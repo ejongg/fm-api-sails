@@ -240,6 +240,7 @@ angular.module('fmApp')
       console.log('Sails responded with post truck: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
+        $scope.snackbarShow('Truck Added');
         $scope.showAddTruckForm(false);
         var indexDriver = _.findIndex($scope.employeeDrivers, {'id' : truck.driver.id});
         $scope.employeeDrivers.splice(indexDriver,1);
@@ -293,6 +294,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          $scope.editIndex = -1;
+         $scope.snackbarShow('Truck Edited');
          $scope.$digest();
       }
     });
@@ -305,6 +307,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          $scope.editIndex = -1;
+         $scope.snackbarShow('Truck Deleted');
       }
       else if (JWR.statusCode === 500){
         console.log("Error Occured");
