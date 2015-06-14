@@ -111,6 +111,7 @@ angular.module('fmApp')
   $scope.changeCompany = function () {
     console.log("Company Changed");
     $scope.expense.sku = null;
+    $scope.noBays = true;
   };
 
    $scope.getBays = function (sku){
