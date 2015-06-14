@@ -264,6 +264,35 @@ module.exports = {
 					return res.send("Truck successfully deleted", 200);
 				})
 		})
+	},
+
+	findEmployeeTruck : function(req, res){
+		var userId = req.query.user;
+
+		Users.findOne({id : userId})
+			.then(function (foundUser){
+
+				var query = {
+					emp_fname : foundUser.firstname, 
+					emp_lname : foundUser.lastname
+				};
+
+				return Employees.findOne(query);
+			})
+
+			.then(function (foundEmployee){
+
+				Trucks.findOne({dispatcher : foundEmployee.id})
+					.then(function (foundTruck){
+
+						if(foundTruck){
+							return res.send(foundTruck);	
+						}else{
+							return res.send({message : "No trucks found"}, 400);
+						}
+						
+					})
+			})
 	}
 };
 

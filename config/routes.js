@@ -133,6 +133,7 @@ module.exports.routes = {
 	*/
 	'POST /trucks/add' : 'Trucks.add',
 	'POST /trucks/edit' : 'Trucks.edit',
+	'GET  /trucks/employee-truck' : 'Trucks.findEmployeeTruck',
 
 	/* 	WAREHOUSE TRANSACTIONS 
 		add - for creating warehouse transactions
