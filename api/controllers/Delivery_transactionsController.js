@@ -122,7 +122,7 @@ module.exports = {
 
 			.then(function (updatedDelivery){
 				sails.sockets.blast('delivery_transactions', {verb : "updated", data : updatedDelivery});
-				return res.send("Empties successfully added")
+				return res.send("Empties successfully added", 200);
 			})
 	},
 
