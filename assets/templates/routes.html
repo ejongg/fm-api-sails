@@ -439,7 +439,7 @@
      <br>     
 
 
- <div dir-paginate="routeInfo in routes |filter : searchRoute | filter:companySelect | itemsPerPage:2" pagination-id="routesPagination">
+ <div dir-paginate="routeInfo in routes |filter : searchRoute | filter:companySelect | orderBy:'route_name' | itemsPerPage:2" pagination-id="routesPagination">
       <div class="panel-primary" >
 
       <input type="hidden" ng-model="MTH.days">
