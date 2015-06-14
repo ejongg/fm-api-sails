@@ -20,7 +20,7 @@ angular.module('fmApp')
   $scope.noDeliveryTransactions = false;
 
   var getDeliveryTransactions= function () {
-    $http.get(httpHost + '/delivery_transactions').success( function (data) {      
+    $http.get(httpHost + '/delivery_transactions?where={"status":"Complete"}').success( function (data) {      
       if(data.length !== 0){
         $scope.deliveryTransactions = data;
          console.log('Delivery Transactions');
