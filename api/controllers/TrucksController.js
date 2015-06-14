@@ -263,6 +263,10 @@ module.exports = {
 					sails.sockets.blast('trucks', {verb : 'destroyed', data : foundTruck});
 					return res.send("Truck successfully deleted", 200);
 				})
+
+				.catch(function (err){
+					return res.send({message : "Can't Delete truck"}, 400);
+				})
 		})
 	},
 
