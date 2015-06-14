@@ -118,7 +118,7 @@ angular.module('fmApp')
   };
 
   var getSKUMovingPile = function () {
-    $http.get(httpHost + '/sku/available-with-moving-pile').success( function (data) {
+    $http.get(httpHost + '/sku/available-with-moving-pile?company=SMB').success( function (data) {
       if(data.length !== 0){
         $scope.noSKU = false;
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
