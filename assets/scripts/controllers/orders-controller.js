@@ -39,6 +39,8 @@ angular.module('fmApp')
   
   $scope.companies = ['Coca-Cola', 'SMB'];
 
+  //$scope.customers = [];
+
   $scope.currentPage = 1;
   //$scope.filteredData = [];
   $scope.filteredAndSortedData = [];
@@ -46,6 +48,23 @@ angular.module('fmApp')
   $scope.noOfRows = 0;
   $scope.newlyAdded = {};
   $scope.index = 0;
+
+  $scope.uniqueCustomers = [];
+  $scope.pluckedOrders = [];
+  $scope.uniqueAgents = [];
+
+
+/*  var getCustomers = function () {
+    $http.get(httpHost + '/customers').success( function (data) {
+      if(data.length !== 0){
+        $scope.customers = data;
+        console.log("Customers:");
+        console.log($scope.customers);
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };*/
 
   var setPage = function(){
     console.log("NEW ADDED:");
@@ -76,13 +95,6 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.inventory = data;
         $scope.smbInventory = $filter('filter')($scope.inventory, {company: 'SMB'});
-        
-        if($scope.smbInventory==0){
-          $scope.noSKU = true;
-        }
-
-      }else{
-        $scope.noInventory = true;
       }
     }).error(function (err) {
       $scope.checkError(err);
@@ -139,6 +151,7 @@ angular.module('fmApp')
     $http.get(httpHost + '/customer_orders').success( function (data) {
       if(data.length !== 0){
          $scope.ordersList = data;
+         getUniques();
         console.log("Orders:");
         console.log($scope.ordersList);
       }else{
@@ -163,14 +176,24 @@ angular.module('fmApp')
     }).error(function (err) {
       console.log(err);
     });
+  };
 
+  var getUniques = function (){
+    console.log($scope.ordersList);
+    $scope.pluckedOrders = _.pluck($scope.ordersList, 'customer_id');
+    $scope.uniqueCustomers = _.uniq($scope.pluckedOrders, 'establishment_name');
+    $scope.uniqueAgents = _.uniq(_.pluck($scope.ordersList, 'supplieragent_name'));
+    console.log("UNIQUE");
+    console.log($scope.uniqueCustomers);
+    console.log($scope.uniqueAgents);
   };
   
+  getSMBInventory();
   getOrders();
   getSKU();
   // getSKUMovingPile();
   getAddresses();
-  getSMBInventory();
+  
 
   $scope.changeCompany = function (company) {
     
@@ -289,7 +312,7 @@ angular.module('fmApp')
   };
 
   $scope.getOwnerName = function ($item, $model, $label) {
-    $scope.order.owner = $item.customer_id.owner_name;
+    $scope.order.owner = $item.owner_name;
   };
 
   $scope.addOrder = function (order) {
@@ -358,10 +381,11 @@ angular.module('fmApp')
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
-       console.log("close form");
-       $scope.showAddOrderForm(false);
-       $scope.snackbarShow('Order Added');
-       $scope.$digest();
+        getUniques();
+        console.log("close form");
+        $scope.showAddOrderForm(false);
+        $scope.snackbarShow('Order Added');
+        $scope.$digest();
       }
     });  
 

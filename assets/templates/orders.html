@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="orders.customer_id.establishment_name for orders in ordersList | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
+                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="cust.establishment_name for cust in uniqueCustomers | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
 
                             <strong class="fbackMsg" ng-show="cokeOrderForm.orderEstablishmentName.$dirty && cokeOrderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
                         </div>
@@ -111,7 +111,7 @@
 
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Supplier Agent</label>
-                        <div class="col-md-12"><input type="text" class="form-control" name="orderSupplierAgent" placeholder="Enter agent name." ng-model="order.cokeagent_name" required>
+                        <div class="col-md-12"><input type="text" class="form-control" name="orderSupplierAgent" placeholder="Enter agent name." typeahead="agent for agent in uniqueAgents | filter:$viewValue | limitTo:8" ng-model="order.cokeagent_name" required>
 
                         <strong class="fbackMsg" ng-show="cokeOrderForm.orderSupplierAgent.$dirty && cokeOrderForm.orderSupplierAgent.$invalid"> Please input Supplier Agent </strong>
                         </div>
@@ -164,7 +164,7 @@
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="orders.customer_id.establishment_name for orders in ordersList | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
+                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="cust.establishment_name for cust in uniqueCustomers | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
 
                             <strong class="fbackMsg" ng-show="orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
                         </div>
@@ -212,10 +212,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputCokeOrderCases" class="col-md-6">Cases</label>
-                        <div class="col-md-12"><input type="number" min="1" max="{{count}}" class="form-control" placeholder="Enter number of cases." name="cokeOrderCases" ng-model="order.cases" required>
+                        <label for="inputsmbOrderCases" class="col-md-6">Cases</label>
+                        <div class="col-md-12"><input type="number" min="1" max="{{count}}" class="form-control" placeholder="Enter number of cases." name="smbOrderCases" ng-model="order.cases" required>
 
-                        <strong class="fbackMsg" ng-show="orderForm.cokeOrderCases.$dirty && orderForm.cokeOrderCases.$invalid"> Enter numbers only. ({{count}}) available in inventory</strong>
+                        <strong class="fbackMsg" ng-show="orderForm.smbOrderCases.$dirty && orderForm.smbOrderCases.$invalid"> Enter numbers only. ({{count}}) available in inventory</strong>
                         </div>
                     </div>
 
