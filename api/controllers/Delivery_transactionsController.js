@@ -116,6 +116,10 @@ module.exports = {
 			deposit = 0;
 		}
 
+		if(!Array.isArray(returns)){
+			returns = [returns];
+		}
+
 		ReturnsService.createReturns(returns, deposit)
 			.then(function (returnId){
 				return new Promise(function (resolve){
