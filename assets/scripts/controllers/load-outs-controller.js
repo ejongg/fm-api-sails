@@ -13,6 +13,7 @@ angular.module('fmApp')
   $scope.noCustomerOrders = false;
   $scope.noCustomerOrdersAvailable = false;
   $scope.noLoadOut = false;
+  $scope.noLoadOutNumber = false;
 
   $scope.editIndex = -1;
 
@@ -324,7 +325,13 @@ angular.module('fmApp')
             console.log(loadout.loadout_number);
            var indexOfNumber = _.indexOf($scope.loadOutNumbers, loadout.loadout_number);
            $scope.loadOutNumbers.splice(indexOfNumber,1);
-           $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
+           if($scope.loadOutNumbers.length !== 0){
+             $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
+             $scope.noLoadOutNumber = false;
+           }else{
+             $scope.noLoadOutNumber = true;
+           }
+     
           });
            console.log($scope.loadOutNumbers);
         }
