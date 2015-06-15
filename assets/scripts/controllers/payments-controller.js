@@ -11,6 +11,7 @@ angular.module('fmApp')
   $scope.payment.payment_date = new Date();
   $scope.summary = {};
   $scope.historyData = [];
+  $scope.paymentDateFilter = new Date();
 
   // forSorting
   $scope.sortCriteria='id';
@@ -21,12 +22,14 @@ angular.module('fmApp')
 
   $scope.noDeliveryTransactions = false;
 
-  var getDeliveryTransactions= function () {
-    $http.get(httpHost + '/delivery/available-payments').success( function (data) {      
+  var getDeliveryTransactions= function (date) {
+    console.log($scope.formatDate(date));
+    $http.get(httpHost + '/delivery/available-payments?date='+ $scope.formatDate(date)).success( function (data) {      
       if(data.length !== 0){
         $scope.deliveryTransactions = data;
          console.log('Delivery Transactions');
         console.log($scope.deliveryTransactions);
+        $scope.noDeliveryTransactions = false;
       }else{
         console.log('No Delivery Transactions');
         $scope.noDeliveryTransactions = true;
@@ -36,7 +39,7 @@ angular.module('fmApp')
     });
   };
   
-  getDeliveryTransactions();
+  getDeliveryTransactions($scope.paymentDateFilter);
 
   var clearForm = function () {
     $scope.payment.payment_date = new Date();
@@ -51,6 +54,11 @@ angular.module('fmApp')
        clearForm();
     }
 
+  };
+
+  $scope.dateFilterChange = function (date) {
+    console.log(date);
+    getDeliveryTransactions(date);
   };
 
   $scope.showSummaryForm = function (data) {

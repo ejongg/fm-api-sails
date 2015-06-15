@@ -13,7 +13,7 @@ angular.module('fmApp')
   $scope.todayDate.setDate($scope.todayDate.getDate() - 1);
 
   $scope.purchase = {};
-  $scope.purchase.prod_date =$scope.todayDate;
+  $scope.purchase.prod_date = $scope.todayDate;
 
 
   $scope.totalAmount= 0;
