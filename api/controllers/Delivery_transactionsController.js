@@ -118,7 +118,18 @@ module.exports = {
 
 		ReturnsService.createReturns(returns, deposit)
 			.then(function (returnId){
-				return Delivery_transactions.update({id : deliveryId}, {returns_id : returnId});
+				return new Promise(function (resolve){
+					ReturnsService.getReturnsAmount(returnId, deposit)
+						.then(function (returnsAmount){
+							return [returnsAmount, Delivery_transactions.findOne({id : deliveryId})];
+						})
+
+						.spread(function (returnsAmount, foundDelivery){
+							var newAmount = foundDelivery.total_amount - returnsAmount;
+							resolve(Delivery_transactions.update({id : deliveryId}, {returns_id : returnId, total_amount : newAmount}));
+						})
+					
+				})
 			})
 
 			.then(function (updatedDelivery){
