@@ -128,31 +128,18 @@
     <div class="panel">
         <div class="panel-body">
 
-      <form class="form-horizontal col-md-12" name="" ng-submit="" novalidate>
+      <form class="form-horizontal col-md-12" name="" novalidate>
              <fieldset class="forminput">
 
              <div class="form-group col-md-4">
-               <label class="col-md-4">Start Date</label> 
+               <label class="col-md-4">Payment Date</label> 
                <div class="col-md-12">
-              <input type="date" name="startD" class="form-control" max="{{formatDate(dateToday)}}" required>
+              <input type="date" name="paymentDate" class="form-control" required>
                 </div>
              </div>
 
-             <div class="form-group col-md-4">
-                <label class="col-md-4">End Date</label> 
-               <div class="col-md-12">
-               <input type="date" name="endD" class="form-control" min="{{formatDate(startDate)}}" max="{{formatDate(dateToday)}}" required>
-               </div>
-             </div>
-
-             <br>
-
-              <div class="col-md-2">
-                  <button class="btn btn-xs btn-default" type="submit">Generate Report</button>
-              </div>
-
              </fieldset>
-          </form>
+      </form>
 
 
         <!-- IF NO PRODUCTS -->
