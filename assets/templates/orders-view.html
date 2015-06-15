@@ -1,2 +1,89 @@
 <h1>Order View</h1>
-{{order}}
+
+<!-- START OF CONTENT -->
+
+
+<!-- PAGE HEADERS -->
+
+<div class="row">
+
+    <div class="pageheader-left">
+        <h1> Customer Orders</h1>
+    </div>
+
+    <div class="pageheader-right">
+        <div class="form-group">
+            <ul class="nav nav-tabs col-md-12">
+                        <li>
+                            <a ng-click="pagePrint()" ng-hide="addOrderForm || noOrders || editOrDeleteForm">
+                            <h6><i class="mdi-action-print center"/> &nbsp; PRINT</h6></a>
+                        </li>
+                    </ul>
+                </div>
+    </div>
+
+</div>
+
+
+
+<!-- BODY -->
+
+<!-- DO NOT REMOVE-->
+<div class="container">
+
+
+    <!-- RIGHT PANEL -->
+    <div class="panel col-md-12" ng-hide="addOrderForm">
+        <div class="panel-body" >
+            <p>Customer</p>
+            {{order.order.customer_id.owner_name}}
+            <p>Establishment</p>
+            {{order.order.customer_id.establishment_name}}
+
+
+    <!-- START OF TABLE -->      
+            <table ng-hide="noSKU || noOrders" class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="" ng-click="sortCriteria='date_received'; reverseSort = !reverseSort" class="thlink">
+                                Product
+                                <span ng-show="sortCriteria == 'date_received'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                      </th>
+                      <th>
+                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                                Number of Cases
+                                <span ng-show="sortCriteria == 'supplieragent_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+    
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="prod in order.products">
+                        <td>{{prod.sku_id.brand_name + " " + prod.sku_id.sku_name + " " + prod.sku_id.size}}</td>
+                        <td>{{prod.cases}}</td>
+                    
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <h2>Total Amount</h2>
+            {{order.total_amount}}
+
+    <!-- END OF TABLE -->
+    
+
+
+  </div>
+</div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
