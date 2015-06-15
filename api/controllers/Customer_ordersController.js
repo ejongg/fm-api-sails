@@ -38,6 +38,7 @@ module.exports = {
 
 	list : function(req, res){
 		var routeId = req.query.route;
+		var company = null;
 		
 		function getRouteAddress(){
 			return new Promise(function (resolve){
@@ -45,6 +46,7 @@ module.exports = {
 
 				Routes.findOne({id : routeId}).then(function (foundRoute){
 					var query = null;
+					company = foundRoute.company;
 
 					if(foundRoute.company == 'SMB'){
 						query = {smb_route : foundRoute.id};
@@ -68,20 +70,38 @@ module.exports = {
 				})
 			})
 		};
+
+		function getDeliveryCompany(orderId){
+			return new Promise(function (resolve){
+				Customer_order_products.findOne({order_id : orderId})
+					.then(function (foundProduct){
+						resolve(SkuService.getCompanyName(foundProduct.sku_id));
+					})
+			});
+		};
 		
 		getRouteAddress().then(function (addressList){
 			var ordersList = [];
 			var finalList = [];
 
 			Customer_orders.find({delivery_id : null, status : {'like' : 'Pending'}}).populate('customer_id')
-				.then(function getOrders(orders){
+				.then(function (orders){
 					return orders;
 				})
 
 				.each(function (order){
-					if(addressList.indexOf(order.customer_id.address) != -1){
-						ordersList.push(order);
-					}
+					return new Promise(function (resolve){
+						getDeliveryCompany(order.id).then(function (orderCompany){
+							
+							if(addressList.indexOf(order.customer_id.address) != -1 && orderCompany == company){
+								ordersList.push(order);
+								resolve();
+							}else{
+								resolve();
+							}
+
+						})
+					});
 				})
 
 				.then(function (){
