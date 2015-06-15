@@ -150,10 +150,10 @@
             </div>
 
             <div ng-show="companySelected === 'SMB'">
-            <form class="form-horizontal" name="cokeOrderForm" ng-submit="addOrder(order)" novalidate>
+            <form class="form-horizontal" name="orderForm" ng-submit="addOrder(order)" novalidate>
                 <fieldset>
 
-                        <div class="alert alert-warning" ng-show="(cokeOrderForm.orderEstablishmentName.$dirty && cokeOrderForm.orderEstablishmentName.$invalid) || (cokeOrderForm.orderOwnerName.$invalid && cokeOrderForm.orderOwnerName.$dirty) || (cokeOrderForm.orderAddressName.$invalid && cokeOrderForm.orderAddressName.$dirty)  || (cokeOrderForm.orderCases.$invalid && cokeOrderForm.orderCases.$dirty)">
+                        <div class="alert alert-warning" ng-show="(orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid) || (orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty) || (orderForm.orderAddressName.$invalid && orderForm.orderAddressName.$dirty)  || (orderForm.orderCases.$invalid && orderForm.orderCases.$dirty)">
 
                         <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
                     </div>
@@ -166,7 +166,7 @@
                         <div class="col-md-12">
                             <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="orders.customer_id.establishment_name for orders in ordersList | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
 
-                            <strong class="fbackMsg" ng-show="cokeOrderForm.orderEstablishmentName.$dirty && cokeOrderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
+                            <strong class="fbackMsg" ng-show="orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
                         </div>
                     </div>
 
@@ -174,7 +174,7 @@
                         <label for="inputOwnerName" class="col-md-6">Owner Name</label>
                         <div class="col-md-12"><input type="text" class="form-control" name="orderOwnerName" placeholder="Enter owner name." ng-model="order.owner" required>
 
-                        <strong class="fbackMsg" ng-show="cokeOrderForm.orderOwnerName.$invalid && cokeOrderForm.orderOwnerName.$dirty"> Please input Owner Name</strong>
+                        <strong class="fbackMsg" ng-show="orderForm.orderOwnerName.$invalid && orderForm.orderOwnerName.$dirty"> Please input Owner Name</strong>
                         </div>
                     </div>
 
@@ -215,7 +215,7 @@
                         <label for="inputCokeOrderCases" class="col-md-6">Cases</label>
                         <div class="col-md-12"><input type="number" min="1" max="{{count}}" class="form-control" placeholder="Enter number of cases." name="cokeOrderCases" ng-model="order.cases" required>
 
-                        <strong class="fbackMsg" ng-show="cokeOrderForm.cokeOrderCases.$dirty && cokeOrderForm.cokeOrderCases.$invalid"> Enter numbers only. ({{count}}) available in inventory</strong>
+                        <strong class="fbackMsg" ng-show="orderForm.cokeOrderCases.$dirty && orderForm.cokeOrderCases.$invalid"> Enter numbers only. ({{count}}) available in inventory</strong>
                         </div>
                     </div>
 
@@ -225,7 +225,7 @@
                     </div> 
 
                     <div class="form-group rightalign">
-                        <button type="submit" class="btn btn-primary" ng-disabled="cokeOrderForm.$invalid">Add</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="orderForm.$invalid">Add</button>
                     </div>
 
                 </fieldset>
