@@ -134,7 +134,7 @@
              <div class="form-group col-md-4">
                <label class="col-md-4">Payment Date</label> 
                <div class="col-md-12">
-              <input type="date" name="paymentDate" class="form-control" required>
+              <input type="date" name="paymentDate" ng-model="paymentDateFilter" ng-change="dateFilterChange(paymentDateFilter)" class="form-control" required>
                 </div>
              </div>
 
@@ -144,7 +144,7 @@
 
         <!-- IF NO PRODUCTS -->
        <div ng-show="noDeliveryTransactions" align="center">
-          <h3><strong>NO DELIVERY TRANSACTIONS YET! </strong></h3>
+          <h3><strong>NO DELIVERY TRANSACTIONS IN THIS DATE! </strong></h3>
         </div>
 
         <!-- START OF TABLE -->
