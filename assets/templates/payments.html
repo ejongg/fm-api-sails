@@ -55,7 +55,24 @@
 
                      <div class="icon-preview"><i class="mdi-alert-error"></i><span></span> Some fields are empty or incorrect.</div> 
                     </div>
- -->
+ -->              
+
+                   <div class="form-group">
+                    <label for="inputBrandName" class="col-md-12">Customer Name</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control empty" name="" ng-model="payment.customer" disabled>
+                      <!-- <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong> -->
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputBrandName" class="col-md-12">Establishment Name</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control empty" name="" ng-model="payment.establishment" disabled>
+                      <!-- <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong> -->
+                    </div>
+                  </div>
+
 
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Payment Date</label>
@@ -95,6 +112,24 @@
 
           <form class="form-horizontal" name="productForm" ng-submit="addProduct(product)" novalidate>
                 <fieldset>
+
+                  <div class="form-group">
+                    <label for="inputBrandName" class="col-md-12">Customer Name</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control empty" name="" ng-model="summary.customer_id.owner_name" disabled>
+                      <!-- <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong> -->
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputBrandName" class="col-md-12">Establishment Name</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control empty" name="" ng-model="summary.customer_id.establishment_name" disabled>
+                      <!-- <strong class= "fbackMsg" ng-show="productForm.addProductBrandName.$dirty && productForm.addProductBrandName.$invalid"> Brand name required!  </strong> -->
+                    </div>
+                  </div>
+
+
                   <div class="form-group">
                     <label for="inputBrandName" class="col-md-12">Payment Date</label>
                     <div class="col-md-12">

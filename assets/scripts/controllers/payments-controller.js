@@ -68,6 +68,8 @@ angular.module('fmApp')
   $scope.transactionClicked = function (data) {
     if (data.payment_date === 'Unpaid') {
       $scope.payment.delivery_id = data.id;
+      $scope.payment.customer = data.customer_id.owner_name;
+      $scope.payment.establishment = data.customer_id.establishment_name;
       $scope.showPayForm(true);
       $scope.showSummaryForm(false);
     }else {
