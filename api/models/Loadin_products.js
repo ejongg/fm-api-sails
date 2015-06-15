@@ -13,7 +13,7 @@ module.exports = {
   		unique: true,
   		primaryKey: true,
   		autoIncrement : true,
-  		columnName: "loadin_loadin_product_id"
+  		columnName: "loadin_product_id"
   	},
   	sku_id : {
   		model : "sku",

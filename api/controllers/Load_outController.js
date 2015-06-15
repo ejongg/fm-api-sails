@@ -107,6 +107,7 @@ module.exports = {
 		var truck = req.body.truck_id;
 		var deliveryDate = req.body.delivery_date;
 
+
 		Load_out.update({id : loadoutId}, {status : "In progress"})
 			.then(function (updatedLoadout){
 				return new Promise(function (resolve){
