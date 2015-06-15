@@ -204,18 +204,13 @@ module.exports = {
 					})
 
 					.each(function computeAmount(returns){
-						return new Promise(function (resolve, reject){
-							ReturnsService.getTotalAmount(returns.products, function(err, result){
-								if(err) reject(err);
-								
-								totalAmount = totalAmount + result;
-								resolve(returns);
-							});	
+						return new Promise(function (resolve){
+							ReturnsService.getReturnsAmount(returns.id, returns.deposit)
+								.then(function (returnsAmount){
+									totalAmount = totalAmount + returnsAmount;
+									resolve();
+								})
 						});
-					})
-
-					.each(function (returns){
-						totalAmount = totalAmount + returns.deposit;
 					})
 
 					.then(function addToDssr(){
