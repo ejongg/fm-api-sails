@@ -128,6 +128,8 @@ angular.module('fmApp')
         break;
       case "for-payment":
       console.log("For Payment");
+      console.log(msg.data.delivery_date);
+      console.log($scope.formatDate($scope.paymentDateFilter));
       if(msg.data.delivery_date === $scope.formatDate($scope.paymentDateFilter)){
         console.log("Same Date");
         $scope.deliveryTransactions.push(msg.data);
