@@ -141,7 +141,10 @@ module.exports = {
 			})
 
 			.then(function (totalAmount){
-				return res.send({products : orderList, total_amount : totalAmount, id : orderId});
+				Customer_orders.findOne({id : orderId}).populate('customer_id')
+					.then(function (foundOrder){
+						return res.send({products : orderList, total_amount : totalAmount, order : foundOrder});
+					})
 			})
 	},
 
