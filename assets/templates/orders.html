@@ -204,7 +204,6 @@
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12" ng-hide="noSKU">
                             <select class="form-control" ng-model="order.sku" ng-change="getSkuInventoryCount(order.sku)" ng-options="sku as combine(sku) for sku in skuList | filter:companySelected" required>
-                                <option value="">Select SKU</option>
                             </select>
                         </div>
                         <div class="col-md-12" ng-show="noSKU">

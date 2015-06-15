@@ -122,7 +122,7 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.noSKU = false;
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
-        $scope.order.sku = null;
+        $scope.order.sku =  $scope.skuList[0];
         console.log("SKU Moving:");
         console.log($scope.skuList);
       }else{
@@ -178,7 +178,6 @@ angular.module('fmApp')
     if(company === 'SMB'){
       $scope.orderForm.$setPristine();
       $scope.order.distance_rating = $scope.distanceRatings[0];
-      $scope.order.sku = null;
       $scope.order.address = $scope.addresses[0].address_name;
       $scope.order.cases = null;
       $scope.order.establishment = '';
@@ -189,7 +188,6 @@ angular.module('fmApp')
     }else{
       $scope.cokeOrderForm.$setPristine();
       $scope.cokeOrderForm.distance_rating = $scope.distanceRatings[0];
-      $scope.cokeOrderForm.sku = null;
       $scope.cokeOrderForm.address = $scope.addresses[0].address_name;
       $scope.cokeOrderForm.cases = null;
       $scope.cokeOrderForm.establishment = '';
@@ -325,7 +323,7 @@ angular.module('fmApp')
     }
 
     $scope.order.cases = null;
-    $scope.order.sku = null;
+    $scope.order.sku = $scope.skuList[0];
   };
 
   $scope.deleteOrder = function (index) {
