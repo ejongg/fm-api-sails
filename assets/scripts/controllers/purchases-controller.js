@@ -9,8 +9,12 @@ angular.module('fmApp')
   $scope.purchases = [];
   $scope.purchaseProducts = [];
 
+  $scope.todayDate= new Date();
+  $scope.todayDate.setDate($scope.todayDate.getDate() - 1);
+
   $scope.purchase = {};
-  $scope.purchase.prod_date = new Date();
+  $scope.purchase.prod_date =$scope.todayDate;
+
 
   $scope.totalAmount= 0;
 

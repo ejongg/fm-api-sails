@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService','$modal','$interval', '$filter',
-  function($scope, _, $http, httpHost, authService,userService,$modal,$interval,$filter){
+.controller('OrdersCtrl',['$scope','_','$http','httpHost', 'authService','userService','$modal','$interval', '$filter','$location',
+  function($scope, _, $http, httpHost, authService,userService,$modal,$interval,$filter,$location){
   $scope.distanceRatings = [1,2,3,4,5];
 
   $scope.inventory = [];
@@ -286,22 +286,8 @@ angular.module('fmApp')
     $scope.companySelected = $scope.companies[0];       
   };
 
-  $scope.getOrderProducts = function (order_id,status) {
-
-    $http.get(httpHost + '/customer-orders/details?id=' + order_id).success( function (data) {  
-      console.log(data);
-    //   console.log(data.total_amount);
-    //   $scope.orderProducts.products = data.products;
-    //   console.log("Order Products");
-    //   $scope.totalAmountView = data.total_amount;
-    //   $scope.showViewProducts(true);
-    //   $scope.orderProducts.order_id = data.id;
-     data.status = status;
-      $scope.open(data);
-    }).error(function (err) {
-      console.log(err);
-    });
-
+  $scope.getOrderProducts = function (order_id) {
+    $location.path('/encoder/orders/'+ order_id);
   };
 
   $scope.getOwnerName = function ($item, $model, $label) {

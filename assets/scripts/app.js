@@ -13,7 +13,7 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
 })
 .config(['$urlRouterProvider', '$stateProvider','accessLevels', function ($urlRouterProvider, $stateProvider, accessLevels) {
   console.log("Config");
-  $urlRouterProvider.otherwise('/');
+  // $urlRouterProvider.otherwise('/');
 
   $stateProvider
     .state('login', {
@@ -140,6 +140,15 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
           'mainContent': {
             templateUrl: 'templates/orders.html',
             controller:'OrdersCtrl'
+          }
+        }  
+      })
+      .state('encoder.orders-view', {
+        url:'/orders/:orderID',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/orders-view.html',
+            controller:'OrdersViewCtrl'
           }
         }  
       })
