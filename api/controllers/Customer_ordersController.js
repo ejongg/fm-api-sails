@@ -41,6 +41,10 @@ module.exports = {
 		var company = null;
 
 		var tomorrow = moment().add(1, 'days').format('dddd').toLowerCase();
+
+		if(tomorrow == 'sunday'){
+			tomorrow = 'monday';
+		}
 		
 		function getRouteAddress(){
 			return new Promise(function (resolve){
