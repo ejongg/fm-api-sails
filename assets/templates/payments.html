@@ -128,6 +128,19 @@
     <div class="panel">
         <div class="panel-body">
 
+      <form class="form-horizontal col-md-12" name="" novalidate>
+             <fieldset class="forminput">
+
+             <div class="form-group col-md-4">
+               <label class="col-md-4">Payment Date</label> 
+               <div class="col-md-12">
+              <input type="date" name="paymentDate" class="form-control" required>
+                </div>
+             </div>
+
+             </fieldset>
+      </form>
+
 
         <!-- IF NO PRODUCTS -->
        <div ng-show="noDeliveryTransactions" align="center">
@@ -220,7 +233,7 @@
                       <td width="25%">
                         <button ng-show="transaction.payment_date === 'Unpaid'" ng-click="transactionClicked(transaction)">Pay</button>
                         <button ng-hide="transaction.payment_date === 'Unpaid'" ng-click="transactionClicked(transaction)">Summary</button>
-                        <button ng-click="getPaymentHistory(transaction)">History</button>
+                        <button ng-click="getPaymentHistory(transaction)" data-toggle="modal" data-target="#myModal">History</button>
                       </td>
 
                     </tr>
@@ -245,6 +258,35 @@
 
 <div class="snackbar-container" data-snackbar="true"></div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4> 
+      </div>
+      <div class="modal-body">
+       <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                    </tr>
+                </tbody>
+            </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 
