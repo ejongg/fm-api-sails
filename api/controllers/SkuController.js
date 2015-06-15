@@ -83,8 +83,12 @@ module.exports = {
 											resolve();
 										}
 									}else{
-										available.push(sku);
-										resolve();
+										if(found){
+											available.push(sku);
+											resolve();
+										}else{
+											resolve();
+										}
 									}		
 								})
 								
