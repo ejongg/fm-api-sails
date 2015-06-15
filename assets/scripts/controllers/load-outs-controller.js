@@ -156,7 +156,7 @@ angular.module('fmApp')
 
       $scope.customerOrdersAvailable = $scope.sortData($scope.customerOrdersAvailable,'customer_id.establishment_name');
       $scope.ordersAvailableList = $scope.customerOrdersAvailable[0];
-      $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
+      // $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
 
     }
   };

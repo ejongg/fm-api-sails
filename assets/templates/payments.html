@@ -203,19 +203,21 @@
                               </span>
                             </a>
                           </th>
+                          <th></th>
                       </tr>
                   </thead>
 
                   <tbody>
 
 
-                    <tr dir-paginate="transaction in deliveryTransactions | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows"  ng-click="transactionClicked(transaction)">
+                    <tr dir-paginate="transaction in deliveryTransactions | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" >
 
                       <td width="25%">{{transaction.customer_id.establishment_name}}</td>
                       <td width="25%">{{transaction.delivery_date}}</td>
                       <td width="25%">{{transaction.total_amount - transaction.paid_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.total_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.payment_date}}</td>
+                      <td width="25%"><button ng-click="transactionClicked(transaction)">Pay</button><button ng-click="getPaymentHistory(transaction)">History</button></td>
 
                     </tr>
 

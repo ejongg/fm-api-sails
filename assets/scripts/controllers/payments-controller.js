@@ -10,10 +10,12 @@ angular.module('fmApp')
   $scope.payment = {};
   $scope.payment.payment_date = new Date();
   $scope.summary = {};
+  $scope.historyData = [];
 
   // forSorting
   $scope.sortCriteria='id';
   $scope.reverseSort = false;
+  $scope.noHistory = false;
 
 
 
@@ -65,6 +67,22 @@ angular.module('fmApp')
       $scope.showPayForm(false);
     }
   };
+
+  $scope.getPaymentHistory = function (transaction) {
+    console.log(transaction);
+    $http.get(httpHost + '/payments?where={"delivery_id":'+transaction.id+'}').success( function (data) {      
+      if(data.length !== 0){
+        $scope.historyData = data;
+         console.log('History Data');
+        console.log($scope.historyData);
+      }else{
+        console.log("No History");
+        $scope.noHistory = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  }
 
   $scope.addPayment = function (data) {
     console.log(data);
