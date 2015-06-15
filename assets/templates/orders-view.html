@@ -68,6 +68,43 @@
                                 </span>
                             </a>
                         </th>
+                        <th>
+                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                               Price per Case
+                                <span ng-show="sortCriteria == 'supplieragent_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                                Price per case x Quantity
+                                <span ng-show="sortCriteria == 'supplieragent_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                                Price Per bottle
+                                <span ng-show="sortCriteria == 'supplieragent_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                                Retail profit = (Price per case x Quantity) (Price per bottle x Bottles per case x quantity)
+                                <span ng-show="sortCriteria == 'supplieragent_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
 
     
                     </tr>
@@ -77,14 +114,17 @@
                     <tr ng-repeat="prod in order.products">
                         <td>{{prod.sku_id.brand_name + " " + prod.sku_id.sku_name + " " + prod.sku_id.size}}</td>
                         <td>{{prod.cases}}</td>
-                    
+                        <td>{{prod.sku_id.pricepercase}}</td>
+                        <td></td>
+                        <td>{{prod.sku_id.priceperbottle}}</td>
+                        <td></td>
                     </tr>
 
                 </tbody>
             </table>
 
             <h2>Total Amount</h2>
-            {{order.total_amount}}
+            <legend>{{order.total_amount | currency: "₱"}}</legend>
 
     <!-- END OF TABLE -->
     
