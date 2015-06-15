@@ -61,7 +61,7 @@ module.exports = {
 				})
 
 				.then(function computeAmount(sku){
-					totalAmount = totalAmount + (product.bottles * sku.priceperbottle);						
+					totalAmount = totalAmount + (product.bottles * sku.priceperempty);						
 					cb(); 
 				})
 
@@ -91,7 +91,7 @@ module.exports = {
 
 							.then(function computeAmount(sku){
 								totalAmount = totalAmount + (product.bottles * sku.priceperempty);
-								totalAmount = totalAmount + ((product.cases * sku.bottlespercase) *sku.pricepercase);						
+								totalAmount = totalAmount + ((product.cases * sku.bottlespercase) *sku.priceperempty);						
 								resolve();
 							})
 					});
