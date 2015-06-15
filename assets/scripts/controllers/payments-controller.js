@@ -18,6 +18,8 @@ angular.module('fmApp')
   $scope.reverseSort = false;
   $scope.noHistory = false;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
 
 
   $scope.noDeliveryTransactions = false;
@@ -46,12 +48,23 @@ angular.module('fmApp')
       $scope.payment.paid_amount = 0;     
   };
 
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+       
+    }
+  }
+
   $scope.showPayForm = function (data) {
+    $scope.hasError = false;
     $scope.payForm = data;
     if(data === false){
       $scope.payment.payment_date = new Date();
       $scope.payment.paid_amount = 0;
-       clearForm();
     }
 
   };
@@ -60,6 +73,7 @@ angular.module('fmApp')
     console.log(date);
     getDeliveryTransactions(date);
   };
+
 
   $scope.showSummaryForm = function (data) {
     $scope.summaryForm = data;
@@ -110,8 +124,11 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
         $scope.showPayForm(false);
         $scope.snackbarShow('Payment Added');
-        $scope.$digest();
+      } else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true, body.message);
       }
+        $scope.$digest();
     });  
   }
 

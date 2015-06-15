@@ -528,6 +528,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Added Address");
+         $scope.snackbarShow('Added address in route');
          $scope.$digest();
       }
     }); 
@@ -562,6 +563,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          console.log("Deleted Address");
+         $scope.snackbarShow('Deleted address in route');
          $scope.$digest();
       }
     }); 
