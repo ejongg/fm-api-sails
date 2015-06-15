@@ -229,13 +229,22 @@ module.exports = {
 				})
 
 				.each(function (product){
-					return new Promise(function (resolve){
-						SkuService.getSkuDetails(product.sku_id).then(function (detailedProduct){
-							detailedProduct.prod_date = product.prod_date;
-							productList.push(detailedProduct);
-							resolve();
-						})
-					});	
+
+					var index = _.findIndex(productList, {'sku_id' : product.sku_id});
+					
+					if(index == -1){
+						return new Promise(function (resolve){
+							SkuService.getSkuDetails(product.sku_id).then(function (detailedProduct){
+								detailedProduct.prod_date = product.prod_date;
+								product.sku = detailedProduct;
+								productList.push(product);
+								resolve();
+							})
+						});	
+					}else{
+						productList[index].cases = productList[index].cases + product.cases;
+					}
+					
 				})
 
 				.then(function (){
