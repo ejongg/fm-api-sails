@@ -217,7 +217,11 @@
                       <td width="25%">{{transaction.total_amount - transaction.paid_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.total_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.payment_date}}</td>
-                      <td width="25%"><button ng-click="transactionClicked(transaction)">Pay</button><button ng-click="getPaymentHistory(transaction)">History</button></td>
+                      <td width="25%">
+                        <button ng-show="transaction.payment_date === 'Unpaid'" ng-click="transactionClicked(transaction)">Pay</button>
+                        <button ng-hide="transaction.payment_date === 'Unpaid'" ng-click="transactionClicked(transaction)">Summary</button>
+                        <button ng-click="getPaymentHistory(transaction)">History</button>
+                      </td>
 
                     </tr>
 

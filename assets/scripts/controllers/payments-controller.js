@@ -114,8 +114,12 @@ angular.module('fmApp')
         console.log(msg.data);
         var index = _.findIndex($scope.deliveryTransactions,{'id': msg.data.id});
         $scope.deliveryTransactions[index] = msg.data;
-        $scope.$digest();
+        break;
+      case "for-payment":
+        var index = _.findIndex($scope.deliveryTransactions,{'id': msg.data.id});
+        $scope.deliveryTransactions[index] = msg.data;  
     }
+    $scope.$digest();
   });
  
 }]);
