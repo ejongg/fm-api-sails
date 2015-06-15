@@ -81,7 +81,17 @@ module.exports = {
 					transaction.paid_amount = transaction.paid_amount + paidAmount;
 
 					if(transaction.paid_amount == transaction.total_amount){
-						transaction.payment_date = paymentDate;
+						Customer_orders.update({delivery_id : deliveryId}, {status : "Complete"})
+							.then(function (updatedOrder){
+								transaction.payment_date = paymentDate;
+							})
+
+							.then(function (){
+								transaction.save(function (err, result){
+									sails.sockets.blast("delivery_transactions", {verb : "paid", data : result});
+									resolve(transaction.customer_id);
+								});
+							})
 					}
 
 					transaction.save(function (err, result){
@@ -137,7 +147,7 @@ module.exports = {
 			})
 
 			.then(function (updatedDelivery){
-				sails.sockets.blast('delivery_transactions', {verb : "updated", data : updatedDelivery});
+				sails.sockets.blast('delivery_transactions', {verb : "for-payment", data : updatedDelivery});
 				return res.send("Empties successfully added", 200);
 			})
 	},
@@ -207,7 +217,23 @@ module.exports = {
 				return new Promise(function (resolve){
 					ReturnsService.getReturnsAmount(delivery.returns_id.id, delivery.returns_id.deposit)
 						.then(function (returnsAmount){
-							delivery.returns_id.total_amount = returnsAmount;
+							delivery.returns_amount = returnsAmount;
+						})
+
+						.then(function (){
+							return Customer_orders.findOne({delivery_id : delivery.id});
+						})
+
+						.then(function (foundOrder){
+							delivery.order_amount = foundOrder.total_amount;
+						})
+
+						.then(function (){
+							return LoadInService.getLoadinAmount(delivery.id);
+						})
+
+						.then(function (loadinAmount){
+							delivery.loadin_amount = loadinAmount;
 							resolve();
 						})
 				});
