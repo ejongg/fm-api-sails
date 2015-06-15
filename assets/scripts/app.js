@@ -116,6 +116,17 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
         access: accessLevels.encoder
       }
     })
+
+    .state('encoder.edit-account', {
+        url:'/edit-account',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/edit-account.html',
+            controller:'AccountsEditCtrl'
+          }
+        }  
+      })
+
       .state('encoder.sku', {
         url:'/inventory/sku',
         views: {
@@ -251,6 +262,16 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
         access: accessLevels.cashier
       }
     })
+      .state('cashier.edit-account', {
+        url:'/edit-account',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/edit-account.html',
+            controller:'AccountsEditCtrl'
+          }
+        }  
+      })
+
       .state('cashier.pos', {
         url:'/pos',
         views: {
