@@ -119,8 +119,7 @@ padding: 20px;
   border-bottom: 2px solid #202020;
   border-bottom-right-radius: 20px; 
   border-bottom-left-radius: 20px;
-  box-shadow: 0px 0px 0px #ffffff;
-  /*box-shadow: 0px 3px 15px #202020;*/
+  box-shadow: 5px 10px 10px #e1e1e1;
 }
 
 h3.panel-heading {
@@ -878,8 +877,8 @@ legend {
 
 table {
   table-layout: fixed !important;
+  box-shadow: 0px 10px 15px #e1e1e1;
 }
-
 
 td {
   border-right: 1px solid #ffffff;
@@ -891,22 +890,22 @@ tr:hover td {
   cursor: pointer !important;
 }
 
-thead {
+thead, th {
   text-transform: uppercase !important;
   margin: 0px;
   table-layout: fixed;
 
   color: #ffffff;
-  border-bottom: 3px solid #ffffff !important;
+  border-bottom: 0px solid #ffffff !important;
   background-color: #202020 !important;
-  border: 1px solid #ffffff !important;
+  border: 0px solid #ffffff !important;
 
+  vertical-align: bottom !important;
   table-layout: fixed;
 }
 
 th {
   table-layout: fixed;
-
   height: 60px !important;
 }
 

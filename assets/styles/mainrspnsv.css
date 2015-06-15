@@ -855,9 +855,8 @@ legend {
 
 table {
   table-layout: fixed !important;
-  
+  box-shadow: 5px 10px 10px #e1e1e1;
 }
-
 
 td {
   border-right: 1px solid #ffffff;
@@ -869,26 +868,27 @@ tr:hover td {
   cursor: pointer !important;
 }
 
-thead {
+thead, th {
+  font-size: 80% !important;
+
   text-transform: uppercase !important;
   margin: 0px;
   table-layout: fixed;
 
   color: #ffffff;
-  border-bottom: 3px solid #ffffff !important;
+  border-bottom: 0px solid #ffffff !important;
   background-color: #202020 !important;
-  border: 1px solid #ffffff !important;
+  border: 0px solid #ffffff !important;
 
-  vertical-align: text-top !important;
+  vertical-align: bottom !important;
   table-layout: fixed;
 }
 
 th {
-  text-align: center;
   height: 60px !important;
   width: auto;
   table-layout: fixed;
-  vertical-align: text-top !important;
+  vertical-align: bottom !important;
 }
 
 th:first-child {
@@ -967,7 +967,7 @@ tr:hover {
   border-bottom: 2px solid #202020;
   border-bottom-right-radius: 30px; 
   border-bottom-left-radius: 30px;
-  box-shadow: 0px 10px 15px #202020;
+  box-shadow: 5px 10px 10px #e1e1e1;
 
 }
 
