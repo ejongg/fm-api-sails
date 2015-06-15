@@ -137,6 +137,7 @@ angular.module('fmApp')
 
   var clearTransactionForm = function () {
     $scope.transaction.sku = $scope.skuList[0];
+    $scope.transactionForm.$setPristine();
     $scope.transaction.extraBottles = null;
     $scope.transaction.cases = null;
     $scope.transaction.discount = null;
