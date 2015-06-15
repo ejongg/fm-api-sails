@@ -130,7 +130,7 @@ angular.module('fmApp')
       console.log("For Payment");
       console.log(msg.data.delivery_date);
       console.log($scope.formatDate($scope.paymentDateFilter));
-      if(msg.data.delivery_date === $scope.formatDate($scope.paymentDateFilter)){
+      if(msg.data[0].delivery_date === $scope.formatDate($scope.paymentDateFilter)){
         console.log("Same Date");
         $scope.deliveryTransactions.push(msg.data);
       }
