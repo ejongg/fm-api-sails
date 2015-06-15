@@ -56,6 +56,10 @@ module.exports = {
 			})
 
 			.then(function (){
+				return Customer_orders.update({delivery_id : deliveryId}, {status : "Delivered"});
+			})
+
+			.then(function (){
 				sails.sockets.blast("inventory", {verb : "updated"});
 				return res.send("Load in successful", 200);
 			})
@@ -84,6 +88,10 @@ module.exports = {
 							sails.sockets.blast('loadout', {verb : "completed", data : updatedLoadout});
 						})
 				}
+			})
+
+			.then(function (){
+				return Customer_orders.update({delivery_id : deliveryId}, {status : "Delivered"});
 			})
 
 			.then(function (){
