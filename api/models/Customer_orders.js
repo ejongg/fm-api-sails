@@ -32,7 +32,7 @@ module.exports = {
   		type : 'string',
   		required : true,
       defaultsTo : 'Pending',
-      enum : ['Pending', 'Delivered', 'To be delivered', 'Cancelled', 'Assigned for delivery', "Complete"]
+      enum : ['Pending', 'Delivered', 'To be delivered', 'Cancelled', 'Assigned for delivery', 'Complete', 'On delivery']
   	},
   	user : {
   		type : 'string',
