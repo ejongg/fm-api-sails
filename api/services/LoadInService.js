@@ -67,5 +67,40 @@ module.exports = {
 					})
 			}
 		});
+	},
+
+	getLoadinAmount : function (deliveryId){
+		return new Promise(function (resolve){
+			var totalAmount = 0;
+
+			Load_in.findOne({delivery_id : deliveryId})
+				.then(function (foundLoadin){
+					if(foundLoadin){
+						return Loadin_products.find({loadin_id : foundLoadin.id});
+					}else{
+						resolve(0);
+					}
+					
+				})
+
+				.each(function (product){
+					return new Promise(function (resolve){
+
+						Sku.findOne({id : product.sku_id})
+							.then(function findSku(sku){
+								return sku;
+							})
+
+							.then(function computeAmount(sku){
+								totalAmount = totalAmount + (product.cases * sku.pricepercase);						
+								resolve();
+							})
+					});
+				})
+
+				.then(function (){
+					resolve(totalAmount);
+				})
+		});
 	}
 };
