@@ -22,12 +22,13 @@ angular.module('fmApp')
   $scope.noDeliveryTransactions = false;
 
   var getDeliveryTransactions= function () {
-    $http.get(httpHost + '/delivery_transactions?where={"status":"Complete"}').success( function (data) {      
+    $http.get(httpHost + '/delivery/available-payments').success( function (data) {      
       if(data.length !== 0){
         $scope.deliveryTransactions = data;
          console.log('Delivery Transactions');
         console.log($scope.deliveryTransactions);
       }else{
+        console.log('No Delivery Transactions');
         $scope.noDeliveryTransactions = true;
       }
     }).error(function (err) {
