@@ -31,23 +31,30 @@
 
 
     <!-- RIGHT PANEL -->
-    <div class="panel col-md-12" ng-hide="addOrderForm">
+    <div class="panel col-md-12">
         <div class="panel-body">
-            <h3>{{order.order.customer_id.owner_name}}</h3>
-            <legend>{{order.order.customer_id.establishment_name}}</legend>
-             {{order.order.customer_id.address}}<br/>
-            <br/>
-            
-            Order No. {{order.order.id}}<br/>
-            Order Date/Time:{{order.order.createdAt}}<br/>
-            {{}}
 
-           
+        <div class="col-md-12"> 
+            <div class="col-md-6">
+                <h3>{{order.order.customer_id.establishment_name | uppercase}}</h3>
+                <label>Owner Name:</label> {{order.order.customer_id.owner_name }} <br/>
+                <label>Address: </label> {{order.order.customer_id.address}}
+                <br/>
+                <br/>
+            </div>
+            <div class="col-md-6">
+                <br/>
+                <label>Order No.: </label> {{order.order.id}}<br/>
+                <label>Order Date/Time: </label> {{order.order.createdAt}}<br/>
+            </div>
             
+        </div>            
+              
 
+        
 
     <!-- START OF TABLE -->      
-            <table ng-hide="noSKU || noOrders" class="table table-striped table-hover ">
+            <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
                         <th>
@@ -60,7 +67,7 @@
                             </a>
                       </th>
                       <th>
-                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
                                 Number of Cases
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -69,7 +76,7 @@
                             </a>
                         </th>
                         <th>
-                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
                                Price per Case
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -78,7 +85,7 @@
                             </a>
                         </th>
                         <th>
-                            <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
+                            <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
                                 Price per case x Quantity
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
@@ -123,8 +130,16 @@
                 </tbody>
             </table>
 
-            <h2>Total Amount</h2>
-            <legend>{{order.total_amount | currency: "₱"}}</legend>
+            <br/>
+            <br/>
+
+            <div class="form-group">
+                <legend align="right" class="col-md-2 pull-right">
+                    <u class="doublebig">{{order.total_amount | currency:"₱"}}</u>
+                </legend>
+                <legend class="col-md-2 pull-right control-label">Total Amount</legend>
+            </div>
+   
 
     <!-- END OF TABLE -->
     
