@@ -127,8 +127,7 @@ angular.module('fmApp')
         $scope.deliveryTransactions[index] = msg.data;
         break;
       case "for-payment":
-        var index = _.findIndex($scope.deliveryTransactions,{'id': msg.data.id});
-        $scope.deliveryTransactions[index] = msg.data;  
+        $scope.deliveryTransactions.push(msg.data);
     }
     $scope.$digest();
   });
