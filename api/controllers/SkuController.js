@@ -75,13 +75,17 @@ module.exports = {
 							.then(function (sku){
 
 								Bays.findOne({sku_id : sku.id, pile_status : "Moving pile"}).then(function (found){
-									if(found && found.bay_label == company){
-										available.push(sku);
-										resolve();	
+									if(company){
+										if(found && found.bay_label == company){
+											available.push(sku);
+											resolve();	
+										}else{
+											resolve();
+										}
 									}else{
+										available.push(sku);
 										resolve();
-									}
-											
+									}		
 								})
 								
 							})
