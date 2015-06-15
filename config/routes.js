@@ -65,7 +65,8 @@ module.exports.routes = {
 	'GET  /delivery/details' : 'Delivery_transactions.getTransactionDetails',
 	'POST /delivery/payments' : 'Delivery_transactions.payments',
 	'POST /delivery/empties' : 'Delivery_transactions.empties',
-	'GET /delivery/list' : 'Delivery_transactions.list',
+	'GET  /delivery/list' : 'Delivery_transactions.list',
+	'GET  /delivery/available-payments' : 'Delivery_transactions.availableForPayment',
 
 	/* 	EMPLOYEES 
 		add - for creating employees

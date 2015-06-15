@@ -70,5 +70,36 @@ module.exports = {
 
 			callback(null, totalAmount);
 		});
+	},
+
+	getReturnsAmount : function (returnId, deposit){
+		return new Promise(function (resolve){
+			var totalAmount = deposit;
+
+			Returns_products.find({return_id : returnId})
+				.then(function (foundProducts){
+					return foundProducts;
+				})
+
+				.each(function (product){
+					return new Promise(function (resolve){
+
+						Sku.findOne({id : product.sku_id})
+							.then(function findSku(sku){
+								return sku;
+							})
+
+							.then(function computeAmount(sku){
+								totalAmount = totalAmount + (product.bottles * sku.priceperbottle);
+								totalAmount = totalAmount + (product.cases * sku.pricepercase);						
+								resolve();
+							})
+					});
+				})
+
+				.then(function (){
+					resolve(totalAmount);
+				})
+		});
 	}
 };

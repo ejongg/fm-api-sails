@@ -5,7 +5,8 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-var Promise = require("bluebird");
+var Promise = require('bluebird');
+var moment = require('moment');
 
 module.exports = {
 	remove : function (req, res){
@@ -172,6 +173,33 @@ module.exports = {
 
 			.then(function (){
 				return res.send(deliveryList, 200);
+			})
+	},
+
+	availableForPayment : function (req, res){
+		var date = req.query.date;
+
+		if(!date){
+			date = moment().format('YYYY-MM-DD');
+		}
+
+		Delivery_transactions.find({delivery_date : date, returns_id : {'not' : null}}).populateAll()
+			.then(function (foundDeliveries){
+				return foundDeliveries;
+			})
+
+			.each(function (delivery){
+				return new Promise(function (resolve){
+					ReturnsService.getReturnsAmount(delivery.returns_id.id, delivery.returns_id.deposit)
+						.then(function (returnsAmount){
+							delivery.returns_id.total_amount = returnsAmount;
+							resolve();
+						})
+				});
+			})
+
+			.then(function (foundDeliveries){
+				return res.send(foundDeliveries);
 			})
 	}
 };
