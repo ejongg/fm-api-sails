@@ -1,5 +1,3 @@
-<h1>Order View</h1>
-
 <!-- START OF CONTENT -->
 
 
@@ -34,11 +32,18 @@
 
     <!-- RIGHT PANEL -->
     <div class="panel col-md-12" ng-hide="addOrderForm">
-        <div class="panel-body" >
-            <p>Customer</p>
-            {{order.order.customer_id.owner_name}}
-            <p>Establishment</p>
-            {{order.order.customer_id.establishment_name}}
+        <div class="panel-body">
+            <h3>{{order.order.customer_id.owner_name}}</h3>
+            <legend>{{order.order.customer_id.establishment_name}}</legend>
+             {{order.order.customer_id.address}}<br/>
+            <br/>
+            
+            Order No. {{order.order.id}}<br/>
+            Order Date/Time:{{order.order.createdAt}}<br/>
+            {{}}
+
+           
+            
 
 
     <!-- START OF TABLE -->      

@@ -495,7 +495,7 @@ angular.module('fmApp')
       "username": cred.username,
       "password": cred.password
     }
-    $modalInstance.open(voidInfo);
+    $modalInstance.close(voidInfo);
   };
 
   $scope.cancel = function () {
