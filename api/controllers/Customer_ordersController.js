@@ -39,6 +39,8 @@ module.exports = {
 	list : function(req, res){
 		var routeId = req.query.route;
 		var company = null;
+
+		var tomorrow = moment().add(1, 'days').format('dddd').toLowerCase();
 		
 		function getRouteAddress(){
 			return new Promise(function (resolve){
@@ -49,9 +51,9 @@ module.exports = {
 					company = foundRoute.company;
 
 					if(foundRoute.company == 'SMB'){
-						query = {smb_route : foundRoute.id};
+						query = {smb_route : foundRoute.id, days : {'contains' : tomorrow}};
 					}else{
-						query = {coke_route : foundRoute.id};
+						query = {coke_route : foundRoute.id, days : {'contains' : tomorrow}};
 					}
 
 					return Address.find(query);
