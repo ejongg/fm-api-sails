@@ -151,8 +151,11 @@ module.exports = {
 			})
 
 			.then(function (updatedDelivery){
-				sails.sockets.blast('delivery_transactions', {verb : "for-payment", data : updatedDelivery});
-				return res.send("Empties successfully added", 200);
+				return PaymentsService.getDetails(updatedDelivery[0]).then(function (detailed){
+					updatedDelivery = detailed;
+					sails.sockets.blast('delivery_transactions', {verb : "for-payment", data : updatedDelivery});
+					return res.send("Empties successfully added", 200);
+				});
 			})
 	},
 
