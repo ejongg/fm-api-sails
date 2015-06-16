@@ -279,6 +279,7 @@ angular.module('fmApp')
       "loadout_no": loadOut.loadout_no,
       "orders": loadOut.orders,
       "truck_id": loadOut.truck.id,
+      "carry_weight": loadOut.truck.carry_weight,
       "user": loadOut.user
     };
     console.log(addLoadOut);
