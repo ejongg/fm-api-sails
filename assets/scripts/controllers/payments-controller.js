@@ -127,6 +127,7 @@ angular.module('fmApp')
         $scope.deliveryTransactions[index] = msg.data;
         break;
       case "for-payment":
+      console.log("For Payment");
       if(msg.data.delivery_date === $scope.formatDate($scope.paymentDateFilter)){
         console.log("Same Date");
         $scope.deliveryTransactions.push(msg.data);
