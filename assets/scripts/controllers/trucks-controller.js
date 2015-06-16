@@ -180,6 +180,7 @@ angular.module('fmApp')
     $scope.truck.dispatcher = $scope.employeeCheckers[0];
     $scope.truck.agent = $scope.employeeDeliverySalesPersonnel[0];
     $scope.truck.helper = $scope.employeeDeliveryHelper[0];
+    $scope.truck.carry_weight = null;
   }; 
 
   $scope.fullName = function (driver) {
@@ -231,7 +232,7 @@ angular.module('fmApp')
         "driver": truck.driver,
         "helper": truck.helper,
         "route": truck.route.id,
-        "carry_weight": 0
+        "carry_weight": truck.carry_weight
       };
 
       console.log(truckInfo);
