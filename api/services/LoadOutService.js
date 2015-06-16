@@ -62,5 +62,79 @@ module.exports = {
 
 				})
 		});		
+	},
+
+	addWeight : function (loadoutId, products){
+		return new Promise(function (resolve){
+			new Promise(function (resolve){
+				resolve(products);
+			})
+
+			.each(function (product){
+				return new Promise(function (resolve){
+
+					Load_out.findOne({id : loadoutId})
+						.then(function (foundLoadout){
+							var weight = foundLoadout.current_weight + (product.sku_id.weightpercase * product.cases);
+
+							return Load_out.update({id : loadoutId}, {current_weight : weight});
+						})
+
+						.then(function (){
+							resolve();
+						})
+				});
+			})
+
+			.then(function (){
+				resolve();
+			})
+		});
+	},
+
+	removeWeight : function (loadoutId, products){
+		return new Promise(function (resolve){
+			new Promise(function (resolve){
+				resolve(products);
+			})
+
+			.each(function (product){
+				return new Promise(function (resolve){
+					
+					Load_out.findOne({id : loadoutId})
+						.then(function (foundLoadout){
+							var weight = foundLoadout.current_weight - (product.sku_id.weightpercase * product.cases);
+
+							return Load_out.update({id : loadoutId}, {current_weight : weight});
+						})
+
+						.then(function (){
+							resolve();
+						})
+				});
+			})
+
+			.then(function (){
+				resolve();
+			})
+		});
+	},
+
+	countOrderWeight : function (products){
+		return new Promise(function (resolve){
+			var weight = 0;
+
+			new Promise(function (resolve){
+				resolve(products);
+			})
+
+			.each(function (product){
+				weight = weight + product.sku_id.weightpercase * product.cases;
+			})
+
+			.then(function (){
+				resolve(weight);
+			})
+		});
 	}
 }

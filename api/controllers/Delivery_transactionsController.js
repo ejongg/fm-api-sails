@@ -42,13 +42,7 @@ module.exports = {
 			})
 
 			.then(function (detailedOrder){
-				return new Promise(function (resolve){
-					resolve([Load_out.findOne({id : loadout}), detailedOrder.productslist]);
-				});
-			})
-
-			.spread(function (foundLoadout, products){
-				return TrucksService.removeWeight(foundLoadout.truck_id, products);
+				return LoadOutService.removeWeight(loadout, detailedOrder.productslist);
 			})
 
 			.then(function (){
@@ -86,6 +80,7 @@ module.exports = {
 		var deliveryId = req.body.delivery_id;
 		var paidAmount = req.body.paid_amount;
 		var paymentDate = req.body.payment_date;
+		var user = req.body.user;
 
 		Delivery_transactions.findOne({id : deliveryId})
 			.then(function (transaction){
@@ -124,7 +119,8 @@ module.exports = {
 					customer_id  : customerId,
 					delivery_id : deliveryId,
 					amount : paidAmount,
-					date : paymentDate
+					date : paymentDate,
+					user : user
 				};
 
 				Payments.create(paymentDetails).then(function (createdPayment){

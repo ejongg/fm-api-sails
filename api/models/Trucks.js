@@ -38,10 +38,6 @@ module.exports = {
       type : 'float',
       defaultsTo : 0
     },
-    current_load_weight : {
-      type : 'float',
-      defaultsTo : 0.00
-    },
     isAvailable : function(){
       if(this.carry_weight > this.current_load_weight){
         return true;

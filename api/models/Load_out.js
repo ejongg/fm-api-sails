@@ -27,6 +27,13 @@ module.exports = {
   		type : "integer",
   		required : true
   	},
+    max_weight : {
+      type : "float",
+      required : true
+    },
+    current_weight : {
+      type : "float"
+    },
     truck_id : {
       model : "trucks"
     },

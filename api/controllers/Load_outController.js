@@ -16,21 +16,30 @@ module.exports = {
 		var flag = req.body.flag;
 		var truckId = req.body.truck_id;	
 		var loadoutNumber = req.body.loadout_no;
-		var loadoutId = req.body.loadout_id;
 		var deliveryDate = moment(req.body.delivery_date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+		var maxWeight = req.body.carry_weight;
+		var loadoutId = null;
 
 		if(!Array.isArray(orders)){
 			orders = [orders];
 		}
 
-		var loadout = {
+		var findLoadout = {
 			loadout_number : loadoutNumber,
 			date_created : deliveryDate,
 			truck_id : truckId
 		};
 
-		Load_out.findOrCreate(loadout, loadout)
+		var loadout = {
+			loadout_number : loadoutNumber,
+			date_created : deliveryDate,
+			truck_id : truckId,
+			max_weight : maxWeight
+		};
+
+		Load_out.findOrCreate(findLoadout, loadout)
 			.then(function (resultLoadout){
+				loadoutId = resultLoadout.id;
 				return resultLoadout;
 			})
 
@@ -45,7 +54,7 @@ module.exports = {
 					})
 
 					.each(function (order){
-						return TrucksService.addWeight(truckId, order.productslist);
+						return LoadOutService.addWeight(loadoutId, order.productslist);
 					})
 
 					.then(function (){
