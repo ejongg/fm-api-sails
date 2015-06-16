@@ -27,7 +27,7 @@ angular.module('fmApp')
   $scope.maxDeposit =  0;
 
   $scope.totalAmount = 0;
-  $scope.deposit = null;
+  $scope.totalDeposit = 0;
 
   var getSKU = function () {
     // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
@@ -127,12 +127,12 @@ angular.module('fmApp')
     $scope.transaction.discount = null;
     $scope.transaction.return_extraBottles = null;
     $scope.transaction.return_cases = null;
-    
     $scope.transaction.deposit = null;
-
+    
     $scope.transactionItems = [];
     $scope.returnsItems = [];
     $scope.totalAmount = 0;
+    $scope.totalDeposit = 0;
   };
 
   var clearTransactionForm = function () {
@@ -143,6 +143,7 @@ angular.module('fmApp')
     $scope.transaction.discount = null;
     $scope.transaction.return_extraBottles = null;
     $scope.transaction.return_cases = null;
+    $scope.transaction.deposit = null;
   };
 
 
@@ -170,12 +171,17 @@ angular.module('fmApp')
       "brand_name" : item.sku.prod_id.brand_name,
       "bottles" : item.return_extraBottles,
       "cases" : item.return_cases,
-      "bottlespercase" : item.sku.bottlespercase
+      "bottlespercase" : item.sku.bottlespercase,
+      "deposit": item.deposit
     };
+
+
 
      console.log("Add Transaction Item");
      console.log(itemInfo);
      console.log(returnInfo);
+     $scope.totalDeposit += returnInfo.deposit;
+     console.log($scope.totalDeposit);
 
      if( _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id }) === -1 ){
       $scope.transactionItems.push(itemInfo);
@@ -185,19 +191,22 @@ angular.module('fmApp')
       var index = _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id });
       $scope.transactionItems[index].bottles += itemInfo.bottles;
       $scope.transactionItems[index].cases += itemInfo.cases;
-      $scope.returnsItems[index].bottles += returnInfo.return_extraBottles;
-      $scope.returnsItems[index].cases += returnInfo.return_cases;
+      $scope.returnsItems[index].bottles += returnInfo.bottles;
+      $scope.returnsItems[index].cases += returnInfo.cases;
       $scope.showItemExistingTransactionError(true,itemInfo.sku_name);
     }
 
+     
      clearTransactionForm();
               
  };
 
   $scope.deleteTransactionItem= function (index) {
+    $scope.totalDeposit -= $scope.returnsItems[index].deposit;
     $scope.totalAmount -= $scope.transactionItems[index].amount;
     $scope.transactionItems.splice(index,1);
     $scope.returnsItems.splice(index,1);
+    console.log($scope.totalDeposit);
   };
 
   $scope.deleteReturnsItem= function (index) {
@@ -210,7 +219,7 @@ angular.module('fmApp')
       "returns" : $scope.returnsItems,
       "customer_name" : $scope.customerName,
       "total_amount" : $scope.totalAmount,
-      "deposit" : $scope.transaction.deposit,
+      "deposit" : $scope.totalDeposit,
       "user" : $scope.userName
     };
             
