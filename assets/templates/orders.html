@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="cust.establishment_name for cust in uniqueCustomers | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
+                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="cust.establishment_name for cust in uniqueCustomers | filter:$viewValue | limitTo:8" ng-model="order.establishment" ng-change="disableAddress=false;disableDistance=false" typeahead-on-select="getOwnerName($item, $model, $label)" required>
 
                             <strong class="fbackMsg" ng-show="cokeOrderForm.orderEstablishmentName.$dirty && cokeOrderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
                         </div>
@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Address</label>
                         <div class="col-md-12">
-                            <select class="form-control"  name="orderAddressName" id="selectType" ng-model="order.address" ng-options
+                            <select class="form-control" ng-disabled="disableAddress"  name="orderAddressName" id="selectType" ng-model="order.address" ng-options
                             ="address.address_name as address.address_name for address in addresses">
                             
                             </select>
@@ -103,7 +103,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-6">Distance / Priority</label>
                         <div class="col-md-12">
-                            <select class="form-control"  name="orderDistancePriority" id="selectType" ng-model="order.distance_rating" ng-init="order.distance_rating = distanceRatings[0]">
+                            <select class="form-control"  name="orderDistancePriority" id="selectType" ng-model="order.distance_rating" ng-disabled="disableDistance" ng-init="order.distance_rating = distanceRatings[0]">
                                 <option ng-repeat="distanceRating in distanceRatings" value="{{distanceRating}}">{{distanceRating}}</option>
                             </select>
                         </div>
@@ -164,7 +164,7 @@
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-6">Establisment Name</label>  
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="cust.establishment_name for cust in uniqueCustomers | filter:$viewValue | limitTo:8" ng-model="order.establishment" typeahead-on-select="getOwnerName($item, $model, $label)" required>
+                            <input type="text" class="form-control" name="orderEstablishmentName" placeholder="Enter establishment name." typeahead="cust.establishment_name for cust in uniqueCustomers | filter:$viewValue | limitTo:8" ng-model="order.establishment" ng-change="disableAddress=false;disableDistance=false" typeahead-on-select="getOwnerName($item, $model, $label)" required>
 
                             <strong class="fbackMsg" ng-show="orderForm.orderEstablishmentName.$dirty && orderForm.orderEstablishmentName.$invalid">Please input Establishment Name</strong>
                         </div>
@@ -181,7 +181,7 @@
                     <div class="form-group">
                         <label for="inputAddress" class="col-md-6">Address</label>
                         <div class="col-md-12">
-                            <select class="form-control"  name="orderAddressName" id="selectType" ng-model="order.address" ng-options
+                            <select class="form-control" ng-disabled="disableAddress"  name="orderAddressName" id="selectType" ng-model="order.address" ng-options
                             ="address.address_name as address.address_name for address in addresses">
                             
                             </select>
@@ -192,7 +192,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-6">Distance / Priority</label>
                         <div class="col-md-12">
-                            <select class="form-control"  name="orderDistancePriority" id="selectType" ng-model="order.distance_rating" ng-init="order.distance_rating = distanceRatings[0]">
+                            <select class="form-control" ng-disabled="disableDistance" name="orderDistancePriority" id="selectType" ng-model="order.distance_rating" ng-init="order.distance_rating = distanceRatings[0]">
                                 <option ng-repeat="distanceRating in distanceRatings" value="{{distanceRating}}">{{distanceRating}}</option>
                             </select>
                         </div>

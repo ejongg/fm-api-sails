@@ -55,6 +55,8 @@ angular.module('fmApp')
   $scope.uniqueAgents = [];
   $scope.invents = [];
 
+  $scope.disableAddress = false;
+  $scope.disableDistance = false;
 
 /*  var getCustomers = function () {
     $http.get(httpHost + '/customers').success( function (data) {
@@ -215,7 +217,9 @@ angular.module('fmApp')
       $scope.order.cases = null;
       $scope.order.establishment = '';
       $scope.order.owner = '';
-      $scope.order.cokeagent_name = ''; 
+      $scope.order.cokeagent_name = '';
+      $scope.disableAddress = false;
+      $scope.disableDistance = false;
       console.log('SMB');
       getSKUMovingPile();
     }else{
@@ -226,6 +230,8 @@ angular.module('fmApp')
       $scope.cokeOrderForm.establishment = '';
       $scope.cokeOrderForm.owner = '';
       $scope.cokeOrderForm.cokeagent_name = ''; 
+      $scope.disableAddress = false;
+      $scope.disableDistance = false;
       console.log('COke');
       getSKU();
     }
@@ -315,7 +321,9 @@ angular.module('fmApp')
     $scope.order.establishment = '';
     $scope.order.owner = '';
     $scope.order.cokeagent_name = ''; 
-    $scope.companySelected = $scope.companies[0]; 
+    $scope.companySelected = $scope.companies[0];
+    $scope.disableAddress = false;
+    $scope.disableDistance = false;
 
   };
 
@@ -325,6 +333,12 @@ angular.module('fmApp')
 
   $scope.getOwnerName = function ($item, $model, $label) {
     $scope.order.owner = $item.owner_name;
+    $scope.order.address = $item.address;
+    $scope.disableAddress = true;
+    $scope.order.distance_rating = $item.distance;
+    $scope.disableDistance = true;
+    console.log("CUST");
+    console.log($item);
   };
 
   $scope.addOrder = function (order) {
