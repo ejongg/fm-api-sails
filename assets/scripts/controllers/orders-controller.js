@@ -53,6 +53,7 @@ angular.module('fmApp')
   $scope.uniqueCustomers = [];
   $scope.pluckedOrders = [];
   $scope.uniqueAgents = [];
+  $scope.invents = [];
 
 
 /*  var getCustomers = function () {
@@ -104,7 +105,15 @@ angular.module('fmApp')
 
   $scope.getSkuInventoryCount = function (sku) {
     var idSku = sku.id;
-    $scope.count = _.result(_.find($scope.smbInventory, {'sku_id':idSku}), 'physical_count')
+
+    $scope.invents = $filter('filter')($scope.smbInventory, {'sku_id': idSku});
+    console.log("SMBINVENTORY");
+    console.log($scope.invents);
+     $scope.count = _.reduce(_.pluck($scope.invents,'physical_count'), function(total, n) {
+      return total + n;
+    });
+
+    //$scope.count = _.result(_.find($scope.smbInventory, {'sku_id':idSku}), 'physical_count')
     console.log("COUNT");
     console.log($scope.count);
   };
@@ -133,9 +142,9 @@ angular.module('fmApp')
         $scope.noSKU = false;
         $scope.skuList = $scope.sortData(data,'prod_id.brand_name');
         $scope.order.sku =  $scope.skuList[0];
-        var id = $scope.skuList[0].id;
-        $scope.count = _.result(_.find($scope.smbInventory, 'id', id), 'physical_count');
-        console.log(id);
+        
+        $scope.getSkuInventoryCount($scope.skuList[0]);
+       
         console.log("SKU Moving:");
         console.log($scope.skuList);
       }else{
