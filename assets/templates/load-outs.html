@@ -65,7 +65,7 @@
                 <label class="col-md-4">Establishment Name:</label>
                 
                 <div ng-show="noCustomerOrdersAvailable" class="col-md-6">
-                  NO CUSTOMER ORDERS, ADD FIRST!
+                  No Customer Order Available
                 </div>
                 <div class="col-md-6" ng-hide="noCustomerOrdersAvailable">
                   <select class="form-control" ng-model="ordersAvailableList" ng-options="orderAvailable as loadOutName(orderAvailable) for orderAvailable in customerOrdersAvailable">
