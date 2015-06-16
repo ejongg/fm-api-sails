@@ -273,6 +273,7 @@ angular.module('fmApp')
     $scope.addOrderForm = data;
     if(data === true){
       console.log("Show Form");
+      getSKU();
       checkTime($scope.hours);
     }
     if(data === false){
@@ -308,13 +309,14 @@ angular.module('fmApp')
   var clearForm = function () {
     $scope.orderForm.$setPristine();
     $scope.order.distance_rating = $scope.distanceRatings[0];
-    $scope.order.sku = null;
+    $scope.order.sku = $scope.skuList[0];
     $scope.order.address = $scope.addresses[0].address_name;
     $scope.order.cases = null;
     $scope.order.establishment = '';
     $scope.order.owner = '';
     $scope.order.cokeagent_name = ''; 
-    $scope.companySelected = $scope.companies[0];       
+    $scope.companySelected = $scope.companies[0]; 
+
   };
 
   $scope.getOrderProducts = function (order_id) {
@@ -331,6 +333,7 @@ angular.module('fmApp')
     }
     $scope.orderForm.$setPristine();
     $scope.cokeOrderForm.$setPristine();
+    $scope.count = $scope.count - order.cases;
 
     var orderInfo = {
       "sku_id" : order.sku.id,
@@ -392,6 +395,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 201){
         getUniques();
+        getSMBInventory();
         console.log("close form");
         $scope.showAddOrderForm(false);
         $scope.snackbarShow('Order Added');
