@@ -159,11 +159,16 @@ module.exports = {
 			})
 
 			.then(function (updatedDelivery){
-				return PaymentsService.getDetails(updatedDelivery[0]).then(function (detailed){
-					updatedDelivery = detailed;
-					sails.sockets.blast('delivery_transactions', {verb : "for-payment", data : updatedDelivery});
-					return res.send("Empties successfully added", 200);
-				});
+				Delivery_transactions.findOne({id : updatedDelivery[0].id}).populateAll()
+					.then(function (delivery){
+						return PaymentsService.getDetails(delivery);
+					})
+
+					.then(function (detailedDelivery){
+						console.log(detailedDelivery);
+						sails.sockets.blast('delivery_transactions', {verb : "for-payment", data : detailedDelivery});
+						return res.send("Empties successfully added", 200);
+					})		
 			})
 	},
 
