@@ -61,5 +61,23 @@ module.exports = {
 				resolve();
 			})
 		});
+	},
+
+	countOrderWeight : function (truckId, products){
+		return new Promise(function (resolve){
+			var weight = 0;
+
+			new Promise(function (resolve){
+				resolve(products);
+			})
+
+			.each(function (product){
+				weight = weight + product.sku_id.weightpercase * product.cases;
+			})
+
+			.then(function (){
+				resolve(weight);
+			})
+		});
 	}
 };

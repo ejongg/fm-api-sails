@@ -52,7 +52,7 @@ module.exports.policies = {
   },
 
   Load_outController : {
-    add : 'AddLoadoutPolicy'
+    add : 'TruckOverloadPolicy'
   },
 
   Customer_ordersController : {
