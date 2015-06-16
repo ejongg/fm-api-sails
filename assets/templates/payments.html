@@ -245,6 +245,16 @@
                             </a>
                           </th>
 
+                           <th>
+                            <a href="" ng-click="sortCriteria='returns_amount'; reverseSort = !reverseSort" class="thlink">
+                              Load In Amount
+                              <span ng-show="sortCriteria == 'returns_amount'">
+                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                              </span>
+                            </a>
+                          </th>
+
                           <th>
                             <a href="" ng-click="sortCriteria='returns_amount'; reverseSort = !reverseSort" class="thlink">
                               Returns Amount
@@ -288,6 +298,7 @@
                       <td width="25%">{{transaction.delivery_date}}</td>
                       <td width="25%">{{transaction.total_amount - transaction.paid_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.total_amount | currency : "₱"}}</td>
+                      <td width="25%">{{transaction.loadin_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.returns_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.order_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.payment_date}}</td>

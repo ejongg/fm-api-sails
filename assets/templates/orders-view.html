@@ -85,7 +85,7 @@
                         </th>
                         <th>
                             <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
-                                Price per case x Quantity
+                                Net Amount
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                     <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
@@ -104,7 +104,7 @@
 
                         <th>
                             <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
-                                Retail profit = (Price per case x Quantity) (Price per bottle x Bottles per case x quantity)
+                                Retail Profit
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
                                     <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
                                     <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
@@ -121,9 +121,9 @@
                         <td>{{prod.sku_id.brand_name + " " + prod.sku_id.sku_name + " " + prod.sku_id.size}}</td>
                         <td>{{prod.cases}}</td>
                         <td>{{prod.sku_id.pricepercase}}</td>
-                        <td></td>
+                        <td>{{prod.sku_id.pricepercase * prod.cases}}</td>
                         <td>{{prod.sku_id.priceperbottle}}</td>
-                        <td></td>
+                        <td>{{(prod.sku_id.priceperbottle * prod.sku_id.bottlespercase)*(prod.cases) - (prod.sku_id.pricepercase * prod.cases)}}</td>
                     </tr>
 
                 </tbody>
