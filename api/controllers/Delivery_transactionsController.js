@@ -165,7 +165,6 @@ module.exports = {
 					})
 
 					.then(function (detailedDelivery){
-						console.log(detailedDelivery);
 						sails.sockets.blast('delivery_transactions', {verb : "for-payment", data : detailedDelivery});
 						return res.send("Empties successfully added", 200);
 					})		
