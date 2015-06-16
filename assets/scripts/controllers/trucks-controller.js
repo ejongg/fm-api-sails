@@ -457,6 +457,27 @@ angular.module('fmApp')
         $scope.truck.route = $scope.routes[0];
         //$scope.truckEdit.route = $scope.routes[0];
 
+        if($scope.noTruckDriver === true){
+          $scope.noTruckDriver = false;
+        }
+
+        if($scope.noChecker === true){
+          $scope.noChecker = false;
+        }
+
+        if($scope.noDSP === true){
+          $scope.noDSP = false;
+        }
+
+        if($scope.noDH === true){
+          $scope.noDH = false;
+        }
+
+        if($scope.noRoute === true){
+          $scope.noRoute = false;
+        }
+
+
         if($scope.trucks.length === 0){
           $scope.noTrucks = true;
         }

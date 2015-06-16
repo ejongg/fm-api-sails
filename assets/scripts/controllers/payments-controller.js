@@ -114,7 +114,8 @@ angular.module('fmApp')
     var paymentInfo = {
       "payment_date" : $scope.formatDate(data.payment_date),
       "delivery_id" : data.delivery_id,
-      "paid_amount" : data.paid_amount
+      "paid_amount" : data.paid_amount,
+      "user" : $scope.userName
     };
     
     console.log(paymentInfo);
