@@ -56,6 +56,7 @@ module.exports = {
 		var agentId = req.body.agent.id;
 		var helperId = req.body.helper.id;
 		var routeId = req.body.route.id;
+		var carryWeight = req.body.carry_weight;
 		var toReplace = [];
 		var toBeReplaced = [];
 		var replacedRoute = null;
@@ -65,7 +66,8 @@ module.exports = {
 			var prevEmployees = [foundTruck.dispatcher, foundTruck.driver, foundTruck.agent, foundTruck.helper];
 			
 			var updateQuery = {
-				route : routeId
+				route : routeId,
+				carry_weight : carryWeight
 			};
 
 			if(routeId != foundTruck.route){
