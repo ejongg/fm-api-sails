@@ -107,6 +107,15 @@
                         </div>
                     </div>
 
+
+                  <div class="form-group">
+                    <label class="col-md-6">Carry Weight (kg)</label>
+                    <div class="col-md-12">
+                        <input type="number" class="form-control" name="" min="1" ng-model="truck.carry_weight" required>
+                    </div>                  
+                  </div>
+
+
                     <div class="form-group pull-right">
                         <br/>
                         <button type="submit" class="btn btn-primary" ng-disabled="truckForm.$invalid">Add</button>
@@ -149,6 +158,7 @@
                         <p>Delivery Sales Personnel: {{truck.agent.emp_fname+ " " +truck.agent.emp_lname}}</p>
                         <p>Delivery Helper: {{truck.helper.emp_fname+ " "+truck.helper.emp_lname}}</p>
                         <p>Route:{{truck.route.route_name + " " +truck.route.company}}</p>
+                        <p>Carry Weight:{{truck.carry_weight}}</p>
                     </div>
 
                     <div ng-show="editIndex === $index">
@@ -159,8 +169,7 @@
                         <table class="table table-striped">
                             <tr class="removehover">
                                 <td>Truck Driver:</td>
-                                <td ng-show="noTruckDriver">No Truck Driver</td>
-                                <td ng-hide="noTruckDriver">
+                                <td>
                                  <select class="form-control" id="selectType" ng-model="truckEdit.driver" 
                                  ng-options="driver as fullName(driver) for driver in employeeDriversEdit">
                                  </select>
@@ -170,8 +179,7 @@
 
                             <tr>
                                 <td>Checker:</td>
-                                <td ng-show="noChecker">No Checker</td>
-                                <td ng-hide="noChecker">
+                                <td>
                                 <select class="form-control" id="selectType" ng-model="truckEdit.dispatcher" 
                                  ng-options="checker as fullName(checker) for checker in employeeCheckersEdit">
                                  </select>
@@ -180,8 +188,7 @@
 
                             <tr>
                                 <td>Delivery Sales Personnel:</td>
-                                <td ng-show="noDSP">No Delivery Sales Personnel</td>
-                                <td ng-hide="noDSP">
+                                <td>
                                 <select class="form-control" id="selectType" ng-model="truckEdit.agent" 
                                  ng-options="dsp as fullName(dsp) for dsp in employeeDeliverySalesPersonnelEdit">
                                  </select>
@@ -190,8 +197,7 @@
                             
                             <tr>
                                 <td>Delivery Helper:</td>
-                                <td ng-show="noDH">No Delivery Helper</td>
-                                <td ng-hide="noDH">
+                                <td>
                                 <select class="form-control" id="selectType" ng-model="truckEdit.helper" 
                                  ng-options="helper as fullName(helper) for helper in employeeDeliveryHelperEdit">
                                  </select>
@@ -200,12 +206,16 @@
 
                             <tr>
                                 <td>Route:</td>
-                                <td ng-show="noRoute">No Routes</td>
-                                <td ng-hide="noRoute">
+                                <td>
                                    <select class="form-control" id="selectType" ng-model="truckEdit.route" 
                                    ng-options="route as combine(route) for route in routesEdit" required>
                                     </select>
                                 </td>
+                            </tr>
+
+                             <tr>
+                                <td>Carry Weight:</td>
+                                   <td><input type="number" class="form-control" name="" min="1" ng-model="truckEdit.carry_weight" required></td>
                             </tr>
 
 
@@ -241,7 +251,7 @@
                     </div>
                 
                 <div ng-show="editIndex === $index" class="pull-right">
-                  <button type="button" ng-disabled="editTruckForm.$invalid || noTruckDriver || noChecker || noDSP || noDH || noRoute" ng-click="editTruck(truckEdit)" class="btn btn-primary btn-xs">Save</button>
+                  <button type="button" ng-disabled="editTruckForm.$invalid" ng-click="editTruck(truckEdit)" class="btn btn-primary btn-xs">Save</button>
 
                   <button type="button" ng-click="truckEditClicked(-1)" class="btn btn-primary btn-xs">Cancel</button>
                 </div>
