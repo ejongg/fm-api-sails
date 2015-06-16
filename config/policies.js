@@ -52,7 +52,8 @@ module.exports.policies = {
   },
 
   Load_outController : {
-    add : 'TruckOverloadPolicy'
+    add : 'TruckOverloadPolicy',
+    confirm : 'OneInProgressLoadoutPolicy'
   },
 
   Customer_ordersController : {

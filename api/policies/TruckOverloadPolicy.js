@@ -18,7 +18,7 @@ module.exports = function(req, res, next){
 	}
 
 	Load_out.findOne(findLoadout).then(function (foundLoadout){
-		console.log(foundLoadout);
+
 		if(foundLoadout){
 			var accumulatedWeight = 0;
 
