@@ -30,7 +30,11 @@ module.exports = {
   	date : {
   		type : "string",
   		required : true
-  	}
+  	},
+    user : {
+      type : "string",
+      required : true
+    }
   }
 };
 
