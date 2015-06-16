@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('POSCtrl',['$scope','_','$http','httpHost','authService','$location', '$anchorScroll', function($scope, _, $http, httpHost, authService, $location,$anchorScroll){
+.controller('POSCtrl',['$scope','_','$http','httpHost','authService','$location', '$anchorScroll','$filter', function($scope, _, $http, httpHost, authService, $location,$anchorScroll,$filter){
   $scope.skuList = [];
   $scope.transaction = {};
   $scope.transactionItems = [];
@@ -21,13 +21,20 @@ angular.module('fmApp')
   $scope.errorMessage = '';
   $scope.hasError = false;
 
-  $scope.maxBottles = 0;
+  //$scope.maxBottles = 0;
   $scope.maxReturnedBottles = 0;
 
   $scope.maxDeposit =  0;
 
   $scope.totalAmount = 0;
   $scope.totalDeposit = 0;
+  $scope.count = 0;
+  $scope.casesMax = 0;
+
+  $scope.inventory = [];
+  $scope.invents = [];
+
+  //$scope.temp = [];
 
   var getSKU = function () {
     // io.socket.request($scope.socketOptions('get','/sku/available'), function (body, JWR) {
@@ -44,10 +51,10 @@ angular.module('fmApp')
       if(data.length !== 0){
         $scope.skuList = data;
         $scope.transaction.sku = $scope.skuList[0];
-        $scope.maxBottles = $scope.transaction.sku.bottlespercase;
-        $scope.maxReturnedBottles = $scope.transaction.sku.bottlespercase;
+        //$scope.maxBottles = $scope.transaction.sku.bottlespercase;
+        $scope.maxReturnedBottles = $scope.transaction.sku.bottlespercase -1;
         $scope.returns.sku = null;
-
+        $scope.getSkuInventoryCount($scope.skuList[0]);
         console.log("Available SKU:");
         console.log($scope.skuList);
       }else{
@@ -58,18 +65,63 @@ angular.module('fmApp')
     });
   };
 
-  getSKU();
+  var getInventory = function () {
+    $http.get(httpHost + '/inventory/getInventory').success( function (data) {
+      if(data.length !== 0){
+        $scope.inventory = data;
+        console.log("INVENTORY");
+        console.log($scope.inventory);
+        //$scope.smbInventory = $filter('filter')($scope.inventory, {company: 'SMB'});
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
 
-  $scope.getMaxBottles = function (sku){
+  getSKU();
+  getInventory();
+  
+  
+/*  $scope.getMaxBottles = function (sku){
     $scope.maxReturnedBottles = sku.bottlespercase;
     console.log("MAX BOTTLES " + $scope.maxBottles);
+  };*/
+
+  
+
+  $scope.getSkuInventoryCount = function (sku) {
+    console.log("IN INVENTORY");
+    console.log($scope.inventory);
+    console.log("SKU SELECTED");
+    console.log(sku);
+    var idSku = sku.id;
+    //var tmpIndex = 0;
+    console.log("ID");
+    console.log(idSku);
+
+    /*$scope.temp = _.uniq($scope.inventory, 'sku_id');
+    tmpIndex = _.findIndex($scope.temp,{ 'sku_id': idSku });*/
+
+    $scope.invents = $filter('filter')($scope.inventory, {'sku_id': idSku},true);
+    console.log("FILTERED");
+    console.log($scope.invents);
+    $scope.count = _.reduce(_.pluck($scope.invents,'physical_count'), function(total, n) {
+      return total + n;
+    });
+
+    //$scope.temp[tmpIndex].physical_count = $scope.count;
+    //$scope.casesMax = $scope.count;
+
+    //$scope.count = _.result(_.find($scope.smbInventory, {'sku_id':idSku}), 'physical_count')
+    console.log("COUNT");
+    console.log($scope.count);
   };
 
   $scope.getMaxReturnedBottles = function (returns){
     console.log("RETURNED:");
     if(returns !== null){
        console.log(returns);
-    $scope.maxReturnedBottles = returns.bottlespercase;
+    $scope.maxReturnedBottles = returns.bottlespercase - 1;
     console.log("MAX RETURNED BOTTLES " + $scope.maxReturnedBottles);
     }
 
@@ -180,6 +232,7 @@ angular.module('fmApp')
      console.log("Add Transaction Item");
      console.log(itemInfo);
      console.log(returnInfo);
+     //$scope.count = $scope.count - item.cases;
      $scope.totalDeposit += returnInfo.deposit;
      console.log($scope.totalDeposit);
 
@@ -202,6 +255,7 @@ angular.module('fmApp')
  };
 
   $scope.deleteTransactionItem= function (index) {
+    //$scope.getSkuInventoryCount($scope.transaction.sku);
     $scope.totalDeposit -= $scope.returnsItems[index].deposit;
     $scope.totalAmount -= $scope.transactionItems[index].amount;
     $scope.transactionItems.splice(index,1);

@@ -78,7 +78,7 @@
                 NO SKU AVAILABLE
               </div>
               <div ng-hide="noSKU" class="col-md-9">
-                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxBottles(transaction.sku)" ng-options="sku as combined(sku) for sku in skuList">
+                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxBottles(transaction.sku);getSkuInventoryCount(transaction.sku)" ng-options="sku as combined(sku) for sku in skuList">
                 </select>
               </div>
             </div>
@@ -96,7 +96,9 @@
             <div class="form-group">
                 <label for="cases" class="col-md-3">Cases</label>
                  <div class="col-md-9">
-                 <input ng-model="transaction.cases" type="number" min="0" class="form-control" placeholder="Enter number of cases." required>
+                 <input ng-model="transaction.cases" name="transCases" type="number" min="0" max="{{count}}"class="form-control" placeholder="Enter number of cases." required>
+                 
+                 <strong class="fbackMsg" ng-show="transactionForm.transCases.$dirty && transactionForm.transCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
                  </div>
             </div>
 
@@ -123,7 +125,10 @@
         <div class="form-group">
           <label for="select" class="col-md-3">Cases</label>
           <div class="col-md-9">
-            <input ng-model="transaction.return_cases" type="number" min="0" class="form-control" placeholder="Enter number of cases." required>
+            <input ng-model="transaction.return_cases" name="transReturnCases" type="number" min="0" class="form-control" placeholder="Enter number of cases." required>
+
+            <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && transactionForm.transReturnCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
+
           </div>
         </div>
 
