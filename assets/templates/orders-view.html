@@ -35,22 +35,21 @@
         <div class="panel-body">
 
         <div class="col-md-12"> 
-            <div class="col-md-6">
-                <h3>{{order.order.customer_id.establishment_name | uppercase}}</h3>
-                <label>Owner Name:</label> {{order.order.customer_id.owner_name }} <br/>
-                <label>Address: </label> {{order.order.customer_id.address}}
-                <br/>
-                <br/>
-            </div>
-            <div class="col-md-6">
-                <br/>
-                <label>Order No.: </label> {{order.order.id}}<br/>
-                <label>Order Date/Time: </label> {{order.order.createdAt}}<br/>
-            </div>
-            
-        </div>            
-              
 
+            <h3>{{order.order.customer_id.establishment_name | uppercase}}</h3>
+
+            <div class="col-md-6">
+                <label>Owner Name:</label> {{order.order.customer_id.owner_name }} <br/>
+                <label>Address: </label> {{order.order.customer_id.address}} <br/>
+            </div>
+            <div class="col-md-6">
+                <label>Order No.: </label> {{order.order.id}}<br/>
+                <label>Order Date/Time: </label> {{order.order.createdAt}}<br/> <br/><br/>
+            </div>
+
+
+
+        </div>        
         
 
     <!-- START OF TABLE -->      
