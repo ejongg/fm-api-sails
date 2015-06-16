@@ -74,7 +74,7 @@
                                 </span>
                             </a>
                         </th>
-                        <th>
+                        <th style="text-align: right">
                             <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
                                Price per Case
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
@@ -83,7 +83,7 @@
                                 </span>
                             </a>
                         </th>
-                        <th>
+                        <th style="text-align: right">
                             <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
                                 Net Amount
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
@@ -92,7 +92,7 @@
                                 </span>
                             </a>
                         </th>
-                        <th>
+                        <th style="text-align: right">
                             <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
                                 Price Per bottle
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
@@ -102,7 +102,7 @@
                             </a>
                         </th>
 
-                        <th>
+                        <th style="text-align: right">
                             <a href="" ng-click="sortCriteria='supplieragent_name'; reverseSort = !reverseSort" class="thlink">
                                 Retail Profit
                                 <span ng-show="sortCriteria == 'supplieragent_name'">
@@ -119,11 +119,11 @@
                 <tbody>
                     <tr ng-repeat="prod in order.products">
                         <td>{{prod.sku_id.brand_name + " " + prod.sku_id.sku_name + " " + prod.sku_id.size}}</td>
-                        <td>{{prod.cases}}</td>
-                        <td>{{prod.sku_id.pricepercase}}</td>
-                        <td>{{prod.sku_id.pricepercase * prod.cases}}</td>
-                        <td>{{prod.sku_id.priceperbottle}}</td>
-                        <td>{{(prod.sku_id.priceperbottle * prod.sku_id.bottlespercase)*(prod.cases) - (prod.sku_id.pricepercase * prod.cases)}}</td>
+                        <td>{{prod.cases}} cases</td>
+                        <td align="right">{{prod.sku_id.pricepercase | currency:"₱"}}</td>
+                        <td align="right">{{prod.sku_id.pricepercase * prod.cases | currency:"₱"}}</td>
+                        <td align="right">{{prod.sku_id.priceperbottle | currency:"₱"}}</td>
+                        <td align="right">{{((prod.sku_id.priceperbottle * prod.sku_id.bottlespercase)*(prod.cases) - prod.sku_id.pricepercase * prod.cases)  | currency:"₱"}}</td>
                     </tr>
 
                 </tbody>

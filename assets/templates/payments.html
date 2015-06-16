@@ -225,7 +225,7 @@
                             </a>
                           </th>
 
-                          <th>
+                          <th style="text-align: right">
                             <a href="" ng-click="sortCriteria='total_amount - transaction.paid_amount'; reverseSort = !reverseSort" class="thlink">
                               Balance
                               <span ng-show="sortCriteria == 'total_amount - transaction.paid_amount'">
@@ -235,7 +235,7 @@
                             </a>
                           </th>
 
-                          <th>
+                          <th style="text-align: right">
                             <a href="" ng-click="sortCriteria='total_amount'; reverseSort = !reverseSort" class="thlink">
                               Total Amount
                               <span ng-show="sortCriteria == 'total_amount'">
@@ -245,7 +245,7 @@
                             </a>
                           </th>
 
-                           <th>
+                           <th style="text-align: right">
                             <a href="" ng-click="sortCriteria='returns_amount'; reverseSort = !reverseSort" class="thlink">
                               Load In Amount
                               <span ng-show="sortCriteria == 'returns_amount'">
@@ -255,7 +255,7 @@
                             </a>
                           </th>
 
-                          <th>
+                          <th style="text-align: right">
                             <a href="" ng-click="sortCriteria='returns_amount'; reverseSort = !reverseSort" class="thlink">
                               Returns Amount
                               <span ng-show="sortCriteria == 'returns_amount'">
@@ -265,7 +265,7 @@
                             </a>
                           </th>
 
-                           <th>
+                           <th style="text-align: right">
                             <a href="" ng-click="sortCriteria='order_amount'; reverseSort = !reverseSort" class="thlink">
                               Order Amount
                               <span ng-show="sortCriteria == 'order_amount'">
@@ -294,13 +294,13 @@
 
                     <tr dir-paginate="transaction in deliveryTransactions | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" >
 
-                      <td width="25%">{{transaction.customer_id.establishment_name}}</td>
+                      <td width="25%" >{{transaction.customer_id.establishment_name}}</td>
                       <td width="25%">{{transaction.delivery_date}}</td>
-                      <td width="25%">{{transaction.total_amount - transaction.paid_amount | currency : "₱"}}</td>
-                      <td width="25%">{{transaction.total_amount | currency : "₱"}}</td>
-                      <td width="25%">{{transaction.loadin_amount | currency : "₱"}}</td>
-                      <td width="25%">{{transaction.returns_amount | currency : "₱"}}</td>
-                      <td width="25%">{{transaction.order_amount | currency : "₱"}}</td>
+                      <td width="25%" align="right">{{transaction.total_amount - transaction.paid_amount | currency : "₱"}}</td>
+                      <td width="25%" align="right">{{transaction.total_amount | currency : "₱"}}</td>
+                      <td width="25%" align="right">{{transaction.loadin_amount | currency : "₱"}}</td>
+                      <td width="25%" align="right">{{transaction.returns_amount | currency : "₱"}}</td>
+                      <td width="25%" align="right">{{transaction.order_amount | currency : "₱"}}</td>
                       <td width="25%">{{transaction.payment_date}}</td>
                       <td width="25%">
                         <button ng-show="transaction.payment_date === 'Unpaid'" ng-click="transactionClicked(transaction)" class= "btn btn-primary btn-xs">Pay</button>
