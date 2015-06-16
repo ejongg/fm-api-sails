@@ -41,7 +41,11 @@ module.exports = {
 					})
 
 					.each(function (order){
-						return DeliveryService.createDelivery(order, resultLoadout.id, loadoutNumber, truckId, deliveryDate, user)
+						return DeliveryService.createDelivery(order, resultLoadout.id, loadoutNumber, truckId, deliveryDate, user);
+					})
+
+					.each(function (order){
+						return TrucksService.addWeight(truckId, order.productslist);
 					})
 
 					.then(function (){

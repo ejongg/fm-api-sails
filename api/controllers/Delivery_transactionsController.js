@@ -25,18 +25,30 @@ module.exports = {
 			})
 
 			.then(function (detailedOrder){
-				Load_out.findOne({id : loadout}).then(function (foundLoadout){
-					return foundLoadout;	
-				})
+				return new Promise(function (resolve){
+					Load_out.findOne({id : loadout}).then(function (foundLoadout){
+						return foundLoadout;	
+					})
 
-				.then(function (foundLoadout){
-					return LoadOutService.getDetails(foundLoadout);
-				})
+					.then(function (foundLoadout){
+						return LoadOutService.getDetails(foundLoadout);
+					})
 
-				.then(function (detailedLoadout){
-					sails.sockets.blast("loadout", {verb : "destroyed", data : {order : detailedOrder, delivery_id : deliveryId, loadout_id : detailedLoadout}});
-				})
-				
+					.then(function (detailedLoadout){
+						sails.sockets.blast("loadout", {verb : "destroyed", data : {order : detailedOrder, delivery_id : deliveryId, loadout_id : detailedLoadout}});
+						resolve(detailedOrder);
+					})
+				});
+			})
+
+			.then(function (detailedOrder){
+				return new Promise(function (resolve){
+					resolve([Load_out.findOne({id : loadout}), detailedOrder.productslist]);
+				});
+			})
+
+			.spread(function (foundLoadout, products){
+				return TrucksService.removeWeight(foundLoadout.truck_id, products);
 			})
 
 			.then(function (){
