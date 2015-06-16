@@ -103,7 +103,7 @@ module.exports = {
 			.each(function (product){
 				return new Promise(function (resolve){
 					if(product.company == "SMB"){
-						Inventory.find({sku_id : product.sku_id, bay_id : product.bay_id}).sort('exp_date ASC')
+						Inventory.find({sku_id : product.sku_id, bay_id : product.bay_id, physical_count : {'>' : 0}}).sort('exp_date ASC')
 							.then(function (items){
 								var index = 0;
 								var remainingCases = product.cases;
