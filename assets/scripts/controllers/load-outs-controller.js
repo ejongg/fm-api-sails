@@ -178,7 +178,12 @@ angular.module('fmApp')
   };
 
   $scope.loadOutName = function (loadOut){
-    return loadOut.id + " " + loadOut.customer_id.establishment_name;
+    var totalWeight = 0;
+    for (var i = 0 ; i < loadOut.productslist.length;i++){
+      console.log(loadOut.productslist[i].sku_id.weightpercase);
+      totalWeight += (loadOut.productslist[i].sku_id.weightpercase * loadOut.productslist[i].cases);
+    }
+    return loadOut.id + " " + loadOut.customer_id.establishment_name +" "+ totalWeight+"kg";
   }
 
   $scope.orderName = function (loadOut){
