@@ -26,7 +26,7 @@ module.exports = {
 				})
 
 				.then(function (createdOrder){
-					return Customer_orders.findOne({id : createdOrder.id}).populate('customer_id');
+					return Customer_orders.findOne({id : createdOrder.id}).populateAll();
 				})
 
 				.then(function (foundCustomerOrder){
