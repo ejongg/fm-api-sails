@@ -54,8 +54,11 @@ module.exports = {
 			})
 
 			.then(function (updateCustomerOrder){
-				sails.sockets.blast('customer_orders', {verb : "updated", data : updateCustomerOrder[0]});
-				return res.send("Delivery removed from " + loadout, 200);
+				Customer_orders.findOne({id : updatedCustomerOrder[0].id}).populateAll()
+					.then(function (detailedOrder){
+						sails.sockets.blast('customer_orders', {verb : "updated", data : detailedOrder});
+						return res.send("Delivery removed from " + loadout, 200);
+					})
 			})
 	},
 
