@@ -34,6 +34,9 @@ module.exports = {
 
 	createWarehouseSalesProducts : function (product, transactionId){
 		return new Promise(function (resolve){
+			if(product.bottles > 0){
+				product.cases = product.cases - 1;
+			}
 
 			var salesProduct = {
 				wtrans_id : transactionId,
@@ -45,6 +48,9 @@ module.exports = {
 
 			Warehouse_transaction_products.create(salesProduct)
 				.then(function (){
+					if(product.bottles > 0){
+						product.cases = product.cases + 1;
+					}
 					return InventoryService.deduct(product.sku_id, product.bottles, product.cases, product.bottlespercase);
 				})
 
