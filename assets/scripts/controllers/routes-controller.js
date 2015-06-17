@@ -131,7 +131,7 @@ angular.module('fmApp')
   };
 
   getAdresses();
-  
+  $scope.getAdressesAvailable("Coca-Cola");
   getRoutes();
 
   $scope.pagePrint = function () {
@@ -172,6 +172,7 @@ angular.module('fmApp')
 
   $scope.showEditAddressForm = function (data) {
     $scope.addressForm.$setPristine();
+
     $scope.hasError = false;
     if($scope.addAddressForm === true){
       $scope.showAddAdressForm(false);
@@ -189,7 +190,7 @@ angular.module('fmApp')
   };
 
   $scope.showAddRouteBox = function (data){
-    $scope.getAdressesAvailable("Coca-Cola");
+     $scope.getAdressesAvailable("Coca-Cola");
      $scope.route.company = $scope.companies[0];
     if($scope.editIndex !== -1){
       $scope.editIndex = -1;
@@ -319,6 +320,8 @@ angular.module('fmApp')
      if($scope.addRouteBox === true){
        $scope.showAddRouteBox(false);
      }
+     console.log("Edit Clicked");
+     $scope.getAdressesAvailable($scope.companySelect);
      $scope.editIndex = index;
   };
 
@@ -625,6 +628,7 @@ angular.module('fmApp')
         break;
       case "removed":
         console.log("Address Removed");
+        console.log(msg.data.route.id);
         var routeIndex =  _.findIndex($scope.routes,{'id': msg.data.route.id});
         console.log(routeIndex);
         console.log($scope.routes[routeIndex]);
@@ -680,8 +684,7 @@ angular.module('fmApp')
         if($scope.routes.length === 0){
           $scope.noRoutes = true;
         }
-        $scope.$digest();
-
+        if(msg.data.coke_address != null || msg.data.smb_address ){
         if(msg.data.coke_address.length !== 0){
           console.log("Coke Adress");
           for (var i = 0; i < msg.data.coke_address.length; i++) {
@@ -707,6 +710,13 @@ angular.module('fmApp')
               $scope.noAddressesAvailable = false;
             }
         }
+        }
+
+        if($scope.editIndex !== -1){
+          $scope.editIndex = -1;
+        }
+        
+        $scope.$digest();
     }
 
   });
