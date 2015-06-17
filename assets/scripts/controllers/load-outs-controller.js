@@ -171,7 +171,7 @@ angular.module('fmApp')
   $scope.truckName = function (truck) {
     var index = _.findIndex($scope.trucks, truck);
     index += 1;
-    return "Truck " + index;
+    return "Truck " + index +" "+ truck.carry_weight+"kg";
   };
 
   $scope.loadOutName = function (loadOut){
