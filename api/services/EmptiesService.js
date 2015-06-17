@@ -29,7 +29,7 @@ module.exports = {
 						foundSku.bottles = foundSku.bottles + bottles + (bottlespercase * cases);
 						foundSku.cases = foundSku.cases + cases;
 
-						if(bottles == bottlespercase){
+						if(bottles == bottlespercase || foundSku.bottles + bottles > bottlespercase){
 							foundSku.cases = foundSku.cases + 1;
 						}
 
