@@ -53,10 +53,11 @@ module.exports = {
 				})
 
 				.then(function (createdDelivery){
-					return Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id});
+					return Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id, status : "On delivery"});
 				})
 
 				.then(function (){
+					sails.sockets.blast('customer_orders', {verb : "updated", data : updateCustomerOrder});
 					resolve();
 				})
 		});

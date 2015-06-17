@@ -50,6 +50,11 @@ module.exports = {
 			})
 
 			.then(function (){
+				return Customer_orders.update({id : order.order_id}, {status : "Pending"});
+			})
+
+			.then(function (updateCustomerOrder){
+				sails.sockets.blast('customer_orders', {verb : "updated", data : updateCustomerOrder});
 				return res.send("Delivery removed from " + loadout, 200);
 			})
 	},

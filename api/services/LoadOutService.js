@@ -53,9 +53,11 @@ module.exports = {
 
 					if(transactions.length == 0){
 
-						return Load_out.destroy({id : loadoutId});
-						resolve();
-
+						Load_out.destroy({id : loadoutId})
+							.then(function (destroyedLoadout){
+								resolve();
+							})
+							
 					}else{
 						resolve();
 					}
