@@ -44,6 +44,10 @@ angular.module('fmApp')
 
   $scope.bayLimit = 0;
   $scope.totalProducts = 0;
+  $scope.emptiesInventory = [];
+  $scope.noEmptiesInventory = false;
+  $scope.emptyCases = 0;
+  $scope.emptyBottles = 0;
 
   
   
@@ -63,6 +67,38 @@ angular.module('fmApp')
       $scope.checkError(err);
     });
 
+  };
+
+  var getInventory = function () {
+    $http.get(httpHost + '/empties/list').success( function (data) {
+      if(data.length !== 0){
+        $scope.emptiesInventory = data;
+
+        console.log(" Empties Inventory:");
+        console.log($scope.emptiesInventory);
+      }else{
+        $scope.noEmptiesInventory = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
+
+  $scope.getEmpties = function(purchase){
+    console.log("Empties Inventory");
+    console.log($scope.emptiesInventory)
+    console.log("PURCHASE SKU");
+    console.log(purchase.id);
+    var plucked = _.pluck($scope.emptiesInventory,'sku_id');
+    console.log("plucked");
+    console.log(plucked);
+    var index = _.findIndex(plucked, {'id':purchase.id});
+    $scope.emptyBottles = $scope.emptiesInventory[index].bottles;
+    $scope.emptyCases = $scope.emptiesInventory[index].cases;
+    console.log("Empties bottles");
+    console.log($scope.emptyBottles);
+    console.log("Empties cases");
+    console.log($scope.emptyCases);
   };
 
   $scope.getCasesInLine = function(bay){
@@ -138,8 +174,10 @@ angular.module('fmApp')
     console.log("CURRENT PAGE: " + $scope.currentPage);
   };
   
+  getInventory();
   getPurchases();
   getSKU();
+
 
   $scope.pagePrint = function () {
     window.print();
