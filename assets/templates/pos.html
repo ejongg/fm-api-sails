@@ -87,7 +87,7 @@
                 <label for="select" class="col-md-3">Extra bottles</label>
 
                 <div class="col-md-9">
-                  <input ng-model="transaction.extraBottles" name="extraBottles" type="number" max="{{maxReturnedBottles}}"  min="0" class="form-control" na-change="{{getMaxDeposit()}}" placeholder="Enter number of bottles." required>
+                  <input ng-model="transaction.extraBottles" name="extraBottles" type="number" max="{{maxReturnedBottles}}"  min="0" class="form-control" ng-change="getMaxDeposit()" placeholder="Enter number of bottles." required>
 
                   <strong class="fbackMsg" ng-show="transactionForm.extraBottles.$dirty && transactionForm.extraBottles.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
                 </div>
@@ -96,7 +96,7 @@
             <div class="form-group">
                 <label for="cases" class="col-md-3">Cases</label>
                  <div class="col-md-9">
-                 <input ng-model="transaction.cases" na-change="getMaxDeposit()" name="transCases" type="number" min="0" max="{{count}}"class="form-control" placeholder="Enter number of cases." required>
+                 <input ng-model="transaction.cases" ng-change="getMaxDeposit()" name="transCases" type="number" min="0" max="{{count}}"class="form-control" placeholder="Enter number of cases." required>
                  
                  <strong class="fbackMsg" ng-show="transactionForm.transCases.$dirty && transactionForm.transCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
                  </div>
@@ -138,7 +138,7 @@
         <div class="col-md-9">
           <input ng-model="transaction.deposit" name="deposit" type="number" min="0" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
 
-           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Max deposit is {{maxDeposit}}.<br>Extra Bottles: {{transaction.return_extraBottles}}<br>Returned cases: {{transaction.return_cases}}<br>Price Per Empty{{pricePerEmpt}} <br> Bot per case:{{maxReturnedBottles}}</strong>
+           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Max deposit is {{maxDeposit}}.</strong>
         </div>
       </div>
 
