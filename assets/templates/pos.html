@@ -116,7 +116,7 @@
         <div class="form-group">
           <label for="select" class="col-md-3">Extra Bottles</label>
           <div class="col-md-9">
-            <input type="number" ng-model="transaction.return_extraBottles" name="maxReturnedBot" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
+            <input type="number" ng-model="transaction.return_extraBottles" ng-change="getMaxDeposit()" name="maxReturnedBot" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
 
             <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.maxReturnedBot.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
           </div>
@@ -125,7 +125,7 @@
         <div class="form-group">
           <label for="select" class="col-md-3">Cases</label>
           <div class="col-md-9">
-            <input type="number" ng-model="transaction.return_cases" name="transReturnCases"  min="0" class="form-control" placeholder="Enter number of cases." required>
+            <input type="number" ng-model="transaction.return_cases" ng-change="getMaxDeposit()" name="transReturnCases"  min="0" class="form-control" placeholder="Enter number of cases." required>
 
             <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && transactionForm.transReturnCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
 
@@ -138,7 +138,7 @@
         <div class="col-md-9">
           <input ng-model="transaction.deposit" name="deposit" type="number" min="0" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
 
-           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Max deposit is {{maxDeposit}}.</strong>
+           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Max deposit is {{maxDeposit}}. Needed deposit:{{returnedValue}}</strong>
         </div>
       </div>
 
