@@ -527,8 +527,15 @@ angular.module('fmApp')
         var index = _.findIndex($scope.ordersList,{'id': msg.data.id});
         console.log(index);
         $scope.ordersList[index] = msg.data;
-        $scope.$digest();
+      case "updated":
+        console.log("updated");
+        console.log(msg.data.id);  
+        var index = _.findIndex($scope.ordersList,{'id': msg.data.id});
+        console.log(index);
+        $scope.ordersList[index] = msg.data;
     }
+
+   $scope.$digest();
 
   });  
 
