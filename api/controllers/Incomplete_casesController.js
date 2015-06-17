@@ -28,8 +28,9 @@ module.exports = {
 				item.bottles = item.bottles - (product.cases * product.bottlespercase);
 
 				item.save(function (err, saved){
-					sails.sockets.blast("incomplete_cases", {verb : "created", data : saved});
-					return res.send(201);
+					sails.sockets.blast('inventory', {verb : "updated"});
+					sails.sockets.blast("incomplete_cases", {verb : "updated", data : saved});
+					return res.send('Case assembled', 201);
 				});
 			})
 	},
