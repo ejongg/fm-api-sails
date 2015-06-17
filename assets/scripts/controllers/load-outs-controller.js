@@ -62,6 +62,7 @@ angular.module('fmApp')
          $scope.ordersAvailableListEdit = $scope.customerOrdersAvailable[0];
         console.log("Customer Orders Available:");
         console.log($scope.customerOrdersAvailable);
+        $scope.noCustomerOrdersAvailable = false;
       }else{
         console.log("No Customer");
         $scope.noCustomerOrdersAvailable = true;
@@ -137,11 +138,13 @@ angular.module('fmApp')
     if(data === true){
       if($scope.loadOut.truck){
         $scope.dropdownChange($scope.loadOut.truck);
+        $scope.getCustomerOrdersAvailable($scope.loadOut.truck);
       }
     }
 
     if(data === false){
       $scope.loadOut.loadout_no = $scope.loadOutNumbers[0];
+      $scope.loadOut.truck = $scope.trucks[0];
       $scope.loadOutNumbers = [1,2,3,4,5];
       if($scope.noTrucks === false){
         $scope.loadOut.truck_id = $scope.trucks[0].id;
@@ -292,8 +295,10 @@ angular.module('fmApp')
         $scope.loadOut.orders = [];
         $scope.showAddLoadOutBox(false);
         $scope.snackbarShow('Load Out Added');
-        $scope.$digest();
+      }else if(JWR.statusCode === 400){
+        console.log(body.message);
       }
+      $scope.$digest();
     });  
     console.log(addLoadOut);
   };
