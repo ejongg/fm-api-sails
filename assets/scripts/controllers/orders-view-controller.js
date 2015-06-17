@@ -15,6 +15,10 @@ angular.module('fmApp')
     });
   };
 
+  $scope.pagePrint = function () {
+    window.print();
+  };
+
   getOrder();
 
 }]);
