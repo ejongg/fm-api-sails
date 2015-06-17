@@ -104,7 +104,7 @@ module.exports = {
 	},
 
 	deductInSpecificBay : function(skuId, bottles, cases, bottlespercase, bayId){
-		return new Promise(function (resolve, reject){
+		return new Promise(function (resolve){
 
 			Inventory.find({sku_id : skuId, bay_id : bayId}).sort("exp_date ASC")
 				.then(function (skus){
@@ -120,13 +120,30 @@ module.exports = {
 						},
 
 						function (cb){
-
 							if(skus[index].physical_count > 0){
-								InventoryService.deductFromInventory(skus[index], bottles, cases, bottlespercase)
-									.then(function (remainingCases){
-										cases = remainingCases;
-										cb();
-									})
+
+								if(bottles > 0 && skus[index].physical_count > cases || bottles > 0 && skus.length -1 == index){
+									var remainingBottles = 0;
+									remainingBottles = bottlespercase - bottles;
+
+									IncompleteCasesService.add(skus[index].sku_id, skus[index].exp_date, skus[index].prod_date, remainingBottles)
+										.then(function (){
+											return InventoryService.deductCases(skus[index], cases, bottlespercase);
+										})
+
+										.then(function (remainingCases){
+											cases = remainingCases;
+											cb();
+										})
+								}else{
+
+									InventoryService.deductCases(skus[index], cases, bottlespercase)
+										.then(function (remainingCases){
+											cases = remainingCases;
+											cb();
+										})
+								}
+
 							}else{
 								index++;
 								cb();
