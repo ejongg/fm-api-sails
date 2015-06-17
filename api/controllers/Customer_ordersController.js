@@ -30,6 +30,7 @@ module.exports = {
 				})
 
 				.then(function (foundCustomerOrder){
+					sails.sockets.blast('inventory', {verb : "updated"});
 					sails.sockets.blast('customer_orders', {verb : "created", data : foundCustomerOrder});
 					return res.send("Order recorded", 201);
 				})	
