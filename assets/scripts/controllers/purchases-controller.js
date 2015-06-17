@@ -85,6 +85,13 @@ angular.module('fmApp')
   };
 
   $scope.getEmpties = function(purchase){
+    if($scope.noEmptiesInventory){
+      $scope.emptyBottles = 0;
+      $scope.emptyCases = 0;
+      $scope.purchase.return_empties_cases =0;
+      $scope.purchase.return_empties_bottles =0;
+      return;
+    };
     console.log("Empties Inventory");
     console.log($scope.emptiesInventory)
     console.log("PURCHASE SKU");
@@ -275,8 +282,13 @@ angular.module('fmApp')
     if($scope.itemExistingError === true){
       $scope.showItemExistingError(false);
     }
-  console.log(purchase.sku.pricepercase);
-
+    console.log(purchase.sku.pricepercase);
+    if(purchase.return_empties_bottles==null){
+      purchase.return_empties_bottles=0;
+    }
+    if(purchase.return_empties_cases==null){
+      purchase.return_empties_cases=0;
+    }
     var purchaseInfo = {
       "sku_id" : purchase.sku.id,
       "bay_id" : purchase.bay.id,

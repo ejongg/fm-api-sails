@@ -79,7 +79,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.sku" ng-change="getBays(purchase.sku);getEmpties(purchase.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                            <select class="form-control" name="purchaseSKU" ng-model="purchase.sku" ng-change="getBays(purchase.sku);getEmpties(purchase.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>
@@ -111,7 +111,13 @@
 
                             <input type="number"  name="inputCases" min="1" max="{{bayLimit-totalProducts}}" class="form-control" placeholder="Enter number of cases." ng-model="purchase.cases" required>
 
-                            <strong class="fbackMsg" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid">Input numbers only.<br>Limit:{{bayLimit}}<br>Products in Line:{{totalProducts}}<br>Remaining capacity:{{bayLimit-totalProducts}}</strong>
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$invalid && !purchaseForm.purchaseSKU.$error.required">Limit:{{bayLimit}}<br>Products in Line:{{totalProducts}}<br>Remaining capacity:{{bayLimit-totalProducts}}</strong>
+
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.inputCases.$error.number && !purchaseForm.purchaseSKU.$error.required">Input numbers only.</strong>
+
+
+
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputCases.$dirty && purchaseForm.purchaseSKU.$error.required">Select SKU first.</strong>
                             
                         </div>
                     </div>
@@ -120,9 +126,13 @@
                         <label for="inputEmpty" class="col-md-12">Returned Empty Cases</label>
                         <div class="col-md-12">
 
-                            <input type="number"  name="inputEmptyCases" min="0" max="{{emptyCases}}" class="form-control" placeholder="Enter number of empty cases." ng-model="purchase.return_empties_cases" required>
+                            <input type="number" ng-disabled="noEmptiesInventory && !purchaseForm.purchaseSKU.$error.required"  name="inputEmptyCases" min="0" max="{{emptyCases}}" class="form-control" placeholder="Enter number of empty cases." ng-model="purchase.return_empties_cases" >
 
-                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyCases.$dirty && purchaseForm.inputEmptyCases.$invalid"> Enter numbers only. {{emptyCases}} Cases in inventory. </strong>
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyCases.$dirty && purchaseForm.inputEmptyCases.$invalid && !noEmptiesInventory"> Enter numbers only. {{emptyCases}} Cases in inventory. </strong>
+
+                            <strong class="fbackMsg" ng-show="noEmptiesInventory && !purchaseForm.purchaseSKU.$error.required">There is no empty cases in inventory for this sku.</strong>
+
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyCases.$dirty && purchaseForm.purchaseSKU.$error.required">Select SKU first.</strong>
                             
                         </div>
                     </div>
@@ -132,9 +142,13 @@
                         <label for="inputEmpty" class="col-md-12">Returned Empty Bottles</label>
                         <div class="col-md-12">
 
-                            <input type="number"  name="inputEmptyBottles" min="0" max="{{emptyBottles}}" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.return_empties_bottles" required>
+                            <input type="number" ng-disabled="noEmptiesInventory && !purchaseForm.purchaseSKU.$error.required" name="inputEmptyBottles" min="0" max="{{emptyBottles}}" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.return_empties_bottles">
 
-                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyBottles.$dirty && purchaseForm.inputEmptyBottles.$invalid"> Enter numbers only. {{emptyBottles}} Bottles in inventory. </strong>
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyBottles.$dirty && purchaseForm.inputEmptyBottles.$invalid && !noEmptiesInventory"> Enter numbers only. {{emptyBottles}} Bottles in inventory. </strong>
+
+                            <strong class="fbackMsg" ng-show="noEmptiesInventory && !purchaseForm.purchaseSKU.$error.required">There is no empty cases in inventory for this sku.</strong>
+
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyBottles.$dirty && purchaseForm.purchaseSKU.$error.required">Select SKU first.</strong>
                             
                         </div>
                     </div>
@@ -145,7 +159,7 @@
                             
                             <input type="number" name="discountpercase" ng-max="purchase.cost" step="0.01" class="form-control" placeholder="Enter discount per case." ng-model="purchase.discount" required>
 
-                            <strong class="fbackMsg" ng-show="purchaseForm.discountpercase.$dirty && purchaseForm.discountpercase.$invalid"> Invalid input.</strong>
+                            <strong class="fbackMsg" ng-show="purchaseForm.discountpercase.$dirty && purchaseForm.discountpercase.$invalid"> Enter positive numbers only.</strong>
 
                         </div>
                     </div>
