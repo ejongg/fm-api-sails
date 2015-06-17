@@ -328,6 +328,20 @@
     <!-- START OF TABLE -->            
         <div ng-hide="noEmployees"><br>
             <div class="form-group">
+
+
+                     <br>
+                         <div class="form-group" ng-hide="noEmployees">
+                          <label for="select" ng-class = "addEmployeesForm || editOrDeleteEmployeesForm ? 'col-md-3' : 'col-md-2'">Office :</label>
+                            <div ng-class = "addEmployeesForm || editOrDeleteEmployeesForm ? 'col-md-3' : 'col-md-2'">
+                                <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect" ng-change="getAdressesAvailable(companySelect)">
+                                  <option value="Coca-Cola">Coca-Cola Office</option>
+                                  <option value="SMB">SMB Office</option>
+                                  <option value="FM">FM Office</option>
+                                </select>
+                            </div>
+                          </div>
+                     <br>    
                   <label for="select" ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-3' : 'col-md-2'">Number of rows:</label>
                     <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-2'">
                         <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
@@ -421,7 +435,7 @@
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="employee in employees | filter: search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage" ng-click="employeeClicked(employee)">
+                    <tr dir-paginate="employee in employees | filter: search | filter: companySelect |orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage" ng-click="employeeClicked(employee)">
                         <td width="15%">{{employee.emp_fname}}</td>
                         <td width="15%">{{employee.emp_lname}}</td>
                         <td width="15%">{{employee.office}}</td>
