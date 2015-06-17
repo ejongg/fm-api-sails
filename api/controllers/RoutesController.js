@@ -83,6 +83,10 @@ module.exports = {
 						sails.sockets.blast('routes', {verb : 'destroyed', data : foundRoute});
 						return res.send(destroyedRoute);
 					})
+
+					.catch(function (err){
+						return res.send({message : "Can\'t delete route. Make sure it's not assigned to a truck"}, 400);
+					})
 			})
 	},
 
