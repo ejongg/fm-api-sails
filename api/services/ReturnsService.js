@@ -39,14 +39,20 @@ module.exports = {
 				cases : product.cases
 			};
 
-			Returns_products.create(item)
-				.then(function (){
+			if(product.bottles > 0 || product.cases > 0){
+
+				Returns_products.create(item).then(function (){
 					return EmptiesService.put(product.sku_id, product.bottlespercase, product.bottles, product.cases);
 				})
 
 				.then(function (){
 					resolve();
 				})
+
+			}else{
+				resolve();
+			}
+			
 		});
 	},
 
