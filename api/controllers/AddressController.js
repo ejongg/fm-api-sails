@@ -30,8 +30,12 @@ module.exports = {
 
 			.spread(function (updatedAddress, company){
 				RoutesService.checkIfEmpty(route, company)
-					.then(function (){
-						return Routes.findOne({id : route});						
+					.then(function (destroyedRoute){
+						if(destroyedRoute){
+							return destroyedRoute;
+						}else{
+							return Routes.findOne({id : route});	
+						}						
 					})
 
 					.then(function (foundRoute){

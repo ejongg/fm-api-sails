@@ -18,8 +18,12 @@ module.exports = {
 					}
 				})
 
-				.then(function (){
-					resolve();
+				.then(function (destroyedRoute){
+					if(destroyedRoute){
+						resolve(destroyedRoute[0])
+					}else{
+						resolve();
+					}
 				})
 		});
 	}
