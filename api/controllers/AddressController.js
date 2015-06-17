@@ -57,6 +57,10 @@ module.exports = {
 						return res.send("Address removed from route " + route, 200);
 					})
 
+					.catch(function (err){
+						return res.send(err, 400);
+					})
+
 			})
 
 			.catch(function (err){

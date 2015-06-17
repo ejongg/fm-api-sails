@@ -2,7 +2,7 @@ var Promise = require('bluebird');
 
 module.exports = {
 	checkIfEmpty : function(routeId, company){
-		return new Promise(function (resolve){
+		return new Promise(function (resolve, reject){
 			var obj = null;
 
 			if(company == 'SMB'){
