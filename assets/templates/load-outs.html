@@ -61,7 +61,24 @@
         <div  class="form-group">
           <form name="loadOutAddForm" novalidate>
 
-           
+              <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+                </div> 
+
+              <div class="form-group">
+                <label class="col-md-4">Establishment Name:</label>
+                
+                <div ng-show="noCustomerOrdersAvailable" class="col-md-6">
+                  No Customer Order Available
+                </div>
+                <div class="col-md-6" ng-hide="noCustomerOrdersAvailable">
+                  <select class="form-control" ng-model="ordersAvailableList" ng-options="orderAvailable as loadOutName(orderAvailable) for orderAvailable in customerOrdersAvailable">
+                  </select>
+                </div>
+                  
+                     <button class="btn btn-xs btn-default pull-right" type="button" ng-click="addAvailableCustomer(ordersAvailableList)" ng-hide="noCustomerOrdersAvailable">ADD</button>
+              </div>
 
               <br>
               <br>
@@ -76,25 +93,10 @@
                 </div>
 
               </div>
-              <br><br>
 
                 <div class = "col-md-8" ng-show="noTrucks">
                   NO TRUCKS, ADD TRUCK FIRST
                 </div>
-
-                   <div class="form-group">
-                <label class="col-md-4">Establishment Name:</label>
-                
-                <div ng-show="noCustomerOrdersAvailable" class="col-md-6">
-                  No Customer Order Available
-                </div>
-                <div class="col-md-6" ng-hide="noCustomerOrdersAvailable">
-                  <select class="form-control" ng-model="ordersAvailableList" ng-options="orderAvailable as loadOutName(orderAvailable) for orderAvailable in customerOrdersAvailable">
-                  </select>
-                </div>
-                  
-                     <button class="btn btn-xs btn-default pull-right" type="button" ng-click="addAvailableCustomer(ordersAvailableList)" ng-hide="noCustomerOrdersAvailable">ADD</button>
-              </div>
             
           <br>
               <div class="form-group " ng-hide="noLoadOutNumber">
@@ -170,6 +172,11 @@
              
 
             <div class="rpanel panel-body" ng-show="editIndex === $index">
+               <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+                     <strong>{{errorMessage}}</strong>
+              </div> 
+              
                <label class="col-md-4">Available Establishment:</label>
               <div ng-show="noCustomerOrdersAvailable" align="center">
                   NO CUSTOMER ORDER AVAILABLE
