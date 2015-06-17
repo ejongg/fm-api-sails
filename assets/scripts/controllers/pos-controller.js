@@ -33,6 +33,7 @@ angular.module('fmApp')
 
   $scope.inventory = [];
   $scope.invents = [];
+  $scope.pricePerEmpt = 0;
 
   //$scope.temp = [];
 
@@ -52,9 +53,12 @@ angular.module('fmApp')
         $scope.skuList = data;
         $scope.transaction.sku = $scope.skuList[0];
         //$scope.maxBottles = $scope.transaction.sku.bottlespercase;
-        $scope.maxReturnedBottles = $scope.transaction.sku.bottlespercase -1;
+        //$scope.transaction.return_extraBottles = 0;
+        //$scope.transaction.return_cases = 0;
+        $scope.getMaxReturnedBottles($scope.transaction.sku);
         $scope.returns.sku = null;
         $scope.getSkuInventoryCount($scope.skuList[0]);
+        
         console.log("Available SKU:");
         console.log($scope.skuList);
       }else{
@@ -81,13 +85,6 @@ angular.module('fmApp')
   getSKU();
   getInventory();
   
-  
-/*  $scope.getMaxBottles = function (sku){
-    $scope.maxReturnedBottles = sku.bottlespercase;
-    console.log("MAX BOTTLES " + $scope.maxBottles);
-  };*/
-
-  
 
   $scope.getSkuInventoryCount = function (sku) {
     console.log("IN INVENTORY");
@@ -95,12 +92,9 @@ angular.module('fmApp')
     console.log("SKU SELECTED");
     console.log(sku);
     var idSku = sku.id;
-    //var tmpIndex = 0;
+
     console.log("ID");
     console.log(idSku);
-
-    /*$scope.temp = _.uniq($scope.inventory, 'sku_id');
-    tmpIndex = _.findIndex($scope.temp,{ 'sku_id': idSku });*/
 
     $scope.invents = $filter('filter')($scope.inventory, {'sku_id': idSku},true);
     console.log("FILTERED");
@@ -109,10 +103,6 @@ angular.module('fmApp')
       return total + n;
     });
 
-    //$scope.temp[tmpIndex].physical_count = $scope.count;
-    //$scope.casesMax = $scope.count;
-
-    //$scope.count = _.result(_.find($scope.smbInventory, {'sku_id':idSku}), 'physical_count')
     console.log("COUNT");
     console.log($scope.count);
   };
@@ -122,9 +112,16 @@ angular.module('fmApp')
     if(returns !== null){
        console.log(returns);
     $scope.maxReturnedBottles = returns.bottlespercase - 1;
+    $scope.pricePerEmpt = returns.priceperempty;
+    $scope.getMaxDeposit();
     console.log("MAX RETURNED BOTTLES " + $scope.maxReturnedBottles);
     }
+  };
 
+  $scope.getMaxDeposit = function () {
+    $scope.maxDeposit = (($scope.transaction.extraBottles+($scope.transaction.cases * $scope.maxReturnedBottles ))*$scope.pricePerEmpt);
+    console.log("DEPOSIT MAX:");
+    console.log($scope.maxDeposit);
   };
 
   $scope.combined = function (sku) {

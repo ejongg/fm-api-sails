@@ -78,7 +78,7 @@
                 NO SKU AVAILABLE
               </div>
               <div ng-hide="noSKU" class="col-md-9">
-                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxBottles(transaction.sku);getSkuInventoryCount(transaction.sku)" ng-options="sku as combined(sku) for sku in skuList">
+                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxReturnedBottles(transaction.sku);getSkuInventoryCount(transaction.sku)" ng-options="sku as combined(sku) for sku in skuList">
                 </select>
               </div>
             </div>
@@ -87,7 +87,7 @@
                 <label for="select" class="col-md-3">Extra bottles</label>
 
                 <div class="col-md-9">
-                  <input ng-model="transaction.extraBottles" name="extraBottles" type="number" max="{{maxReturnedBottles}}"  min="0" class="form-control" placeholder="Enter number of bottles." required>
+                  <input ng-model="transaction.extraBottles" name="extraBottles" type="number" max="{{maxReturnedBottles}}"  min="0" class="form-control" na-change="{{getMaxDeposit()}}" placeholder="Enter number of bottles." required>
 
                   <strong class="fbackMsg" ng-show="transactionForm.extraBottles.$dirty && transactionForm.extraBottles.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
                 </div>
@@ -96,7 +96,7 @@
             <div class="form-group">
                 <label for="cases" class="col-md-3">Cases</label>
                  <div class="col-md-9">
-                 <input ng-model="transaction.cases" name="transCases" type="number" min="0" max="{{count}}"class="form-control" placeholder="Enter number of cases." required>
+                 <input ng-model="transaction.cases" na-change="getMaxDeposit()" name="transCases" type="number" min="0" max="{{count}}"class="form-control" placeholder="Enter number of cases." required>
                  
                  <strong class="fbackMsg" ng-show="transactionForm.transCases.$dirty && transactionForm.transCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
                  </div>
@@ -116,7 +116,7 @@
         <div class="form-group">
           <label for="select" class="col-md-3">Extra Bottles</label>
           <div class="col-md-9">
-            <input ng-model="transaction.return_extraBottles" name="maxReturnedBot" type="number" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
+            <input type="number" ng-model="transaction.return_extraBottles" name="maxReturnedBot" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
 
             <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.maxReturnedBot.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
           </div>
@@ -125,7 +125,7 @@
         <div class="form-group">
           <label for="select" class="col-md-3">Cases</label>
           <div class="col-md-9">
-            <input ng-model="transaction.return_cases" name="transReturnCases" type="number" min="0" class="form-control" placeholder="Enter number of cases." required>
+            <input type="number" ng-model="transaction.return_cases" name="transReturnCases"  min="0" class="form-control" placeholder="Enter number of cases." required>
 
             <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && transactionForm.transReturnCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
 
@@ -136,7 +136,9 @@
       <div class="form-group">
         <label for="select" class="col-md-3">Deposit</label>
         <div class="col-md-9">
-          <input ng-model="transaction.deposit" type="number"  class="form-control" placeholder="Enter deposit (₱).">
+          <input ng-model="transaction.deposit" name="deposit" type="number" min="0" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
+
+           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Max deposit is {{maxDeposit}}.<br>Extra Bottles: {{transaction.return_extraBottles}}<br>Returned cases: {{transaction.return_cases}}<br>Price Per Empty{{pricePerEmpt}} <br> Bot per case:{{maxReturnedBottles}}</strong>
         </div>
       </div>
 
