@@ -56,8 +56,8 @@ module.exports = {
 					return Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id, status : "On delivery"});
 				})
 
-				.then(function (){
-					sails.sockets.blast('customer_orders', {verb : "updated", data : updateCustomerOrder[0]});
+				.then(function (updatedCustomerOrder){
+					sails.sockets.blast('customer_orders', {verb : "updated", data : updatedCustomerOrder[0]});
 					resolve();
 				})
 		});
