@@ -77,8 +77,9 @@ angular.module('fmApp')
     });
   };
 
-  $scope.getAdressesAvailable = function () {
-    $http.get(httpHost + '/address/list?company=' + $scope.route.company).success( function (data) {
+  $scope.getAdressesAvailable = function (company) {
+    console.log(company);
+    $http.get(httpHost + '/address/list?company=' + company).success( function (data) {
       if(data.length !== 0){
         console.log("ROUTEEEE");
         console.log($scope.route.company);
@@ -96,24 +97,24 @@ angular.module('fmApp')
     });
   };
 
-  var getAdressesAvailable = function () {
-    $http.get(httpHost + '/address/list?company=' + $scope.route.company).success( function (data) {
-      if(data.length !== 0){
-        console.log("ROUTEEEE");
-        console.log($scope.route.company);
+  // var getAdressesAvailable = function () {
+  //   $http.get(httpHost + '/address/list?company=' + $scope.route.company).success( function (data) {
+  //     if(data.length !== 0){
+  //       console.log("ROUTEEEE");
+  //       console.log($scope.route.company);
 
-        $scope.addressesAvailable = $scope.sortData(data,'address_name');
-        $scope.addressAvailableList = $scope.addressesAvailable[0];
-        $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
-        console.log("Addresses Available:");
-        console.log($scope.addressesAvailable);
-      }else{
-        $scope.noAddressesAvailable = true;
-      }
-    }).error(function (err) {
-      $scope.checkError(err);
-    });
-  };
+  //       $scope.addressesAvailable = $scope.sortData(data,'address_name');
+  //       $scope.addressAvailableList = $scope.addressesAvailable[0];
+  //       $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+  //       console.log("Addresses Available:");
+  //       console.log($scope.addressesAvailable);
+  //     }else{
+  //       $scope.noAddressesAvailable = true;
+  //     }
+  //   }).error(function (err) {
+  //     $scope.checkError(err);
+  //   });
+  // };
 
   var getRoutes= function () {
     $http.get(httpHost + '/routes').success( function (data) {
@@ -188,7 +189,8 @@ angular.module('fmApp')
   };
 
   $scope.showAddRouteBox = function (data){
-    getAdressesAvailable();
+    $scope.getAdressesAvailable("Coca-Cola");
+     $scope.route.company = $scope.companies[0];
     if($scope.editIndex !== -1){
       $scope.editIndex = -1;
     }
@@ -203,7 +205,6 @@ angular.module('fmApp')
         $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
         $scope.addressAvailableList = $scope.addressesAvailable[0];
         $scope.noAddressesAvailable = false;
-        $scope.route.company = $scope.companies[0]
       }
     }
   };
@@ -303,6 +304,7 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
          $scope.route.address= [];
+         $scope.companySelect = route.company;
          $scope.showAddRouteBox(false);
          $scope.snackbarShow('Route Added');
          $scope.$digest();
