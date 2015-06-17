@@ -7,7 +7,7 @@ module.exports = function (req, res, next){
 			bottlesToDeduct = product.cases * product.bottlespercase;
 
 			if(item.bottles < bottlesToDeduct){
-				return res.send("Insufficient bottles in Incomplete bay", 400)
+				return res.send({message : "Insufficient bottles in Incomplete bay"}, 400)
 			}else{
 				next();
 			}

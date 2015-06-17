@@ -44,7 +44,7 @@ module.exports.policies = {
   },
 
   Incomplete_casesController : {
-    assembleCase : ['IncompletesPolicy', 'WrongLinePolicy']
+    assembleCase : ['IncompletesPolicy', 'WrongLinePolicy', 'LineLimitPolicy']
   },
 
   Delivery_transactionsController : {

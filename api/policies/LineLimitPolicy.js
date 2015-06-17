@@ -4,6 +4,10 @@ module.exports = function (req, res, next){
 	var products = req.body.products;
 	var unavailableLines = [];
 
+	if(!Array.isArray(products)){
+		products = [products];
+	}
+
 	new Promise(function (resolve){
 		resolve(products);
 	})
