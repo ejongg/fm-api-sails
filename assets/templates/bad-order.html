@@ -93,7 +93,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="product.sku" ng-change="getBays(product.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                            <select class="form-control" name="prodSku" ng-model="product.sku" ng-change="getBays(product.sku);getMaxExtraBottles(product.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>
@@ -118,21 +118,32 @@
 
                     <div class="col-md-12">
                         <input type="number" name="inputCases" min="0" class="form-control" placeholder="Enter the number of cases."
-                        ng-model="product.cases" required>
+                        ng-model="product.cases" ng-required="!product.bottles">
 
-                         <strong class="fbackMsg" ng-show="badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid"> Cases required! Enter numbers only. </strong>
+                         <strong class="fbackMsg" ng-show="badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$error.required">Enter number of cases.</strong>
+
+                         <strong class="fbackMsg" ng-show="badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$invalid">Positive whole numbers only.</strong>
+
+                         <strong class="fbackMsg" ng-show="badOrderForm.inputCases.$dirty && badOrderForm.inputCases.$error.number">Enter numbers only.</strong>
 
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="inputOwnerName" class="col-md-2 control-label">Bottles</label>
+                    <label for="inputOwnerName" class="col-md-2 control-label">Extra Bottles</label>
 
                     <div class="col-md-12">
-                        <input type="number" name="inputBottles" min="0" max="" class="form-control" placeholder="Enter the number of bottles."
-                        ng-model="product.bottles" required>
+                        <input type="number" name="inputBottles" min="0" max="{{maxExtraBottles}}" class="form-control" placeholder="Enter the number of bottles."
+                        ng-model="product.bottles" ng-required="!product.cases">
 
-                        <strong class="fbackMsg" ng-show="badOrderForm.inputBottles.$dirty && badOrderForm.inputBottles.$invalid"> Bottles required! Enter numbers only. </strong>
+                        <strong class="fbackMsg" ng-show="badOrderForm.inputBottles.$dirty && badOrderForm.inputBottles.$invalid">  </strong>
+
+                         <strong class="fbackMsg" ng-show="badOrderForm.inputBottles.$dirty && badOrderForm.inputBottles.$error.required">Enter number of extra bottles.</strong>
+
+                         <strong class="fbackMsg" ng-show="badOrderForm.prodSku.$error.required && badOrderForm.inputBottles.$dirty">Select SKU first.</strong>
+
+                         <strong class="fbackMsg" ng-show="badOrderForm.inputBottles.$dirty && badOrderForm.inputBottles.$invalid">Positive whole numbers only. Max:({{maxExtraBottles}})</strong>
+
                     </div>
                 </div>
 

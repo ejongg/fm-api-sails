@@ -37,6 +37,8 @@ angular.module('fmApp')
   $scope.newlyAdded = {};
   $scope.index = 0;
 
+  $scope.maxExtraBottles = 0;
+
   var setPage = function(){
     $scope.sortCriteria = 'id';
 
@@ -72,6 +74,10 @@ angular.module('fmApp')
     });
   };
 
+  $scope.checkIfZero = function (){
+
+  };
+
 
   $scope.getBays = function (sku){
     console.log(sku);
@@ -91,6 +97,10 @@ angular.module('fmApp')
     }).error(function (err) {
       $scope.checkError(err);
     });
+  };
+
+  $scope.getMaxExtraBottles = function (sku){
+    $scope.maxExtraBottles = sku.bottlespercase - 1;
   };
 
   $scope.changeCompany = function () {
@@ -223,7 +233,12 @@ angular.module('fmApp')
     if($scope.itemExistingError === true){
       $scope.showItemExistingError(false);
     }
-
+    if(product.bottles == null){
+      product.bottles = 0;
+    }
+    if(product.cases == null){
+      product.cases = 0;
+    }
     var productInfo = {
       "sku_id" : product.sku.id,
       "bay_id" : product.bay.id,
