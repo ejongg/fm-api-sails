@@ -57,7 +57,7 @@ module.exports = {
 				})
 
 				.then(function (){
-					sails.sockets.blast('customer_orders', {verb : "updated", data : updateCustomerOrder});
+					sails.sockets.blast('customer_orders', {verb : "updated", data : updateCustomerOrder[0]});
 					resolve();
 				})
 		});
