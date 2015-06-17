@@ -34,6 +34,7 @@ angular.module('fmApp')
   $scope.inventory = [];
   $scope.invents = [];
   $scope.pricePerEmpt = 0;
+  $scope.returnedValue = 0;
 
   //$scope.temp = [];
 
@@ -120,8 +121,12 @@ angular.module('fmApp')
 
   $scope.getMaxDeposit = function () {
     $scope.maxDeposit = (($scope.transaction.extraBottles+($scope.transaction.cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
+    $scope.returnedValue = (($scope.transaction.return_extraBottles+($scope.transaction.return_cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
     console.log("DEPOSIT MAX:");
     console.log($scope.maxDeposit);
+    console.log("Returned Value");
+    console.log($scope.returnedValue);
+
   };
 
   $scope.combined = function (sku) {

@@ -15,6 +15,9 @@ angular.module('fmApp')
   $scope.noLoadOut = false;
   $scope.noLoadOutNumber = false;
 
+  $scope.errorMessage = '';
+  $scope.hasError = false;
+
   $scope.editIndex = -1;
 
   var todayDay = new Date();
@@ -122,6 +125,7 @@ angular.module('fmApp')
   };
   
   $scope.setEditLoadOut = function (index,loadOut) {
+     $scope.hasError = false;
     if($scope.addLoadOutBox === true){
       $scope.showAddLoadOutBox(false);
     }
@@ -132,7 +136,18 @@ angular.module('fmApp')
     $scope.editIndex = index;
   };
 
+  $scope.showErrorMessage = function (data,msg) {
+     $scope.hasError = data;
+     console.log($scope.hasError);
+    if(data === true){
+       console.log(data);
+       console.log(msg);
+       $scope.errorMessage = msg;
+    }
+  }
+
   $scope.showAddLoadOutBox = function (data){
+    $scope.hasError = false;
     $scope.editIndex = -1;
     $scope.addLoadOutBox = data;
     if(data === true){
@@ -272,8 +287,11 @@ angular.module('fmApp')
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
         $scope.snackbarShow('Load Out Edited');
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body.message);
+      }         
         $scope.$digest();
-      }
     });  
 
   };
@@ -300,9 +318,10 @@ angular.module('fmApp')
         $scope.loadOut.orders = [];
         $scope.showAddLoadOutBox(false);
         $scope.snackbarShow('Load Out Added');
-      }else if(JWR.statusCode === 400){
-        console.log(body.message);
-      }
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true,body.message);
+      } 
       $scope.$digest();
     });  
     console.log(addLoadOut);
