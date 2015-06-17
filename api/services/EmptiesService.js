@@ -26,12 +26,26 @@ module.exports = {
 				.then(function (foundSku){
 
 					if(foundSku){
-						foundSku.bottles = foundSku.bottles + bottles + (bottlespercase * cases);
-						foundSku.cases = foundSku.cases + cases;
 
-						if(bottles == bottlespercase || foundSku.bottles + bottles > bottlespercase){
+						if(bottles == bottlespercase){
 							foundSku.cases = foundSku.cases + 1;
 						}
+
+						if(foundSku.bottles + bottles >= bottlespercase){
+							if(foundSku.bottles >= bottlespercase){
+
+								if((foundSku.bottles % bottlespercase) + bottles >= bottlespercase){
+									foundSku.cases = foundSku.cases + 1;
+								}
+
+							}else{
+								foundSku.cases = foundSku.cases + 1;
+							}
+						}
+						
+
+						foundSku.bottles = foundSku.bottles + bottles + (bottlespercase * cases);
+						foundSku.cases = foundSku.cases + cases;
 
 						foundSku.save(function (err, saved){
 							resolve();
@@ -46,7 +60,9 @@ module.exports = {
 						};
 
 						if(bottles > 0 || cases > 0){
-							return Empties.create(empty);	
+							Empties.create(empty).then(function (createdEmpty){
+								resolve();
+							})	
 						}else{
 							resolve();
 						}
