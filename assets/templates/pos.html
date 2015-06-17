@@ -144,9 +144,7 @@
 
             <button class="btn btn-primary pull-right" ng-disabled="transactionForm.$invalid">Add</button><br><br><br>
 
-            <div class="form-group"><br/>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total Amount: {{totalAmount| currency : '₱'}}</legend>
-            </div>
+            
 
       </form>
 </div>
@@ -162,6 +160,7 @@
                   <th>Brand&nbsp;</th>
                   <th>Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
+                  <th>Amount</th>
                   <th></th>
                 </tr>
             </thead>
@@ -171,6 +170,7 @@
                     <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
+                    <td>{{totalAmount}}</td>
                     <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
                 </tr>
             </tbody>
@@ -187,6 +187,7 @@
                   <th>Brand&nbsp;</th>
                   <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
+                  <th>Amount</th>
                   <th></th>
                 </tr>
             </thead>
@@ -196,10 +197,15 @@
                     <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
+                    <td>{{returnedValue}}<td>
                     <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
                 </tr>
             </tbody>
         </table>
+
+         <div class="form-group pull-right"><br/>
+                <legend class="col-md-12 col-md-offset-1 panel"> Total Amount: {{totalAmount + (maxDeposit - returnedValue) | currency : '₱'}}</legend>
+            </div>
     </div>
 
 </div>

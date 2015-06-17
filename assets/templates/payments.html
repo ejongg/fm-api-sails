@@ -353,7 +353,7 @@
 
                 <tbody>
                     <tr ng-repeat="history in historyData">
-                        <td> {{}}</td>
+                        <td> {{history.user}}</td>
                         <td>{{history.date}}</td>
                         <td align="right">{{history.amount |currency : "₱" }}</td>
                     </tr>
