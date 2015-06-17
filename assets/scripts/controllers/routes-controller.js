@@ -682,13 +682,25 @@ angular.module('fmApp')
         }
         $scope.$digest();
 
-        if(msg.data.address.length !== 0){
-          console.log("Adress");
-          for (var i = 0; i < msg.data.address.length; i++) {
+        if(msg.data.coke_address.length !== 0){
+          console.log("Coke Adress");
+          for (var i = 0; i < msg.data.coke_address.length; i++) {
             console.log("ADD");
-            $scope.addressesAvailable.push(msg.data.address[i]);
+            $scope.addressesAvailable.push(msg.data.coke_address[i]);
           }
-           $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+            $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
+            $scope.addressAvailableList = $scope.addressesAvailable[0];
+            $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
+            if($scope.noAddressesAvailable === true){
+              $scope.noAddressesAvailable = false;
+            }
+        }else{
+          console.log("SMB Adress");
+          for (var i = 0; i < msg.data.smb_address.length; i++) {
+            console.log("ADD");
+            $scope.addressesAvailable.push(msg.data.smb_address[i]);
+          }
+            $scope.addressesAvailable = $scope.sortData($scope.addressesAvailable,'address_name');
             $scope.addressAvailableList = $scope.addressesAvailable[0];
             $scope.addressAvailableListEdit = $scope.addressesAvailable[0];
             if($scope.noAddressesAvailable === true){
