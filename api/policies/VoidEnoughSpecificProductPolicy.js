@@ -14,16 +14,25 @@ module.exports = function (req, res, next){
 
 				Inventory.findOne({sku_id : product.sku_id, bay_id : product.bay_id, prod_date : product.prod_date})
 					.then(function (foundItem){
-						
-						if(product.cases > foundItem.physical_count){
+
+						if(foundItem){
+							if(product.cases > foundItem.physical_count){
+
+								return SkuService.getSkuCompleteName(product.sku_id).then(function (skuCompleteName){
+									unavailableProducts.push(skuCompleteName);
+									resolve();
+								});
+
+							}else{
+								resolve();
+							}
+
+						}else{
 
 							return SkuService.getSkuCompleteName(product.sku_id).then(function (skuCompleteName){
 								unavailableProducts.push(skuCompleteName);
 								resolve();
 							});
-
-						}else{
-							resolve();
 						}
 
 					})
