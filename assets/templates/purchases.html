@@ -79,7 +79,7 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="purchase.sku" ng-change="getBays(purchase.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                            <select class="form-control" ng-model="purchase.sku" ng-change="getBays(purchase.sku);getEmpties(purchase.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>
@@ -120,9 +120,9 @@
                         <label for="inputEmpty" class="col-md-12">Returned Empty Cases</label>
                         <div class="col-md-12">
 
-                            <input type="number"  name="inputEmptyBottles" min="0" class="form-control" placeholder="Enter number of empty cases." ng-model="purchase.return_empties_cases" required>
+                            <input type="number"  name="inputEmptyCases" min="0" max="{{emptyCases}}" class="form-control" placeholder="Enter number of empty cases." ng-model="purchase.return_empties_cases" required>
 
-                            <strong class="fbackMsg" ng-show=""> Invalid! Please enter no. of empty cases. </strong>
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyCases.$dirty && purchaseForm.inputEmptyCases.$invalid"> Enter numbers only. {{emptyCases}} Cases in inventory. </strong>
                             
                         </div>
                     </div>
@@ -132,9 +132,9 @@
                         <label for="inputEmpty" class="col-md-12">Returned Empty Bottles</label>
                         <div class="col-md-12">
 
-                            <input type="number"  name="inputEmptyBottles" min="0" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.return_empties_bottles" required>
+                            <input type="number"  name="inputEmptyBottles" min="0" max="{{emptyBottles}}" class="form-control" placeholder="Enter number of empty bottles." ng-model="purchase.return_empties_bottles" required>
 
-                            <strong class="fbackMsg" ng-show=""> Invalid! Please enter no. of empty bottles. </strong>
+                            <strong class="fbackMsg" ng-show="purchaseForm.inputEmptyBottles.$dirty && purchaseForm.inputEmptyBottles.$invalid"> Enter numbers only. {{emptyBottles}} Bottles in inventory. </strong>
                             
                         </div>
                     </div>
