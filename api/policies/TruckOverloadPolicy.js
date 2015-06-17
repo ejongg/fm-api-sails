@@ -48,7 +48,34 @@ module.exports = function(req, res, next){
 			})
 
 		}else{
-			next();
+			var accumulatedWeight = 0;
+
+			new Promise(function (resolve){
+				resolve(orders);
+			})
+
+			.each(function (order){
+				return new Promise(function (resolve){
+
+					LoadOutService.countOrderWeight(order.productslist)
+						.then(function (resultWeight){
+							accumulatedWeight = accumulatedWeight + resultWeight;
+							resolve();
+						})
+				});
+			})
+
+			.then(function (){
+				var totalWeight = accumulatedWeight;
+
+				Trucks.findOne({id : truckId}).then(function (foundTruck){
+					if(totalWeight > foundTruck.carry_weight){
+						return res.send({message : "Can't accomodate orders, it exceeds the truck capacity"}, 400);
+					}else{
+						next();
+					}
+				})
+			})
 		}
 	});
 };
