@@ -20,6 +20,10 @@ module.exports = {
 
 				.then(function (destroyedRoute){
 					if(destroyedRoute){
+						destroyedRoute[0].id = destroyedRoute[0].route_id;
+						delete destroyedRoute[0].route_id;
+
+						sails.sockets.blast('routes', {verb : 'destroyed', data : destroyedRoute});
 						resolve(destroyedRoute[0])
 					}else{
 						resolve();
