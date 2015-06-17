@@ -38,7 +38,6 @@ angular.module('fmApp')
   $scope.index = 0;
 
   $scope.maxExtraBottles = 0;
-  $scope.min = 0; 
 
   var setPage = function(){
     $scope.sortCriteria = 'id';
