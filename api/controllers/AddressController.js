@@ -29,13 +29,17 @@ module.exports = {
 			})
 
 			.spread(function (updatedAddress, company){
+				var deleted = false;
 				RoutesService.checkIfEmpty(route, company)
 					.then(function (destroyedRoute){
+
 						if(destroyedRoute){
+							deleted = true;
 							return destroyedRoute;
 						}else{
 							return Routes.findOne({id : route});	
-						}						
+						}		
+
 					})
 
 					.then(function (foundRoute){
@@ -45,6 +49,11 @@ module.exports = {
 						};
 
 						sails.sockets.blast("address", {verb : "removed", data : data});
+
+						if(deleted){
+							sails.sockets.blast('routes', {verb : 'destroyed', data : foundRoute});
+						}
+
 						return res.send("Address removed from route " + route, 200);
 					})
 
