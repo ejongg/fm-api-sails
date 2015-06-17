@@ -138,7 +138,7 @@
         <div class="col-md-9">
           <input ng-model="transaction.deposit" name="deposit" type="number" min="0" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
 
-           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Max deposit is {{maxDeposit}}. Needed deposit:{{returnedValue}}</strong>
+           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Transaction price per empty total: {{maxDeposit}}.<br> Returns price per empty total:{{returnedValue}}<br> Needed deposit {{maxDeposit - returnedValue}}</strong>
         </div>
       </div>
 
