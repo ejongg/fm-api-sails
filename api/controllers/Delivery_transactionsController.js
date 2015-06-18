@@ -164,8 +164,8 @@ module.exports = {
 						})
 
 						.then(function (updatedDelivery){
-							var newAmount = updatedDelivery.total_amount + deposit;
-							resolve(Delivery_transactions.update({id : deliveryId}, {total_amount : newAmount}));
+							var depositAmount = updatedDelivery[0].total_amount + deposit;
+							resolve(Delivery_transactions.update({id : deliveryId}, {total_amount : depositAmount}));
 						})
 					
 				})
