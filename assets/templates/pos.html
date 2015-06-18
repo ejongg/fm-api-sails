@@ -206,7 +206,7 @@
          <div class="form-group pull-right"><br/>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total Amount: {{totalAmount | currency : '₱'}}</legend>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total Deposit: {{totalDeposit | currency : '₱'}}</legend>
-                <legend class="col-md-12 col-md-offset-1 panel"> Amount to be paid : {{totalDeposit | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Amount to be paid : {{(totalAmount-totalDeposit) | currency : '₱'}}</legend>
             </div>
     </div>
 </div>

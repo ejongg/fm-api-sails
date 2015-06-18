@@ -85,7 +85,7 @@
                           <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                           <div ng-show="noSKU" class="col-md-12">No purchased SKU</div>
                           <div ng-hide="noSKU" class="col-md-12">
-                            <select class="form-control" ng-model="expense.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                            <select class="form-control" ng-change="getEmptyInventory(expense.sku)" ng-model="expense.sku" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
                               <option value="" disabled>Select SKU</option>
                             </select>
                           </div>
@@ -102,16 +102,19 @@
                     <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
                             Cases</label> 
-                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of empty cases." ng-model="expense.return_empties_cases" required>
+                            <div class="col-md-12"><input type="number" name="brokenEmptCases" min="0" max="{{maxEmptyCases}}" class="form-control"  placeholder="Enter no. of empty cases." ng-model="expense.return_empties_cases" required>
 
+                                <strong class="fbackMsg" ng-show="expenseEmptiesForm.brokenEmptCases.$dirty && expenseEmptiesForm.brokenEmptCases.$invalid"> Enter numbers only. ({{maxEmptyCases}}) empty cases in inventroy</strong>
 
                             </div>
                           </div>
+
                     <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
                             Bottles</label> 
-                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of empty bottles." ng-model="expense.return_empties_bottles" required>
+                            <div class="col-md-12"><input type="number" name="brokenEmptBots" min="0" max="{{maxEmptyBottles}}" class="form-control"  placeholder="Enter no. of empty bottles." ng-model="expense.return_empties_bottles" required>
 
+                              <strong class="fbackMsg" ng-show="expenseEmptiesForm.brokenEmptBots.$dirty && expenseEmptiesForm.brokenEmptBots.$invalid"> Enter numbers only. ({{maxEmptyBottles}}) empty bottles in inventroy</strong>
 
                             </div>
                           </div>

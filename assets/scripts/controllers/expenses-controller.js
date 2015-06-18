@@ -44,6 +44,40 @@ angular.module('fmApp')
   $scope.newlyAdded = {};
   $scope.index = 0;
 
+  $scope.emptiesInventory = [];
+  $scope.noEmptiesInventory = false;
+  $scope.maxEmptyCases = 0;
+  $scope.maxEmptyBottles = 0;
+
+  $scope.getEmptyInventory = function (sku) {
+    $http.get(httpHost + '/empties/list').success( function (data) {
+      if(data.length !== 0){
+        console.log("SKU");
+        console.log(sku);
+        var id = sku.id;
+        $scope.emptiesInventory = data;
+
+        var plucked = _.pluck($scope.emptiesInventory,'sku_id');
+        console.log("plucked");
+        console.log(plucked);
+        var index = _.findIndex(plucked, {'id':id});
+        $scope.maxEmptyBottles = $scope.emptiesInventory[index].bottles;
+        $scope.maxEmptyCases = $scope.emptiesInventory[index].cases;
+        console.log("Empties bottles");
+        console.log($scope.maxEmptyBottles);
+        console.log("Empties cases");
+        console.log($scope.maxEmptyCases);
+
+        console.log(" Empties Inventory:");
+        console.log($scope.emptiesInventory);
+      }else{
+        $scope.noEmptiesInventory = true;
+      }
+    }).error(function (err) {
+      $scope.checkError(err);
+    });
+  };
+
   var setPage = function(){
     console.log("NEWLY ADDED");
     console.log($scope.newlyAdded);
@@ -277,6 +311,7 @@ angular.module('fmApp')
 
   $scope.addBrokenList = function (expense) {
     console.log(expense);
+    $scope.expenseEmptiesForm.$setPristine();
     var empty = {
       "sku": expense.sku,
       "sku_id": expense.sku.id,
