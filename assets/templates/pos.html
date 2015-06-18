@@ -114,31 +114,31 @@
       <h4>RETURN</h4><hr>
 
         <div class="form-group">
-          <label for="select" class="col-md-3">Extra Bottles</label>
+          <label for="select" class="col-md-3">Returned Extra Bottles</label>
           <div class="col-md-9">
-            <input type="number" ng-model="transaction.return_extraBottles" ng-change="getMaxDeposit()" name="maxReturnedBot" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
+            <input type="number" ng-model="transaction.return_extraBottles" ng-change="getMaxDeposit()" name="maxReturnedBot" min="0" max="{{transaction.extraBottles}}" class="form-control" placeholder="Enter number of bottles." required>
 
-            <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.maxReturnedBot.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
+            <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.maxReturnedBot.$invalid"> Should not be greater than the extra bottles({{transaction.extraBottles}}).</strong>
           </div>
         </div>
         
         <div class="form-group">
-          <label for="select" class="col-md-3">Cases</label>
+          <label for="select" class="col-md-3">Returned Cases{{transactionForm.transReturnCases.$invalid}}</label>
           <div class="col-md-9">
-            <input type="number" ng-model="transaction.return_cases" ng-change="getMaxDeposit()" name="transReturnCases"  min="0" class="form-control" placeholder="Enter number of cases." required>
+            <input type="number" ng-model="transaction.return_cases" ng-change="getMaxDeposit()" name="transReturnCases"  min="0" max="{{transaction.cases}}" class="form-control" placeholder="Enter number of cases." required>
 
-            <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && transactionForm.transReturnCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
+            <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && {{transaction.return_cases > transaction.cases}}"> Should not be greater than the extra cases({{transaction.cases}}).</strong>
 
           </div>
         </div>
 
         <hr>
       <div class="form-group">
-        <label for="select" class="col-md-3">Deposit</label>
+        <label for="select" class="col-md-3">Needed Deposit</label>
         <div class="col-md-9">
-          <input ng-model="transaction.deposit" name="deposit" type="number" min="0" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱).">
+          <input ng-model="transaction.deposit" name="deposit" type="number" min="0" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱)." disabled>
 
-           <strong class="fbackMsg" ng-show="transactionForm.deposit.$dirty && transactionForm.deposit.$invalid"> Enter numbers only. Transaction price per empty total: {{maxDeposit}}.<br> Returns price per empty total:{{returnedValue}}<br> Needed deposit {{maxDeposit - returnedValue}}</strong>
+           
         </div>
       </div>
 
@@ -170,7 +170,7 @@
                     <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
-                    <td>{{totalAmount}}</td>
+                    <td>{{item.amount}}</td>
                     <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
                 </tr>
             </tbody>
@@ -197,14 +197,14 @@
                     <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
-                    <td>{{returnedValue}}<td>
+                    <td>{{item.deposit}}<td>
                     <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
                 </tr>
             </tbody>
         </table>
 
          <div class="form-group pull-right"><br/>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total Amount: {{totalAmount + (maxDeposit - returnedValue) | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Total Amount: {{totalAmount | currency : '₱'}}</legend>
             </div>
     </div>
 
