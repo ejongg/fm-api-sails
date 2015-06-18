@@ -150,9 +150,12 @@ angular.module('fmApp')
 
   $scope.showItemExistingTransactionError = function (data, sku) {
     $scope.itemExistingTransactionError = data;
-
+    var brand = $scope.transaction.sku.prod_id.brand_name;
+    console.log("DEBUG");
+    console.log(data);
+    console.log(sku);
     if(data === true){
-      $scope.itemExistingTransaction = sku + " is already added.";
+      $scope.itemExistingTransaction = brand + " "+sku + " is already added.";
     }else{
       $scope.itemExistingTransaction = '';
     }
