@@ -194,6 +194,8 @@ angular.module('fmApp')
     $scope.returnsItems = [];
     $scope.totalAmount = 0;
     $scope.totalDeposit = 0;
+    $scope.totalDiscount = 0;
+
   };
 
   var clearTransactionForm = function () {

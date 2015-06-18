@@ -72,10 +72,6 @@
                     </div>
                 </div>
 
-=======
-
- -->             
->>>>>>> origin/unstable_with_frontend
                 <div class="form-group">
                     <label for="select" class="col-md-3">Line</label>
 
@@ -120,7 +116,7 @@
         <div ng-hide="noIncomplete">
 
         <div class="form-group">
-          <label for="select" class="col-md-2">Number of rows:</label>
+          <label for="select" ng-class = "incForm ? 'col-md-3' : 'col-md-2'">Number of rows:</label>
             <div ng-class = "incForm ? 'col-md-2' : 'col-md-1'">
                 <select class="form-control" ng-init="noOfRows = '10'" ng-model="noOfRows">
                   <option value="10">10</option>

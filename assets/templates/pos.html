@@ -67,7 +67,7 @@
               <strong>{{errorMessage}}.</strong>
             </div> 
 
-            <div class="alert alert-dismissable alert-danger" ng-show="itemExistingTransactionError">
+            <div class="alert alert-dismissable alert-success" ng-show="itemExistingTransactionError">
               <button type="button" class="close" ng-click="showItemExistingTransactionError(false)">×</button>
               <strong>{{itemExistingTransaction}}</strong>
             </div>
@@ -214,13 +214,7 @@
             </tbody>
         </table>
 
-<<<<<<< HEAD
-         <div class="form-group pull-right"><br/>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total amount : {{totalAmount | currency : '₱'}}</legend>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total deposit Needed: {{totalDeposit | currency : '₱'}}</legend>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total Discount: {{totalDiscount | currency : '₱'}}</legend>
-                 <legend class="col-md-12 col-md-offset-1 panel"> Amount to be paid: {{(totalAmount+totalDeposit)-totalDiscount | currency : '₱'}}</legend>
-=======
+
          <div align="right"><br/>
             
             <div class="form-group col-md-12" >
@@ -233,7 +227,6 @@
                <legend class="col-md-2 pull-right">{{totalDeposit  | currency:"₱"}}
               </legend>
               <legend class="col-md-5 pull-right "> Total deposit Needed:</legend>
->>>>>>> origin/unstable_with_frontend
             </div>
 
             <div class="form-group col-md-12" >
@@ -243,9 +236,9 @@
             </div>
 
              <div class="form-group" >
-               <legend class="col-md-2 pull-right panel">{{(totalAmount+totalDeposit)  | currency:"₱"}}
+               <legend class="col-md-2 pull-right panel">{{(totalAmount+totalDeposit) - totalDiscount  | currency:"₱"}}
               </legend>
-              <legend class="col-md-4 pull-right">Total amount:</legend>
+              <legend class="col-md-4 pull-right  panel">Total amount:</legend>
             </div>
 
           </div>
