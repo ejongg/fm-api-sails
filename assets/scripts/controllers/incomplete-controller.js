@@ -69,6 +69,7 @@ angular.module('fmApp')
   }
 
   $scope.showIncForm = function (data) {
+    $scope.hasError = false;
     clearForm();
     $scope.incForm = data;
     $scope.incCaseForm.$setPristine();
@@ -114,7 +115,7 @@ angular.module('fmApp')
         $scope.snackbarShow('Completed case(s)');
       }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true, "Insufficient bottles to complete a case.");
+        $scope.showErrorMessage(true, body.message);
       }
 
        $scope.$digest();

@@ -354,15 +354,15 @@
             <h3><strong>NO ROUTES! </strong></h3>
           </div>
 
+            <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+              <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
+               <strong>{{errorMessage}}</strong>
+            </div>
+
           <div ng-show="addRouteBox">
               <h4><i class="mdi-content-add-circle"></i> ADD ROUTE</h4>
 
             <form name="routeAddForm" ng-submit="addRoute(route)" novalidate>
-
-            <div ng-show="hasError" class="alert alert-dismissable alert-danger">
-                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
-                     <strong>{{errorMessage}}</strong>
-                  </div>
 
               <div class="alert alert-dismissable alert-danger" ng-show="existingAddressInRouteError">
                 <button type="button" class="close" ng-click="showExistingAddressInRouteError(false)">×</button>
@@ -373,6 +373,8 @@
              <br>
 
               <div class="form-group">
+
+
                         <label for="select" class="col-md-3">Company:</label>
                         <div class="col-md-7">
                             <select class="form-control" ng-change="getAdressesAvailable(route.company)" ng-model="route.company" ng-init="route.company = companies[0]">
@@ -433,6 +435,7 @@
 <!--  HIDE FOR PRINTER   -->
 </div>
 <br>
+
          <div class="form-group" ng-hide="noRoutes">
           <label for="select" ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-3' : 'col-md-2'">Company:</label>
             <div ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-2' : 'col-md-3'">

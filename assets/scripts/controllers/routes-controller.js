@@ -190,6 +190,7 @@ angular.module('fmApp')
   };
 
   $scope.showAddRouteBox = function (data){
+    $scope.hasError = false;
      $scope.getAdressesAvailable("Coca-Cola");
      $scope.route.company = $scope.companies[0];
     if($scope.editIndex !== -1){
@@ -308,11 +309,11 @@ angular.module('fmApp')
          $scope.companySelect = route.company;
          $scope.showAddRouteBox(false);
          $scope.snackbarShow('Route Added');
-         $scope.$digest();
       } else if (JWR.statusCode === 400){
         console.log("Error Occured");
         $scope.showErrorMessage(true, body.message);
       }
+         $scope.$digest();
     }); 
   };
 
@@ -332,8 +333,11 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
         console.log("Delete LoadOut");
         $scope.snackbarShow('Route Deleted');
-        $scope.$digest();
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.showErrorMessage(true, body.message);
       }
+        $scope.$digest();
     });
   }; 
 

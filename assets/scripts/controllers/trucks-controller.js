@@ -309,10 +309,9 @@ angular.module('fmApp')
       if(JWR.statusCode === 200){
          $scope.editIndex = -1;
          $scope.snackbarShow('Truck Deleted');
-      }
-      else if (JWR.statusCode === 500){
+      }else if (JWR.statusCode === 400){
         console.log("Error Occured");
-        $scope.showErrorMessage(true,body);
+        $scope.showErrorMessage(true,body.message);
       }
 
        $scope.$digest();

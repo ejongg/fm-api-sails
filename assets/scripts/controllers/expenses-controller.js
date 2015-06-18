@@ -239,6 +239,7 @@ angular.module('fmApp')
   }
 
   $scope.showAddExpenseForm = function (data) {
+    $scope.hasError = false;
     $scope.addExpenseForm = data;
     if(data === false){
       console.log("Close");
