@@ -28,6 +28,7 @@ angular.module('fmApp')
 
   $scope.totalAmount = 0;
   $scope.totalDeposit = 0;
+  $scope.totalDiscount = 0;
   $scope.count = 0;
   $scope.casesMax = 0;
 
@@ -35,6 +36,7 @@ angular.module('fmApp')
   $scope.invents = [];
   $scope.pricePerEmpt = 0;
   $scope.returnedValue = 0;
+  //$scope.priceperempty = 0;
 
   //$scope.temp = [];
 
@@ -93,6 +95,7 @@ angular.module('fmApp')
     console.log("SKU SELECTED");
     console.log(sku);
     var idSku = sku.id;
+
 
     console.log("ID");
     console.log(idSku);
@@ -206,7 +209,7 @@ angular.module('fmApp')
     if($scope.itemExistingTransactionError === true){
      $scope.showItemExistingTransactionError(false);
     }
-
+    console.log("ITEM");
     console.log(item);
     var itemInfo = {
       "sku_id" : item.sku.id,
@@ -217,7 +220,8 @@ angular.module('fmApp')
       "bottles" : item.extraBottles,
       "cases" : item.cases,
       "discountpercase": item.discount,
-      "amount" : (item.extraBottles * item.sku.priceperbottle) + (item.cases * item.sku.pricepercase)
+      "amount" : (item.extraBottles * item.sku.priceperbottle) + (item.cases * item.sku.pricepercase),
+      "pricepercase" : item.sku.pricepercase
     };
 
     var returnInfo = {
@@ -227,7 +231,8 @@ angular.module('fmApp')
       "bottles" : item.return_extraBottles,
       "cases" : item.return_cases,
       "bottlespercase" : item.sku.bottlespercase,
-      "deposit": item.deposit
+      "deposit": item.deposit,
+      "priceperempty" :  item.sku.priceperempty
     };
 
 
@@ -238,11 +243,17 @@ angular.module('fmApp')
      //$scope.count = $scope.count - item.cases;
      console.log($scope.totalDeposit);
 
+     if($scope.transaction.discount == null){
+        $scope.transaction.discount = 0;
+      }
+
      if( _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id }) === -1 ){
       $scope.transactionItems.push(itemInfo);
       $scope.returnsItems.push(returnInfo);
       $scope.totalAmount += itemInfo.amount ;
       $scope.totalDeposit += returnInfo.deposit;
+      $scope.totalDiscount += $scope.transaction.discount;
+
     }else{
       var index = _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id });
       $scope.transactionItems[index].bottles += itemInfo.bottles;
@@ -252,7 +263,8 @@ angular.module('fmApp')
       $scope.returnsItems[index].cases += returnInfo.cases;
       $scope.returnsItems[index].deposit += returnInfo.deposit;
       $scope.totalDeposit += returnInfo.deposit;
-      $scope.totalAmount += itemInfo.amount ;
+      $scope.totalAmount += itemInfo.amount;
+      $scope.totalDiscount += $scope.transaction.discount;
       $scope.showItemExistingTransactionError(true,itemInfo.sku_name);
     }
 
