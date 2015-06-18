@@ -6,7 +6,6 @@ angular.module('fmApp')
   $scope.bays = [];
   $scope.incForm = false;
   $scope.incVal = {};
-
   $scope.noIncomplete = false;
   $scope.noBays = false;
 
@@ -80,7 +79,10 @@ angular.module('fmApp')
   };
 
   $scope.incompleteClicked = function (inc){
+    console.log(inc);
+    console.log(inc.sku_id.sku_name);
     $scope.incCaseForm.$setPristine();
+    $scope.incVal.brand_name = inc.sku_id.sku_name;
     $scope.incVal = inc;
     $scope.incVal.bay = $scope.bays[0];
     $scope.showIncForm(true);
