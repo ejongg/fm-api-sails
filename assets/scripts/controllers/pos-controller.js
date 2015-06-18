@@ -122,7 +122,7 @@ angular.module('fmApp')
   $scope.getMaxDeposit = function () {
     $scope.maxDeposit = (($scope.transaction.extraBottles+($scope.transaction.cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
     $scope.returnedValue = (($scope.transaction.return_extraBottles+($scope.transaction.return_cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
-    $scope.transaction.deposit = $scope.returnedValue;
+    $scope.transaction.deposit = ($scope.maxDeposit - $scope.returnedValue);
     console.log("DEPOSIT MAX:");
     console.log($scope.maxDeposit);
     console.log("Returned Value");

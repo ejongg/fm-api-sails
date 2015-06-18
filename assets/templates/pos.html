@@ -187,7 +187,7 @@
                   <th>Brand&nbsp;</th>
                   <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
-                  <th>Amount</th>
+                  <th>Deposit needed</th>
                   <th></th>
                 </tr>
             </thead>
@@ -204,9 +204,9 @@
         </table>
 
          <div class="form-group pull-right"><br/>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total Amount: {{totalAmount | currency : '₱'}}</legend>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total Deposit: {{totalDeposit | currency : '₱'}}</legend>
-                <legend class="col-md-12 col-md-offset-1 panel"> Amount to be paid : {{(totalAmount-totalDeposit) | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Amount: {{totalAmount | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Total deposit Needed: {{totalDeposit | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Total amount : {{(totalAmount+totalDeposit) | currency : '₱'}}</legend>
             </div>
     </div>
 </div>
