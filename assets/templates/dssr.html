@@ -111,14 +111,14 @@
              <div class="form-group col-md-4">
                <label class="col-md-4">Start Date</label> 
                <div class="col-md-12">
-              <input type="date" name="startD" class="form-control" max="{{formatDate(dateToday)}}" ng-model="startDate" required>
+              <input type="date" name="startD" class="form-control" max="{{formatDate(startDateMax)}}" ng-model="startDate" required>
                 </div>
              </div>
 
              <div class="form-group col-md-4">
                 <label class="col-md-4">End Date</label> 
                <div class="col-md-12">
-               <input type="date" name="endD" class="form-control" min="{{formatDate(startDate)}}" max="{{formatDate(dateToday)}}" ng-model="endDate" required>
+               <input type="date" name="endD" class="form-control" min="{{formatDate(startDate)}}" max="{{formatDate(endDateMax)}}" ng-model="endDate" required>
                </div>
              </div>
 

@@ -14,6 +14,11 @@ angular.module('fmApp')
   $scope.endDate = new Date();
   $scope.start = new Date();
   $scope.end = new Date();
+  $scope.endDateMax = new Date();
+  $scope.endDateMax.setDate($scope.endDate.getDate() + 1);
+  $scope.startDateMax = new Date();
+  $scope.startDateMax.setDate($scope.startDate.getDate() + 1);
+
 
   $scope.labels = ['Purchases', 'Expenses', 'Empties', 'Income', 'Sales to Trade'];
   $scope.series = ['DSSR'];

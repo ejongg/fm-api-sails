@@ -352,15 +352,20 @@
                                 </span>
                             </a>
                         </th>
+                        <th>   
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr dir-paginate="order in ordersList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="getOrderProducts(order.id)" current-page="currentPage" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
+                    <tr dir-paginate="order in ordersList | filter:search | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" current-page="currentPage" data-toggle="modal" data-target="#myModal" data-animation="am-flip-x" data-placement="center" bs-modal="modal">
                         <td>{{order.customer_id.establishment_name}}</td>
                         <td>{{order.date_received}}</td>
                         <td>{{order.supplieragent_name}}</td>
                         <td>{{order.status}}</td>
+                        <td>
+                            <button ng-click="open(order)">CANCEL</button>
+                            <button ng-click="getOrderProducts(order.id)">VIEW</button></td>
                     </tr>
 
                 </tbody>
@@ -399,7 +404,6 @@
                     <tr>
                         <th>SKU</th>
                         <th>Cases</th>
-                        <th>Price Per Case</th>
                     </tr>
                 </thead>
 
@@ -407,7 +411,6 @@
                     <tr ng-repeat="product in orderProducts.products">
                         <td>{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
                         <td>{{product.cases}}</td>
-                        <td style="text-align:right">{{product.sku_id.pricepercase | currency:"₱ "}}</td>
                     </tr>
 
 
