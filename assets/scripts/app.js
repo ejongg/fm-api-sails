@@ -61,15 +61,6 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
           }
         }  
       })
-      .state('admin.bays', {
-        url:'/inventory/bays',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/bays.html',
-            controller:'BaysCtrl'
-          }
-        }  
-      })
       .state('admin.trucks', {
         url:'/delivery/trucks',
         views: {
@@ -123,6 +114,16 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
           'mainContent': {
             templateUrl: 'templates/edit-account.html',
             controller:'AccountsEditCtrl'
+          }
+        }  
+      })
+
+      .state('encoder.bays', {
+        url:'/inventory/bays',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/bays.html',
+            controller:'BaysCtrl'
           }
         }  
       })

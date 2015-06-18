@@ -20,7 +20,7 @@
                             </div>
                         </li>
                         <li>
-                            <a ng-hide="addBayForm" ng-click="showAddBayForm(true)">
+                            <a ng-hide="addBayForm || userType === 'encoder'" ng-click="showAddBayForm(true)">
                                 <h6><i class="mdi-content-add-box"/> &nbsp; ADD LINES</h6></a>
 
                         </li>
@@ -109,7 +109,7 @@
                         <li>
                             <a ng-click="setEditBayTab(true)"><i class="mdi-editor-mode-edit"/>&nbsp;Edit Line</a>
                         </li>
-                        <li>
+                        <li ng-hide="userType === 'encoder'">
                             <a ng-click="setEditBayTab(false)"><i class="mdi-action-delete"/>&nbsp;Delete Line</a>
                         </li>
                     </ul>
@@ -135,7 +135,10 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Company</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-change="changeCompany()" ng-model="companySelectedEdit">
+                            <select ng-hide="userType === 'encoder'" class="form-control" ng-change="changeCompany()" ng-model="companySelectedEdit">
+                              <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                            </select>
+                            <select ng-show="userType === 'encoder'" class="form-control" ng-change="changeCompany()" ng-model="companySelectedEdit" disabled>
                               <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
                             </select>
                         </div>
@@ -144,7 +147,10 @@
                     <div class="form-group">
                         <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
                         <div class="col-md-12">
-                            <select class="form-control" ng-model="bayEdit.sku" ng-options="sku as combine(sku) for sku in skuLists | filter: companySelectedEdit" required>
+                            <select ng-hide="userType === 'encoder'" class="form-control" ng-model="bayEdit.sku" ng-options="sku as combine(sku) for sku in skuLists | filter: companySelectedEdit" required>
+                                <option value="" disabled>Select SKU</option>
+                            </select>
+                            <select ng-show="userType === 'encoder'" class="form-control" ng-model="bayEdit.sku" ng-options="sku as combine(sku) for sku in skuLists | filter: companySelectedEdit" disabled>
                                 <option value="" disabled>Select SKU</option>
                             </select>
                         </div>
@@ -153,7 +159,10 @@
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Line Number</label>  
-                        <div class="col-md-12"><input type="text" name="inputBayName" maxlength="5" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" required>
+                        <div class="col-md-12">
+                          <input ng-hide="userType === 'encoder'" type="text" name="inputBayName" maxlength="5" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" required>
+
+                          <input ng-show="userType === 'encoder'" type="text" name="inputBayName" maxlength="5" class="form-control" placeholder="Enter establishment name." ng-model="bayEdit.bay_name" disabled>
                          <strong class="fbackMsg" ng-show="editBayForm.inputBayName.$dirty && editBayForm.inputBayName.$invalid"> Line name required!  </strong>
                         </div>
                     </div>
@@ -161,7 +170,9 @@
 
                     <div class="form-group">
                         <label for="inputEstablishmentName" class="col-md-4">Line Limit</label>  
-                          <div class="col-md-12"><input type="number" name="inputBayLimit" min="0" class="form-control" placeholder="Enter bay label." ng-model="bayEdit.bay_limit" required>
+                          <div class="col-md-12">
+                          <input ng-hide="userType === 'encoder'" type="number" name="inputBayLimit" min="0" class="form-control" placeholder="Enter bay label." ng-model="bayEdit.bay_limit" required>
+                          <input ng-show="userType === 'encoder'" type="number" name="inputBayLimit" min="0" class="form-control" placeholder="Enter bay label." ng-model="bayEdit.bay_limit" disabled>
                           <strong class="fbackMsg" ng-show="editBayForm.inputBayLimit.$invalid &&editBayForm.inputBayLimit.$dirty"> Line limit required! Enter numbers only. </strong>
 
                         </div>
