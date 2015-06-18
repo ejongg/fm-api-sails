@@ -334,10 +334,11 @@
                          <div class="form-group" ng-hide="noEmployees">
                           <label for="select" ng-class = "addEmployeesForm || editOrDeleteEmployeesForm ? 'col-md-3' : 'col-md-2'">Office :</label>
                             <div ng-class = "addEmployeesForm || editOrDeleteEmployeesForm ? 'col-md-3' : 'col-md-2'">
-                                <select class="form-control" ng-init="companySelect = 'Coca-Cola'" ng-model="companySelect" ng-change="getAdressesAvailable(companySelect)">
+                                <select class="form-control" ng-init="companySelect = 'FM'" ng-model="companySelect" ng-change="getAdressesAvailable(companySelect)">
+                                <option value="FM">FM Office</option>
                                   <option value="Coca-Cola">Coca-Cola Office</option>
                                   <option value="SMB">SMB Office</option>
-                                  <option value="FM">FM Office</option>
+                                  
                                 </select>
                             </div>
                           </div>

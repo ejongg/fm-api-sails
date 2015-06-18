@@ -215,30 +215,14 @@
         </table>
 
 
-         <div align="right"><br/>
+         <div align="left"><br/>
             
             <div class="form-group col-md-12" >
-               <legend class="col-md-2 pull-right">{{totalAmount  | currency:"₱"}}
-              </legend>
-              <legend class="col-md-4 pull-right "> Amount</legend>
-            </div>
+               <legend> Amount: <div class="pull-right">{{totalAmount  | currency:"₱"}}</div></legend>
+               <legend>Total deposit Needed:<div class="pull-right">{{totalDeposit  | currency:"₱"}}</div> </legend>
+               <legend>Total Discount:<div class="pull-right">{{totalDiscount  | currency:"₱"}}</div></legend>
+               <legend class="panel">Total amount:<u class="pull-right" Style="border-bottom:1px solid black;">{{(totalAmount+totalDeposit) - totalDiscount  | currency:"₱"}}</u></legend>
 
-            <div class="form-group col-md-12" >
-               <legend class="col-md-2 pull-right">{{totalDeposit  | currency:"₱"}}
-              </legend>
-              <legend class="col-md-5 pull-right "> Total deposit Needed:</legend>
-            </div>
-
-            <div class="form-group col-md-12" >
-               <legend class="col-md-2 pull-right">{{totalDiscount  | currency:"₱"}}
-              </legend>
-              <legend class="col-md-4 pull-right "> Total Discount:</legend>
-            </div>
-
-             <div class="form-group" >
-               <legend class="col-md-2 pull-right panel">{{(totalAmount+totalDeposit) - totalDiscount  | currency:"₱"}}
-              </legend>
-              <legend class="col-md-4 pull-right  panel">Total amount:</legend>
             </div>
 
           </div>
