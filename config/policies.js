@@ -91,7 +91,8 @@ module.exports.policies = {
 
   AddressController : {
     create : 'UniqueAddressPolicy',
-    destroy : 'DeleteAddressPolicy'
+    destroy : 'DeleteAddressPolicy',
+    remove : 'RouteLastAddressPolicy'
   },
 
   RoutesController : {

@@ -53,7 +53,7 @@ module.exports = {
 				return Customer_orders.update({id : order.order_id}, {status : "Pending"});
 			})
 
-			.then(function (updateCustomerOrder){
+			.then(function (updatedCustomerOrder){
 				Customer_orders.findOne({id : updatedCustomerOrder[0].id}).populateAll()
 					.then(function (detailedOrder){
 						sails.sockets.blast('customer_orders', {verb : "updated", data : detailedOrder});
