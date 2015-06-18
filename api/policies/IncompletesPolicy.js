@@ -1,16 +1,26 @@
+var Promise = require('bluebird');
+
 module.exports = function (req, res, next){
 	var product = req.body.products;
 
-	Incomplete_cases.findOne({sku_id : product.sku_id, exp_date : product.exp_date})
-		.then(function (item){
+	Incomplete_cases.find({sku_id : product.sku_id})
+		.then(function (items){
+			return items;
+		})
 
-			bottlesToDeduct = product.cases * product.bottlespercase;
+		.reduce(function (runningTotal, item){
 
-			if(item.bottles < bottlesToDeduct){
-				return res.send({message : "Insufficient bottles in Incomplete bay"}, 400)
+			return new Promise(function (resolve){
+				resolve(runningTotal + item.bottles);
+			});
+
+		}, 0)
+
+		.then(function (totalBottles){
+			if(totalBottles < product.cases * product.bottlespercase){
+				return res.send({message : "Insufficient bottles in Incomplete line"}, 400)
 			}else{
 				next();
 			}
-
 		})
 };

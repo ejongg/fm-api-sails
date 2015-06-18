@@ -10,28 +10,46 @@ var moment = require("moment");
 module.exports = {
 	assembleCase : function (req, res){
 		var product = req.body.products;
+		var totalBottles = product.cases * product.bottlespercase;
+		var productionDate = null;
 
-		var productionDate =moment(product.exp_date, "YYYY-MM-DD").subtract(product.lifespan, 'M').format('YYYY-MM-DD');
-
-		InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay_id, productionDate, product.lifespan)	
-			.then(function (){
-
-				return new Promise(function (resolve, reject){
-					Incomplete_cases.findOne({sku_id : product.sku_id, exp_date : product.exp_date})
-						.then(function (item){
-							resolve(item);
-						})
-				});
+		Incomplete_cases.find({sku_id : product.sku_id, bottles : {'!' : 0}}).sort('exp_date ASC')
+			.then(function (foundItems){
+				productionDate = foundItems[0].prod_date;
+				return foundItems;
 			})
 
-			.then(function (item){
-				item.bottles = item.bottles - (product.cases * product.bottlespercase);
+			.then(function (items){
+				var index = 0;
 
-				item.save(function (err, saved){
-					sails.sockets.blast('inventory', {verb : "updated"});
-					sails.sockets.blast("incomplete_cases", {verb : "updated", data : saved});
-					return res.send('Case assembled', 201);
-				});
+				async.whilst(function(){
+					return totalBottles > 0;
+				},
+
+				function (cb){
+					if(items[index].bottles > 0){
+						IncompleteCasesService.deduct(items[index], totalBottles)
+							.then(function (remainingBottles){
+								totalBottles = remainingBottles;
+								index++;
+								cb();
+							})
+					}else{
+						index++;
+						cb();
+					}
+				},
+
+				function (err){
+					if(err) return res.send(err, 400);
+
+					InventoryService.put(product.sku_id, product.cases, product.bottlespercase, product.bay_id, productionDate, product.lifespan)
+						.then(function (){
+							sails.sockets.blast('incomplete_cases', {verb : "updated"});
+							sails.sockets.blast('inventory', {verb : "updated"});
+							return res.send('Case assembled', 201);
+						})
+				})
 			})
 	},
 
@@ -45,19 +63,29 @@ module.exports = {
 
 			.each(function (item){
 				return new Promise(function (resolve){
-					SkuService.getProductName(item.sku_id.id).then(function (brandName){
-						item.brand_name = brandName;
-					})
+					var index = _.findIndex(list, {sku : item.sku_id.id});
 
-					.then(function (){
-						return SkuService.getSkuCompleteName(item.sku_id.id);
-					})
+					if(index == -1){
+						item.sku = item.sku_id.id;
+						SkuService.getProductName(item.sku_id.id).then(function (brandName){
+							item.brand_name = brandName;
+						})
 
-					.then(function (completeSkuName){
-						item.sku_id.sku_name = completeSkuName;
-						list.push(item);
+						.then(function (){
+							return SkuService.getSkuCompleteName(item.sku_id.id);
+						})
+
+						.then(function (completeSkuName){
+							item.sku_id.sku_name = completeSkuName;
+							list.push(item);
+							resolve();
+						})
+
+					}else{
+						list[index].bottles = list[index].bottles + item.bottles;
 						resolve();
-					})
+					}
+					
 				});
 			})
 
