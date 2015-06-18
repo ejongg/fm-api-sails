@@ -196,7 +196,7 @@
                   <th>Brand&nbsp;</th>
                   <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
-                  <th>Price per empty</th>
+                  <th>Price per empty bottle</th>
                   <th>Deposit needed</th>
                   <th></th>
                 </tr>
@@ -214,12 +214,43 @@
             </tbody>
         </table>
 
+<<<<<<< HEAD
          <div class="form-group pull-right"><br/>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total amount : {{totalAmount | currency : '₱'}}</legend>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total deposit Needed: {{totalDeposit | currency : '₱'}}</legend>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total Discount: {{totalDiscount | currency : '₱'}}</legend>
                  <legend class="col-md-12 col-md-offset-1 panel"> Amount to be paid: {{(totalAmount+totalDeposit)-totalDiscount | currency : '₱'}}</legend>
+=======
+         <div align="right"><br/>
+            
+            <div class="form-group col-md-12" >
+               <legend class="col-md-2 pull-right">{{totalAmount  | currency:"₱"}}
+              </legend>
+              <legend class="col-md-4 pull-right "> Amount</legend>
             </div>
+
+            <div class="form-group col-md-12" >
+               <legend class="col-md-2 pull-right">{{totalDeposit  | currency:"₱"}}
+              </legend>
+              <legend class="col-md-5 pull-right "> Total deposit Needed:</legend>
+>>>>>>> origin/unstable_with_frontend
+            </div>
+
+            <div class="form-group col-md-12" >
+               <legend class="col-md-2 pull-right">{{totalDiscount  | currency:"₱"}}
+              </legend>
+              <legend class="col-md-4 pull-right "> Total Discount:</legend>
+            </div>
+
+             <div class="form-group" >
+               <legend class="col-md-2 pull-right panel">{{(totalAmount+totalDeposit)  | currency:"₱"}}
+              </legend>
+              <legend class="col-md-4 pull-right">Total amount:</legend>
+            </div>
+
+          </div>
+
+
     </div>
 </div>
 
