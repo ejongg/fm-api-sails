@@ -133,11 +133,11 @@
                 <tbody>
                     <tr dir-paginate="item in inventory | filter:search | filter:companySelect | orderBy:sortCriteria:reverseSort | itemsPerPage: noOfRows" ng-click="itemClicked(item)">
                         <td width="15%">{{item.bay_id.bay_name + " " +item.bay_id.bay_label }}</td>
-                        <td width="15%">{{item.sku_name}}</td>
+                        <td width="15%">{{item.brand_name+ " " +item.sku_name + " " + item.size}}</td>
                         <td width="15%">{{item.exp_date}}</td>
                         <td width="5%">{{item.age}}</td>
                         <td width="15%">{{item.physical_count}}</td>
-                    </tr>
+                    </tr> +
 
                     <!-- DON'T REMOVE CODE BELOW -->
 
