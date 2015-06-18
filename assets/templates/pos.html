@@ -161,7 +161,10 @@
                   <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
                   <th>Price per case</th>
+                  <th>Discount per case</th>
                   <th>Amount</th>
+                  <th>Total discount</th>
+                  <th>Discounted amount</th>
                   <th></th>
                 </tr>
             </thead>
@@ -171,8 +174,11 @@
                     <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
-                    <td>{{item.pricepercase}}</td>  
+                    <td>{{item.pricepercase}}</td>
+                    <td>{{item.discountpercase}}</td>
                     <td>{{item.amount}}</td>
+                    <td>{{(item.cases * item.discountpercase)}}</td>
+                    <td>{{(item.amount - (item.cases * item.discountpercase))}}</td>
               
                   <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
                 </tr>
@@ -209,10 +215,10 @@
         </table>
 
          <div class="form-group pull-right"><br/>
-                <legend class="col-md-12 col-md-offset-1 panel"> Amount: {{totalAmount | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Total amount : {{totalAmount | currency : '₱'}}</legend>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total deposit Needed: {{totalDeposit | currency : '₱'}}</legend>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total Discount: {{totalDiscount | currency : '₱'}}</legend>
-                <legend class="col-md-12 col-md-offset-1 panel"> Total amount : {{(totalAmount+totalDeposit) | currency : '₱'}}</legend>
+                 <legend class="col-md-12 col-md-offset-1 panel"> Amount to be paid: {{(totalAmount+totalDeposit)-totalDiscount | currency : '₱'}}</legend>
             </div>
     </div>
 </div>

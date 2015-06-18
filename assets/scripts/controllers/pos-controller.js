@@ -255,7 +255,7 @@ angular.module('fmApp')
       $scope.returnsItems.push(returnInfo);
       $scope.totalAmount += itemInfo.amount ;
       $scope.totalDeposit += returnInfo.deposit;
-      $scope.totalDiscount += $scope.transaction.discount;
+      $scope.totalDiscount += (itemInfo.discountpercase * itemInfo.cases);
 
     }else{
       var index = _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id });
@@ -267,7 +267,7 @@ angular.module('fmApp')
       $scope.returnsItems[index].deposit += returnInfo.deposit;
       $scope.totalDeposit += returnInfo.deposit;
       $scope.totalAmount += itemInfo.amount;
-      $scope.totalDiscount += $scope.transaction.discount;
+      $scope.totalDiscount += (itemInfo.discountpercase * itemInfo.cases);
       $scope.showItemExistingTransactionError(true,itemInfo.sku_name);
     }
 
