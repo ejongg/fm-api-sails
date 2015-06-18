@@ -132,15 +132,7 @@
                             </a>
                           </th>
 
-                          <th>
-                            <a href="" ng-click="sortCriteria='exp_date'; reverseSort = !reverseSort" class="thlink">
-                              EXPIRATION DATE
-                              <span ng-show="sortCriteria == 'exp_date'">
-                                <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
-                                <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
-                              </span>
-                            </a>
-                          </th>
+                          
 
                           <th>
                             <a href="" ng-click="sortCriteria='bottles'; reverseSort = !reverseSort" class="thlink">
@@ -159,8 +151,8 @@
 
                     <tr dir-paginate="inc in incompleteCases | filter:search | orderBy:sortCriteria:sortCriteria | itemsPerPage: noOfRows"  ng-click="incompleteClicked(inc)">
 
-                      <td width="33%">{{inc.sku_id.sku_name + " " + inc.sku_id.size}}</td>
-                      <td width="33%">{{inc.exp_date}}</td>
+                      <td width="33%">{{inc.sku_id.sku_name}}</td>
+
                       <td width="33%">{{inc.bottles}}</td>
 
                     </tr>
