@@ -123,7 +123,7 @@
         </div>
         
         <div class="form-group">
-          <label for="select" class="col-md-3">Returned Cases{{transactionForm.transReturnCases.$invalid}}</label>
+          <label for="select" class="col-md-3">Returned Cases</label>
           <div class="col-md-9">
             <input type="number" ng-model="transaction.return_cases" ng-change="getMaxDeposit()" name="transReturnCases"  min="0" max="{{transaction.cases}}" class="form-control" placeholder="Enter number of cases." required>
 
@@ -205,9 +205,10 @@
 
          <div class="form-group pull-right"><br/>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total Amount: {{totalAmount | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Total Deposit: {{totalDeposit | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Amount to be paid : {{totalDeposit | currency : '₱'}}</legend>
             </div>
     </div>
-
 </div>
 
 <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' " class="btn btn-primary btn-lg pull-right">Done</div>

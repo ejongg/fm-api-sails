@@ -122,7 +122,7 @@ angular.module('fmApp')
   $scope.getMaxDeposit = function () {
     $scope.maxDeposit = (($scope.transaction.extraBottles+($scope.transaction.cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
     $scope.returnedValue = (($scope.transaction.return_extraBottles+($scope.transaction.return_cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
-    $scope.transaction.deposit = $scope.maxDeposit - $scope.returnedValue;
+    $scope.transaction.deposit = $scope.returnedValue;
     console.log("DEPOSIT MAX:");
     console.log($scope.maxDeposit);
     console.log("Returned Value");
@@ -236,19 +236,23 @@ angular.module('fmApp')
      console.log(itemInfo);
      console.log(returnInfo);
      //$scope.count = $scope.count - item.cases;
-     $scope.totalDeposit += returnInfo.deposit;
      console.log($scope.totalDeposit);
 
      if( _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id }) === -1 ){
       $scope.transactionItems.push(itemInfo);
       $scope.returnsItems.push(returnInfo);
       $scope.totalAmount += itemInfo.amount ;
+      $scope.totalDeposit += returnInfo.deposit;
     }else{
       var index = _.findIndex($scope.transactionItems,{ 'sku_id': itemInfo.sku_id });
       $scope.transactionItems[index].bottles += itemInfo.bottles;
       $scope.transactionItems[index].cases += itemInfo.cases;
+      $scope.transactionItems[index].amount += itemInfo.amount;
       $scope.returnsItems[index].bottles += returnInfo.bottles;
       $scope.returnsItems[index].cases += returnInfo.cases;
+      $scope.returnsItems[index].deposit += returnInfo.deposit;
+      $scope.totalDeposit += returnInfo.deposit;
+      $scope.totalAmount += itemInfo.amount ;
       $scope.showItemExistingTransactionError(true,itemInfo.sku_name);
     }
 
