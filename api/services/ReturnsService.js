@@ -80,7 +80,7 @@ module.exports = {
 
 	getReturnsAmount : function (returnId, deposit){
 		return new Promise(function (resolve){
-			var totalAmount = deposit;
+			var totalAmount = 0;
 
 			Returns_products.find({return_id : returnId})
 				.then(function (foundProducts){

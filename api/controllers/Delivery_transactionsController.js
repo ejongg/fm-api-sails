@@ -160,7 +160,12 @@ module.exports = {
 
 						.spread(function (returnsAmount, foundDelivery){
 							var newAmount = foundDelivery.total_amount - returnsAmount;
-							resolve(Delivery_transactions.update({id : deliveryId}, {returns_id : returnId, total_amount : newAmount}));
+							return Delivery_transactions.update({id : deliveryId}, {returns_id : returnId, total_amount : newAmount});
+						})
+
+						.then(function (updatedDelivery){
+							var newAmount = updatedDelivery.total_amount + deposit;
+							resolve(Delivery_transactions.update({id : deliveryId}, {total_amount : newAmount}));
 						})
 					
 				})
