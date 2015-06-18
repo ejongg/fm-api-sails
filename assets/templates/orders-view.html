@@ -74,6 +74,15 @@
                                 </span>
                             </a>
                         </th>
+                        <th>
+                            <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
+                                Bottles per Case
+                                <span ng-show="sortCriteria == 'supplieragent_name'">
+                                    <span class="mdi-navigation-expand-less upa" ng-show="!reverseSort"></span>
+                                    <span class="mdi-navigation-expand-more downa" ng-show="reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
                         <th style="text-align: right">
                             <a href="" ng-click="sortCriteria=''; reverseSort = !reverseSort" class="thlink">
                                Price per Case
@@ -120,6 +129,7 @@
                     <tr ng-repeat="prod in order.products">
                         <td>{{prod.sku_id.brand_name + " " + prod.sku_id.sku_name + " " + prod.sku_id.size}}</td>
                         <td>{{prod.cases}} cases</td>
+                        <td>{{prod.sku_id.bottlespercase}} bottles</td>
                         <td align="right">{{prod.sku_id.pricepercase | currency:"₱"}}</td>
                         <td align="right">{{prod.sku_id.pricepercase * prod.cases | currency:"₱"}}</td>
                         <td align="right">{{prod.sku_id.priceperbottle | currency:"₱"}}</td>
