@@ -37,8 +37,13 @@
 <!-- DO NOT REMOVE-->
 <div class="container">
 
-    <!-- LEFT PANEL -->
+   
+
+        <!-- LEFT PANEL -->
     <div ng-class="addTruckForm ? 'col-xs-12 col-md-4' : ''">
+
+    
+
     <div class="panel" ng-show="addTruckForm">
         <div class="panel-body">
 
@@ -97,13 +102,11 @@
                     </div>
 
                     <div class="form-group">
-                        <div ng-show="noRoute" class=" col-md-9">No Routes</div>
-                        <div ng-hide="noRoute">
-                        <label for="inputRoute" class="col-md-6">Route</label> 
-                        <div class="col-md-12">
-                        <select class="form-control" id="selectType" ng-model="truck.route" 
-                        ng-options="route as combine(route) for route in routes">
-                        </select>
+                        <label for="inputRoute" class="col-md-6">Route</label> <div ng-show="noRoute" class=" col-md-9">No Routes</div>
+                        <div class="col-md-12" ng-hide="noRoute">
+                            <select class="form-control" id="selectType" ng-model="truck.route" 
+                            ng-options="route as combine(route) for route in routes">
+                            </select>
                         </div>
                     </div>
 
@@ -131,14 +134,15 @@
 
     <div ng-class="addTruckForm ? 'col-xs-12 col-md-8' : ''">
         <div class="panel">
-            <div class="panel-body">
 
+       
 
-                    <div ng-show="hasError" class="alert alert-dismissable alert-danger">
-                         <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
-                         <strong>"Truck cannot be deleted!"</strong>
-                    </div> 
-
+             <div class="col-md-12" >  <br/>
+                <div ng-show="hasError" class="alert alert-dismissable alert-danger col-md-offset-3 col-md-6" align="center">
+                    <button type="button" class="close" ng-click="showErrorMessage( false)">×</button>
+                        <strong>{{errorMessage}}</strong>
+                </div>
+            </div>
 
             <div ng-show="noTrucks" align="center">
             <h3 ng-hide="addTruckForm"><strong>NO TRUCKS!</strong></h3>
