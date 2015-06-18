@@ -377,7 +377,7 @@
 
             <tbody>
                 <tr ng-repeat="product in purchaseInfo.products">
-                    <td width ="15%">{{product.sku_id.brand_name + " " + product.sku_id.sku_name}}</td>
+                    <td width ="15%">{{product.sku_id.brand_name + " " + product.sku_id.sku_name +" "+ product.sku_id.size}}</td>
                     <td width ="1%">{{product.cases}}</td>
                     <td style="text-align:right" width ="10%">{{product.costpercase | currency : "₱" }}</td>
                     <td style="text-align:right" width ="10%">{{product.discountpercase | currency : "₱"}}</td>
