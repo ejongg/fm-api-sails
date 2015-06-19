@@ -345,11 +345,11 @@ angular.module('fmApp')
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-        $scope.returnMsg = body;
+        $scope.returnMsg = "Temporary password:" + " " + body;
         $scope.hasReturn = true;
         $scope.closeForm();
       }else if (JWR.statusCode === 400){
-        $scope.returnMsg = body; 
+        $scope.returnMsg = body.message; 
         $scope.hasReturn = true;
       }
        $scope.$digest();

@@ -295,9 +295,8 @@
 
             <br/>
 
-            <div align="center" ng-show="hasReturn">
-            <label> Temporary Password: </label> <br/>
-              {{returnMsg}} <button class = "btn btn-primary btn-xs" ng-click="closeMsg()">X</button>
+            <div align="center" ng-show="hasReturn" class="alerts">
+              <strong>{{returnMsg}}</strong> <button type="button" class="close" ng-click="closeMsg()">×</button>
             </div>
 
             <div class="form-group col-md-12" align="center" ng-show="resetMode && hasReturn === false">
