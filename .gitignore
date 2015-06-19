@@ -119,3 +119,4 @@ nbproject
 test/bootstrap.test.js
 test/mocha.opts
 test/unit/models/Users.test.js
+*.sql
