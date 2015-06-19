@@ -59,9 +59,13 @@ module.exports = {
 				return Customer_orders.update({delivery_id : deliveryId}, {status : "Delivered"});
 			})
 
-			.then(function (){
-				sails.sockets.blast("inventory", {verb : "updated"});
-				return res.send("Load in successful", 200);
+			.then(function (updatedOrder){
+				Customer_orders.findOne({id : updatedOrder[0].id}).populateAll()
+					.then(function (detailedOrder){
+						sails.sockets.blast('customer_orders', {verb : "updated", data : detailedOrder});
+						sails.sockets.blast("inventory", {verb : "updated"});
+						return res.send("Load in successful", 200);
+					})
 			})
 	},
 
@@ -94,8 +98,12 @@ module.exports = {
 				return Customer_orders.update({delivery_id : deliveryId}, {status : "Delivered"});
 			})
 
-			.then(function (){
-				return res.send("Delivery marked complete", 200);
+			.then(function (updatedOrder){
+				Customer_orders.findOne({id : updatedOrder[0].id}).populateAll()
+					.then(function (detailedOrder){
+						sails.sockets.blast('customer_orders', {verb : "updated", data : detailedOrder});
+						return res.send("Delivery marked complete", 200);
+					})
 			})
 	}
 };

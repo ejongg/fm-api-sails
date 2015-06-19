@@ -139,6 +139,20 @@ module.exports = {
 				return Delivery_transactions.update({id : transaction.id}, {status : "On delivery"});
 			})
 
+			.each(function (transaction){
+				return new Promise(function (resolve){
+					Customer_orders.update({delivery_id : transaction.id}, {status : "On delivery"})
+						.then(function (updatedOrder){
+							return Customer_orders.findOne({id : updatedOrder[0].id}).populateAll()
+						})
+
+						.then(function (detailedOrder){
+							sails.sockets.blast('customer_orders', {verb : "updated", data : detailedOrder});
+							resolve();
+						})
+				});
+			})
+
 			.then(function (){
 				return res.send("Load out confirmed", 200);
 			})

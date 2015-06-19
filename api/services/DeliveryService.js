@@ -53,15 +53,22 @@ module.exports = {
 				})
 
 				.then(function (createdDelivery){
-					return Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id, status : "On delivery"});
+					return Customer_orders.update({id : order.id}, {delivery_id : createdDelivery.id, status : "To be delivered"});
 				})
 
 				.then(function (updatedCustomerOrder){
-					Customer_orders.findOne({id : updatedCustomerOrder[0].id}).populateAll()
-						.then(function (detailedOrder){
-							sails.sockets.blast('customer_orders', {verb : "updated", data : detailedOrder});
-							resolve();
-						})
+					return new Promise(function (resolve){
+
+						Customer_orders.findOne({id : updatedCustomerOrder[0].id}).populateAll()
+							.then(function (detailedOrder){
+								sails.sockets.blast('customer_orders', {verb : "updated", data : detailedOrder});
+								resolve();
+							})
+					});
+				})
+
+				.then(function (){
+					resolve();
 				})
 		});
 	},
