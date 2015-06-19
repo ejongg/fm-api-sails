@@ -385,13 +385,13 @@
 
             </tbody>
         </table>
-             <div ng-show="hasError" class="alert alert-dismissable alert-danger">
-                     <button type="button" class="close" ng-click="showErrorMessage(false)">×</button>
-                     <strong>{{errorMessage}}</strong>
-            </div>
 
             <div class="form-group col-md-12" align="center" ng-show="voidMode">
-            <div ng-show="hasError">{{errMsg.message}}<button ng-click="hasError = false">X</button></div>
+
+            <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" ng-click="hasError = false">×</button>
+                    <strong>{{errMsg.message}}</strong>
+            </div>
               <form name="voidForm" ng-submit="ok(voids)" novalidate>
                <div class="form-group" >
                   <input type="text" class="form-control" placeholder="Enter username." ng-model="voids.username" required>
