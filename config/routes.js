@@ -56,6 +56,7 @@ module.exports.routes = {
 	'GET  /customer-orders/details' : 'Customer_orders.getOrderDetails',
 	'POST /customer-orders/cancel' : 'Customer_orders.cancelOrder',
 	'GET  /customer-orders/list-cancelled' : 'Customer_orders.listCancelledOrders',
+	'GET  /customer-orders/list-all' : 'Customer_orders.listAllOrders',
 
 	/* DELIVERY
 

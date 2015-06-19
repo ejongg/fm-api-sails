@@ -247,6 +247,39 @@ module.exports = {
 					return res.send({message : "Order cancelled"}, 200);
 				})
 			})
+	},
+
+	listAllOrders : function (req, res){
+		Customer_orders.find().populateAll()
+			.then(function (orders){
+				return orders;
+			})
+
+			.each(function (order){
+				return new Promise(function (resolve){
+					new Promise(function (resolve){
+						resolve(order.products);
+					})
+
+					.each(function (product){
+						return new Promise(function (resolve){
+							SkuService.getSkuDetails(product.sku_id)
+								.then(function (detailedSku){
+									product.sku_id = detailedSku;
+									resolve();
+								})
+						});
+					})
+
+					.then(function (){
+						resolve();
+					})
+				});
+			})
+
+			.then(function (orders){
+				return res.send(orders);
+			})
 	}
 };
 
