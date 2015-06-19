@@ -78,7 +78,7 @@
                 NO SKU AVAILABLE
               </div>
               <div ng-hide="noSKU" class="col-md-9">
-                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxReturnedBottles(transaction.sku);getSkuInventoryCount(transaction.sku)" ng-options="sku as combined(sku) group by sku.prod_id.company for sku in skuList" required>
+                <select  class="form-control" ng-model="transaction.sku" name="SKU" ng-change="getMaxReturnedBottles(transaction.sku);getSkuInventoryCount(transaction.sku)" ng-options="sku as combined(sku) group by sku.prod_id.company for sku in skuList" required>
                   <option value="">Select SKU</option>
                 </select>
               </div>
@@ -90,8 +90,12 @@
                 <div class="col-md-9">
                   <input ng-model="transaction.extraBottles" name="extraBottles" type="number" max="{{maxReturnedBottles}}"  min="0" class="form-control" ng-change="getMaxDeposit()" placeholder="Enter number of bottles." required>
 
-                  <strong class="fbackMsg" ng-show="transactionForm.extraBottles.$dirty && transactionForm.extraBottles.$invalid"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
-                </div>
+                  <strong class="fbackMsg" ng-show="transactionForm.extraBottles.$dirty && transactionForm.extraBottles.$invalid && !transactionForm.SKU.$error.required"> Enter numbers only. ({{maxReturnedBottles}}) max for this S.K.U.</strong>
+
+                  <strong class="fbackMsg" ng-show="transactionForm.extraBottles.$dirty && transactionForm.SKU.$error.required"> Select SKU first.</strong>
+
+
+                  </div>
             </div>
             
             <div class="form-group">
@@ -99,14 +103,21 @@
                  <div class="col-md-9">
                  <input ng-model="transaction.cases" ng-change="getMaxDeposit()" name="transCases" type="number" min="0" max="{{count}}"class="form-control" placeholder="Enter number of cases." required>
                  
-                 <strong class="fbackMsg" ng-show="transactionForm.transCases.$dirty && transactionForm.transCases.$invalid"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
+                 <strong class="fbackMsg" ng-show="transactionForm.transCases.$dirty && transactionForm.transCases.$invalid && !transactionForm.SKU.$error.required"> Enter numbers only. Only ({{count}}) is available in inventory. </strong>
+
+                 <strong class="fbackMsg" ng-show="transactionForm.transCases.$dirty && transactionForm.SKU.$error.required"> Select SKU first</strong>
+
+
                  </div>
             </div>
 
             <div class="form-group">
                 <label for="cases" class="col-md-3">Discount</label>
                  <div class="col-md-9">
-                 <input ng-model="transaction.discount" type="number" min="0" step="0.01" class="form-control" placeholder="Enter discount per case." required>
+                 <input ng-model="transaction.discount" name="discount" type="number" min="0" step="0.01" class="form-control" placeholder="Enter discount per case." required>
+
+                 <strong class="fbackMsg" ng-show="transactionForm.discount.$dirty && transactionForm.SKU.$error.required"> Select SKU first</strong>
+
                  </div>
             </div>
 
@@ -119,7 +130,10 @@
           <div class="col-md-9">
             <input type="number" ng-model="transaction.return_extraBottles" ng-change="getMaxDeposit()" name="maxReturnedBot" min="0" max="{{transaction.extraBottles}}" class="form-control" placeholder="Enter number of bottles." required>
 
-            <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.maxReturnedBot.$invalid"> Should not be greater than the extra bottles({{transaction.extraBottles}}).</strong>
+            <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.maxReturnedBot.$invalid && !transactionForm.SKU.$error.required "> Should not be greater than the extra bottles({{transaction.extraBottles}}).</strong>
+
+            <strong class="fbackMsg" ng-show="transactionForm.maxReturnedBot.$dirty && transactionForm.SKU.$error.required"> Select SKU first</strong>
+
           </div>
         </div>
         
@@ -128,7 +142,9 @@
           <div class="col-md-9">
             <input type="number" ng-model="transaction.return_cases" ng-change="getMaxDeposit()" name="transReturnCases"  min="0" max="{{transaction.cases}}" class="form-control" placeholder="Enter number of cases." required>
 
-            <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && {{transaction.return_cases > transaction.cases}}"> Should not be greater than the extra cases({{transaction.cases}}).</strong>
+            <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && transactionForm.transReturnCases.$invalid && !transactionForm.SKU.$error.required "> Should not be greater than the extra cases({{transaction.cases}}).</strong>
+
+            <strong class="fbackMsg" ng-show="transactionForm.transReturnCases.$dirty && transactionForm.SKU.$error.required"> Select SKU first</strong>
 
           </div>
         </div>
@@ -138,7 +154,6 @@
         <label for="select" class="col-md-3">Needed Deposit</label>
         <div class="col-md-9">
           <input ng-model="transaction.deposit" name="deposit" type="number" min="0" max="{{maxDeposit}}"  class="form-control" placeholder="Enter deposit (₱)." disabled>
-
            
         </div>
       </div>

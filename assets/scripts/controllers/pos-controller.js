@@ -36,6 +36,7 @@ angular.module('fmApp')
   $scope.invents = [];
   $scope.pricePerEmpt = 0;
   $scope.returnedValue = 0;
+  $scope.maxReturnedBottles = 0;
   //$scope.priceperempty = 0;
 
   //$scope.temp = [];
@@ -59,9 +60,9 @@ angular.module('fmApp')
         //$scope.maxBottles = $scope.transaction.sku.bottlespercase;
         //$scope.transaction.return_extraBottles = 0;
         //$scope.transaction.return_cases = 0;
-        $scope.getMaxReturnedBottles($scope.transaction.sku);
+        //$scope.getMaxReturnedBottles($scope.transaction.sku);
         $scope.returns.sku = null;
-        $scope.getSkuInventoryCount($scope.skuList[0]);
+        //$scope.getSkuInventoryCount($scope.skuList[0]);
         
         console.log("Available SKU:");
         console.log($scope.skuList);
@@ -114,17 +115,27 @@ angular.module('fmApp')
   };
 
   $scope.getMaxReturnedBottles = function (returns){
+    $scope.transaction.extraBottles = null;
+    $scope.transaction.cases = null;
+    $scope.transaction.discount = null;
+    $scope.transaction.return_extraBottles = null;
+    $scope.transaction.return_cases = null;
+    $scope.transaction.deposit = null;
     console.log("RETURNED:");
+    $scope.transactionForm.$setPristine();
     if(returns != null){
        console.log(returns);
     $scope.maxReturnedBottles = returns.bottlespercase - 1;
     $scope.pricePerEmpt = returns.priceperempty;
     $scope.getMaxDeposit();
     console.log("MAX RETURNED BOTTLES " + $scope.maxReturnedBottles);
+    }else{
+      $scope.maxReturnedBottles = 0;
     }
   };
 
   $scope.getMaxDeposit = function () {
+
     $scope.maxDeposit = (($scope.transaction.extraBottles+($scope.transaction.cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
     $scope.returnedValue = (($scope.transaction.return_extraBottles+($scope.transaction.return_cases * ($scope.maxReturnedBottles+1) ))*$scope.pricePerEmpt);
     $scope.transaction.deposit = ($scope.maxDeposit - $scope.returnedValue);
