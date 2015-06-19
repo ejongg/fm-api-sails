@@ -158,8 +158,9 @@
                 <tr>
                   <th>Sku name&nbsp;</th>
                   <th>Brand&nbsp;</th>
-                  <th>Bottles&nbsp;</th>
+                  <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
+                  <th>Price per case</th>
                   <th>Amount</th>
                   <th></th>
                 </tr>
@@ -170,8 +171,10 @@
                     <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
+                    <td>{{item.sku_id.spriceperbottle}}</td>  
                     <td>{{item.amount}}</td>
-                    <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
+              
+                  <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
                 </tr>
             </tbody>
         </table>
@@ -187,6 +190,7 @@
                   <th>Brand&nbsp;</th>
                   <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
+                  <th>Price per empty</th>
                   <th>Deposit needed</th>
                   <th></th>
                 </tr>
@@ -197,7 +201,8 @@
                     <td>{{item.brand_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
-                    <td>{{item.deposit}}<td>
+                    <td>{{pricePerEmpt}}</td>
+                    <td>{{item.deposit}}</td>
                     <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
                 </tr>
             </tbody>
@@ -206,6 +211,7 @@
          <div class="form-group pull-right"><br/>
                 <legend class="col-md-12 col-md-offset-1 panel"> Amount: {{totalAmount | currency : '₱'}}</legend>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total deposit Needed: {{totalDeposit | currency : '₱'}}</legend>
+                <legend class="col-md-12 col-md-offset-1 panel"> Total Discount: {{item.discountpercase | currency : '₱'}}</legend>
                 <legend class="col-md-12 col-md-offset-1 panel"> Total amount : {{(totalAmount+totalDeposit) | currency : '₱'}}</legend>
             </div>
     </div>
