@@ -84,7 +84,7 @@
                   </div>
 
                    <tr>
-                    <td><label>Address:</label></td>
+                    <td><label align="right">ADDRESS:</label></td>
                     <td colspan="2">
                         <div class="col-md-10">
                             <input type="text" class="form-control" ng-model="address.address_name" required>
@@ -94,7 +94,7 @@
                   </tr>
 
                    <tr>
-                    <td><label>Days:</label></td>
+                    <td><label align="right">DAYS:</label></td>
                     <td colspan="2">
                       <b>&nbsp; &nbsp; &nbsp;<div class="" ng-repeat="day in address.days" style="display:inline;">
 
@@ -146,14 +146,14 @@
             </tr>
           </table>
 
-
-           
-
             <div class="form-group pull-right">
               <br>
               <button type="submit" ng-click="addAddress(address)" ng-disabled="addressForm.$invalid || address.days.length === 0" class="btn btn-xs btn-primary">Add</button>
               <a type="button" ng-click="showAddAddressForm(false)" class="btn btn-xs btn-default">Cancel</a>
             </div>
+           
+
+
 
           </form>
         </div>
@@ -175,7 +175,7 @@
                   </div>
 
                    <tr>
-                    <td><label>Address:</label></td>
+                    <td><label align="right">ADDRESS:</label></td>
                     <td colspan="2">
                         <div class="col-md-10">
                             <input type="text" class="form-control" ng-model="addressEdit.address_name" required>
@@ -184,7 +184,7 @@
                   </tr>
 
                    <tr>
-                    <td><label>Days:</label></td>
+                    <td><label align="right">DAYS:</label></td>
                     <td colspan="2">
                       <b>&nbsp; &nbsp; &nbsp;<div class="" ng-repeat="day in addressEdit.days" style="display:inline;">
                         <font style="text-transform: capitalize !important; color: red">
@@ -243,6 +243,8 @@
               </div>
           </form>
 
+          <br><br><br>
+
 
         </div>
 
@@ -250,6 +252,7 @@
           <h3><strong>NO ADDRESS! </strong></h3>
         </div> -->
 
+        <br>
 
         <div ng-hide="noAddresses">
              
@@ -266,7 +269,8 @@
                 </div>
             </div>
 
-            <br><br>
+        <br><br><br>
+            
                 
             <thead>
               <tr>
@@ -295,10 +299,13 @@
                 </td>
 
                 <td style="color:red; cursor:button;" ng-hide="editAddressForm">
-                  <a ng-show="editState" class="btn btn-xs btn-default" ng-click="addressEditClicked(address)"><i class="mdi-editor-mode-edit"/>
-              &nbsp;Edit&nbsp;</a>
 
-                  <a ng-show="deleteState" class="btn btn-xs btn-default" ng-click="open(address)"><i class="mdi-action-delete"/>&nbsp;Delete</a>
+                  <a ng-show="deleteState" class="editdelete button-large" ng-click="open(address)">
+                    <i class="mdi-navigation-cancel"></i>&nbsp; Delete</a>
+
+                  <a ng-show="editState" class="editdelete button-large" ng-click="addressEditClicked(address)">
+                    <i class="mdi-editor-mode-edit"></i>&nbsp; Edit</a>
+                  
                 </td>
               </tr>
             </tbody>
@@ -434,7 +441,7 @@
 
 <!--  HIDE FOR PRINTER   -->
 </div>
-<br>
+<br><br>
 
          <div class="form-group" ng-hide="noRoutes">
           <label for="select" ng-class = "addBayForm || editOrDeleteBayForm ? 'col-md-3' : 'col-md-2'">Company:</label>
@@ -445,7 +452,7 @@
                 </select>
             </div>
           </div>
-     <br>     
+     <br><br>
 
 
  <div dir-paginate="routeInfo in routes |filter : searchRoute | filter:companySelect | orderBy:'route_name' | itemsPerPage:2" pagination-id="routesPagination">

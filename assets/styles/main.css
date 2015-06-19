@@ -56,10 +56,29 @@
   font-weight: bold;
 }
 
+.editdelete {
+  font-size: 15px !important;
+  float: right;
+  text-align: center;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 20px 0px 0px;
+  color: #000;
+  /*border-radius: 30px*/
+  border: 0px solid #202020; 
+  background-color: transparent !important;
+}
+
+.editdelete:hover {
+  color: red;
+  border: 0px solid #202020; 
+  background-color: transparent !important;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 .button-large {
   font-size: 35px;
 }
-
 
 .button-icon {
   -webkit-transition: opacity 0.1s;
