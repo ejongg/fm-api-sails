@@ -75,8 +75,8 @@ module.exports = {
 				});
 			})
 
-			.error(function (err){
-				return res.send(err, 400);
+			.catch(function (err){
+				return res.send({message : "Can't change line number. Make sure that line number does not exist"}, 400);
 			})
 	},
 
