@@ -4,7 +4,7 @@ angular.module('fmApp')
 .controller('EmployeesCtrl',['$scope', '_', '$http', 'httpHost','authService', '$modal', function($scope, _, $http, httpHost, authService, $modal){
 	$scope.positions = ['Cashier','Checker','Delivery Helper','Delivery Sales Personnel','Driver','Encoder'];
   $scope.statuses = ['Contractual','Probational','Regular'];
-  $scope.offices = ['Coke','FM Office','Beer'];
+  $scope.offices = ['Coca-cola','FM Office','SMB'];
 	$scope.employees = [];
 
   $scope.noEmployees = false;
