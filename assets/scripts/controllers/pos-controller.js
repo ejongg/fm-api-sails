@@ -280,6 +280,7 @@ angular.module('fmApp')
 
   $scope.deleteTransactionItem= function (index) {
     //$scope.getSkuInventoryCount($scope.transaction.sku);
+    $scope.totalDiscount = 0;
     $scope.totalDeposit -= $scope.returnsItems[index].deposit;
     $scope.totalAmount -= $scope.transactionItems[index].amount;
     $scope.transactionItems.splice(index,1);
