@@ -156,8 +156,7 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                  <th>Sku name&nbsp;</th>
-                  <th>Brand&nbsp;</th>
+                  <th>Product Name&nbsp;</th>
                   <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
                   <th>Price per case</th>
@@ -170,8 +169,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in transactionItems">
-                    <td>{{item.sku_name}}</td>
-                    <td>{{item.brand_name}}</td>
+                    <td>{{item.brand_name+ " " + item.sku_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
                     <td>{{item.pricepercase}}</td>
@@ -180,7 +178,7 @@
                     <td>{{(item.cases * item.discountpercase)}}</td>
                     <td>{{(item.amount - (item.cases * item.discountpercase))}}</td>
               
-                  <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
+                     <td><button class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"/> </button></td>
                 </tr>
             </tbody>
         </table>
@@ -192,24 +190,22 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                  <th>Sku name&nbsp;</th>
-                  <th>Brand&nbsp;</th>
+                  <th>Product Name&nbsp;</th>
                   <th>Extra Bottles&nbsp;</th>
                   <th>Cases&nbsp;</th>
                   <th>Price per empty bottle</th>
                   <th>Deposit needed</th>
-                  <th></th>
+
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in returnsItems">
-                    <td>{{item.sku_name}}</td>
-                    <td>{{item.brand_name}}</td>
+                    <td>{{item.brand_name+ " " + item.sku_name}}</td>
                     <td>{{item.bottles}}</td>
                     <td>{{item.cases}}</td>
                     <td>{{item.priceperempty}}</td>
                     <td>{{item.deposit}}</td>
-                    <td><button  class="btn btn-primary btn-xs" ng-click="deleteTransactionItem($index)"><i class="mdi-action-delete"></i>DELETE</button></td>
+                    
                 </tr>
             </tbody>
         </table>
@@ -233,101 +229,6 @@
 
 <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' " class="btn btn-primary btn-lg pull-right">Done</div>
 
-<!-- <div class="panel">
-
-<hr>
-
-
-<br/>
-<br/> -->
-
-<!-- 
-  <h2>RETURNED ITEMS</h2><hr>
-
-  <div class="row content-view">
-
-    <div class="col-md-3">
-
-
-
-
-      <form class="form-horizontal" name="returnsForm" ng-submit="addReturns(returns)" novalidate>
-        <div class="alert alert-dismissable alert-danger" ng-show="itemExistingReturnsError">
-          <button type="button" class="close" ng-click="showItemExistingReturnsError(false)">×</button>
-          <strong>{{itemExistingReturns}}</strong>
-        </div> 
-
-
-        
-        <div class="form-group">
-          <label for="select" class="col-md-3">SKU name</label>
-          <div ng-show="noSKU">
-            NO SKU AVAILABLE
-          </div>
-          <div ng-hide="noSKU" class="col-md-9">
-            <select  class="form-control" ng-model="returns.sku" ng-change="getMaxReturnedBottles(returns.sku)" ng-options="sku as combined(sku) for sku in skuList">
-               <option value="" >None</option>
-             </select>
-          </div>
-           </div>
-
-      
-      <div class="form-group">
-        <label for="select" class="col-md-3">Deposit</label>
-        <div class="col-md-9">
-          <input ng-model="deposit" type="number"  class="form-control" placeholder="Enter deposit (₱).">
-        </div>
-      </div>
-
-
-        <div class="form-group">
-          <label for="select" class="col-md-3">Extra Bottles</label>
-          <div class="col-md-9">
-            <input ng-model="returns.bottles" type="number" min="0" max="{{maxReturnedBottles}}" class="form-control" placeholder="Enter number of bottles." required>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label for="select" class="col-md-3">Cases</label>
-          <div class="col-md-9">
-            <input ng-model="returns.cases" type="number" min="0" class="form-control" placeholder="Enter number of cases." required>
-          </div>
-        </div>
-
-        <button class="btn btn-primary pull-right" ng-disabled="returnsForm.$invalid">Add</button>
-
-  </form>
-</div>
-
-      <div class="col-md-8 col-md-offset-1">
-       <table class="table table-striped table-hover">
-          <thead>
-              <tr>
-                    <th>Sku name&nbsp;</th>
-                    <th>Brand&nbsp;</th>
-                    <th>Bottles&nbsp;</th>
-                    <th>Cases&nbsp;</th>
-                    <th></th>
-                </tr>
-          </thead>
-          <tbody> 
-                <tr ng-repeat="item in returnsItems">
-                    <td>{{item.sku_name}}</td>
-                    <td>{{item.brand_name}}</td>
-                    <td>{{item.bottles}}</td>
-                    <td>{{item.cases}}</td>
-                    <td><button  class="btn btn-primary btn-xs" ng-click="deleteReturnsItem($index)">Delete</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<br/>
-<br/>
-
-
- <div ng-click="finalizeTransaction()" ng-disabled="!transactionItems.length || !returnsItems.length || customerName === '' || deposit === null " class="btn btn-primary btn-lg pull-right">Done</div> -->
 
 <div class="snackbar-container" data-snackbar="true"></div>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
