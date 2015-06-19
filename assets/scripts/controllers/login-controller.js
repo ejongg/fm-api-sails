@@ -4,10 +4,30 @@ angular.module('fmApp')
 .controller('LoginCtrl',['$scope', 'authService', '$state', 'userService', function($scope, authService, $state, userService){
 	$scope.error = "";
 	$scope.showError = false;
+  
 
-  if(userService.getAccessLevel() === 1){
-    $state.go('admin.dssr');
+  if (authService.getToken() != null) {
+     console.log("Have token");
+     userService.getUser().then(function(){
+     console.log("Check User");
+       switch(userService.getAccessLevel()) {
+            case 1:
+              $state.go('admin.dssr');
+              break;
+            case 2:
+              $state.go('encoder.sku');
+              break;
+            case 3:
+              $state.go('cashier.pos');
+       }
+     },function(err){
+       if(err.status === 403){
+         authService.logout();
+       }
+     });
   }
+
+ 
     
     $scope.closeError = function (option) {
 
@@ -25,7 +45,7 @@ angular.module('fmApp')
          var userInfo = {};
         if(status.code === 1) {
            
-          authService.setToken(data.token);
+         authService.setToken(data.token);
           // userService.getUser();
          userService.getUser().success(function (data) {
            switch(data.type) {
@@ -37,13 +57,11 @@ angular.module('fmApp')
               break;
             case 'cashier':
               $state.go('cashier.pos');
-              break;
-            case 'checker':
-              $state.go('checker.tally');
           }
          });
          
         }else{
+          console.log("Show Error");
           $scope.error = status.message;
 	        $scope.showError = true;
         }

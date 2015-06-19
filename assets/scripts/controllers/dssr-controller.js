@@ -51,6 +51,7 @@ angular.module('fmApp')
       console.log(data);
     }).error(function (err) {
       console.log(err);
+      $scope.checkError(err);
     });
   };
 

@@ -293,24 +293,6 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
       })
 
 
-    .state('checker', {
-      url:'/checker',
-      abstract: true,
-      templateUrl: 'templates/main.html',
-      controller: 'MainCtrl',
-      data: {
-        access: accessLevels.checker
-      }
-    })
-      .state('checker.tally', {
-        url:'/tally',
-        views: {
-          'mainContent': {
-            templateUrl: 'templates/tally.html'
-          }
-        }  
-      })
-
 }])	
 
 .run(['$rootScope','$state','userService','authService', function ($rootScope, $state, userService,authService) {
@@ -365,7 +347,10 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
      $scope.userLastName = userService.getLastName();
      $scope.userName = $scope.userFirstName + " " + $scope.userLastName;
   },function(err){
-    console.log(err);
+    if(403){
+      console.log("403");
+      $scope.logout();
+    }
   });
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -420,9 +405,15 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
   };
 
   $scope.checkError = function (err) {
+    console.log(err);
+    console.log("Check Error");
     if(err.error === 'Unauthorized'){
         $scope.logout();
       }
+
+    if(err === 403){
+      $scope.logout();
+    }
   };
 
   $scope.logout = function () {

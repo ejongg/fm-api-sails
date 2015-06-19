@@ -2,11 +2,16 @@
 
 angular.module('fmApp')
 
-.service('userService',['authService','$window', '$log', 'jwtHelper','$http','$rootScope','httpHost', function (authService, $window, $log, jwtHelper,$http,$rootScope,httpHost) {
+.service('userService',['authService','$window', '$log', 'jwtHelper','$http','$rootScope','httpHost','$state','$q', 
+  function (authService, $window, $log, jwtHelper,$http,$rootScope,httpHost,$state,$q) {
 	var userAccess = 0;
   var token = '';
   var user = {};
   var userID = null;
+
+  var removeLevel = function (){
+    userAccess = 0;
+  }
 
   console.log("User Service");
 
@@ -15,6 +20,13 @@ angular.module('fmApp')
 	  getUser : function () {
       console.log("get user");
 	  	token = authService.getToken();
+      var deferred = $q.defer();
+      if(token == null){
+        // authService.logout();
+        // removeLevel();
+        // $state.go('login');
+        deferred.reject(403);
+      }else{
       userID = jwtHelper.decodeToken(token);
       console.log(token);
       console.log(userID);
@@ -30,22 +42,20 @@ angular.module('fmApp')
             break;
           case 'cashier':
             userAccess = 3;
-            break;
-          case 'checker':
-            userAccess = 4;
-            break;  
          }
          console.log(userAccess);
          console.log(user);
-         return data;
+         deferred.resolve(data);
       });
+      }
+      return deferred.promise;
 	  },
 
     getAccessLevel: function () {
       return userAccess;
     },
     removeAccessLevel: function () {
-      userAccess = 0;
+     removeLevel();
     },
 
      getUserID : function () {
