@@ -76,9 +76,8 @@ angular.module('fmApp')
   };
 
    $scope.combine = function (sku){
-    return sku.prod_id.brand_name + ' ' + sku.sku_name;
+    return sku.prod_id.brand_name + ' ' + sku.sku_name + ' ' + sku.size;
   };
-
 
   /*var getBayItems = function () {
     // io.socket.request($scope.socketOptions('get','/bays/bayitems'), function (body, JWR) {
