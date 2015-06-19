@@ -29,7 +29,7 @@ module.exports.policies = {
   '*': 'tokenAuth',
 
   UsersController : {
-    login : 'alreadyLoggedIn', 
+    login : ['alreadyLoggedIn', 'CheckerNotAllowedPolicy'], 
     mobileLogin : 'alreadyLoggedIn',
     create : 'disableTokenAuth',
     resetPassword : 'MustBeAdminPolicy'
