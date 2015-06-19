@@ -229,9 +229,8 @@ angular.module('fmApp')
 
   $scope.showItemExistingError = function (data, sku) {
     $scope.itemExistingError = data;
-    var brand = $scope.product.sku.prod_id.brand_name;
     if(data === true){
-      $scope.itemExisting = brand + sku + " has been added to the existing entry.";
+      $scope.itemExisting = sku + " has been added to the existing entry.";
     }else{
       $scope.itemExisting= '';
     }

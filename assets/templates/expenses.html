@@ -111,7 +111,7 @@
 
                     <div class="form-group">
                           <label for="inputSkuName" class="col-md-12">
-                            Bottles</label> 
+                            Extra Bottles</label> 
                             <div class="col-md-12"><input type="number" name="brokenEmptBots" min="0" max="{{maxEmptyBottles}}" class="form-control"  placeholder="Enter no. of empty bottles." ng-model="expense.return_empties_bottles" required>
 
                               <strong class="fbackMsg" ng-show="expenseEmptiesForm.brokenEmptBots.$dirty && expenseEmptiesForm.brokenEmptBots.$invalid"> Enter numbers only. ({{maxEmptyBottles}}) empty bottles in inventroy</strong>
@@ -191,6 +191,15 @@
                             </div>
                           </div>
 
+                           <div class="form-group" ng-hide = "expense.type === 'Spoilage'">
+                            <label for="inputSkuName" class="col-md-12">
+                              Extra Bottles</label> 
+                              <div class="col-md-12"><input type="number" min="0" max="{{maxBottles}}" class="form-control" placeholder="Enter no. of bottle" ng-model="expense.bottles" required>
+
+                              </div>
+                        
+                            </div>
+
                             <!-- ADD BUTTON -->
 
                             <div class="icon-preview">
@@ -216,6 +225,11 @@
                               <div class="col-md-12"><input type="number" min="0"class="form-control" placeholder="Enter amount." ng-model="expense.amount" required>       
                               </div>
                             </div>
+
+                            <div class="alert alert-dismissable alert-success" ng-show="itemExistingError">
+                              <button type="button" class="close" ng-click="showItemExistingError(false)">×</button>
+                              <strong>{{itemExisting}}</strong>
+                          </div> 
 
                             <!-- ADD BUTTON -->
 
