@@ -38,6 +38,46 @@
   transition: opacity 0.1s linear 0s !important;
   opacity: 0; }
 
+
+.x {
+  float: right;
+  text-align: center;
+  padding: 0px 0px 0px 0px;
+  color: #000;
+  border-radius: 30px;
+  border: 0px solid #202020; 
+  background-color: transparent !important;
+}
+
+.x:hover {
+  color: #202020;
+  border: 0px solid #202020; 
+  background-color: transparent !important;
+  font-weight: bold;
+}
+
+.button-large {
+  font-size: 35px;
+}
+
+
+.button-icon {
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+  padding: 0 6px;
+  min-width: initial;
+  border-color: transparent;
+  background: none; }
+  .button-icon.button.active, .button-icon.button.activated {
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    opacity: 0.3; }
+  .button-icon .icon:before, .button-icon.icon:before {
+    font-size: 32px; }
+
+
+
 body {
   background-color: #ffffff !important;
   overflow-x: hidden; }
