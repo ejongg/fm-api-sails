@@ -35,6 +35,10 @@ module.exports.policies = {
     resetPassword : 'MustBeAdminPolicy'
   },
 
+  BackupController : {
+    restore : 'MustBeAdminPolicy'
+  }, 
+
   Warehouse_transactionsController : {
     add : 'InventoryPolicy'
   },

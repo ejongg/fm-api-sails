@@ -45,7 +45,7 @@ module.exports = {
 
 		Backup.findOne({id : backupId})
 			.then(function (backupFile){
-				console.log(backupFile);
+				
 				var tool = new MysqlTools();
 				 tool.restoreDatabase({
 				    host: 'localhost'
