@@ -32,9 +32,9 @@ angular.module('fmApp')
 
   };
 
-  var getBays = function () {
+  var getBays = function (sku) {
 
-    $http.get(httpHost + '/bays').success( function (data) {      
+    $http.get(httpHost + '/bays/list/sku-lines?id=' + sku.id).success( function (data) {      
       if(data.length !== 0){
         $scope.bays = data;
         $scope.incVal.bay = $scope.bays[0];
@@ -51,7 +51,7 @@ angular.module('fmApp')
   };
 
   getIncompleteCases();
-  getBays();
+  // getBays();
 
    $scope.combineBay = function (bay){
     return bay.bay_name + ' ' + bay.bay_label;
@@ -85,7 +85,8 @@ angular.module('fmApp')
     $scope.incCaseForm.$setPristine();
     $scope.incVal.brand_name = inc.sku_id.sku_name;
     $scope.incVal = inc;
-    $scope.incVal.bay = $scope.bays[0];
+    // $scope.incVal.bay = $scope.bays[0];
+    getBays(inc.sku_id);
     $scope.showIncForm(true);
   };
 
