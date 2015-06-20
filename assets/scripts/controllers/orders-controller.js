@@ -554,7 +554,7 @@ angular.module('fmApp')
     });
 
 
-    modalInstance.result.then(function () {
+    modalInstance.result.then(function (confirm) {
     }, function () {
       console.log("close");
     });
@@ -584,21 +584,11 @@ angular.module('fmApp')
       "username": cred.username,
       "password": cred.password
     }
-
-    $scope.socketOptions = function (method,url,headers,params) {
-    return {
-      method: method,
-      url: url,
-      headers: headers,
-      params: params
-    };
-    };
-
       io.socket.request($scope.socketOptions('post','/customer-orders/cancel',{"Authorization": "Bearer " + authService.getToken()}, cancelInfo), function (body, JWR) {
       console.log('Sails responded with post user: ', body);
       console.log('and with status code: ', JWR.statusCode);
       if(JWR.statusCode === 200){
-         $modalInstance.close();
+         $modalInstance.close(true);
       }else if (JWR.statusCode === 400){
         $scope.hasError = true;
         $scope.errMsg = body;
@@ -608,6 +598,15 @@ angular.module('fmApp')
     
       });
   };
+
+    $scope.socketOptions = function (method,url,headers,params) {
+    return {
+      method: method,
+      url: url,
+      headers: headers,
+      params: params
+    };
+    };
 
   $scope.closeModal = function () {
     $modalInstance.dismiss('cancel');

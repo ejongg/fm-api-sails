@@ -506,19 +506,6 @@ angular.module('fmApp')
 
     modalInstance.result.then(function (voidInfo) {
       console.log(voidInfo);
-
-      io.socket.request($scope.socketOptions('post','  /purchases/void',{"Authorization": "Bearer " + authService.getToken()}, voidInfo), function (body, JWR) {
-      console.log('Sails responded with post user: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.snackbarShow('Purchase Void');  
-      }else if (JWR.statusCode === 400){
-        console.log("Error Occured");
-        $scope.showErrorMessage(true,body.message);
-      }
-       $scope.$digest();
-    
-      });
     }, function () {
       console.log("close");
     });
@@ -527,10 +514,13 @@ angular.module('fmApp')
 
 }])
 
-  .controller('PurchaseModalCtrl', function ($scope, $modalInstance, purchase) {
+.controller('PurchaseModalCtrl',['$scope','$modalInstance','purchase','authService',
+  function ($scope, $modalInstance,purchase,authService) {
   $scope.voidMode = false;
   $scope.purchaseInfo = purchase;
   $scope.voids = {};
+  $scope.hasError = false;
+  $scope.errMsg = '';
   console.log($scope.purchaseInfo);
 
   $scope.closeForm = function () {
@@ -544,14 +534,37 @@ angular.module('fmApp')
       "purchase_id": purchase.id,
       "username": cred.username,
       "password": cred.password
-    }
-    $modalInstance.close(voidInfo);
+    };
+         io.socket.request($scope.socketOptions('post','  /purchases/void',{"Authorization": "Bearer " + authService.getToken()}, voidInfo), function (body, JWR) {
+      console.log('Sails responded with post user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+        $modalInstance.close(true);
+      }else if (JWR.statusCode === 400){
+        console.log("Error Occured");
+        $scope.hasError = true;
+        $scope.errMsg = body;
+        $scope.voids = {};
+      }
+       $scope.$digest();
+    
+      });
+
   };
+
+  $scope.socketOptions = function (method,url,headers,params) {
+    return {
+      method: method,
+      url: url,
+      headers: headers,
+      params: params
+    };
+    };
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-});
+}]);
 
 
 
