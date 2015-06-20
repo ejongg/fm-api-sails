@@ -211,7 +211,7 @@ angular.module('fmApp')
     $scope.product.cases = null;
     $scope.product.bottles = null;
     $scope.product.reason = "";
-    $scope.companySelected = $scope.companies[0];
+    // $scope.companySelected = $scope.companies[0];
     $scope.accountable = $scope.employees[0];
     $scope.bays = [];
     $scope.noBays = true;
