@@ -100,6 +100,7 @@ angular.module('fmApp')
         $scope.historyData = data;
          console.log('History Data');
         console.log($scope.historyData);
+        $scope.noHistory = false;
       }else{
         console.log("No History");
         $scope.noHistory = true;
