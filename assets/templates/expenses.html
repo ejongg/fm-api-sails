@@ -366,7 +366,7 @@
       <td>{{product.sku}}</td>
       <td>{{product.cases}}</td>
       <td>{{product.bottles}}</td>
-      <td><button ng-click="deleteSKUToList($index)" class="btn btn-primary btn-xs"><i class="mdi-action-delete"/></button></td>
+      <td><button ng-click="deleteSKUToList($index)" class="x button-large"><i class="mdi-navigation-cancel"/></i></button></td>
     </tr>
   </tbody>
 </table>
@@ -417,7 +417,7 @@
       <td>{{product.sku.prod_id.brand_name + " " +product.sku.sku_name+ " "+product.sku.size}}</td>
       <td>{{product.return_empties_cases}}</td>
       <td>{{product.return_empties_bottles}}</td>
-      <td><button ng-click="deleteEmptiesToList($index)" class="btn btn-primary btn-xs"><i class="mdi-action-delete"/></button></td>
+      <td><button ng-click="deleteEmptiesToList($index)" class="x button-large"><i class="mdi-navigation-cancel"/></i></button></td>
     </tr>
   </tbody>
 </table>
