@@ -160,7 +160,7 @@ angular.module('fmApp')
   };
 
   var getOrders = function (){
-    $http.get(httpHost + '/customer_orders').success( function (data) {
+    $http.get(httpHost + '/customer-orders/list-all').success( function (data) {
       if(data.length !== 0){
          $scope.ordersList = data;
          getUniques();
@@ -554,21 +554,7 @@ angular.module('fmApp')
     });
 
 
-    modalInstance.result.then(function (cancelInfo) {
-      console.log(cancelInfo);
-
-      io.socket.request($scope.socketOptions('post','/customer-orders/cancel',{"Authorization": "Bearer " + authService.getToken()}, cancelInfo), function (body, JWR) {
-      console.log('Sails responded with post user: ', body);
-      console.log('and with status code: ', JWR.statusCode);
-      if(JWR.statusCode === 200){
-        $scope.snackbarShow('Order Cancelled');  
-      }else if (JWR.statusCode === 400){
-        console.log("Error Occured");
-        $scope.snackbarShow('Order Cancel Error');  
-      }
-       $scope.$digest();
-    
-      });
+    modalInstance.result.then(function () {
     }, function () {
       console.log("close");
     });
@@ -577,10 +563,13 @@ angular.module('fmApp')
 
 }])
 
-.controller('OrderModalCtrl', function ($scope, $modalInstance, order) {
+.controller('OrderModalCtrl',['$scope','$modalInstance','order','authService',
+  function ($scope, $modalInstance,order,authService) {
   $scope.cancelMode = false;
   $scope.orderProducts = order;
   $scope.cancel = {};
+  $scope.hasError = false;
+  $scope.errMsg = '';
   console.log($scope.orderProducts);
   
   $scope.closeForm = function () {
@@ -595,13 +584,35 @@ angular.module('fmApp')
       "username": cred.username,
       "password": cred.password
     }
-    $modalInstance.close(cancelInfo);
+
+    $scope.socketOptions = function (method,url,headers,params) {
+    return {
+      method: method,
+      url: url,
+      headers: headers,
+      params: params
+    };
+    };
+
+      io.socket.request($scope.socketOptions('post','/customer-orders/cancel',{"Authorization": "Bearer " + authService.getToken()}, cancelInfo), function (body, JWR) {
+      console.log('Sails responded with post user: ', body);
+      console.log('and with status code: ', JWR.statusCode);
+      if(JWR.statusCode === 200){
+         $modalInstance.close();
+      }else if (JWR.statusCode === 400){
+        $scope.hasError = true;
+        $scope.errMsg = body;
+        $scope.cancel = {};
+      }
+       $scope.$digest();
+    
+      });
   };
 
   $scope.closeModal = function () {
     $modalInstance.dismiss('cancel');
   }
-});
+}]);
 
 
 

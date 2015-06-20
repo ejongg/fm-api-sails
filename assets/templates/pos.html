@@ -78,7 +78,8 @@
                 NO SKU AVAILABLE
               </div>
               <div ng-hide="noSKU" class="col-md-9">
-                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxReturnedBottles(transaction.sku);getSkuInventoryCount(transaction.sku)" ng-options="sku as combined(sku) for sku in skuList">
+                <select  class="form-control" ng-model="transaction.sku" ng-change="getMaxReturnedBottles(transaction.sku);getSkuInventoryCount(transaction.sku)" ng-options="sku as combined(sku) group by sku.prod_id.company for sku in skuList" required>
+                  <option value="">Select SKU</option>
                 </select>
               </div>
             </div>

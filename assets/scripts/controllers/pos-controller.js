@@ -54,7 +54,8 @@ angular.module('fmApp')
     $http.get(httpHost + '/sku/available-with-moving-pile').success( function (data) {
       if(data.length !== 0){
         $scope.skuList = data;
-        $scope.transaction.sku = $scope.skuList[0];
+        // $scope.transaction.sku = $scope.skuList[0];
+         $scope.transaction.sku = null;
         //$scope.maxBottles = $scope.transaction.sku.bottlespercase;
         //$scope.transaction.return_extraBottles = 0;
         //$scope.transaction.return_cases = 0;
@@ -94,8 +95,9 @@ angular.module('fmApp')
     console.log($scope.inventory);
     console.log("SKU SELECTED");
     console.log(sku);
-    var idSku = sku.id;
-
+    if(sku != null){
+      var idSku = sku.id;
+    }
 
     console.log("ID");
     console.log(idSku);
@@ -113,7 +115,7 @@ angular.module('fmApp')
 
   $scope.getMaxReturnedBottles = function (returns){
     console.log("RETURNED:");
-    if(returns !== null){
+    if(returns != null){
        console.log(returns);
     $scope.maxReturnedBottles = returns.bottlespercase - 1;
     $scope.pricePerEmpt = returns.priceperempty;

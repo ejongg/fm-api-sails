@@ -364,7 +364,7 @@
                         <td>{{order.supplieragent_name}}</td>
                         <td>{{order.status}}</td>
                         <td>
-                            <button class ="btn btn-primary btn-xs" ng-click="open(order)">CANCEL</button>
+                            <button class ="btn btn-primary btn-xs" ng-show="order.status === 'Pending'" ng-click="open(order)">CANCEL</button>
                             <button class ="btn btn-default btn-xs" ng-click="getOrderProducts(order.id)">VIEW</button></td>
                     </tr>
 
@@ -426,6 +426,7 @@
 
             <br/>
             <div class="form-group col-md-12" align="center" ng-show="cancelMode">
+            <div ng-show="hasError">{{errMsg.message}}<button ng-click="hasError = false">X</button></div>
             <form name="cancelForm" ng-submit="ok(cancel)" novalidate>
             <div class="form-group">
                         <input type="text" class="form-control" placeholder="Enter username." ng-model="cancel.username" required>
