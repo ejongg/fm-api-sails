@@ -253,7 +253,7 @@ angular.module('fmApp')
     $scope.purchase.cost = null;
     $scope.purchase.discount = null;
     $scope.purchase.prod_date = new Date();
-    $scope.companySelected = $scope.companies[0];
+    // $scope.companySelected = $scope.companies[0];
     $scope.bays = [];
     $scope.noBays = true;
   };
