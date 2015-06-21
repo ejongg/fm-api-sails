@@ -21,8 +21,13 @@ angular.module('fmApp')
   $scope.editIndex = -1;
 
   var todayDay = new Date();
-  todayDay.setDate(todayDay.getDate() + 1);
+  if(todayDay.getDay() === 6){
+    todayDay.setDate(todayDay.getDate() + 2);
+  }else{
+    todayDay.setDate(todayDay.getDate() + 1);
+  }
   var todayDayFormatted = $scope.formatDate(todayDay);
+  console.log(todayDayFormatted);
 
   $scope.loadOut = {};
   $scope.loadOut.orders = [];
