@@ -66,7 +66,7 @@ angular.module('fmApp')
   var getAdresses = function () {
     $http.get(httpHost + '/address/list-all').success( function (data) {
       if(data.length !== 0){
-        $scope.addresses = data;    
+        $scope.addresses = $scope.sortData(data,'address_name');    
         console.log("Addresses:");
         console.log($scope.addresses);
       }else{

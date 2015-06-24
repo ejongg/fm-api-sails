@@ -131,7 +131,7 @@
                  </form>
               </div>
 
-              <div  ng-show="expense.type === 'Breakage' || expense.type === 'Spoilage'">
+              <div  ng-show="expense.type === 'Breakage'">
 
                 <form class="form-horizontal" name="expenseForm" ng-submit="addSKUToList(expense)" novalidate>
 
@@ -209,6 +209,78 @@
 
                          </form>
                        </div>
+
+
+                       <div  ng-show="expense.type === 'Spoilage'">
+
+                <form class="form-horizontal" name="expenseForm" ng-submit="addSKUToList(expense)" novalidate>
+
+                        <div class="form-group"  ng-show="expense.products.length === 0">
+                        <label for="select" class="col-md-12">Company</label>
+                        <div class="col-md-12">
+                            <select class="form-control" ng-change="changeCompany()" ng-model="companySelected" ng-init="companySelected = companies[0]">
+                              <option ng-repeat="company in companies" value="{{company}}">{{company}}</option>
+                            </select>
+                        </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="select" class="col-md-12">Safe Keeping Unit (SKU)</label>
+                          <div ng-show="noSKU" class="col-md-12"> No purchased SKU </div>
+                          <div ng-hide="noSKU" class="col-md-12">
+                            <select class="form-control" ng-model="expense.sku" ng-change="getBays(expense.sku);getMaxBottles(expense.sku)" ng-options="sku as combine(sku) for sku in skuList | filter: companySelected" required>
+                              <option value="" disabled>Select SKU</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        
+
+                        <div class="form-group">
+                          <label for="select" class="col-md-3">Line</label>
+                          <div class="col-md-12" ng-hide="noBays">
+                            <select class="form-control" ng-model="expense.bay" ng-options="bay.id as combineBay(bay) for bay in bays | filter: companySelected">
+                            </select>
+                          </div>
+
+                          <div class="col-md-12" ng-show="noBays">
+                            No Line Available
+                        </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputSkuName" class="col-md-12">
+                           Date</label>
+
+                           <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.date" required>
+                           </div>
+                         </div>
+
+                         <div class="form-group">
+                          <label for="inputSkuName" class="col-md-12">
+                           Production Date</label>
+
+                           <div class="col-md-12"><input type="date" class="form-control" ng-model="expense.prod_date" required>
+                           </div>
+                         </div>
+
+                         <div class="form-group">
+                          <label for="inputSkuName" class="col-md-12">
+                            Cases</label> 
+                            <div class="col-md-12"><input type="number" min="0" class="form-control"  placeholder="Enter no. of cases." ng-model="expense.cases" required>
+                            </div>
+                          </div>
+
+                            <!-- ADD BUTTON -->
+
+                            <div class="icon-preview">
+                             <button type="submit" class="btn btn-primary btn-xs pull-right" ng-disabled="expenseForm.$invalid">Add</button>
+                             <br>
+                           </div>
+
+                         </form>
+                       </div>
+
 
                        <div  ng-hide="expense.type === 'Breakage' || expense.type === 'Spoilage' || expense.type === 'Broken Empties'">
                         <form class="form-horizontal" name="expenseOtherForm" ng-submit="addExpense(expense)" novalidate>
@@ -305,6 +377,7 @@
                 </span>
               </a>
             </th>
+            <th></th>
 
           </tr>
         </thead>
@@ -314,6 +387,7 @@
             <td>{{expense.type}}</td>
             <td>{{expense.date}}</td>
             <td align="right">{{expense.amount | currency : "₱"}}</td>
+            <td><button ng-click="open($index)">VOID</td>
           </tr>
         </tbody>
       </table>
@@ -352,7 +426,7 @@
 
       </th>
 
-      <th><font size="1px">Bottles&nbsp;</font>
+      <th ng-hide="expense.type === 'Spoilage'"><font size="1px">Bottles&nbsp;</font>
 
       </th>
       <th></th>
@@ -365,7 +439,7 @@
     <tr ng-repeat="product in expense.products">
       <td>{{product.sku}}</td>
       <td>{{product.cases}}</td>
-      <td>{{product.bottles}}</td>
+      <td ng-hide="expense.type === 'Spoilage'">{{product.bottles}}</td>
       <td><button ng-click="deleteSKUToList($index)" class="x button-large"><i class="mdi-navigation-cancel"/></i></button></td>
     </tr>
   </tbody>
@@ -437,4 +511,40 @@
 </div>
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 <div class="snackbar-container" data-snackbar="true"></div>
+
+<script type="text/ng-template" id="expensesDetailsModal.html">
+   <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4> 
+      </div>
+      <div class="modal-body">
+      
+
+
+      </div>
+      <div class="modal-footer">
+      <div ng-show="hasError" class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" ng-click="hasError = false">×</button>
+                    <strong> {{errMsg.message}} </strong>
+            </div>
+            
+            <form name="cancelForm" ng-submit="ok(cancel)" novalidate>
+            <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter username." ng-model="cancel.username" required>
+            </div>
+            <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Enter password." ng-model="cancel.password" required>
+            </div>
+            <div class="form-group">
+                        <button type="submit" class="btn btn-primary" ng-disabled="cancelForm.$invalid">Submit</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</script>
+
+
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->

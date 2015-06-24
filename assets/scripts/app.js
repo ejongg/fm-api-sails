@@ -43,6 +43,15 @@ angular.module('fmApp', ['fmApp.Service','ui.router','angular-jwt','angularUtils
           }
         }  
       })
+      .state('admin.backup', {
+        url:'/backup',
+        views: {
+          'mainContent': {
+            templateUrl: 'templates/backup.html',
+            controller: 'BackupCtrl'
+          }
+        }  
+      })
       .state('admin.dssr', {
         url:'/dssr',
         views: {

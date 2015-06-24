@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fmApp')
-.controller('ExpensesCtrl',['$scope','_','$http', 'httpHost', 'authService', function($scope, _, $http, httpHost, authService){
+.controller('ExpensesCtrl',['$scope','_','$http', 'httpHost', 'authService', '$modal', function($scope, _, $http, httpHost, authService, $modal){
   $scope.expenseType = ['Utilities','Broken Empties','Breakage', 'Spoilage', 'Water', 'Electricity', 'Rent', 
                         'SSS/PhilHealth/PAGIBIG', 'Maintenance', 'Gas', 'Office Supplies'];
   $scope.skuList = [];
@@ -503,6 +503,45 @@ angular.module('fmApp')
     }
 
   });
+
+
+  $scope.open = function (purchase) {
+      console.log("Open Modal");
+      var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: 'expensesDetailsModal.html',
+        controller: 'ExpensesModalCtrl',
+        resolve: {
+          purchase : function () {
+            return purchase;
+          }
+        }
+      });
+
+
+      modalInstance.result.then(function (voidInfo) {
+        console.log(voidInfo);
+      }, function () {
+        console.log("close");
+      });
+
+    };
+
+  }])
+
+  .controller('ExpensesModalCtrl',['$scope','$modalInstance','purchase','authService',
+    function ($scope, $modalInstance,purchase,authService) {
+    console.log($scope.purchaseInfo);
+
+    $scope.closeForm = function () {
+      console.log("Close form");
+      $scope.voidMode = false;
+      $scope.voids = {};
+    }
+
+    $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+    };
 
 
 }]);
