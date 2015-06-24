@@ -10,6 +10,18 @@
         <h1> Backup & Recovery </h1>
     </div>
 
+        <div class="pageheader-right">
+        <div class="form-group"  ng-hide="noInventory">
+            <ul class="nav nav-tabs col-md-12">
+                           <li>
+                            <a ng-hide="addProductForm" ng-click="open()">
+                                <h6><i class="mdi-content-add-box"/> &nbsp; BACKUP</h6></a>
+
+                        </li>
+                    </ul>
+                </div>
+    </div>
+
 
 </div>
 
@@ -29,6 +41,8 @@
                     <tr>
                         <th>
                          Backup Date
+                        </th>
+                        <th>
                         </th>
 
                     </tr>
@@ -57,5 +71,27 @@
 </div>
 </div> <!-- END OF WHITE PANEL | DON'T REMOVE! -->
 <div class="snackbar-container" data-snackbar="true"></div>
+
+<script type="text/ng-template" id="backupModal.html">
+   <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4> 
+      </div>
+      <div class="modal-body">
+      Do you want to backup the system?            
+           
+            <div class="form-group">
+                        <button type="button" class="btn btn-primary" ng-click="ok()">Yes</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()">No</button>
+            </div>
+  
+      </div>
+      <div class="modal-footer">
+      
+      </div>
+    </div>
+  </div>
+</script>
 </div> <!-- END OF CONTAINER   | DON'T REMOVE! -->
 
