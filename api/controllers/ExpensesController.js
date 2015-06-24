@@ -90,7 +90,9 @@ module.exports = {
 							sku_id : product.sku_id,
 							bottles : product.bottles,
 							cases : product.cases,
-							expense_id : expenseId
+							expense_id : expenseId,
+							prod_date : product.prod_date,
+							bay_id : product.bay_id
 						};
 
 						Expense_products.create(expenseProduct)
@@ -112,6 +114,58 @@ module.exports = {
 							sails.sockets.blast("expenses", {verb : "created", data : expense});
 							return res.send(201);
 						})
+				})
+		};
+	},
+
+	voidExpense : function (req, res){
+		var expenseId = req.body.expense_id;
+		var type = req.body.type;
+
+		switch(type){
+			case "Breakage":
+				voidBreaksAndSpoils(expenseId);
+				break;
+
+			case "Spoilage":
+				voidBreaksAndSpoils(expenseId);
+				break;
+
+			case "Broken Empties":
+				voidEmptyExpenses(expenseId);
+				break;
+
+			default :
+				Expenses.update({id : expenseId}, {status : 'Void'})
+					.then(function (expense){
+						sails.sockets.blast("expenses", {verb : "updated", data : expense[0]});
+						return res.send('Expense now void', 200);
+					})
+		};
+
+		function voidBreaksAndSpoils(expenseId){
+			Expenses.update({id : expenseId}, {status : 'Void'})
+				.then(function (expense){
+					return ExpenseService.voidBreakageAndSpoilage(expenseId);
+				})
+
+				.then(function (updatedExpense){
+					sails.sockets.blast('inventory', {verb : 'updated'});
+					sails.sockets.blast("expenses", {verb : "updated", data : updatedExpense});
+					return res.send('Expense now void', 200);
+				})
+		};
+
+		function voidEmptyExpenses(expenseId){
+			Expenses.update({id : expenseId}, {status : 'Void'})
+				.then(function (expense){
+					return ExpenseService.voidEmpties(expenseId);
+				})
+
+				.then(function (updatedExpense){
+					sails.sockets.blast('empties', {verb : 'updated'});
+					sails.sockets.blast("expenses", {verb : "updated", data : updatedExpense});
+					return res.send('Expense now void', 200);
 				})
 		};
 	}

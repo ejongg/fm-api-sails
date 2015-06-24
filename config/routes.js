@@ -150,6 +150,9 @@ module.exports.routes = {
   	/* INCOMPLETE CASES */
   	'POST /incompletes/assemble' : 'Incomplete_cases.assembleCase',
 
+  	/* EXPENSES */
+  	'POST /expenses/void' : 'Expenses.voidExpense',
+
   	/* MOBILE */
   	'POST /mobile/login' : 'UsersController.mobileLogin'
 };

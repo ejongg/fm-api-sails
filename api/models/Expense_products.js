@@ -29,6 +29,12 @@ module.exports = {
 	expense_id : {
 	  model : 'expenses',
 	  required : true
+	},
+	bay_id : {
+	  model : 'bays'
+	},
+	prod_date : {
+	  type : 'string'
 	}
   }
 };

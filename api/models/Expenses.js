@@ -27,6 +27,10 @@ module.exports = {
 	    type : 'string',
 	    required : true
   	},
+    status : {
+      type : 'string',
+      defaultsTo : 'Verified'
+    },
   	user : {
 	    type : 'string',
 	    required : true
