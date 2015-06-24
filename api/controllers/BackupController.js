@@ -62,6 +62,20 @@ module.exports = {
 				});
 
 			})
+	},
+
+	getAll : function (req, res){
+		Backup.find().then(function (backups){
+			return backups;
+		})
+
+		.each(function (backup){
+			delete backup.name;
+		})
+
+		.then(function (backups){
+			return res.send(backups);
+		})
 	}
 };
 

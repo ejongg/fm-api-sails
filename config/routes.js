@@ -153,6 +153,9 @@ module.exports.routes = {
   	/* EXPENSES */
   	'POST /expenses/void' : 'Expenses.voidExpense',
 
+  	/* EXPENSES */
+  	'GET /backup/list' : 'Backup.getAll',
+
   	/* MOBILE */
   	'POST /mobile/login' : 'UsersController.mobileLogin'
 };
