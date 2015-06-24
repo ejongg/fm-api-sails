@@ -47,6 +47,11 @@ module.exports = {
       required : true,
       defaultsTo : 0.00
     },
+    pricepershell : {
+      type : 'float',
+      required : true,
+      defaultsTo : 0.00
+    },
     weightpercase : {
       type : 'float',
       required : true,
